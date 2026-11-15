@@ -166,10 +166,6 @@
       "sha256": "7407fc624857bcdfe3f0217cce2a32a5a470628739efcf36bce4f96c085578f6"
     },
     {
-      "path": "soma/api/__init__.py",
-      "sha256": "47138a01dcf04aefb8a9af1eb10a46e221c9be57e83c86d910f160ae17db2d6c"
-    },
-    {
       "path": "soma/datasets.py",
       "sha256": "ce0a2647afb097e3194f37603be5a5e7670d9efaf29079c3094c5dc4e564e576"
     },
@@ -218,10 +214,6 @@
       "sha256": "7c925e6568e73553bf572e6e802956ac40cb81dd09cce0c9b52a51285e46e1f8"
     },
     {
-      "path": "soma/exports/__init__.py",
-      "sha256": "31ccc7ac527446d52eb7d47c3e6330edf1ae5ae200c5fb87e76fcf8c72740d5c"
-    },
-    {
       "path": "soma/geometry/__init__.py",
       "sha256": "55d86096dfe120711dd9cad27cebf235d1d0f8c8e2817712f3c94180a432ae9c"
     },
@@ -260,10 +252,6 @@
     {
       "path": "soma/power/__init__.py",
       "sha256": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd"
-    },
-    {
-      "path": "soma/schedule/__init__.py",
-      "sha256": "d783b2a79b686e13fcb0e313ccfa772efcc97ba0000d8335a3794bf84f769037"
     },
     {
       "path": "soma/terrain/__init__.py",
