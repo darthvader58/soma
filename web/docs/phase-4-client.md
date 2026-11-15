@@ -19,6 +19,10 @@ expose:
   The caller must invoke `cancel()` when an input edit invalidates the scenario.
 - `exportRun(scenario)`: returns `{bytes: Uint8Array, filename, fixture}` for
   the most recent validated completion with exactly that scenario hash.
+- `getSummary(scenario)`: reads only a version 0.4.0 `soma_run_summary` with
+  matching scenario hash, status, solver, fidelity, delivered bytes and arrival.
+  Cancellation or replacement invalidates it. Comparison accepts metrics only
+  when the Python summary also records successful independent replay.
 
 Live options remain `baseUrl`, `fetchImpl` and `pollIntervalMs`. The service
 protocol is POST `/plans` returning `job_id`, GET `/plans/{id}` returning
@@ -78,16 +82,18 @@ visible even though timeline bar positions are display proportions.
 ## Verification and limits
 
 `node --test tests/web/client.test.mjs tests/web/result.test.mjs`: 17 passed.
-The complete `npm test` run from `web/`: 49 passed. `npm run build` passes.
+The complete `npm test` run from `web/`: 51 passed. `npm run build` passes.
 Controlled transport tests cover late POST deletion, superseded accepted jobs,
 explicit delayed-fixture cancellation, immutable retry, nested result freezing,
 exact raw package bytes, header/hash rejection, stale export rejection and
 invalid result rejection before progress publication. Structured explanation
 tests preserve microsecond text and ignore unapproved summary fields.
 
-This bounded client change adds no colors, icons, motion or new controls.
-Existing scrollable tables, text status and native timeline control remain.
-The owner's browser workflow must verify the newly wired controls and rendered
-schedule at desktop/mobile sizes, including missing-map fallback, and capture
-visual evidence. This document does not claim a live integrated Phase 5 run,
+The owner wired retry, package download, Python summaries and grouped schedule
+records into the existing interface. Seventeen Chromium checks pass, including
+the delayed-fixture cancel state and exact ZIP download. Existing scrollable
+tables, text status and native timeline control remain. No new palette, icons
+or motion were added. Desktop/mobile evidence and the delivery gate are in
+[phase-4-verification.md](phase-4-verification.md).
+This document does not claim a live integrated Phase 5 run,
 validated Moon registration, operational relay service, or mission prediction.
