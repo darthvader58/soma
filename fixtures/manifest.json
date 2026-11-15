@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "51bc74dba954e612d3cbe4dbef28a0ae9d681acda64ccfc904cf9baec94d6059"
+      "sha256": "b6475dd3a79cd5b2acb7fd98c684990e06017aa141ecb48c5a4b1f0f08f2a80d"
     },
     {
       "path": "data/README.md",
@@ -67,7 +67,7 @@
     },
     {
       "path": "data/phase5-evidence.manifest.json",
-      "sha256": "7a52bd1926b9bd27a6a17b88e726d5b90b80858b7cbbb796725fbd05e7d74bd2"
+      "sha256": "f3aef471beaa14bfa5887aa533f809ec63c833c978c47bb788e3cb76bb9f6a0d"
     },
     {
       "path": "data/renderer-alignment-evidence.manifest.json",
@@ -164,6 +164,18 @@
     {
       "path": "fixtures/phase-5/README.md",
       "sha256": "59f7a9769ce354b22dd4874582da51d4b705561a57c843aba256a6d672cb5221"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/README.md",
+      "sha256": "921ca84f593d123db317b3dc4ccb3d9cd2297c599ef93d066abbbfab49a17f4d"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/run.json",
+      "sha256": "255f5f9a63698d14d137b875c534b8daab35f96a3a11a705061a06f532c621e8"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/run.zip",
+      "sha256": "c5ec2450587f774cf50bda340c0ad6c4086b7a3b1b2ac546470df6fa8a55952a"
     },
     {
       "path": "fixtures/phase-5/live-relay/run.json",
@@ -284,6 +296,10 @@
     {
       "path": "fixtures/registration/polar20m-reference.json",
       "sha256": "d09f58e458e56f346be8212361607af123dfb511d5712fe0354db9e2e1c02155"
+    },
+    {
+      "path": "fixtures/registration/product-qa.json",
+      "sha256": "bfda008b5b8aed7921ed15d1641e29712feadc9ce322048ec4e2efd68ac448d8"
     },
     {
       "path": "fixtures/registration/radial-differences.json",

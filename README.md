@@ -168,9 +168,9 @@ npm --prefix web run dev
 The dev server serves `http://127.0.0.1:5173/`. A scoped Cesium ion token can
 be configured in `web/.env.local` using `web/.env.example`. Without a token,
 the map shows a labelled fallback while the form, text result, timeline and
-JSON downloads work. No default evaluation token is used. Aligned markers and
-contact overlays stay blocked until the engine supplies reviewed frame
-registration. Token-backed rendering and picking have not been verified.
+JSON downloads work. No default evaluation token is used. The corrected Moon representation has a
+reviewed regional registration; the engine supplies declared surface points.
+Missing spacecraft trajectories remain unknown. See the Phase 5 guide below.
 
 Phase 2 separates the immutable synthetic fixture analysis point from typed
 draft coordinates and display-only surface picks. A surface pick creates a
@@ -186,7 +186,7 @@ checked-in results come from Python, with hand-calculated relay allocations
 kept as a separately labelled reference. The Phase 4 interface branch adds
 the actual captured schedules and complete package downloads; its live client
 has controlled tests for polling, cancellation, retry and stale responses.
-Connecting the browser to the running service remains Phase 5 work.
+The Phase 5 workflow connects the browser to the running service.
 
 ## Phase 3 illumination, power, contacts and scientific display
 
@@ -248,7 +248,7 @@ No ground-time booking, flight DTN, thermal-survival or relay-certification
 claim is made. The [Phase 4 evidence and reproduction guide](soma/docs/phase-4/README.md)
 states the discretization, time-limit and coverage limits.
 
-## Phase 5 live integration and remaining map gate
+## Phase 5 live integration and map alignment
 
 Start the engine and browser in separate terminals from the repository root:
 
@@ -270,11 +270,19 @@ of map availability. A 16-byte input edit is genuinely rescheduled; unsupported
 site coverage remains unknown. The declared relay fixture contains no trajectory,
 so its selected spacecraft state stays Unknown. The browser does not invent one.
 
-Cesium Moon access has been verified locally using a scoped token in the ignored
-`web/.env.local`. Actual root/regional metadata was inspected, but it does not
-establish the asset's exact frame realization or independent landmark residuals.
-The [versioned registration handoff](soma/docs/phase-5/registration.md) records
-four published candidates, source hashes, known transforms and missing evidence.
-Aligned scientific overlays remain blocked. **Phase 5 is not fully accepted;
-Phase 6 has not started.** See the [integration guide](soma/docs/phase-5/README.md)
-and [interface evidence](web/docs/phase-5-verification.md).
+The engine corrects the observed coordinate conversion in the streamed Cesium
+Moon v6 mesh, preserving attribution and numerical DEM inputs. Its versioned
+DE421 mean-Earth bridge passes four independently searched terrain-feature
+comparisons at the 5 m source-grid resolution. The measured 3D residuals are
+below 0.3 m; adding the declared grid-resolution allowance remains below the
+10 m acceptance tolerance. This is relative display registration, not an
+absolute lunar navigation accuracy claim or an all-location/LOD guarantee.
+
+The application uses the certificate only from 87.5°S to the south pole. Outside
+that region, scientific overlays stay blocked. The contact-only relay fixture
+still has no trajectory; the viewer displays its declared analysis point and
+keeps spacecraft state Unknown. The [alignment method and reproduction guide](soma/docs/phase-5/map-alignment.md)
+records the measured controls, conversion, sampled source fingerprints and limits.
+The integration PR requires the repository owner's merge before Phase 6 begins.
+See the [integration guide](soma/docs/phase-5/README.md) and
+[interface evidence](web/docs/phase-5-verification.md).
