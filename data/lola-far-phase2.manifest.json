@@ -1,0 +1,65 @@
+{
+  "manifest_version": "0.2.0",
+  "dataset_id": "pds-lola64-southcap-v1",
+  "input_class": "published",
+  "frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "elevation_datum": "height_above_reference_sphere",
+  "elevation_unit": "m",
+  "projection": "simple_cylindrical",
+  "pixels_per_degree": 64,
+  "interpolation_policy": "unknown_if_zero_count",
+  "files": [
+    {
+      "role": "elevation",
+      "path": "lola-far-elevation.tif",
+      "sha256": "b28c264941b7a390c303c7871804b612b482e97538595915785ee1249257199b",
+      "raw_extract_sha256": "b32cdfa666630f76458bb8ab7b95f36a7a8cfd1ef7c0289f7e5b51f916b71586",
+      "size_bytes": 23755273,
+      "source_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_64.img",
+      "label_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_64.lbl",
+      "label_sha256": "4e7a94c76c716a147b21ccf07669d004246b0d1b017b7d63d50befaa1a34142d",
+      "product_version": "V3.1",
+      "source_byte_range_inclusive": [
+        501350400,
+        530841599
+      ],
+      "source_data_stop_time_utc": "2016-11-29T05:48:19Z"
+    },
+    {
+      "role": "count",
+      "path": "lola-far-count.tif",
+      "sha256": "b9324078a697e22a1848dd04dcf5b00a9a3cfae746d39e819ed6bb493ce57bd3",
+      "raw_extract_sha256": "7d4366ebb011e429426d618db0ce1037f499dc4287bc0688dec4cf07fda635c9",
+      "size_bytes": 13302980,
+      "source_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldec_64.img",
+      "label_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldec_64.lbl",
+      "label_sha256": "c39096be522606065f7b9cce245e60d124ab397f4d33d3bd3248ff7bc7208e36",
+      "product_version": "V3.0",
+      "source_byte_range_inclusive": [
+        501350400,
+        530841599
+      ],
+      "source_data_stop_time_utc": "2016-11-29T05:48:19Z"
+    }
+  ],
+  "elevation_sha256": "b28c264941b7a390c303c7871804b612b482e97538595915785ee1249257199b",
+  "count_sha256": "b9324078a697e22a1848dd04dcf5b00a9a3cfae746d39e819ed6bb493ce57bd3",
+  "bounds_lonlat_deg": [
+    0,
+    -90,
+    360,
+    -80
+  ],
+  "height_decode": "height_m = signed_little_endian_DN * 0.5; radius_m = height_m + 1737400",
+  "pixel_registration": "center_lat = 90-(global_row+0.5)/64; center_lon_east=(column+0.5)/64",
+  "quality_notes": [
+    "Height V3.1 and count V3.0 are separately pinned; both cover mission LRO_ES_52 through 2016-11-29.",
+    "Published grid may include interpolation and latitude-band artifacts. Zero counts remain unknown."
+  ],
+  "redistribution": "not_bundled; local range extracts only",
+  "software": {
+    "rasterio": "1.5.2",
+    "gdal": "3.12.2"
+  }
+}
