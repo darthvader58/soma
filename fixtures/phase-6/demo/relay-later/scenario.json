@@ -1,0 +1,211 @@
+{
+  "analysis_horizon": {
+    "end_utc": "2026-11-14T10:05:00Z",
+    "start_utc": "2026-11-14T08:50:00Z"
+  },
+  "analysis_mode": "synthetic_fixture",
+  "data_ready_utc": "2026-11-14T09:05:00Z",
+  "data_volume": {
+    "unit": "MiB",
+    "value": 16
+  },
+  "dataset_manifest_ref": "synthetic-contract-v1",
+  "deadline_utc": "2026-11-14T10:05:00Z",
+  "hardware_profile_ref": "synthetic-lander-hardware-v1",
+  "input_provenance": [
+    {
+      "description": "Invented contract/arithmetic test values, including location, dates, hardware, finite storage, nonzero lander base load, panel parameters and station proxy. No numerical terrain or ephemeris is supplied; no mission prediction.",
+      "input_class": "synthetic",
+      "scope": "all scenario values and contact windows",
+      "source_urls": []
+    },
+    {
+      "description": "Assumed net payload rates with overhead already applied once; ideal pointing; zero acquisition/teardown and relay processing for arithmetic only; light time disabled for synthetic test, not physically zero.",
+      "input_class": "assumed",
+      "scope": "rates, pointing, acquisition, processing and propagation",
+      "source_urls": []
+    },
+    {
+      "description": "Same declared 16 MiB task, hardware, initial battery, site, absolute deadline and fixed network. Only data-ready time and enabled route family change. No new operating-day or site geometry is claimed.",
+      "input_class": "synthetic",
+      "scope": "Phase 6 controlled scheduling demonstration",
+      "source_urls": []
+    }
+  ],
+  "lander": {
+    "antenna_height_m": 2,
+    "elevation_datum": "height_above_reference_sphere",
+    "elevation_m": 0,
+    "frame": "MOON_ME_DE421",
+    "id": "synthetic-lander",
+    "latitude_deg": -89,
+    "longitude_deg_east": 0,
+    "panel_height_m": 1,
+    "pole_reference_meridian_deg_east": 0,
+    "reference_radius_m": 1737400
+  },
+  "pointing_assumption": "ideal_pointing",
+  "profiles": {
+    "hardware": [
+      {
+        "base_load_w": 5,
+        "battery": {
+          "capacity_wh": 100,
+          "charge_efficiency": 0.9,
+          "discharge_efficiency": 0.9,
+          "initial_energy_wh": 80,
+          "max_charge_w": 50,
+          "max_discharge_w": 100,
+          "reserve_wh": 10
+        },
+        "id": "synthetic-lander-hardware-v1",
+        "input_class": "synthetic",
+        "panel": {
+          "area_m2": 1,
+          "efficiency": 0.2,
+          "irradiance_at_1au_w_m2": 1361,
+          "kind": "fixed",
+          "lumped_derating": 0.8,
+          "normal_local_enu": [
+            0,
+            0,
+            1
+          ]
+        },
+        "service": {
+          "input_class": "synthetic",
+          "label": "SYNTHETIC service calendar; no operator allocation",
+          "windows": [
+            {
+              "end_utc": "2026-11-14T10:05:00Z",
+              "start_utc": "2026-11-14T08:50:00Z"
+            }
+          ]
+        },
+        "storage_capacity_bytes": 209715200,
+        "terminals": [
+          {
+            "acquisition_s": 0,
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "id": "lander-radio",
+            "mode_ids": [
+              "synthetic-direct-256k",
+              "synthetic-uplink-2m"
+            ],
+            "rx_electrical_w": 5,
+            "teardown_s": 0,
+            "tx_electrical_w": 20
+          }
+        ]
+      }
+    ],
+    "relays": [
+      {
+        "behavior": "store_and_forward",
+        "id": "synthetic-lunar-relay",
+        "input_class": "synthetic",
+        "power_assumption_label": "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+        "processing_delay_s": 0,
+        "service": {
+          "input_class": "synthetic",
+          "label": "SYNTHETIC service calendar; no operator allocation",
+          "windows": [
+            {
+              "end_utc": "2026-11-14T09:10:00Z",
+              "start_utc": "2026-11-14T09:00:00Z"
+            },
+            {
+              "end_utc": "2026-11-14T10:03:00Z",
+              "start_utc": "2026-11-14T10:00:00Z"
+            }
+          ]
+        },
+        "storage_capacity_bytes": 104857600,
+        "terminals": [
+          {
+            "acquisition_s": 0,
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "id": "relay-radio",
+            "mode_ids": [
+              "synthetic-uplink-2m",
+              "synthetic-downlink-10m"
+            ],
+            "rx_electrical_w": 5,
+            "teardown_s": 0,
+            "tx_electrical_w": 20
+          }
+        ],
+        "trajectory": {
+          "coverage": {
+            "end_utc": "2026-11-14T10:05:00Z",
+            "start_utc": "2026-11-14T08:50:00Z"
+          },
+          "frame": "J2000",
+          "kind": "synthetic_contact_fixture",
+          "origin": "MOON",
+          "position_unit": "m",
+          "reference": "SYNTHETIC contact windows only; no trajectory or ephemeris provided",
+          "time_scale": "UTC"
+        }
+      }
+    ],
+    "stations": [
+      {
+        "frame": "ITRF93",
+        "height_m": 0,
+        "id": "synthetic-earth-station",
+        "input_class": "synthetic",
+        "latitude_deg": 0,
+        "longitude_deg_east": 0,
+        "minimum_elevation_deg": 10,
+        "reference_ellipsoid": "WGS84",
+        "service": {
+          "input_class": "synthetic",
+          "label": "SYNTHETIC service calendar; no operator allocation",
+          "windows": [
+            {
+              "end_utc": "2026-11-14T09:10:00Z",
+              "start_utc": "2026-11-14T08:50:00Z"
+            },
+            {
+              "end_utc": "2026-11-14T10:03:00Z",
+              "start_utc": "2026-11-14T10:00:00Z"
+            }
+          ]
+        },
+        "storage_capacity_bytes": 209715200,
+        "terminals": [
+          {
+            "acquisition_s": 0,
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "id": "station-radio",
+            "mode_ids": [
+              "synthetic-direct-256k",
+              "synthetic-downlink-10m"
+            ],
+            "rx_electrical_w": 5,
+            "teardown_s": 0,
+            "tx_electrical_w": 20
+          }
+        ]
+      }
+    ]
+  },
+  "rate_method": "assumed_net_rate",
+  "relay_refs": [
+    "synthetic-lunar-relay"
+  ],
+  "route_families": [
+    "direct_to_earth",
+    "single_lunar_relay"
+  ],
+  "run_version": "0.1.0",
+  "scenario_id": "phase6-relay-later",
+  "service_assumption_label": "SYNTHETIC windows at both endpoints; no booked network service",
+  "station_refs": [
+    "synthetic-earth-station"
+  ]
+}

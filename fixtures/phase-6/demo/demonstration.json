@@ -1,0 +1,4209 @@
+{
+  "artifact_type": "soma_phase6_controlled_demo",
+  "cases": [
+    {
+      "case_id": "direct-ready",
+      "export_verification_passed": true,
+      "files": {
+        "run.json": "e0decfdd2b71f72498ef134fdfa8f76ebdb01ba811f71ce9765b397836b94cdb",
+        "run.zip": "a61cb5db1f9a10ce9fea4b0e945de1efc43defbac45e2db3a2bb152c5010d8d7",
+        "scenario.json": "10f4e70c442ade72288834fcc7fc37a029f427b213deaeec61ca7130c4daf6f7",
+        "verification.json": "46c97250bf4f61d4ff8ce60cabbaf7fa2a58df5737deb2f53fddb00d63974b39"
+      },
+      "scenario_sha256": "46067f398d3b78f988ed408b161f8af580ad93a8e386927b6b4127dc7d9aee9b",
+      "summary": {
+        "artifact_type": "soma_run_summary",
+        "assumptions": [
+          "Rate method: assumed_net_rate",
+          "Pointing: ideal_pointing",
+          "Service: SYNTHETIC windows at both endpoints; no booked network service",
+          "Sky directions and skylines are invented Phase 3 inputs held at the fixed absolute horizon.",
+          "Contact geometry is declared synthetic interval-wide input, not a computed mission opportunity.",
+          "Rates are assumed net payload bits per second; light time is disabled only for the synthetic fixture.",
+          "Changing coordinates, heights, station geometry, trajectory or analysis extent requires new analysis inputs.",
+          "left_sample_piecewise_constant_assumption",
+          "Battery diagnostic includes base load only; no radio schedule was selected.",
+          "Fixed-panel center-ray projection times sampled uniform solar disk fraction.",
+          "Spherical opaque Earth eclipse mask combined with terrain on the same solar samples.",
+          "Contact event guard is explicitly zero for this diagnostic; not an operational margin.",
+          "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+          "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+          "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+          "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+          "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+          "Ground sink retains all received chunks with finite configured station storage.",
+          "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+          "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+          "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
+        ],
+        "delivered_bytes": 16777216,
+        "details": {
+          "analysis_provenance": {
+            "environment": {
+              "geometry": {
+                "kind": "synthetic_direction_fixture_not_trajectory"
+              },
+              "geometry_artifact_sha256": "ec85d16309076c878e8e402e1ecbd250e580b44bcf6c1c2ba46ee3eb109a90ee",
+              "geometry_digest_convention": "sha256_of_python_sorted_json_utf8_default_separators_not_scenario_JCS",
+              "input_class": "synthetic",
+              "terrain": [
+                {
+                  "id": "synthetic_uniform_skyline_input_v1",
+                  "sha256": "31db0afedf58f108085da7bac839b097fa3df114091075a07938a24e66c784f6"
+                }
+              ]
+            },
+            "model_id": "synthetic-phase4-model-v1",
+            "model_sha256": "76d38a5a3d2e8afcdca101d33e934f0ce668a6dcdfebc0d76710db6e97373fc8",
+            "source_files": [
+              {
+                "path": "fixtures/synthetic-relay/scenario.json",
+                "sha256": "c5fe3f026cc4e0b28101a4c4f0cad93628f5e9c0b5d4564e9086d486becc69c5"
+              },
+              {
+                "path": "fixtures/synthetic-relay/contacts.json",
+                "sha256": "b59b73e84b0ddae8e062ed7f97f3b31519b06c9ec1ee4eb1bb4600bd73d348d1"
+              }
+            ]
+          },
+          "policy": "deadline_then_fewer_relay_hops_then_earlier_arrival_then_lower_lander_radio_energy",
+          "scheduler_options": {
+            "bin_s": 30,
+            "chunk_bytes": 16777216,
+            "time_limit_s": 5
+          },
+          "software": {
+            "source_sha256": {
+              "__init__.py": "96d6e2a93ea819922fa6f4568fc4ee934e1c31875ca9cbbbf50b9bb7c95b4904",
+              "__main__.py": "39ae267db2f9b403f700177be6b51bbef7b6cade97c433dd46209785e7d23ff9",
+              "api/__init__.py": "47138a01dcf04aefb8a9af1eb10a46e221c9be57e83c86d910f160ae17db2d6c",
+              "api/app.py": "64704f42381016b1e501dbb834b45c2fc9a57fc19b7734ca7edcd909ea177359",
+              "api/moon.py": "35f16feb66415e306387136d9e83995fafd93279329c202d266ecc11702e3942",
+              "datasets.py": "ce0a2647afb097e3194f37603be5a5e7670d9efaf29079c3094c5dc4e564e576",
+              "diagnostics.py": "ad0370f0664233e86cdbb7d321f053fb653b04d7d8dd72241359069a9f38f731",
+              "docs/phase-5/inspect-mesh.py": "e65359a95c9ceda23e1c58f75d8b88ab370d5ee70321c64329c71696a5a6664b",
+              "docs/phase-5/reproduction/build_certificate.py": "565a92fb48931ffee1d52f2db5de160c8244dc3fe768f1f0c052a922df5987ac",
+              "docs/phase-5/reproduction/fit_conversion.py": "3bcfc9230d11cf72fbc21c9b23474c39f4dba2b14cfbb1ca6570425f9ca317bf",
+              "docs/phase-5/reproduction/select_landmarks.py": "15521b83418ddd844786570bc9d61ea28334f9c8a856e92f0f418f4371de9992",
+              "docs/phase-6/reproduce-demo.py": "c1ec13c735bd904cf43ab63cd9e0a4457973c3a03af763a98ce9568cff9136fd",
+              "engine.py": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b",
+              "environment.py": "7c925e6568e73553bf572e6e802956ac40cb81dd09cce0c9b52a51285e46e1f8",
+              "exports/__init__.py": "65252c0229af6f4bfaccd1a0ec79fd04f6f37016eaed9e2ec7f9cb8dd0bc2e5c",
+              "exports/display.py": "6822040a51d43827569fe61e5fbda9a3f9fe64aa3f5b0fd398859b46ef46cb09",
+              "geometry/__init__.py": "55d86096dfe120711dd9cad27cebf235d1d0f8c8e2817712f3c94180a432ae9c",
+              "geometry/registration.py": "61f17b250acb25d6bfc4e7150935dfb06f27deec0ab82f8391124ae1134616bd",
+              "geometry/registration_calibration.py": "07e9db63f3fd614260d08253aca916481b691a1303d5c77de00e5e72e758a602",
+              "geometry/registration_landmarks.py": "8916b3517adb3cdcc0ae46da25840cd92d128ce670253ab5575d519e8692cfc2",
+              "geometry/registration_measurements.py": "e86d773b324068b21c61d17e162af7b1850e4242181d1547b5c78bc87d31aa9b",
+              "geometry/renderer_mesh.py": "e65c4256ea16ce95d2dd54f09203c05061e99175b03bc082fbcc9fad813ebd31",
+              "geometry/spice.py": "5de1c0e8e1310e7847d2b3c7f9ed7aaa414ec5083d2d901ba4e24f64e8414f37",
+              "geometry/surface.py": "d9bd0800e289474852934325e1a2aec48cb99676492ff2d13526690cbac19037",
+              "geometry/trajectories.py": "76a051182c8ab45f329362923b13a059a19430e7589f08c15528b6a5e5331510",
+              "geometry_verification.py": "c79445b5e360ce85a053dfcfd693ecd5026f8d5d550c23cd2e5bbd0d95b19989",
+              "illumination/__init__.py": "02569a13cf81c48e5db583655ef8eca7b6a3c9170b6f6abd459ff9fe18685077",
+              "links/__init__.py": "d3704bdd5242ce44ae3241d3b2aa9dc85b85f4b438a1c963252d61a2c9811c00",
+              "links/budget.py": "3d76d1e91028b393d4ce0ec82f3ba76df93693435061db965762c20d57bda772",
+              "links/contacts.py": "acc8c377ac353ff9e0aaf3bf2c7469c9619f94b16345cccf4ccb5129bdf85b20",
+              "power/__init__.py": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd",
+              "preparation.py": "a004acfacfcaee50bc0bb92b723929b02462eba0c0ec17d74c979fe69d386b47",
+              "schedule/__init__.py": "11670e0971df3feb33c6b2122b1a29c9c520ae295ba22066247bc8466c5df1c4",
+              "schedule/optimizer.py": "0a90c73a9f480d9258515cda574eb236618d1a947731adf1e2de6330cdcd1eae",
+              "schedule/replay.py": "80ac535fde189ab9e7543f825ed0c448feebef30b8e3c5b7c4fe16f399148851",
+              "terrain/__init__.py": "0aabc1c1ffc7a8a1b6ceb8357947a948b77018b869ce60d6fcb3ccc0cb89e4b6",
+              "terrain/dem.py": "63fb2f7fac0550df16a5ad9473e8ea613be23832786d30d1e294f3b6428fe52c",
+              "terrain/horizons.py": "e0e6da75cc603ab3f6c298285212c5600d927c666079777e2fcb20d15b5e5b69",
+              "time/__init__.py": "a2813dcca3bc8cd233264b9464f355c0943fd915f4131f9dbd4b6527ff6c0c4e",
+              "time/spice.py": "683fa6ccf1087f3a3606f946065737c419faa228058c9ebec4d4a6f24ce078f2",
+              "validation.py": "9dc4d4e82ef614f937d415e843c630ae6f00a91389bedd7204885ea18dcea898",
+              "verification/__init__.py": "e589bd42be2e5f6ee0da906c1eb3b3ce0a9e2c59a315c594c80b07052127769f",
+              "verification/exports.py": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1",
+              "verification/sensitivity.py": "6d4e1e849e7ef2e5d7e8302bd186f2a81f06083356ec6da2d3f04e3efef3d4c3"
+            },
+            "versions": {
+              "fastapi": "0.163.0",
+              "numpy": "2.5.4",
+              "pulp": "3.3.2",
+              "soma": "0.1.0",
+              "uvicorn": "0.54.0"
+            }
+          },
+          "solver": {
+            "bin_s": 30,
+            "candidate_count": 23,
+            "chunk_bytes": 16777216,
+            "energy_intervals": [
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_energy_wh": 77.68518518518519,
+                "end_utc": "2026-11-14T08:55:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 80.0,
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_energy_wh": 75.83333333333334,
+                "end_utc": "2026-11-14T08:59:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 77.68518518518519,
+                "start_utc": "2026-11-14T08:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 75.74074074074075,
+                "end_utc": "2026-11-14T09:00:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 75.83333333333334,
+                "start_utc": "2026-11-14T08:59:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 75.27777777777779,
+                "end_utc": "2026-11-14T09:05:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 75.74074074074075,
+                "start_utc": "2026-11-14T09:00:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 74.81481481481482,
+                "end_utc": "2026-11-14T09:10:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 75.27777777777779,
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 74.35185185185186,
+                "end_utc": "2026-11-14T09:15:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 74.81481481481482,
+                "start_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 73.8888888888889,
+                "end_utc": "2026-11-14T09:20:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 74.35185185185186,
+                "start_utc": "2026-11-14T09:15:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.986638418086717,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 73.42716310943642,
+                "end_utc": "2026-11-14T09:25:00Z",
+                "generation_w": 0.013361581913282782,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 73.8888888888889,
+                "start_utc": "2026-11-14T09:20:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.888950516346925,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 72.97448250607097,
+                "end_utc": "2026-11-14T09:30:00Z",
+                "generation_w": 0.11104948365307496,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 73.42716310943642,
+                "start_utc": "2026-11-14T09:25:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.673978248779139,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 72.54170674229512,
+                "end_utc": "2026-11-14T09:35:00Z",
+                "generation_w": 0.32602175122086147,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 72.97448250607097,
+                "start_utc": "2026-11-14T09:30:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.333705696040093,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 72.14043769636548,
+                "end_utc": "2026-11-14T09:40:00Z",
+                "generation_w": 0.6662943039599064,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 72.54170674229512,
+                "start_utc": "2026-11-14T09:35:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 3.889512740841687,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 71.78029762776903,
+                "end_utc": "2026-11-14T09:45:00Z",
+                "generation_w": 1.110487259158313,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 72.14043769636548,
+                "start_utc": "2026-11-14T09:40:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 3.366342496799519,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 71.46859924843574,
+                "end_utc": "2026-11-14T09:50:00Z",
+                "generation_w": 1.6336575032004812,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 71.78029762776903,
+                "start_utc": "2026-11-14T09:45:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 2.8737600936126526,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 71.20251035087901,
+                "end_utc": "2026-11-14T09:55:00Z",
+                "generation_w": 2.1262399063873474,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 71.46859924843574,
+                "start_utc": "2026-11-14T09:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 2.5676480353690216,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 70.96476516241891,
+                "end_utc": "2026-11-14T10:00:00Z",
+                "generation_w": 2.4323519646309784,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 71.20251035087901,
+                "start_utc": "2026-11-14T09:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 2.2636191550011358,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 70.75517079621511,
+                "end_utc": "2026-11-14T10:05:00Z",
+                "generation_w": 2.7363808449988642,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 70.96476516241891,
+                "start_utc": "2026-11-14T10:00:00Z"
+              }
+            ],
+            "generation_bins": [
+              {
+                "end_utc": "2026-11-14T08:55:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:00:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T08:55:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:05:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:00:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:10:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:15:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:20:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:15:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:25:00Z",
+                "generation_w": 0.013361581913282782,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:20:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:30:00Z",
+                "generation_w": 0.11104948365307496,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:25:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:35:00Z",
+                "generation_w": 0.32602175122086147,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:30:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:40:00Z",
+                "generation_w": 0.6662943039599064,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:35:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:45:00Z",
+                "generation_w": 1.110487259158313,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:40:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:50:00Z",
+                "generation_w": 1.6336575032004812,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:45:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:55:00Z",
+                "generation_w": 2.1262399063873474,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:50:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T10:00:00Z",
+                "generation_w": 2.4323519646309784,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:55:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T10:05:00Z",
+                "generation_w": 2.7363808449988642,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T10:00:00Z"
+              }
+            ],
+            "milp_energy_intervals": [
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:50:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:51:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:50:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:51:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:51:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:52:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:51:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:52:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:52:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:53:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:52:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:53:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:53:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:54:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:53:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:54:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:54:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:55:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:54:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:55:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:56:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:55:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:56:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:56:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:57:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:56:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:57:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:57:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:58:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:57:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:58:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:58:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T08:59:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:58:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:59:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:59:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:00:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:59:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:00:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:00:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:01:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:00:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:01:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:01:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:02:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:01:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:02:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:02:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:03:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:02:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:03:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:03:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:04:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:03:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:04:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:04:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:05:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:04:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:05:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:06:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:05:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:06:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:06:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:07:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:06:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:07:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:07:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:08:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:07:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:08:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:08:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:09:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:08:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:09:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:09:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:10:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:09:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:10:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:11:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:10:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:11:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:11:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:12:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:11:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:12:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:12:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:13:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:12:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:13:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:13:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:14:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:13:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:14:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:14:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:15:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:14:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:15:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:15:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:16:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:15:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:16:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:16:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:17:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:16:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:17:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:17:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:18:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:17:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:18:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:18:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:19:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:18:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:19:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:19:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:20:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:19:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:20:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:20:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:21:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:20:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:21:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:21:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:22:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:21:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:22:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:22:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:23:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:22:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:23:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:23:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:24:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:23:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:24:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:24:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:25:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:24:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:25:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:25:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:26:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:25:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:26:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:26:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:27:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:26:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:27:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:27:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:28:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:27:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:28:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:28:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:29:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:28:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:29:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:29:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:30:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:29:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:30:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:30:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:31:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:30:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:31:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:31:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:32:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:31:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:32:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:32:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:33:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:32:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:33:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:33:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:34:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:33:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:34:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:34:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:35:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:34:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:35:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:35:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:36:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:35:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:36:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:36:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:37:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:36:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:37:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:37:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:38:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:37:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:38:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:38:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:39:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:38:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:39:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:39:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:40:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:39:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:40:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:40:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:41:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:40:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:41:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:41:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:42:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:41:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:42:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:42:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:43:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:42:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:43:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:43:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:44:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:43:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:44:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:44:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:45:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:44:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:45:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:45:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:46:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:45:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:46:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:46:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:47:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:46:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:47:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:47:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:48:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:47:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:48:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:48:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:49:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:48:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:49:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:49:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:50:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:49:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:50:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:51:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:50:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:51:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:51:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:52:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:51:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:52:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:52:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:53:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:52:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:53:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:53:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:54:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:53:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:54:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:54:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:55:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:54:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:55:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:56:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:55:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:56:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:56:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:57:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:56:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:57:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:57:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:58:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:57:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:58:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:58:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:59:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:58:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:59:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:59:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:00:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:59:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:00:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:00:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:01:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:00:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:01:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:01:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:02:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:01:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:02:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:02:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:03:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:02:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:03:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:03:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:04:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:03:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:04:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:04:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:05:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:04:30Z"
+              }
+            ]
+          }
+        },
+        "final_byte_arrival_utc": "2026-11-14T08:59:00Z",
+        "format_version": "0.4.0",
+        "lander_communications_energy_wh": 3.0,
+        "limiting_reason": "The complete dataset schedule passed independent byte, timing, resource and energy replay under the declared assumptions.",
+        "mean_relay_wait_s": 0.0,
+        "minimum_margin_above_reserve_wh": 60.75517079621511,
+        "minimum_stored_energy_wh": 70.75517079621511,
+        "model_fidelity": "assumed_rate_simulation",
+        "replay": {
+          "buffer_history": [
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-lander",
+              "stored_bytes": 16777216
+            },
+            {
+              "epoch_utc": "2026-11-14T08:59:00Z",
+              "node_id": "synthetic-lander",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-lander",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-lunar-relay",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-lunar-relay",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-earth-station",
+              "stored_bytes": 16777216
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-earth-station",
+              "stored_bytes": 16777216
+            }
+          ],
+          "delivered_bytes": 16777216,
+          "details": {
+            "algorithm": "independent_whole_chunk_replay_v1",
+            "availability_policy": "declared availability may conservatively delay physical availability",
+            "buffer_conservatism": "reserve incoming whole chunk at first arrival; release at transmit end",
+            "external_power": "relay and station power follows explicit profile assumptions",
+            "setup_power_assumption": "acquisition and teardown draw the respective TX/RX electrical watts"
+          },
+          "energy_history": [
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 80
+            },
+            {
+              "epoch_utc": "2026-11-14T08:55:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 77.68518518518519
+            },
+            {
+              "epoch_utc": "2026-11-14T08:59:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 75.83333333333334
+            },
+            {
+              "epoch_utc": "2026-11-14T09:00:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 75.74074074074075
+            },
+            {
+              "epoch_utc": "2026-11-14T09:05:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 75.27777777777779
+            },
+            {
+              "epoch_utc": "2026-11-14T09:10:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 74.81481481481482
+            },
+            {
+              "epoch_utc": "2026-11-14T09:15:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 74.35185185185186
+            },
+            {
+              "epoch_utc": "2026-11-14T09:20:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 73.8888888888889
+            },
+            {
+              "epoch_utc": "2026-11-14T09:25:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 73.42716310943642
+            },
+            {
+              "epoch_utc": "2026-11-14T09:30:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 72.97448250607097
+            },
+            {
+              "epoch_utc": "2026-11-14T09:35:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 72.54170674229512
+            },
+            {
+              "epoch_utc": "2026-11-14T09:40:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 72.14043769636548
+            },
+            {
+              "epoch_utc": "2026-11-14T09:45:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 71.78029762776903
+            },
+            {
+              "epoch_utc": "2026-11-14T09:50:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 71.46859924843574
+            },
+            {
+              "epoch_utc": "2026-11-14T09:55:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 71.20251035087901
+            },
+            {
+              "epoch_utc": "2026-11-14T10:00:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 70.96476516241891
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 70.75517079621511
+            }
+          ],
+          "errors": [],
+          "final_byte_arrival_utc": "2026-11-14T08:59:00Z",
+          "passed": true,
+          "storage_intervals": [
+            {
+              "byte_length": 16777216,
+              "chunk_id": "chunk-0",
+              "interval": {
+                "end_utc": "2026-11-14T08:59:00Z",
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              "node_id": "synthetic-lander"
+            },
+            {
+              "byte_length": 16777216,
+              "chunk_id": "chunk-0",
+              "interval": {
+                "end_utc": "2026-11-14T10:05:00Z",
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              "node_id": "synthetic-earth-station"
+            }
+          ]
+        },
+        "route_family": "direct_to_earth",
+        "route_nodes": [
+          "synthetic-lander",
+          "synthetic-earth-station"
+        ],
+        "scenario_id": "phase6-direct-ready",
+        "scenario_sha256": "46067f398d3b78f988ed408b161f8af580ad93a8e386927b6b4127dc7d9aee9b",
+        "solver_status": "proven_optimum",
+        "status": "feasible_under_assumptions",
+        "warnings": [
+          "Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.",
+          "This result does not book service or certify navigation, relay operation or thermal survival.",
+          "Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage."
+        ]
+      }
+    },
+    {
+      "case_id": "direct-later",
+      "export_verification_passed": true,
+      "files": {
+        "run.json": "cf68f028168a5dc3ca48f31ff856e7b31dc7a6fb20f62c1e6ffa126f1db4d108",
+        "run.zip": "534d3ff110f8968292a4e74d20ed71207f3343d75eea86e9ebbd898dea0ec3a5",
+        "scenario.json": "9a15a19c43bc6c7dae662fda175dcba0c30933705b2788fff0a965814e168d5b",
+        "verification.json": "c91d554bb54eb22df6c111b169d5c87c9b3bca8d1ae48245ad9028e83dcd9230"
+      },
+      "scenario_sha256": "82c1ebd6d945cf766fa1f871d518b76d3c52f53a617600d063cb51ca15590fb4",
+      "summary": {
+        "artifact_type": "soma_run_summary",
+        "assumptions": [
+          "Rate method: assumed_net_rate",
+          "Pointing: ideal_pointing",
+          "Service: SYNTHETIC windows at both endpoints; no booked network service",
+          "Sky directions and skylines are invented Phase 3 inputs held at the fixed absolute horizon.",
+          "Contact geometry is declared synthetic interval-wide input, not a computed mission opportunity.",
+          "Rates are assumed net payload bits per second; light time is disabled only for the synthetic fixture.",
+          "Changing coordinates, heights, station geometry, trajectory or analysis extent requires new analysis inputs.",
+          "left_sample_piecewise_constant_assumption",
+          "Battery diagnostic includes base load only; no radio schedule was selected.",
+          "Fixed-panel center-ray projection times sampled uniform solar disk fraction.",
+          "Spherical opaque Earth eclipse mask combined with terrain on the same solar samples.",
+          "Contact event guard is explicitly zero for this diagnostic; not an operational margin.",
+          "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+          "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+          "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+          "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+          "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+          "Ground sink retains all received chunks with finite configured station storage.",
+          "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+          "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+          "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
+        ],
+        "delivered_bytes": 0,
+        "details": {
+          "analysis_provenance": {
+            "environment": {
+              "geometry": {
+                "kind": "synthetic_direction_fixture_not_trajectory"
+              },
+              "geometry_artifact_sha256": "4a9adb5d317d099e668dd01a7200a3adce7b9c8dc027e901b96ccd552cda9886",
+              "geometry_digest_convention": "sha256_of_python_sorted_json_utf8_default_separators_not_scenario_JCS",
+              "input_class": "synthetic",
+              "terrain": [
+                {
+                  "id": "synthetic_uniform_skyline_input_v1",
+                  "sha256": "31db0afedf58f108085da7bac839b097fa3df114091075a07938a24e66c784f6"
+                }
+              ]
+            },
+            "model_id": "synthetic-phase4-model-v1",
+            "model_sha256": "76d38a5a3d2e8afcdca101d33e934f0ce668a6dcdfebc0d76710db6e97373fc8",
+            "source_files": [
+              {
+                "path": "fixtures/synthetic-relay/scenario.json",
+                "sha256": "c5fe3f026cc4e0b28101a4c4f0cad93628f5e9c0b5d4564e9086d486becc69c5"
+              },
+              {
+                "path": "fixtures/synthetic-relay/contacts.json",
+                "sha256": "b59b73e84b0ddae8e062ed7f97f3b31519b06c9ec1ee4eb1bb4600bd73d348d1"
+              }
+            ]
+          },
+          "limiting_bound": {
+            "available_bits": 76800000,
+            "kind": "direct_contact_capacity_upper_bound",
+            "required_bits": 134217728
+          },
+          "policy": "deadline_then_fewer_relay_hops_then_earlier_arrival_then_lower_lander_radio_energy",
+          "scheduler_options": {
+            "bin_s": 30,
+            "chunk_bytes": 16777216,
+            "time_limit_s": 5
+          },
+          "software": {
+            "source_sha256": {
+              "__init__.py": "96d6e2a93ea819922fa6f4568fc4ee934e1c31875ca9cbbbf50b9bb7c95b4904",
+              "__main__.py": "39ae267db2f9b403f700177be6b51bbef7b6cade97c433dd46209785e7d23ff9",
+              "api/__init__.py": "47138a01dcf04aefb8a9af1eb10a46e221c9be57e83c86d910f160ae17db2d6c",
+              "api/app.py": "64704f42381016b1e501dbb834b45c2fc9a57fc19b7734ca7edcd909ea177359",
+              "api/moon.py": "35f16feb66415e306387136d9e83995fafd93279329c202d266ecc11702e3942",
+              "datasets.py": "ce0a2647afb097e3194f37603be5a5e7670d9efaf29079c3094c5dc4e564e576",
+              "diagnostics.py": "ad0370f0664233e86cdbb7d321f053fb653b04d7d8dd72241359069a9f38f731",
+              "docs/phase-5/inspect-mesh.py": "e65359a95c9ceda23e1c58f75d8b88ab370d5ee70321c64329c71696a5a6664b",
+              "docs/phase-5/reproduction/build_certificate.py": "565a92fb48931ffee1d52f2db5de160c8244dc3fe768f1f0c052a922df5987ac",
+              "docs/phase-5/reproduction/fit_conversion.py": "3bcfc9230d11cf72fbc21c9b23474c39f4dba2b14cfbb1ca6570425f9ca317bf",
+              "docs/phase-5/reproduction/select_landmarks.py": "15521b83418ddd844786570bc9d61ea28334f9c8a856e92f0f418f4371de9992",
+              "docs/phase-6/reproduce-demo.py": "c1ec13c735bd904cf43ab63cd9e0a4457973c3a03af763a98ce9568cff9136fd",
+              "engine.py": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b",
+              "environment.py": "7c925e6568e73553bf572e6e802956ac40cb81dd09cce0c9b52a51285e46e1f8",
+              "exports/__init__.py": "65252c0229af6f4bfaccd1a0ec79fd04f6f37016eaed9e2ec7f9cb8dd0bc2e5c",
+              "exports/display.py": "6822040a51d43827569fe61e5fbda9a3f9fe64aa3f5b0fd398859b46ef46cb09",
+              "geometry/__init__.py": "55d86096dfe120711dd9cad27cebf235d1d0f8c8e2817712f3c94180a432ae9c",
+              "geometry/registration.py": "61f17b250acb25d6bfc4e7150935dfb06f27deec0ab82f8391124ae1134616bd",
+              "geometry/registration_calibration.py": "07e9db63f3fd614260d08253aca916481b691a1303d5c77de00e5e72e758a602",
+              "geometry/registration_landmarks.py": "8916b3517adb3cdcc0ae46da25840cd92d128ce670253ab5575d519e8692cfc2",
+              "geometry/registration_measurements.py": "e86d773b324068b21c61d17e162af7b1850e4242181d1547b5c78bc87d31aa9b",
+              "geometry/renderer_mesh.py": "e65c4256ea16ce95d2dd54f09203c05061e99175b03bc082fbcc9fad813ebd31",
+              "geometry/spice.py": "5de1c0e8e1310e7847d2b3c7f9ed7aaa414ec5083d2d901ba4e24f64e8414f37",
+              "geometry/surface.py": "d9bd0800e289474852934325e1a2aec48cb99676492ff2d13526690cbac19037",
+              "geometry/trajectories.py": "76a051182c8ab45f329362923b13a059a19430e7589f08c15528b6a5e5331510",
+              "geometry_verification.py": "c79445b5e360ce85a053dfcfd693ecd5026f8d5d550c23cd2e5bbd0d95b19989",
+              "illumination/__init__.py": "02569a13cf81c48e5db583655ef8eca7b6a3c9170b6f6abd459ff9fe18685077",
+              "links/__init__.py": "d3704bdd5242ce44ae3241d3b2aa9dc85b85f4b438a1c963252d61a2c9811c00",
+              "links/budget.py": "3d76d1e91028b393d4ce0ec82f3ba76df93693435061db965762c20d57bda772",
+              "links/contacts.py": "acc8c377ac353ff9e0aaf3bf2c7469c9619f94b16345cccf4ccb5129bdf85b20",
+              "power/__init__.py": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd",
+              "preparation.py": "a004acfacfcaee50bc0bb92b723929b02462eba0c0ec17d74c979fe69d386b47",
+              "schedule/__init__.py": "11670e0971df3feb33c6b2122b1a29c9c520ae295ba22066247bc8466c5df1c4",
+              "schedule/optimizer.py": "0a90c73a9f480d9258515cda574eb236618d1a947731adf1e2de6330cdcd1eae",
+              "schedule/replay.py": "80ac535fde189ab9e7543f825ed0c448feebef30b8e3c5b7c4fe16f399148851",
+              "terrain/__init__.py": "0aabc1c1ffc7a8a1b6ceb8357947a948b77018b869ce60d6fcb3ccc0cb89e4b6",
+              "terrain/dem.py": "63fb2f7fac0550df16a5ad9473e8ea613be23832786d30d1e294f3b6428fe52c",
+              "terrain/horizons.py": "e0e6da75cc603ab3f6c298285212c5600d927c666079777e2fcb20d15b5e5b69",
+              "time/__init__.py": "a2813dcca3bc8cd233264b9464f355c0943fd915f4131f9dbd4b6527ff6c0c4e",
+              "time/spice.py": "683fa6ccf1087f3a3606f946065737c419faa228058c9ebec4d4a6f24ce078f2",
+              "validation.py": "9dc4d4e82ef614f937d415e843c630ae6f00a91389bedd7204885ea18dcea898",
+              "verification/__init__.py": "e589bd42be2e5f6ee0da906c1eb3b3ce0a9e2c59a315c594c80b07052127769f",
+              "verification/exports.py": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1",
+              "verification/sensitivity.py": "6d4e1e849e7ef2e5d7e8302bd186f2a81f06083356ec6da2d3f04e3efef3d4c3"
+            },
+            "versions": {
+              "fastapi": "0.163.0",
+              "numpy": "2.5.4",
+              "pulp": "3.3.2",
+              "soma": "0.1.0",
+              "uvicorn": "0.54.0"
+            }
+          },
+          "solver": {
+            "bin_s": 30,
+            "candidate_count": 0,
+            "chunk_bytes": 16777216,
+            "generation_bins": [
+              {
+                "end_utc": "2026-11-14T08:55:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:00:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T08:55:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:05:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:00:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:10:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:15:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:20:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:15:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:25:00Z",
+                "generation_w": 0.013361581913282782,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:20:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:30:00Z",
+                "generation_w": 0.11104948365307496,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:25:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:35:00Z",
+                "generation_w": 0.32602175122086147,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:30:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:40:00Z",
+                "generation_w": 0.6662943039599064,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:35:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:45:00Z",
+                "generation_w": 1.110487259158313,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:40:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:50:00Z",
+                "generation_w": 1.6336575032004812,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:45:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:55:00Z",
+                "generation_w": 2.1262399063873474,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:50:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T10:00:00Z",
+                "generation_w": 2.4323519646309784,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:55:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T10:05:00Z",
+                "generation_w": 2.7363808449988642,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T10:00:00Z"
+              }
+            ]
+          }
+        },
+        "final_byte_arrival_utc": null,
+        "format_version": "0.4.0",
+        "lander_communications_energy_wh": null,
+        "limiting_reason": "Direct contacts after data readiness and before the receiver deadline provide at most 76,800,000 payload bits for a 134,217,728-bit file; the complete file cannot fit in the declared network.",
+        "mean_relay_wait_s": null,
+        "minimum_margin_above_reserve_wh": null,
+        "minimum_stored_energy_wh": null,
+        "model_fidelity": "assumed_rate_simulation",
+        "replay": null,
+        "route_family": null,
+        "route_nodes": null,
+        "scenario_id": "phase6-direct-later",
+        "scenario_sha256": "82c1ebd6d945cf766fa1f871d518b76d3c52f53a617600d063cb51ca15590fb4",
+        "solver_status": "proven_infeasible_discretized_model",
+        "status": "infeasible_in_model",
+        "warnings": [
+          "No complete dataset schedule satisfies the declared discrete route, capacity, storage, service, radio and energy constraints.",
+          "Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.",
+          "This result does not book service or certify navigation, relay operation or thermal survival.",
+          "Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage."
+        ]
+      }
+    },
+    {
+      "case_id": "relay-later",
+      "export_verification_passed": true,
+      "files": {
+        "run.json": "07d3bc067f37478523a97df39a75ad6ff73be73dafb4f4f2c6e1e42db3b588a5",
+        "run.zip": "3192db5877c863c6426eaa9ce9d338261138e05d3589cd280ab416d416639485",
+        "scenario.json": "aa8fffcf6789485ad6114638da4b1b12d373ff1ec36820aba48b16d488d787e6",
+        "verification.json": "d9b2b80cf2b7170b075d3574cf3ac61a9e76b3cb2402c2f59ed43ffc63c99391"
+      },
+      "scenario_sha256": "bfa8864f1f595a01af2144d0503b264ef62f01d59984fff892ca6c9ce7717998",
+      "summary": {
+        "artifact_type": "soma_run_summary",
+        "assumptions": [
+          "Rate method: assumed_net_rate",
+          "Pointing: ideal_pointing",
+          "Service: SYNTHETIC windows at both endpoints; no booked network service",
+          "Sky directions and skylines are invented Phase 3 inputs held at the fixed absolute horizon.",
+          "Contact geometry is declared synthetic interval-wide input, not a computed mission opportunity.",
+          "Rates are assumed net payload bits per second; light time is disabled only for the synthetic fixture.",
+          "Changing coordinates, heights, station geometry, trajectory or analysis extent requires new analysis inputs.",
+          "left_sample_piecewise_constant_assumption",
+          "Battery diagnostic includes base load only; no radio schedule was selected.",
+          "Fixed-panel center-ray projection times sampled uniform solar disk fraction.",
+          "Spherical opaque Earth eclipse mask combined with terrain on the same solar samples.",
+          "Contact event guard is explicitly zero for this diagnostic; not an operational margin.",
+          "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+          "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+          "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+          "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+          "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+          "Ground sink retains all received chunks with finite configured station storage.",
+          "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+          "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+          "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
+        ],
+        "delivered_bytes": 16777216,
+        "details": {
+          "analysis_provenance": {
+            "environment": {
+              "geometry": {
+                "kind": "synthetic_direction_fixture_not_trajectory"
+              },
+              "geometry_artifact_sha256": "de06c3a0358652ec14f5b9149de171a64bebbf95e6be0d5b753cc83e805ddaa4",
+              "geometry_digest_convention": "sha256_of_python_sorted_json_utf8_default_separators_not_scenario_JCS",
+              "input_class": "synthetic",
+              "terrain": [
+                {
+                  "id": "synthetic_uniform_skyline_input_v1",
+                  "sha256": "31db0afedf58f108085da7bac839b097fa3df114091075a07938a24e66c784f6"
+                }
+              ]
+            },
+            "model_id": "synthetic-phase4-model-v1",
+            "model_sha256": "76d38a5a3d2e8afcdca101d33e934f0ce668a6dcdfebc0d76710db6e97373fc8",
+            "source_files": [
+              {
+                "path": "fixtures/synthetic-relay/scenario.json",
+                "sha256": "c5fe3f026cc4e0b28101a4c4f0cad93628f5e9c0b5d4564e9086d486becc69c5"
+              },
+              {
+                "path": "fixtures/synthetic-relay/contacts.json",
+                "sha256": "b59b73e84b0ddae8e062ed7f97f3b31519b06c9ec1ee4eb1bb4600bd73d348d1"
+              }
+            ]
+          },
+          "policy": "deadline_then_fewer_relay_hops_then_earlier_arrival_then_lower_lander_radio_energy",
+          "scheduler_options": {
+            "bin_s": 30,
+            "chunk_bytes": 16777216,
+            "time_limit_s": 5
+          },
+          "software": {
+            "source_sha256": {
+              "__init__.py": "96d6e2a93ea819922fa6f4568fc4ee934e1c31875ca9cbbbf50b9bb7c95b4904",
+              "__main__.py": "39ae267db2f9b403f700177be6b51bbef7b6cade97c433dd46209785e7d23ff9",
+              "api/__init__.py": "47138a01dcf04aefb8a9af1eb10a46e221c9be57e83c86d910f160ae17db2d6c",
+              "api/app.py": "64704f42381016b1e501dbb834b45c2fc9a57fc19b7734ca7edcd909ea177359",
+              "api/moon.py": "35f16feb66415e306387136d9e83995fafd93279329c202d266ecc11702e3942",
+              "datasets.py": "ce0a2647afb097e3194f37603be5a5e7670d9efaf29079c3094c5dc4e564e576",
+              "diagnostics.py": "ad0370f0664233e86cdbb7d321f053fb653b04d7d8dd72241359069a9f38f731",
+              "docs/phase-5/inspect-mesh.py": "e65359a95c9ceda23e1c58f75d8b88ab370d5ee70321c64329c71696a5a6664b",
+              "docs/phase-5/reproduction/build_certificate.py": "565a92fb48931ffee1d52f2db5de160c8244dc3fe768f1f0c052a922df5987ac",
+              "docs/phase-5/reproduction/fit_conversion.py": "3bcfc9230d11cf72fbc21c9b23474c39f4dba2b14cfbb1ca6570425f9ca317bf",
+              "docs/phase-5/reproduction/select_landmarks.py": "15521b83418ddd844786570bc9d61ea28334f9c8a856e92f0f418f4371de9992",
+              "docs/phase-6/reproduce-demo.py": "c1ec13c735bd904cf43ab63cd9e0a4457973c3a03af763a98ce9568cff9136fd",
+              "engine.py": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b",
+              "environment.py": "7c925e6568e73553bf572e6e802956ac40cb81dd09cce0c9b52a51285e46e1f8",
+              "exports/__init__.py": "65252c0229af6f4bfaccd1a0ec79fd04f6f37016eaed9e2ec7f9cb8dd0bc2e5c",
+              "exports/display.py": "6822040a51d43827569fe61e5fbda9a3f9fe64aa3f5b0fd398859b46ef46cb09",
+              "geometry/__init__.py": "55d86096dfe120711dd9cad27cebf235d1d0f8c8e2817712f3c94180a432ae9c",
+              "geometry/registration.py": "61f17b250acb25d6bfc4e7150935dfb06f27deec0ab82f8391124ae1134616bd",
+              "geometry/registration_calibration.py": "07e9db63f3fd614260d08253aca916481b691a1303d5c77de00e5e72e758a602",
+              "geometry/registration_landmarks.py": "8916b3517adb3cdcc0ae46da25840cd92d128ce670253ab5575d519e8692cfc2",
+              "geometry/registration_measurements.py": "e86d773b324068b21c61d17e162af7b1850e4242181d1547b5c78bc87d31aa9b",
+              "geometry/renderer_mesh.py": "e65c4256ea16ce95d2dd54f09203c05061e99175b03bc082fbcc9fad813ebd31",
+              "geometry/spice.py": "5de1c0e8e1310e7847d2b3c7f9ed7aaa414ec5083d2d901ba4e24f64e8414f37",
+              "geometry/surface.py": "d9bd0800e289474852934325e1a2aec48cb99676492ff2d13526690cbac19037",
+              "geometry/trajectories.py": "76a051182c8ab45f329362923b13a059a19430e7589f08c15528b6a5e5331510",
+              "geometry_verification.py": "c79445b5e360ce85a053dfcfd693ecd5026f8d5d550c23cd2e5bbd0d95b19989",
+              "illumination/__init__.py": "02569a13cf81c48e5db583655ef8eca7b6a3c9170b6f6abd459ff9fe18685077",
+              "links/__init__.py": "d3704bdd5242ce44ae3241d3b2aa9dc85b85f4b438a1c963252d61a2c9811c00",
+              "links/budget.py": "3d76d1e91028b393d4ce0ec82f3ba76df93693435061db965762c20d57bda772",
+              "links/contacts.py": "acc8c377ac353ff9e0aaf3bf2c7469c9619f94b16345cccf4ccb5129bdf85b20",
+              "power/__init__.py": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd",
+              "preparation.py": "a004acfacfcaee50bc0bb92b723929b02462eba0c0ec17d74c979fe69d386b47",
+              "schedule/__init__.py": "11670e0971df3feb33c6b2122b1a29c9c520ae295ba22066247bc8466c5df1c4",
+              "schedule/optimizer.py": "0a90c73a9f480d9258515cda574eb236618d1a947731adf1e2de6330cdcd1eae",
+              "schedule/replay.py": "80ac535fde189ab9e7543f825ed0c448feebef30b8e3c5b7c4fe16f399148851",
+              "terrain/__init__.py": "0aabc1c1ffc7a8a1b6ceb8357947a948b77018b869ce60d6fcb3ccc0cb89e4b6",
+              "terrain/dem.py": "63fb2f7fac0550df16a5ad9473e8ea613be23832786d30d1e294f3b6428fe52c",
+              "terrain/horizons.py": "e0e6da75cc603ab3f6c298285212c5600d927c666079777e2fcb20d15b5e5b69",
+              "time/__init__.py": "a2813dcca3bc8cd233264b9464f355c0943fd915f4131f9dbd4b6527ff6c0c4e",
+              "time/spice.py": "683fa6ccf1087f3a3606f946065737c419faa228058c9ebec4d4a6f24ce078f2",
+              "validation.py": "9dc4d4e82ef614f937d415e843c630ae6f00a91389bedd7204885ea18dcea898",
+              "verification/__init__.py": "e589bd42be2e5f6ee0da906c1eb3b3ce0a9e2c59a315c594c80b07052127769f",
+              "verification/exports.py": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1",
+              "verification/sensitivity.py": "6d4e1e849e7ef2e5d7e8302bd186f2a81f06083356ec6da2d3f04e3efef3d4c3"
+            },
+            "versions": {
+              "fastapi": "0.163.0",
+              "numpy": "2.5.4",
+              "pulp": "3.3.2",
+              "soma": "0.1.0",
+              "uvicorn": "0.54.0"
+            }
+          },
+          "solver": {
+            "bin_s": 30,
+            "candidate_count": 14,
+            "chunk_bytes": 16777216,
+            "energy_intervals": [
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 79.53703703703704,
+                "end_utc": "2026-11-14T08:55:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 80.0,
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 79.07407407407408,
+                "end_utc": "2026-11-14T09:00:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 79.53703703703704,
+                "start_utc": "2026-11-14T08:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 78.61111111111111,
+                "end_utc": "2026-11-14T09:05:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 79.07407407407408,
+                "start_utc": "2026-11-14T09:00:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 78.28703703703704,
+                "end_utc": "2026-11-14T09:08:30Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 78.61111111111111,
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_energy_wh": 77.5925925925926,
+                "end_utc": "2026-11-14T09:10:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 78.28703703703704,
+                "start_utc": "2026-11-14T09:08:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 77.12962962962963,
+                "end_utc": "2026-11-14T09:15:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 77.5925925925926,
+                "start_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 76.66666666666667,
+                "end_utc": "2026-11-14T09:20:00Z",
+                "generation_w": 0.0,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 77.12962962962963,
+                "start_utc": "2026-11-14T09:15:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.986638418086717,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 76.20494088721419,
+                "end_utc": "2026-11-14T09:25:00Z",
+                "generation_w": 0.013361581913282782,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 76.66666666666667,
+                "start_utc": "2026-11-14T09:20:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.888950516346925,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 75.75226028384874,
+                "end_utc": "2026-11-14T09:30:00Z",
+                "generation_w": 0.11104948365307496,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 76.20494088721419,
+                "start_utc": "2026-11-14T09:25:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.673978248779139,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 75.31948452007289,
+                "end_utc": "2026-11-14T09:35:00Z",
+                "generation_w": 0.32602175122086147,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 75.75226028384874,
+                "start_utc": "2026-11-14T09:30:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 4.333705696040093,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 74.91821547414325,
+                "end_utc": "2026-11-14T09:40:00Z",
+                "generation_w": 0.6662943039599064,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 75.31948452007289,
+                "start_utc": "2026-11-14T09:35:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 3.889512740841687,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 74.5580754055468,
+                "end_utc": "2026-11-14T09:45:00Z",
+                "generation_w": 1.110487259158313,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 74.91821547414325,
+                "start_utc": "2026-11-14T09:40:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 3.366342496799519,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 74.24637702621351,
+                "end_utc": "2026-11-14T09:50:00Z",
+                "generation_w": 1.6336575032004812,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 74.5580754055468,
+                "start_utc": "2026-11-14T09:45:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 2.8737600936126526,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 73.98028812865678,
+                "end_utc": "2026-11-14T09:55:00Z",
+                "generation_w": 2.1262399063873474,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 74.24637702621351,
+                "start_utc": "2026-11-14T09:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 2.5676480353690216,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 73.74254294019669,
+                "end_utc": "2026-11-14T10:00:00Z",
+                "generation_w": 2.4323519646309784,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 73.98028812865678,
+                "start_utc": "2026-11-14T09:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "charge_bus_w_definition": "bin_average_after_capacity_curtailment",
+                "discharge_bus_w": 2.2636191550011358,
+                "electrical_load_w": 5.0,
+                "end_energy_wh": 73.53294857399288,
+                "end_utc": "2026-11-14T10:05:00Z",
+                "generation_w": 2.7363808449988642,
+                "spilled_bus_energy_wh": 0.0,
+                "start_energy_wh": 73.74254294019669,
+                "start_utc": "2026-11-14T10:00:00Z"
+              }
+            ],
+            "generation_bins": [
+              {
+                "end_utc": "2026-11-14T08:55:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:00:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T08:55:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:05:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:00:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:10:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:15:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:20:00Z",
+                "generation_w": 0.0,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:15:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:25:00Z",
+                "generation_w": 0.013361581913282782,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:20:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:30:00Z",
+                "generation_w": 0.11104948365307496,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:25:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:35:00Z",
+                "generation_w": 0.32602175122086147,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:30:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:40:00Z",
+                "generation_w": 0.6662943039599064,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:35:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:45:00Z",
+                "generation_w": 1.110487259158313,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:40:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:50:00Z",
+                "generation_w": 1.6336575032004812,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:45:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T09:55:00Z",
+                "generation_w": 2.1262399063873474,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:50:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T10:00:00Z",
+                "generation_w": 2.4323519646309784,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T09:55:00Z"
+              },
+              {
+                "end_utc": "2026-11-14T10:05:00Z",
+                "generation_w": 2.7363808449988642,
+                "power_model": "piecewise_constant",
+                "start_utc": "2026-11-14T10:00:00Z"
+              }
+            ],
+            "milp_energy_intervals": [
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:50:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:51:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:50:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:51:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:51:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:52:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:51:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:52:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:52:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:53:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:52:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:53:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:53:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:54:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:53:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:54:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:54:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:55:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:54:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:55:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:56:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:55:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:56:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:56:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:57:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:56:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:57:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:57:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:58:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:57:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:58:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:58:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:59:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:58:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T08:59:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:59:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:00:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T08:59:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:00:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:00:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:01:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:00:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:01:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:01:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:02:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:01:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:02:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:02:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:03:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:02:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:03:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:03:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:04:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:03:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:04:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:04:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:05:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:04:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:05:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:06:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:05:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:06:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:06:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:07:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:06:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:07:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:07:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:08:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:07:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:08:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:08:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T09:09:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:08:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T09:09:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:09:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 25.0,
+                "electrical_load_w": 25.0,
+                "end_utc": "2026-11-14T09:10:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:09:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:10:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:11:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:10:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:11:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:11:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:12:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:11:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:12:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:12:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:13:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:12:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:13:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:13:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:14:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:13:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:14:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:14:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:15:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:14:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:15:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:15:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:16:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:15:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:16:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:16:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:17:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:16:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:17:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:17:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:18:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:17:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:18:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:18:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:19:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:18:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:19:30Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:19:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 5.0,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:20:00Z",
+                "generation_w": 0.0,
+                "start_utc": "2026-11-14T09:19:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:20:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:20:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:21:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:20:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:21:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:21:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:22:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:21:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:22:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:22:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:23:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:22:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:23:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:23:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:24:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:23:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:24:30Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:24:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.9866384,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:25:00Z",
+                "generation_w": 0.013361581913282782,
+                "start_utc": "2026-11-14T09:24:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:25:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:25:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:26:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:25:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:26:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:26:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:27:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:26:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:27:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:27:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:28:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:27:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:28:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:28:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:29:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:28:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:29:30Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:29:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.8889505,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:30:00Z",
+                "generation_w": 0.11104948365307496,
+                "start_utc": "2026-11-14T09:29:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:30:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:30:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:31:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:30:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:31:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:31:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:32:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:31:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:32:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:32:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:33:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:32:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:33:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:33:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:34:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:33:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:34:30Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:34:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.6739782,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:35:00Z",
+                "generation_w": 0.32602175122086147,
+                "start_utc": "2026-11-14T09:34:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:35:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:35:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:36:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:35:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:36:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:36:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:37:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:36:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:37:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:37:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:38:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:37:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:38:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:38:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:39:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:38:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:39:30Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:39:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 4.3337057,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:40:00Z",
+                "generation_w": 0.6662943039599064,
+                "start_utc": "2026-11-14T09:39:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:40:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:40:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:41:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:40:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:41:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:41:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:42:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:41:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:42:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:42:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:43:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:42:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:43:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:43:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:44:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:43:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:44:30Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:44:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.8895127,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:45:00Z",
+                "generation_w": 1.110487259158313,
+                "start_utc": "2026-11-14T09:44:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:45:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:45:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:46:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:45:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:46:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:46:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:47:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:46:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:47:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:47:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:48:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:47:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:48:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:48:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:49:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:48:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:49:30Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:49:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 3.3663425,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:50:00Z",
+                "generation_w": 1.6336575032004812,
+                "start_utc": "2026-11-14T09:49:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:50:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:50:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:51:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:50:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:51:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:51:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:52:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:51:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:52:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:52:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:53:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:52:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:53:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:53:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:54:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:53:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:54:30Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:54:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.8737601,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:55:00Z",
+                "generation_w": 2.1262399063873474,
+                "start_utc": "2026-11-14T09:54:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:55:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:55:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:56:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:55:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:56:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:56:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:57:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:56:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:57:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:57:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:58:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:57:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:58:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:58:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:59:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:58:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T09:59:30Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:59:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.567648,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:00:00Z",
+                "generation_w": 2.4323519646309784,
+                "start_utc": "2026-11-14T09:59:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:00:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:00:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:01:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:00:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:01:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:01:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:02:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:01:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:02:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:02:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:03:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:02:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:03:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:03:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:04:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:03:30Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:04:30Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:04:00Z"
+              },
+              {
+                "charge_bus_w": 0.0,
+                "curtailed_bus_w": 0.0,
+                "discharge_bus_w": 2.2636192,
+                "electrical_load_w": 5.0,
+                "end_utc": "2026-11-14T10:05:00Z",
+                "generation_w": 2.7363808449988642,
+                "start_utc": "2026-11-14T10:04:30Z"
+              }
+            ]
+          }
+        },
+        "final_byte_arrival_utc": "2026-11-14T10:00:30Z",
+        "format_version": "0.4.0",
+        "lander_communications_energy_wh": 0.5,
+        "limiting_reason": "The complete dataset schedule passed independent byte, timing, resource and energy replay under the declared assumptions.",
+        "mean_relay_wait_s": 3000.0,
+        "minimum_margin_above_reserve_wh": 63.53294857399288,
+        "minimum_stored_energy_wh": 73.53294857399288,
+        "model_fidelity": "assumed_rate_simulation",
+        "replay": {
+          "buffer_history": [
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-lander",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T09:05:00Z",
+              "node_id": "synthetic-lander",
+              "stored_bytes": 16777216
+            },
+            {
+              "epoch_utc": "2026-11-14T09:10:00Z",
+              "node_id": "synthetic-lander",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-lander",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-lunar-relay",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T09:08:30Z",
+              "node_id": "synthetic-lunar-relay",
+              "stored_bytes": 16777216
+            },
+            {
+              "epoch_utc": "2026-11-14T10:00:30Z",
+              "node_id": "synthetic-lunar-relay",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-lunar-relay",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-earth-station",
+              "stored_bytes": 0
+            },
+            {
+              "epoch_utc": "2026-11-14T10:00:00Z",
+              "node_id": "synthetic-earth-station",
+              "stored_bytes": 16777216
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-earth-station",
+              "stored_bytes": 16777216
+            }
+          ],
+          "delivered_bytes": 16777216,
+          "details": {
+            "algorithm": "independent_whole_chunk_replay_v1",
+            "availability_policy": "declared availability may conservatively delay physical availability",
+            "buffer_conservatism": "reserve incoming whole chunk at first arrival; release at transmit end",
+            "external_power": "relay and station power follows explicit profile assumptions",
+            "setup_power_assumption": "acquisition and teardown draw the respective TX/RX electrical watts"
+          },
+          "energy_history": [
+            {
+              "epoch_utc": "2026-11-14T08:50:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 80
+            },
+            {
+              "epoch_utc": "2026-11-14T08:55:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 79.53703703703704
+            },
+            {
+              "epoch_utc": "2026-11-14T09:00:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 79.07407407407408
+            },
+            {
+              "epoch_utc": "2026-11-14T09:05:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 78.61111111111111
+            },
+            {
+              "epoch_utc": "2026-11-14T09:08:30Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 78.28703703703704
+            },
+            {
+              "epoch_utc": "2026-11-14T09:10:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 77.5925925925926
+            },
+            {
+              "epoch_utc": "2026-11-14T09:15:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 77.12962962962963
+            },
+            {
+              "epoch_utc": "2026-11-14T09:20:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 76.66666666666667
+            },
+            {
+              "epoch_utc": "2026-11-14T09:25:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 76.20494088721419
+            },
+            {
+              "epoch_utc": "2026-11-14T09:30:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 75.75226028384874
+            },
+            {
+              "epoch_utc": "2026-11-14T09:35:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 75.31948452007289
+            },
+            {
+              "epoch_utc": "2026-11-14T09:40:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 74.91821547414325
+            },
+            {
+              "epoch_utc": "2026-11-14T09:45:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 74.5580754055468
+            },
+            {
+              "epoch_utc": "2026-11-14T09:50:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 74.24637702621351
+            },
+            {
+              "epoch_utc": "2026-11-14T09:55:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 73.98028812865678
+            },
+            {
+              "epoch_utc": "2026-11-14T10:00:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 73.74254294019669
+            },
+            {
+              "epoch_utc": "2026-11-14T10:05:00Z",
+              "node_id": "synthetic-lander",
+              "stored_energy_wh": 73.53294857399288
+            }
+          ],
+          "errors": [],
+          "final_byte_arrival_utc": "2026-11-14T10:00:30Z",
+          "passed": true,
+          "storage_intervals": [
+            {
+              "byte_length": 16777216,
+              "chunk_id": "chunk-0",
+              "interval": {
+                "end_utc": "2026-11-14T09:10:00Z",
+                "start_utc": "2026-11-14T09:05:00Z"
+              },
+              "node_id": "synthetic-lander"
+            },
+            {
+              "byte_length": 16777216,
+              "chunk_id": "chunk-0",
+              "interval": {
+                "end_utc": "2026-11-14T10:00:30Z",
+                "start_utc": "2026-11-14T09:08:30Z"
+              },
+              "node_id": "synthetic-lunar-relay"
+            },
+            {
+              "byte_length": 16777216,
+              "chunk_id": "chunk-0",
+              "interval": {
+                "end_utc": "2026-11-14T10:05:00Z",
+                "start_utc": "2026-11-14T10:00:00Z"
+              },
+              "node_id": "synthetic-earth-station"
+            }
+          ]
+        },
+        "route_family": "single_lunar_relay",
+        "route_nodes": [
+          "synthetic-lander",
+          "synthetic-lunar-relay",
+          "synthetic-earth-station"
+        ],
+        "scenario_id": "phase6-relay-later",
+        "scenario_sha256": "bfa8864f1f595a01af2144d0503b264ef62f01d59984fff892ca6c9ce7717998",
+        "solver_status": "proven_optimum",
+        "status": "feasible_under_assumptions",
+        "warnings": [
+          "Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.",
+          "This result does not book service or certify navigation, relay operation or thermal survival.",
+          "Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage."
+        ]
+      }
+    }
+  ],
+  "changes": [
+    "later data-ready time within one operating day",
+    "enable the configured lunar relay family"
+  ],
+  "fixed_controls": [
+    "data volume",
+    "hardware profile",
+    "initial battery state",
+    "site",
+    "absolute deadline",
+    "analysis horizon",
+    "configured network profiles"
+  ],
+  "input_class": "synthetic",
+  "limitations": [
+    "This does not demonstrate a new site or operating-day ephemeris. Unsupported geometry remains unknown.",
+    "The configured relay has no trajectory. No spacecraft path is invented.",
+    "Thirty-second whole-chunk occupancy is conservative; exact transmission/receive/storage records are in each export."
+  ],
+  "version": "1.0.0"
+}
