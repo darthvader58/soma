@@ -511,7 +511,7 @@
     },
     {
       "path": "soma/engine.py",
-      "sha256": "e265faa6c7583f02cf811826dc0baac0e83b80e7e5e4ca671033d407908728c5"
+      "sha256": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b"
     },
     {
       "path": "soma/environment.py",
@@ -647,7 +647,7 @@
     },
     {
       "path": "tests/engine/test_engine.py",
-      "sha256": "0ba9e0a849f6657f5eef3a48fbddbfc937af8c130d62fd64cc0ebdb30717546d"
+      "sha256": "ec6dde1e9c5bfcff618667619180c60613077371c9c5eaaea624d130c3be341e"
     },
     {
       "path": "tests/engine/test_environment.py",

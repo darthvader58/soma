@@ -33,6 +33,8 @@ def test_small_direct_delivery_passes_replay_and_preserves_assumptions():
     assert all(a['contact_id'].startswith('synthetic-direct') for a in run['result']['allocations'])
     assert 'synthetic' in ' '.join(run['result']['assumptions'] + run['result']['warnings']).lower()
     assert 'assumed' in ' '.join(run['result']['assumptions']).lower()
+    assert not any('unresolved Phase 5 gate' in warning for warning in run['result']['warnings'])
+    assert any('versioned renderer registration' in warning for warning in run['result']['warnings'])
 
 
 @pytest.mark.parametrize('change', ['site', 'horizon'])
@@ -60,6 +62,32 @@ def test_solver_timeout_and_incomplete_coverage_cannot_prove_infeasibility():
     run = plan_run(scenario, analysis_inputs=inputs)
     assert run['result']['status'] == 'unknown'
     assert run['validation'] is None
+
+
+def test_later_data_readiness_explains_the_effective_direct_capacity():
+    scenario = load_scenario('fixtures/synthetic-direct/scenario.json')
+    scenario['data_volume'] = {'value':16, 'unit':'MiB'}
+    scenario['data_ready_utc'] = '2026-11-14T09:05:00Z'
+    run = plan_run(scenario, options={'bin_s':30, 'time_limit_s':5})
+    assert run['result']['status'] == 'infeasible_in_model'
+    assert run['details']['limiting_bound']['available_bits'] == 76800000
+    assert run['details']['limiting_bound']['required_bits'] == 134217728
+    assert 'after data readiness' in run['result']['provenance']['reason']
+
+
+def test_direct_capacity_bound_counts_receiver_delay_and_rounds_optimistically():
+    from soma.engine import _direct_capacity_upper_bound
+    scenario = load_scenario('fixtures/synthetic-direct/scenario.json')
+    scenario['data_ready_utc'] = '2026-11-14T10:04:00Z'
+    contact = {
+        'sender':scenario['lander']['id'], 'receiver':scenario['station_refs'][0],
+        'source_transmit_window':{'start_utc':'2026-11-14T10:00:00Z','end_utc':'2026-11-14T10:05:00Z'},
+        'payload_rate_bps':1.1, 'available_capacity_bits':100,
+        'one_way_delay':{'seconds':1.5},
+    }
+    assert _direct_capacity_upper_bound(scenario,[contact]) == 65
+    contact['one_way_delay']['seconds'] = 61
+    assert _direct_capacity_upper_bound(scenario,[contact]) == 0
 
 
 def test_corrupted_optimizer_candidate_is_not_released(monkeypatch):
