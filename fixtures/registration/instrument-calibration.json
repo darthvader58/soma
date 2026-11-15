@@ -1,0 +1,332 @@
+{
+  "artifact_type": "soma_renderer_instrument_calibration",
+  "format_version": "0.1.0",
+  "status": "completed",
+  "failure_category": null,
+  "registration_status": "not_evaluated",
+  "asset_id": null,
+  "provenance": {
+    "request_sha256": "bfa1280117ba0f79e9ce5cc732038f5a0baa357f87903beab360a6101c2e3d9e",
+    "planes_sha256": "3d09e11f3a98d3e39feaa072f90334a10191a61b01d704245aa032abd84585ea",
+    "diagnostic_source_sha256": "67e406fbef07629b864fa70c3f675bfdf09436031a6fe1cd1f0cc6d978cd3c78",
+    "transformed_diagnostic_source_sha256": "84c7bbe4858012ce18de94649af31ae346a40f7900e28540389d8771fd62f160"
+  },
+  "interception": {
+    "module_requests": 1,
+    "factory_matches": 1,
+    "token_matches": 1,
+    "runtime_marker": true,
+    "blocked_requests": 0,
+    "blocked_asset_requests": 0,
+    "blocked_request_details": []
+  },
+  "page_errors": 0,
+  "console_errors": 0,
+  "synthetic_geometry": {
+    "artifact_type": "synthetic_calibration_planes",
+    "format_version": "0.1.0",
+    "origin": "MOON",
+    "source_frame": "MOON_ME_DE421",
+    "position_unit": "m",
+    "reference_radius_m": 1737400,
+    "expected_height_m": -1000,
+    "half_width_m": 1000,
+    "positions": [
+      152333.4264051253,
+      -1000,
+      -1729705.3180237592,
+      150341.0370089418,
+      -1000,
+      -1729879.6295092546,
+      150341.0370089418,
+      1000,
+      -1729879.6295092546,
+      152333.4264051253,
+      1000,
+      -1729705.3180237592,
+      -999.9999999999907,
+      150341.0370089418,
+      -1729879.6295092546,
+      -999.9999999999907,
+      152333.4264051253,
+      -1729705.3180237592,
+      1000.0000000000093,
+      152333.4264051253,
+      -1729705.3180237592,
+      1000.0000000000093,
+      150341.0370089418,
+      -1729879.6295092546,
+      -150318.11901369313,
+      1641.200033683456,
+      -1729881.1316268626,
+      -152310.51071475295,
+      1641.200033683456,
+      -1729706.8464882309,
+      -152310.24561355944,
+      3641.1977200055217,
+      -1729703.8159061512,
+      -150317.85391249962,
+      3641.1977200055217,
+      -1729878.101044783,
+      -999.9999999999907,
+      -152333.4264051253,
+      -1729705.3180237592,
+      -999.9999999999907,
+      -150341.0370089418,
+      -1729879.6295092546,
+      1000.0000000000093,
+      -150341.0370089418,
+      -1729879.6295092546,
+      1000.0000000000093,
+      -152333.4264051253,
+      -1729705.3180237592
+    ],
+    "indices": [
+      0,
+      1,
+      2,
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      12,
+      14,
+      15
+    ],
+    "centers": [
+      {
+        "id": "polar-0-2-2",
+        "expected_position_m": [
+          151337.23170703356,
+          0,
+          -1729792.4737665069
+        ]
+      },
+      {
+        "id": "polar-1-2-2",
+        "expected_position_m": [
+          9.266732820092e-12,
+          151337.23170703356,
+          -1729792.4737665069
+        ]
+      },
+      {
+        "id": "polar-2-2-2",
+        "expected_position_m": [
+          -151314.18231362628,
+          2641.198876844489,
+          -1729792.4737665069
+        ]
+      },
+      {
+        "id": "polar-3-2-2",
+        "expected_position_m": [
+          9.266732820092e-12,
+          -151337.23170703356,
+          -1729792.4737665069
+        ]
+      }
+    ],
+    "input_class": "synthetic",
+    "registration_passed": false
+  },
+  "measurement": {
+    "artifact_type": "soma_synthetic_calibration_measurement",
+    "format_version": "0.1.0",
+    "request_id": "lola64-polar-four-centers-precheck-v1",
+    "source_frame": "MOON_ME_DE421",
+    "candidate_bridge": "identity_for_measurement_only",
+    "request": {
+      "format_version": "0.1.0",
+      "request_id": "lola64-polar-four-centers-precheck-v1",
+      "source_frame": "MOON_ME_DE421",
+      "candidate_bridge": "identity_for_measurement_only",
+      "purpose": "Raw mesh sampling; identity unvalidated, no mission or registration success",
+      "probes": [
+        {
+          "id": "polar-0-2-2",
+          "position_m": [
+            151424.38744978124,
+            0,
+            -1730788.6684645987
+          ]
+        },
+        {
+          "id": "polar-1-2-2",
+          "position_m": [
+            9.272069570161162e-12,
+            151424.38744978124,
+            -1730788.6684645987
+          ]
+        },
+        {
+          "id": "polar-2-2-2",
+          "position_m": [
+            -151401.32478213217,
+            2642.719954290264,
+            -1730788.6684645987
+          ]
+        },
+        {
+          "id": "polar-3-2-2",
+          "position_m": [
+            9.272069570161162e-12,
+            -151424.38744978124,
+            -1730788.6684645987
+          ]
+        }
+      ],
+      "source_manifest_ref": "data/lola-far-phase2.manifest.json",
+      "source_manifest_sha256": "f1bd2475133b01d07f41ddac7be7be3f696fe9d73dce0b019e6ed209ef6e7f68"
+    },
+    "started_utc": "2026-11-15T18:26:03.924Z",
+    "status": "completed",
+    "asset_id": null,
+    "cesium_version": "1.147.0",
+    "ellipsoid_radii_m": [
+      1737400,
+      1737400,
+      1737400
+    ],
+    "tileset_model_matrix_column_major": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "root_transform_column_major": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "root_computed_transform_column_major": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      1
+    ],
+    "query_width_m": 0.1,
+    "batch_size": 32,
+    "budget_ms": 120000,
+    "vertical_exaggeration": 1,
+    "clamp_to_height_supported": true,
+    "tile_failure_count": 0,
+    "registration_status": "not_evaluated",
+    "warnings": [
+      "Synthetic planar geometry tests the renderer instrument only; no Moon asset or frame registration was evaluated."
+    ],
+    "probes": [
+      {
+        "id": "polar-0-2-2",
+        "input_position_m": [
+          151424.38744978124,
+          0,
+          -1730788.6684645987
+        ],
+        "renderer_position_m": [
+          151337.23233510822,
+          0,
+          -1729792.480945433
+        ],
+        "status": "measured"
+      },
+      {
+        "id": "polar-1-2-2",
+        "input_position_m": [
+          9.272069570161162e-12,
+          151424.38744978124,
+          -1730788.6684645987
+        ],
+        "renderer_position_m": [
+          9.26673285855048e-12,
+          151337.23233510822,
+          -1729792.480945433
+        ],
+        "status": "measured"
+      },
+      {
+        "id": "polar-2-2-2",
+        "input_position_m": [
+          -151401.32478213217,
+          2642.719954290264,
+          -1730788.6684645987
+        ],
+        "renderer_position_m": [
+          -151314.18294160522,
+          2641.1988878059024,
+          -1729792.480945433
+        ],
+        "status": "measured"
+      },
+      {
+        "id": "polar-3-2-2",
+        "input_position_m": [
+          9.272069570161162e-12,
+          -151424.38744978124,
+          -1730788.6684645987
+        ],
+        "renderer_position_m": [
+          9.26673285855048e-12,
+          -151337.23233510822,
+          -1729792.480945433
+        ],
+        "status": "measured"
+      }
+    ],
+    "logarithmic_depth_buffer": true,
+    "elapsed_ms": 716.5999999642372,
+    "finished_utc": "2026-11-15T18:26:04.640Z"
+  },
+  "warning": "Synthetic instrument diagnostic only; no Moon asset or registration approval."
+}
