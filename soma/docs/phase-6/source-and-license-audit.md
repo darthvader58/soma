@@ -12,21 +12,34 @@ kernel, DEM/geoid raster, b3dm/glb, or paper PDF payload. Source URLs, hashes,
 derived measurements and SOMA code are shipped; external binaries are locally
 acquired. This is distinct from the build, which copies Cesium runtime assets.
 
-**The ion-backed corrected map is not license-cleared by this audit.** The
+**The licensing review is complete for the declared localhost R&D scope.** This
+is a bounded source and notice review, not formal legal clearance or a grant of
+new rights. The
 [current ion terms](https://cesium.com/legal/terms-of-service/), read live with
-Aside, contain material conditions requiring resolution before public release:
+Aside, contain the following grants, conditions and unresolved interpretation:
+
+- Section 2.2(a–c) expressly grants application R&D and internal use, graphical
+  display internally and externally, and demonstrations to third parties,
+  subject to the account, plan, term and other conditions. Ordinary localhost
+  development is within the described R&D purpose; public operation of a
+  service is a separate question.
 
 - Section 2.2.2 allows client/proxy caches only as general caching mechanisms
   that also cache other internet traffic. The audit identified a dedicated
   converted-Moon LRU in the baseline. During Phase 6 it was removed; the final
   `RegisteredMoon.get` refetches content and responses are `private, no-store`.
   This resolves that dedicated-cache finding without claiming broader rights.
-- Section 2.2.4(iii) restricts reverse engineering. The inverse-ingestion
-  conversion in `soma/geometry/renderer_mesh.py` and corrected stream need a
-  documented applicable permission or a different display arrangement. This is
-  an unresolved permission boundary, not a conclusion that coordinate correction
-  of documented 3D Tiles is legally prohibited. A
-  token establishes technical access, not permission for this transformation.
+- Section 2.2.4(iii) restricts decoding, reverse assembly, reverse compilation,
+  reverse engineering, translation and reduction to human-perceivable form.
+  Section 1.10 includes content and Data Output within Licensed Services, so
+  this restriction cannot simply be dismissed as applying only to software.
+  Neither provision expressly classifies documented-format geometry processing
+  or the empirical inverse-ingestion conversion in
+  `soma/geometry/renderer_mesh.py`. This audit establishes neither that the
+  correction is definitely permitted nor that it is prohibited. The earlier
+  inference that absent transformation-specific permission necessarily creates
+  a vendor-approval gate for local Phase 6 engineering was unsupported. A token
+  supplies access, not independent legal clearance.
 - Section 2.2.3 requires prominent Cesium ion branding and preservation of
   proprietary notices. The copy script preserves software notices, the viewer
   retains its normal credit display, and `correct_tileset` deep-copies root
@@ -36,8 +49,12 @@ Aside, contain material conditions requiring resolution before public release:
   itself drop normal endpoint credit propagation. Phase 5 records actual logo
   and Data attribution; this audit did not requery the live remote credit panel.
 - Sections 2.1–2.2 and 2.2.1 tie use to the account/plan and restrict access and
-  services for third parties. Hosting rights and any organization-specific
-  agreement were not inspected. Do not infer them from the development token.
+  services for third parties. Section 2.2.6 requires communicating the conditions
+  to employees/contractors and makes the account holder responsible; it does not
+  prescribe a transformation approval process. Future public hosting or a
+  transformed stream offered to third parties needs its actual account/plan and
+  intended use reviewed. Those rights and any organization-specific agreement
+  remain unknown; do not infer them from the development token.
 
 [Appendix A](https://cesium.com/legal/cesium-global-3d-content-tos/) explicitly
 includes Cesium Moon as Global 3D Content. Its terms are separate from the
@@ -48,10 +65,36 @@ organization and publishing attributed renderings with an active account.
 Section 2.3 grants special Clip/Value-Added Clip rights; these fetched Moon
 tiles are not documented ion clipping-feature output. No express permission
 for this empirical ingestion-inversion transformation was established in
-these sources. The guide defers to the terms and any organization agreement;
-it does not establish a blanket ban on public applications. These gates do not invalidate browser-independent
-synthetic schedules or the offline text/results workflow. No contact with
+these sources, and neither was a specific prohibition established. The official
+[global content page](https://cesium.com/platform/cesium-ion/content/) describes
+planning, analysis, modeling and simulation using open standards in custom
+applications. The [Moon page](https://cesium.com/platform/cesium-ion/content/cesium-moon/)
+describes visualization, simulation and analytics, with a Moon-ellipsoid example.
+These support ordinary geometry consumption as intended usage; they do not
+conclusively classify SOMA's empirical correction. The guide defers to the terms
+and any organization agreement. Future deployment review is separate from local Phase 6 engineering and
+browser-independent
+synthetic schedules and the offline text/results workflow. No contact with
 Cesium or external publication was performed by this audit.
+
+## Phase 6 completion review
+
+The completion review uses merged baseline `29c67b7`. The applicable acceptance
+scope in AGENTS Phase 6 and plan Part 5 is the integrated service/interface
+verification: independent exported-schedule replay, exact display/result
+agreement, map-failure fallback, controlled comparisons and computed demo,
+sensitivity reporting, reproducibility, visible assumptions, and source/license
+and attribution checks. Plan source-register D12 calls for checking intended
+usage, account limits and current terms when the application is deployed; it
+does not require a public deployment or vendor correspondence to finish local
+validation. This audit completes the licensing-review portion for the declared
+localhost R&D scope, without deciding the remaining engineering checks on its own.
+
+No public hosting or Cesium vendor correspondence was requested or performed.
+Future hosting, transformed-stream distribution, commercial integration, offline
+bundling and changes in account/plan require review against their actual scope.
+Those future questions are not a mandatory permission gate for the current local
+Phase 6 completion. No binary redistribution rights are expanded by this review.
 
 ## Sources and rights actually inspected
 
@@ -141,9 +184,10 @@ initial local sandbox connection denial was retried with approval and succeeded.
 The guessed `.html` geoid notice did not exist; the actual `.txt` notice was
 then located and read. No tests were needed for this documentation-only audit.
 
-Open gates are the transformation permission boundary and deployment plan
-rights; the dedicated cache issue is fixed and credit propagation has static
-evidence. Accepted scientific limitations are
+The transformation's contractual classification and future deployment/account
+rights remain unresolved interpretations for a future deployment review, not
+blockers inferred for the declared local Phase 6 engineering scope. The dedicated
+cache issue is fixed and credit propagation has static evidence. Accepted scientific limitations are
 synthetic assumptions, missing real terrain/spacecraft states and incomplete
 physical site/date comparison. They must remain visible rather than being
 converted into favorable mission or complete-challenge claims.

@@ -1,17 +1,28 @@
 # Phase 6 integrated verification
 
-Phase 6 starts from merged commit `7c7033a` (PR #11). The integrated synthetic
-planner passes schedule replay, exact export/display checks, the controlled demo,
-sensitivity experiments and browser acceptance. The technical evidence does not
-establish a real lunar mission prediction or complete challenge fulfillment.
+Phase 6 is complete for the declared local integrated baseline, starting from
+merged PR #11 and reviewed again after PR #12 (`29c67b7`). Independent replay,
+exact export/display checks, the computed demo, sensitivity experiments, browser
+acceptance and source/attribution review pass. These results establish the
+planning model under its stated synthetic assumptions.
 
-Public release of the corrected ion-backed map remains conditional on clarifying
-its transformation permission and the applicable account/plan. The
-[source and license audit](source-and-license-audit.md) records the actual terms,
-notices and unresolved questions. The dedicated converted-tile cache found by
-that audit has been removed, and tile responses use `private, no-store`.
-Phase 7 has not started; the full Phase 6 release gate remains pending this
-external rights clarification. The scientific regional registration still passes.
+The completion check reads the actual archives, verifies evidence hashes,
+replays feasible schedules, checks unchanged comparison controls and verifies
+independent non-author review receipts. It does not accept a completion flag as
+proof. The reviewers are automated GPT-6.1 agents; no separate human usability
+study is claimed. See [independent reproduction](independent-review.md) and the
+[independent interface walkthrough](../../../web/docs/phase-6-independent-review.md).
+
+The license review covers the current localhost R&D use and records its terms,
+notices, attribution and interpretation limits. The earlier Phase 6 gate added
+a public-deployment approval requirement that the plan does not require. That
+scope error is corrected. Public hosting has not been requested or performed;
+its account, plan and transformed-content conditions remain separate future
+review items. No vendor approval or new redistribution right is claimed. See the
+[source and license audit](source-and-license-audit.md).
+
+The validated regional map bridge and all scientific calculations are unchanged.
+Phase 7's verification prerequisite is met; its optional features have not started.
 
 ## Start and verify
 
@@ -36,6 +47,7 @@ token in ignored `web/.env.local` is not copied into any tracked artifact.
 Current exact verification commands:
 
 ```sh
+.venv/bin/python -m soma.verification.completion
 .venv/bin/pytest tests/engine -q
 npm --prefix web test
 npm --prefix web run build
@@ -45,8 +57,8 @@ SOMA_FIXTURE_TEST_PORT=5176 npm --prefix web run test:browser
 
 `SOMA_BROWSER_EXECUTABLE` may select an installed compatible Chromium. The
 optional fixture-test port avoids disturbing an existing development server.
-The full engine run passes 363 tests without skips. Final web counts and artifact
-hashes are recorded in `data/phase6-evidence.manifest.json`. Pinned-library
+Current test counts and artifact hashes are recorded in
+`data/phase6-evidence.manifest.json`. Pinned-library
 PuLP, Skyfield and FastAPI/httpx deprecation warnings remain visible.
 
 ## Follow the computed demonstration
@@ -164,8 +176,8 @@ states, stale jobs, keyboard access, mobile layouts, enlarged text and map failu
 
 Source/notice review preserves Cesium attribution and build notices, keeps large
 kernels/DEM/geoid and tile binaries outside Git, and checks current primary terms.
-The ion coordinate-conversion permission and actual deployment plan are unresolved.
-The source audit also maps the reduced implementation against the actual Space
+Future public hosting needs its actual content use and account/plan reviewed;
+this completion check does not authorize deployment. The source audit also maps the reduced implementation against the actual Space
 Apps challenge; physical arbitrary-site/date planning remains a gap.
 
 No ground-time booking, flight DTN stack, relay certification, navigation accuracy,
