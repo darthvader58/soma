@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "0529b78db866022a1c0920d7a38c343d9a831329f25210a3812a20b6082ed406"
+      "sha256": "9ae6e02c406898e6be9dc718e7e463e87056ff10ea5bca5ea31a6d465927acde"
     },
     {
       "path": "data/README.md",
@@ -71,7 +71,7 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "e4e28bfa5b1fb2871d8f6d556da6b3fe1aa9b342cbde607a1ce9ba38cae0f274"
+      "sha256": "58e23772af21075c4a62db5f17addbdc33c79c04aeb334156afc1267a6a58d15"
     },
     {
       "path": "data/renderer-alignment-evidence.manifest.json",
@@ -191,7 +191,11 @@
     },
     {
       "path": "fixtures/phase-6/README.md",
-      "sha256": "0faa3a57b2d95eeafb0858bccf8143563b99d3ec30a973adb9ede85968022a3a"
+      "sha256": "47d85745e3816d46d37bf3b21907526d3b5fb9b2d38e2b22cb6a7fdc8b3e12be"
+    },
+    {
+      "path": "fixtures/phase-6/completion-report.json",
+      "sha256": "b78158dc76a8214feee57d88e6a4098f977fed73d578b5c01afaa878fcd3ba3f"
     },
     {
       "path": "fixtures/phase-6/demo/demonstration.json",
@@ -591,7 +595,7 @@
     },
     {
       "path": "soma/docs/phase-6/README.md",
-      "sha256": "fac10db13b8d854346406fb62c1ae075073f059dba8fc6030a68a8ce35f11abd"
+      "sha256": "6b81f19a2e97308080bee046f9dd8ba844eea31cc333ecd59d0ebe11ba97d87a"
     },
     {
       "path": "soma/docs/phase-6/independent-review.md",
@@ -603,11 +607,11 @@
     },
     {
       "path": "soma/docs/phase-6/source-and-license-audit.md",
-      "sha256": "c441821e62883be5b8da3c35b871e2f13ddf37134635572b1c43f19751cc72d4"
+      "sha256": "0382110b610ca5e72f28630aafa504e829a760e4f7bc24fcfe88e312af2a40cb"
     },
     {
       "path": "soma/docs/phase-6/ui-delivery-gate.md",
-      "sha256": "d5997ac98d05604f95265c757a3c77a02c44600aa56c3dade74aefbb0044a5cf"
+      "sha256": "0485422fca9bf039ea443166f21605f6dfc8996863572ff906ca64f798af1f25"
     },
     {
       "path": "soma/engine.py",
@@ -730,6 +734,10 @@
       "sha256": "e589bd42be2e5f6ee0da906c1eb3b3ce0a9e2c59a315c594c80b07052127769f"
     },
     {
+      "path": "soma/verification/completion.py",
+      "sha256": "2addfc827a7e52e52b5eb04f729904cb994bd6ac877a76e0fcf26a8640a54dd1"
+    },
+    {
       "path": "soma/verification/exports.py",
       "sha256": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1"
     },
@@ -808,6 +816,10 @@
     {
       "path": "tests/engine/test_phase2_integration.py",
       "sha256": "d21a919bd025aa8510246bf4c4d533a334c876cd5dd9dfb12cd622a4f957e56e"
+    },
+    {
+      "path": "tests/engine/test_phase6_completion.py",
+      "sha256": "e9de61111724e9a6d077c9981cc7aef7d0f1071856ac973954096041f3ca7cea"
     },
     {
       "path": "tests/engine/test_phase6_handoff.py",

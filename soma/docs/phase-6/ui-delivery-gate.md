@@ -4,7 +4,7 @@ Owner review covers the bounded readiness-label and validation-error changes.
 Direction remains the established E1/R1/M1 visual draft. The owner ran 73 Node,
 23 browser checks and the build, followed the live demo in Aside, inspected the
 unsupported-day screenshot and independently reproduced the downloaded ZIP.
-Public corrected-map usage permission is a separate unresolved release condition.
+Future public hosting and its content/account conditions are outside the completed local Phase 6 scope.
 
 | Rule | Status | Evidence |
 | --- | --- | --- |

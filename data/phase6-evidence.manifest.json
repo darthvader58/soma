@@ -1,16 +1,16 @@
 {
-  "version": "0.6.0",
-  "baseline_commit": "7c7033a",
+  "version": "0.6.1",
+  "baseline_commit": "29c67b7",
   "purpose": "Integrated replay, display, controlled comparison, export reproduction and sensitivity verification after merged Phase5",
   "input_class": "synthetic",
   "technical_verification_passed": true,
-  "phase_6_release_status": "pending_corrected_ion_stream_permission_clarification",
+  "phase_6_release_status": "complete_for_declared_local_scope",
   "phase_7_started": false,
-  "phase_7_allowed": false,
+  "phase_7_allowed": true,
   "verification": {
     "engine_tests": {
       "command": ".venv/bin/pytest tests/engine -q",
-      "passed": 363,
+      "passed": 366,
       "skipped": 0
     },
     "web_unit_tests": 73,
@@ -21,7 +21,17 @@
     "export_reproduction": "Fresh source copy, installed pinned Python dependencies, no browser files or credentials; allocations identical",
     "native_schemas_changed": false,
     "browser_physics_added": false,
-    "map_registration": "Measured regional registration still passes; transport-only cache removal leaves mesh math unchanged"
+    "map_registration": "Measured regional registration still passes; transport-only cache removal leaves mesh math unchanged",
+    "independent_non_author_engine_review": {
+      "artifact_ref": "fixtures/phase-6/independent-review.json",
+      "archive_replay_passed": true,
+      "reoptimized_allocations_identical": true
+    },
+    "independent_non_author_interface_review": {
+      "artifact_ref": "web/docs/phase-6-independent-review.json",
+      "three_ui_exports_verified": true,
+      "human_study_claimed": false
+    }
   },
   "acceptance": {
     "full_export_replay": true,
@@ -33,12 +43,10 @@
     "computed_direct_later_ready_relay_story": true,
     "terrain_battery_rate_service_resolution_sensitivity_recorded": true,
     "sources_attribution_terms_reviewed": true,
-    "public_corrected_map_permission_established": false
+    "licensing_review_complete_for_declared_scope": true,
+    "independent_non_author_reproduction": true,
+    "independent_interface_walkthrough": true
   },
-  "release_conditions": [
-    "Clarify permission for the coordinate-conversion use in the ion stream before public release; the working token is not treated as that permission.",
-    "Verify the intended deployment account/plan and current asset attribution requirements before hosting."
-  ],
   "resolved_findings": [
     "Direct capacity explanation now accounts for readiness and receiver deadline/light time.",
     "Native warnings no longer incorrectly declare all map registration unresolved.",
@@ -56,13 +64,15 @@
     "soma/docs/phase-6/README.md",
     "soma/docs/phase-6/source-and-license-audit.md",
     "soma/docs/phase-6/ui-delivery-gate.md",
-    "web/docs/phase-6-verification.md"
+    "web/docs/phase-6-verification.md",
+    "soma/docs/phase-6/independent-review.md",
+    "web/docs/phase-6-independent-review.md"
   ],
   "files": [
     {
       "path": "fixtures/phase-6/README.md",
-      "sha256": "0faa3a57b2d95eeafb0858bccf8143563b99d3ec30a973adb9ede85968022a3a",
-      "size_bytes": 1505
+      "sha256": "47d85745e3816d46d37bf3b21907526d3b5fb9b2d38e2b22cb6a7fdc8b3e12be",
+      "size_bytes": 1779
     },
     {
       "path": "fixtures/phase-6/demo/demonstration.json",
@@ -130,6 +140,11 @@
       "size_bytes": 11156
     },
     {
+      "path": "fixtures/phase-6/independent-review.json",
+      "sha256": "38621605f44c46b9646e06a23852ad740b23aefa96896aee2424f53d1f49ed93",
+      "size_bytes": 2778
+    },
+    {
       "path": "fixtures/phase-6/manual-live/reproduction.json",
       "sha256": "3c84e93d6a8ef5a9b7d88beb65b31afab5b1d9675c7578c811bf17b603e5cc2b",
       "size_bytes": 554
@@ -156,8 +171,13 @@
     },
     {
       "path": "soma/docs/phase-6/README.md",
-      "sha256": "fac10db13b8d854346406fb62c1ae075073f059dba8fc6030a68a8ce35f11abd",
-      "size_bytes": 8957
+      "sha256": "6b81f19a2e97308080bee046f9dd8ba844eea31cc333ecd59d0ebe11ba97d87a",
+      "size_bytes": 9687
+    },
+    {
+      "path": "soma/docs/phase-6/independent-review.md",
+      "sha256": "8b4fa608a22dbaccee4b31d57f3d86d7fe849eaff7245e03b458a03fe752e97d",
+      "size_bytes": 2747
     },
     {
       "path": "soma/docs/phase-6/reproduce-demo.py",
@@ -166,18 +186,23 @@
     },
     {
       "path": "soma/docs/phase-6/source-and-license-audit.md",
-      "sha256": "c441821e62883be5b8da3c35b871e2f13ddf37134635572b1c43f19751cc72d4",
-      "size_bytes": 13605
+      "sha256": "0382110b610ca5e72f28630aafa504e829a760e4f7bc24fcfe88e312af2a40cb",
+      "size_bytes": 16572
     },
     {
       "path": "soma/docs/phase-6/ui-delivery-gate.md",
-      "sha256": "d5997ac98d05604f95265c757a3c77a02c44600aa56c3dade74aefbb0044a5cf",
-      "size_bytes": 3777
+      "sha256": "0485422fca9bf039ea443166f21605f6dfc8996863572ff906ca64f798af1f25",
+      "size_bytes": 3799
     },
     {
       "path": "soma/engine.py",
       "sha256": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b",
       "size_bytes": 9832
+    },
+    {
+      "path": "soma/verification/completion.py",
+      "sha256": "2addfc827a7e52e52b5eb04f729904cb994bd6ac877a76e0fcf26a8640a54dd1",
+      "size_bytes": 10227
     },
     {
       "path": "soma/verification/exports.py",
@@ -200,6 +225,11 @@
       "size_bytes": 6380
     },
     {
+      "path": "tests/engine/test_phase6_completion.py",
+      "sha256": "e9de61111724e9a6d077c9981cc7aef7d0f1071856ac973954096041f3ca7cea",
+      "size_bytes": 2524
+    },
+    {
       "path": "tests/engine/test_phase6_handoff.py",
       "sha256": "5642a5e93ac77bf4f054979070a2441c847a0187390ad9076ba5036e5798055d",
       "size_bytes": 3373
@@ -220,14 +250,24 @@
       "size_bytes": 15504
     },
     {
+      "path": "web/docs/phase-6-independent-review.json",
+      "sha256": "cb4a49eb11c0534aa26172aba9cd9a78703a730c7b3046a2ec0e5e710ff38298",
+      "size_bytes": 1816
+    },
+    {
+      "path": "web/docs/phase-6-independent-review.md",
+      "sha256": "8962e4c76c29a53ba3ef164fee96a378c24e3a9b9220fbda4dada4a58b0b7f76",
+      "size_bytes": 2379
+    },
+    {
       "path": "web/docs/phase-6-unsupported-day.jpg",
       "sha256": "d9b5dd424956aa85277d612fdb4060a64b6b1df1aeb9e9da62b49a1eaac6ba0f",
       "size_bytes": 274872
     },
     {
       "path": "web/docs/phase-6-verification.md",
-      "sha256": "6dec141424f0ac4e079981c24510d9f46bd00a97a42a3b3a80c5c7258b6e97d9",
-      "size_bytes": 7232
+      "sha256": "50ff7a83a25650a51eecc94071900ccb390dacc836336b0916881e3473f9890a",
+      "size_bytes": 7239
     },
     {
       "path": "web/src/client.js",
@@ -239,5 +279,31 @@
       "sha256": "7ca1373179b0011bc9f58f77bff2d1bdbcbe9fcc15550b988c4c0b4c9c80e544",
       "size_bytes": 6231
     }
-  ]
+  ],
+  "phase6_complete": true,
+  "public_deployment": {
+    "scope": "not_requested_or_performed",
+    "authorized_by_phase6": false,
+    "corrected_stream_permission_established": false,
+    "deployment_account_plan_verified": false,
+    "conditions": [
+      "Review the intended transformed ion stream and applicable content terms when public hosting is proposed; this record does not establish vendor approval.",
+      "Verify the intended deployment account/plan and current asset attribution requirements before hosting."
+    ]
+  },
+  "completion_scope": "local_integrated_verification_under_declared_assumptions",
+  "completion_review": {
+    "reason": "Public-deployment clearance was previously treated as a Phase 6 engineering prerequisite; the plan requires a scoped source/license review and integrated reproducibility checks.",
+    "independent_review_ref": "fixtures/phase-6/independent-review.json",
+    "human_usability_study_claimed": false,
+    "public_deployment_approval_claimed": false
+  },
+  "completion_verification": {
+    "command": ".venv/bin/python -m soma.verification.completion",
+    "passed": true,
+    "checks_passed": 77,
+    "errors": [],
+    "report_ref": "fixtures/phase-6/completion-report.json",
+    "report_sha256": "b78158dc76a8214feee57d88e6a4098f977fed73d578b5c01afaa878fcd3ba3f"
+  }
 }

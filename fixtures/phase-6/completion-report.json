@@ -1,0 +1,320 @@
+{
+  "artifact_type": "soma_phase6_completion",
+  "version": "1.0.0",
+  "scope": "local_integrated_verification_under_declared_assumptions",
+  "phase6_complete": true,
+  "checks": [
+    {
+      "name": "declared_completion_scope",
+      "passed": true
+    },
+    {
+      "name": "distinct_evidence_bindings",
+      "passed": true
+    },
+    {
+      "name": "required_evidence_bindings",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/README.md",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/demonstration.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-later/run.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-later/run.zip",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-later/scenario.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-later/verification.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-ready/run.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-ready/run.zip",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-ready/scenario.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/direct-ready/verification.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/relay-later/run.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/relay-later/run.zip",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/relay-later/scenario.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/demo/relay-later/verification.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/independent-review.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/manual-live/reproduction.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/manual-live/run.zip",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/manual-live/verification.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:fixtures/phase-6/sensitivity.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/api/moon.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/docs/phase-6/README.md",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/docs/phase-6/independent-review.md",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/docs/phase-6/reproduce-demo.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/docs/phase-6/source-and-license-audit.md",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/docs/phase-6/ui-delivery-gate.md",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/engine.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/verification/completion.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/verification/exports.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:soma/verification/sensitivity.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:tests/engine/test_engine.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:tests/engine/test_moon_display_service.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:tests/engine/test_phase6_completion.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:tests/engine/test_phase6_handoff.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:tests/engine/test_phase6_sensitivity.py",
+      "passed": true
+    },
+    {
+      "name": "evidence:tests/web/client.test.mjs",
+      "passed": true
+    },
+    {
+      "name": "evidence:tests/web/live.browser.spec.mjs",
+      "passed": true
+    },
+    {
+      "name": "evidence:web/docs/phase-6-independent-review.json",
+      "passed": true
+    },
+    {
+      "name": "evidence:web/docs/phase-6-independent-review.md",
+      "passed": true
+    },
+    {
+      "name": "evidence:web/docs/phase-6-unsupported-day.jpg",
+      "passed": true
+    },
+    {
+      "name": "evidence:web/docs/phase-6-verification.md",
+      "passed": true
+    },
+    {
+      "name": "evidence:web/src/client.js",
+      "passed": true
+    },
+    {
+      "name": "evidence:web/src/comparison.js",
+      "passed": true
+    },
+    {
+      "name": "export:fixtures/phase-6/demo/direct-ready/run.zip",
+      "passed": true
+    },
+    {
+      "name": "export:fixtures/phase-6/demo/direct-later/run.zip",
+      "passed": true
+    },
+    {
+      "name": "export:fixtures/phase-6/demo/relay-later/run.zip",
+      "passed": true
+    },
+    {
+      "name": "controlled_task_unchanged",
+      "passed": true
+    },
+    {
+      "name": "controlled_readiness_change",
+      "passed": true
+    },
+    {
+      "name": "configured_route_enablement",
+      "passed": true
+    },
+    {
+      "name": "computed_demo_outcomes",
+      "passed": true
+    },
+    {
+      "name": "assumed_fidelity_visible",
+      "passed": true
+    },
+    {
+      "name": "actual_relay_wait_and_storage",
+      "passed": true
+    },
+    {
+      "name": "no_fabricated_live_spacecraft_states",
+      "passed": true
+    },
+    {
+      "name": "regional_registration_preserved",
+      "passed": true
+    },
+    {
+      "name": "export:fixtures/phase-6/manual-live/run.zip",
+      "passed": true
+    },
+    {
+      "name": "independent_archive_binding",
+      "passed": true
+    },
+    {
+      "name": "independent_reoptimization",
+      "passed": true
+    },
+    {
+      "name": "review_actor_labeled_honestly",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_controls_covered",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_binding:baseline",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_replay:baseline",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_binding:battery-low",
+      "passed": true
+    },
+    {
+      "name": "no_false_schedule:battery-low",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_binding:rate-half",
+      "passed": true
+    },
+    {
+      "name": "no_false_schedule:rate-half",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_binding:service-off",
+      "passed": true
+    },
+    {
+      "name": "no_false_schedule:service-off",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_binding:scheduler-5s",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_replay:scheduler-5s",
+      "passed": true
+    },
+    {
+      "name": "sensitivity_binding:scheduler-30s",
+      "passed": true
+    },
+    {
+      "name": "no_false_schedule:scheduler-30s",
+      "passed": true
+    },
+    {
+      "name": "missing_terrain_stays_unknown",
+      "passed": true
+    },
+    {
+      "name": "independent_interface_walkthrough",
+      "passed": true
+    },
+    {
+      "name": "verification_runs_recorded",
+      "passed": true
+    },
+    {
+      "name": "license_review_recorded_for_scope",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "public_deployment_authorized": false,
+  "phase7_started": false,
+  "phase7_prerequisite_met": true
+}

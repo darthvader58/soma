@@ -12,9 +12,10 @@ planning and relay ephemerides remain unsupported; unknown coverage stays
 unknown. The regional Moon display bridge is verified at the tested resolution
 from 87.5°S to the south pole.
 
-Phase 6 adds a controlled computed demonstration, export reproduction and
-sensitivity evidence. The source audit records an unresolved permission question
-for the corrected ion stream before public release. See the
+Phase 6 is complete for the declared local integrated baseline: controlled
+computed demonstration, independent export reproduction, sensitivity checks and
+source/attribution review. Public deployment is a separate future operation;
+its account and content-use conditions are not a Phase 6 verification gate. See the
 [Phase 6 report and exact commands](soma/docs/phase-6/README.md),
 [source/terms audit](soma/docs/phase-6/source-and-license-audit.md), and
 [interface verification](web/docs/phase-6-verification.md).
