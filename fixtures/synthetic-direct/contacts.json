@@ -1,0 +1,32 @@
+[
+  {
+    "contact_id": "synthetic-direct-contact",
+    "sender": "synthetic-lander",
+    "receiver": "synthetic-earth-station",
+    "sender_terminal_id": "lander-radio",
+    "receiver_terminal_id": "station-radio",
+    "timing_convention": "source_transmit_epochs",
+    "source_transmit_window": {
+      "start_utc": "2026-11-14T08:50:00Z",
+      "end_utc": "2026-11-14T09:10:00Z"
+    },
+    "mode_id": "synthetic-direct-256k",
+    "rate_method": "assumed_net_rate",
+    "payload_rate_bps": 256000,
+    "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+    "available_capacity_bits": 307200000,
+    "one_way_delay": {
+      "model": "disabled_for_synthetic_test",
+      "seconds": 0
+    },
+    "service_provenance": "SYNTHETIC endpoint calendars in scenario.json; no operator service",
+    "quality_flags": [
+      "synthetic_contact_fixture",
+      "assumed_net_rate",
+      "ideal_pointing",
+      "geometry_not_computed",
+      "link_budget_not_computed",
+      "light_time_disabled_for_arithmetic"
+    ]
+  }
+]
