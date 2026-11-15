@@ -1,25 +1,38 @@
 """Standalone contract validation, scientific diagnostics and delivery boundary."""
 
 import argparse
+import hashlib
+import io
 import json
+from pathlib import Path
 import sys
+import zipfile
 
-from soma import plan_delivery
 from soma.validation import ScenarioValidationError, load_json, load_scenario, resource_directory, scenario_sha256
 
 
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(
         prog="python -m soma",
-        description="Validate scenarios, compute standalone diagnostics, or inspect the unresolved delivery planner.",
+        description="Validate scenarios, plan bounded data delivery, replay schedules, and export auditable runs.",
     )
     commands = parser.add_subparsers(dest="command", required=True)
     for name, help_text in (
         ("validate", "Validate a standalone scenario JSON file"),
-        ("plan", "Return an unknown result; scientific planning is not implemented"),
+        ("plan", "Plan bounded delivery under declared assumptions; unsupported coverage remains unknown"),
+        ("run", "Plan once and write the complete auditable run package"),
     ):
         command = commands.add_parser(name, help=help_text)
         command.add_argument("path", help="Path to scenario JSON")
+        if name in ("plan", "run"):
+            command.add_argument("--analysis-inputs", help="Versioned analysis JSON bound to the exact scenario hash")
+            command.add_argument("--chunk-bytes", type=int)
+            command.add_argument("--bin-s", type=float)
+            command.add_argument("--time-limit-s", type=float)
+        if name == "run":
+            command.add_argument("--output-dir", required=True)
+    replay = commands.add_parser("replay", help="Independently validate an exported run without invoking the planner")
+    replay.add_argument("path", help="Path to run.json")
     environment = commands.add_parser("environment", help="Compute Phase 3 diagnostics from a versioned geometry artifact; no delivery result")
     environment.add_argument("path", help="Path to a Phase 2 geometry diagnostic JSON")
     environment.add_argument("--generation-time-model", required=True, choices=["left_sample_piecewise_constant_assumption"])
@@ -85,6 +98,27 @@ def main(argv=None) -> int:
             if scenario["analysis_mode"] != "synthetic_fixture":
                 raise ValueError("Synthetic environment fixture requires synthetic_fixture analysis mode")
             output = synthetic_environment_fixture(scenario, load_json(args.contacts))
+        elif args.command == "replay":
+            from soma.schedule.replay import replay_schedule
+            from soma.validation import data_volume_bytes, validate_document
+            run = load_json(args.path)
+            scenario = run["scenario"]
+            validate_document(scenario, "scenario")
+            result, analysis = run["result"], run["analysis_inputs"]
+            validate_document(result, "result")
+            expected_hash = scenario_sha256(scenario)
+            if result["scenario_sha256"] != expected_hash or analysis["scenario_sha256"] != expected_hash:
+                raise ValueError("Run scenario hash does not match result and analysis inputs")
+            output = replay_schedule(scenario, analysis["contacts"], result["allocations"], analysis["generation_bins"])
+            if result["status"] == "feasible_under_assumptions":
+                for field in ("delivered_bytes", "final_byte_arrival_utc"):
+                    if result[field] != output[field]:
+                        output["errors"].append({"code": "result_mismatch", "reason": f"Native {field} differs from independent replay"})
+                if output["delivered_bytes"] != data_volume_bytes(scenario["data_volume"]):
+                    output["errors"].append({"code": "result_mismatch", "reason": "Native feasibility does not deliver the complete file"})
+            output["passed"] = not output["errors"]
+            print(json.dumps(output, indent=2, allow_nan=False))
+            return 0 if output["passed"] else 1
         elif args.command == "validate":
             scenario = load_scenario(args.path)
             output = {
@@ -93,8 +127,30 @@ def main(argv=None) -> int:
                 "scenario_sha256": scenario_sha256(scenario),
             }
         else:
-            output = plan_delivery(load_scenario(args.path))
-    except (OSError, ValueError, RuntimeError, ImportError) as exc:
+            from soma.engine import plan_run
+            options = {key: getattr(args, key) for key in ("chunk_bytes", "bin_s", "time_limit_s") if getattr(args, key) is not None}
+            analysis = load_json(args.analysis_inputs) if args.analysis_inputs else None
+            if analysis is not None and not isinstance(analysis, dict):
+                raise ValueError("Analysis inputs must be a JSON object")
+            run = plan_run(load_scenario(args.path), analysis_inputs=analysis, options=options)
+            output = run["result"]
+            if args.command == "run":
+                from soma.exports import create_run_package, json_bytes
+                package = create_run_package(run)
+                directory = Path(args.output_dir)
+                directory.mkdir(parents=True, exist_ok=True)
+                with zipfile.ZipFile(io.BytesIO(package)) as archive:
+                    for name in archive.namelist():
+                        member = Path(name)
+                        if member.is_absolute() or len(member.parts) != 1:
+                            raise ValueError("Export contains an unexpected member path")
+                        (directory / name).write_bytes(archive.read(name))
+                (directory / "run.json").write_bytes(json_bytes(run))
+                (directory / "run.zip").write_bytes(package)
+                output = {"status": run["result"]["status"], "solver_status": run["result"]["solver_status"],
+                          "scenario_sha256": run["result"]["scenario_sha256"],
+                          "package_sha256": hashlib.sha256(package).hexdigest(), "output_dir": str(directory.resolve())}
+    except (OSError, ValueError, RuntimeError, ImportError, KeyError, TypeError) as exc:
         print(f"soma: {exc}", file=sys.stderr)
         return 1
     print(json.dumps(output, indent=2, allow_nan=False))

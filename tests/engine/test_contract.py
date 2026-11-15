@@ -127,6 +127,7 @@ def test_nonstandard_json_rejected(tmp_path, text):
 
 
 def test_inputs_are_detached_and_run_is_deterministic(relay_scenario):
+    relay_scenario["lander"]["latitude_deg"] = -88.5
     original = deepcopy(relay_scenario)
     result = plan_delivery(relay_scenario)
     assert result == plan_delivery(relay_scenario)
@@ -139,7 +140,8 @@ def test_inputs_are_detached_and_run_is_deterministic(relay_scenario):
     assert relay_scenario == original
 
 
-def test_unimplemented_engine_does_not_invent_results(relay_scenario):
+def test_unsupported_coverage_does_not_invent_results(relay_scenario):
+    relay_scenario["lander"]["latitude_deg"] = -88.5
     result = plan_delivery(relay_scenario)
     validate_document(result, "result")
     assert result["status"] == "unknown"
@@ -153,6 +155,7 @@ def test_unimplemented_engine_does_not_invent_results(relay_scenario):
 
 
 def test_unimplemented_result_cannot_claim_feasibility(relay_scenario):
+    relay_scenario["lander"]["latitude_deg"] = -88.5
     result = plan_delivery(relay_scenario)
     result["status"] = "feasible_under_assumptions"
     with pytest.raises(ScenarioValidationError):
@@ -160,6 +163,7 @@ def test_unimplemented_result_cannot_claim_feasibility(relay_scenario):
 
 
 def test_unresolved_solver_cannot_claim_proven_infeasibility(relay_scenario):
+    relay_scenario["lander"]["latitude_deg"] = -88.5
     result = plan_delivery(relay_scenario)
     result.update(status="infeasible_in_model", model_fidelity="assumed_rate_simulation")
     with pytest.raises(ScenarioValidationError):
