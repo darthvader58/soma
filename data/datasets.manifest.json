@@ -1,0 +1,56 @@
+{
+  "schema_version": "0.1.0",
+  "datasets": [
+    {
+      "id": "synthetic-contract-v1",
+      "status": "synthetic_fixture_only",
+      "input_class": "synthetic",
+      "purpose": "Validation domain for invented Phase 1 contract fixtures only; not terrain, kernel, ephemeris, illumination, or service coverage.",
+      "frame": "MOON_ME_DE421",
+      "reference_radius_m": 1737400,
+      "elevation_datum": "height_above_reference_sphere",
+      "latitude_bounds_deg": [-90, -80],
+      "longitude_bounds_deg_east": [-180, 180],
+      "longitude_convention": "east_positive_half_open_minus180_to_180",
+      "coverage": {
+        "start_utc": "2026-11-14T00:00:00Z",
+        "end_utc": "2026-11-15T00:00:00Z"
+      },
+      "files": [],
+      "numerical_terrain_available": false,
+      "ephemeris_available": false,
+      "source_urls": [],
+      "missing_terrain_policy": "unknown",
+      "observer_heights": ["antenna_height_m", "panel_height_m"]
+    },
+    {
+      "id": "nasa-pgda-lola-south-pole-product-81-planned",
+      "status": "planned_not_downloaded",
+      "input_class": "published",
+      "purpose": "Candidate numerical DEM for Phase 2; unavailable for analysis in Phase 1.",
+      "source_urls": ["https://pgda.gsfc.nasa.gov/products/81"],
+      "metadata_evidence": "plan/06-Research-and-Source-Register.md#d04",
+      "frame": "MOON_ME_DE421",
+      "pixel_scale_m": 5,
+      "projection": "south_polar_stereographic",
+      "required_products": ["elevation", "interpolated_elevation_fill", "count_mask"],
+      "files": [],
+      "sha256": null,
+      "latitude_bounds_deg": null,
+      "longitude_bounds_deg_east": null,
+      "coverage": null,
+      "numerical_terrain_available": false,
+      "ephemeris_available": false,
+      "missing_terrain_policy": "unknown",
+      "observer_heights": ["antenna_height_m", "panel_height_m"],
+      "terms_review_status": "not_verified_for_download_or_redistribution",
+      "preparation_requirements": [
+        "Verify source terms and selected product revision before acquisition.",
+        "Record actual file checksums, bounds, reference radius, elevation datum, interpolation and count-mask conventions after acquisition.",
+        "For a windowed extract, record parent product, extraction bounds and extract checksum.",
+        "Match DEM frame with lunar frame, orientation, planetary ephemeris and leap-second kernels; verify time coverage independently.",
+        "Preserve missing-data and quality masks; never treat missing samples as clear horizon."
+      ]
+    }
+  ]
+}

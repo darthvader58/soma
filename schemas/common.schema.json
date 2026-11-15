@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:soma:common:0.1.0",
+  "$defs": {
+    "id": {"type": "string", "minLength": 1, "maxLength": 120, "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"},
+    "label": {"type": "string", "minLength": 1},
+    "epoch": {"type": "string", "format": "date-time", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{1,6})?(Z|[+-]\\d{2}:\\d{2})$"},
+    "interval": {
+      "type": "object", "additionalProperties": false,
+      "required": ["start_utc", "end_utc"],
+      "properties": {"start_utc": {"$ref": "#/$defs/epoch"}, "end_utc": {"$ref": "#/$defs/epoch"}}
+    },
+    "vector3": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+    "service": {
+      "type": "object", "additionalProperties": false,
+      "required": ["label", "input_class", "windows"],
+      "properties": {
+        "label": {"$ref": "#/$defs/label"},
+        "input_class": {"enum": ["measured", "published", "synthetic", "assumed"]},
+        "windows": {"type": "array", "items": {"$ref": "#/$defs/interval"}}
+      }
+    },
+    "terminal": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "band", "duplex", "mode_ids", "acquisition_s", "teardown_s", "tx_electrical_w", "rx_electrical_w"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "band": {"$ref": "#/$defs/label"},
+        "duplex": {"enum": ["half_duplex", "full_duplex"]},
+        "mode_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
+        "acquisition_s": {"type": "number", "minimum": 0}, "teardown_s": {"type": "number", "minimum": 0},
+        "tx_electrical_w": {"type": "number", "minimum": 0}, "rx_electrical_w": {"type": "number", "minimum": 0}
+      }
+    }
+  }
+}

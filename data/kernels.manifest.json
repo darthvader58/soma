@@ -1,0 +1,74 @@
+{
+  "manifest_version": "0.1.0",
+  "id": "planned-de421-kernel-set",
+  "status": "planned_not_downloaded",
+  "physical_calculations_enabled": false,
+  "planned_lunar_frame": "MOON_ME_DE421",
+  "matching_requirement": "Verify the selected DE421 planetary ephemeris, lunar orientation, explicit lunar frame realization, leap-second kernel, and numerical DEM together before enabling geometry.",
+  "coverage_utc": null,
+  "coverage_status": "unverified; filenames do not establish run coverage",
+  "kernels": [
+    {
+      "role": "planetary_ephemeris",
+      "planned_family": "DE421",
+      "filename": null,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/",
+      "status": "unavailable_not_downloaded",
+      "local_path": null,
+      "sha256": null,
+      "coverage_utc": null
+    },
+    {
+      "role": "lunar_frame",
+      "planned_family": "DE421",
+      "filename": "moon_080317.tf",
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf",
+      "status": "unavailable_not_downloaded",
+      "local_path": null,
+      "sha256": null,
+      "coverage_utc": null
+    },
+    {
+      "role": "lunar_orientation",
+      "planned_family": "DE421",
+      "filename": "moon_pa_de421_1900-2050.bpc",
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc",
+      "status": "unavailable_not_downloaded",
+      "local_path": null,
+      "sha256": null,
+      "coverage_utc": null
+    },
+    {
+      "role": "leap_seconds",
+      "planned_family": "NAIF LSK; exact revision must be selected and pinned",
+      "filename": null,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/",
+      "status": "unavailable_not_downloaded",
+      "local_path": null,
+      "sha256": null,
+      "coverage_utc": null
+    }
+  ],
+  "excluded_implicit_frame_choices": [
+    {"name": "MOON_ME", "reason": "Generic alias must not replace the explicit planned realization."},
+    {"name": "MOON_PA", "reason": "Principal-axis coordinates are not mean-Earth terrain coordinates."},
+    {"name": "IAU_MOON", "reason": "SPICE default lunar body-fixed association is not the selected DE421 mean-Earth realization."}
+  ],
+  "verification_sources": [
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/aareadme.txt",
+      "checked_on": "2026-11-14",
+      "supports": "NAIF explicitly pairs moon_080317.tf with moon_pa_de421_1900-2050.bpc; distinguishes generic frame association from the default IAU_MOON."
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/naif/data_generic.html",
+      "checked_on": null,
+      "supports": "Reference entry point for future kernel selection; not downloaded or coverage-validated by this manifest."
+    }
+  ],
+  "limitations": [
+    "No kernel is bundled, loaded, hashed, or coverage-validated.",
+    "No geometry, UTC-to-TDB conversion, terrain registration, or scientific ephemeris validation has been performed.",
+    "Redistribution terms must be checked before bundling selected kernel files."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "urn:soma:state:0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["target", "origin", "frame", "epoch", "epoch_format", "time_scale", "position", "position_unit", "provenance_label"],
+  "properties": {
+    "target": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}, "origin": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}, "frame": {"$ref": "urn:soma:common:0.1.0#/$defs/label"},
+    "epoch": {"anyOf": [{"$ref": "urn:soma:common:0.1.0#/$defs/epoch"}, {"type": "number"}]},
+    "epoch_format": {"enum": ["rfc3339", "seconds_past_j2000_tdb"]},
+    "time_scale": {"enum": ["UTC", "TDB"]}, "position": {"$ref": "urn:soma:common:0.1.0#/$defs/vector3"},
+    "position_unit": {"enum": ["m", "km"]}, "provenance_label": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}
+  },
+  "allOf": [
+    {"if": {"properties": {"time_scale": {"const": "UTC"}}}, "then": {"properties": {"epoch": {"$ref": "urn:soma:common:0.1.0#/$defs/epoch"}, "epoch_format": {"const": "rfc3339"}}}},
+    {"if": {"properties": {"time_scale": {"const": "TDB"}}}, "then": {"properties": {"epoch": {"type": "number"}, "epoch_format": {"const": "seconds_past_j2000_tdb"}}}}
+  ]
+}

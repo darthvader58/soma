@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "urn:soma:allocation:0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["allocation_id", "chunk_id", "byte_offset", "byte_length", "contact_id", "source_transmit_interval", "receiver_occupancy_interval", "byte_available_utc"],
+  "properties": {
+    "allocation_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "chunk_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+    "byte_offset": {"type": "integer", "minimum": 0}, "byte_length": {"type": "integer", "minimum": 1},
+    "contact_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+    "source_transmit_interval": {"$ref": "urn:soma:common:0.1.0#/$defs/interval"}, "receiver_occupancy_interval": {"$ref": "urn:soma:common:0.1.0#/$defs/interval"},
+    "byte_available_utc": {"$ref": "urn:soma:common:0.1.0#/$defs/epoch"}
+  }
+}

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "soma-lunar"
+version = "0.1.0"
+description = "Lunar data-delivery planning under declared assumptions"
+requires-python = ">=3.11"
+dependencies = ["jsonschema==4.26.0", "referencing==0.37.0", "rfc8785==0.1.4"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+analysis = ["numpy==2.5.4", "spiceypy==8.4.0", "rasterio==1.5.2", "pyproj==3.8.0"]
+verification = ["skyfield==1.55"]
+
+[tool.setuptools.packages.find]
+include = ["soma*"]
+
+[tool.setuptools.data-files]
+"share/soma/schemas" = ["schemas/*.schema.json"]
+"share/soma/data" = ["data/*.manifest.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests/engine"]
+pythonpath = ["."]

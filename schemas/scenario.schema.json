@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:soma:scenario:0.1.0",
+  "title": "SOMA scenario v0.1.0, Phase 1 review candidate",
+  "type": "object", "additionalProperties": false,
+  "required": ["run_version", "scenario_id", "analysis_mode", "dataset_manifest_ref", "lander", "data_ready_utc", "data_volume", "deadline_utc", "analysis_horizon", "hardware_profile_ref", "relay_refs", "station_refs", "route_families", "rate_method", "pointing_assumption", "service_assumption_label", "profiles", "input_provenance"],
+  "properties": {
+    "run_version": {"const": "0.1.0"}, "scenario_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+    "analysis_mode": {"enum": ["synthetic_fixture", "terrain_ephemeris"]},
+    "dataset_manifest_ref": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+    "lander": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "latitude_deg", "longitude_deg_east", "frame", "reference_radius_m", "elevation_datum", "elevation_m", "antenna_height_m", "panel_height_m", "pole_reference_meridian_deg_east"],
+      "properties": {
+        "id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+        "latitude_deg": {"type": "number", "minimum": -90, "maximum": 90},
+        "longitude_deg_east": {"type": "number", "minimum": -180, "exclusiveMaximum": 180},
+        "frame": {"const": "MOON_ME_DE421"},
+        "reference_radius_m": {"type": "number", "exclusiveMinimum": 0},
+        "elevation_datum": {"const": "height_above_reference_sphere"},
+        "elevation_m": {"type": "number"},
+        "antenna_height_m": {"type": "number", "minimum": 0}, "panel_height_m": {"type": "number", "minimum": 0},
+        "pole_reference_meridian_deg_east": {"type": "number", "minimum": -180, "exclusiveMaximum": 180}
+      }
+    },
+    "data_ready_utc": {"$ref": "urn:soma:common:0.1.0#/$defs/epoch"},
+    "data_volume": {
+      "type": "object", "additionalProperties": false, "required": ["value", "unit"],
+      "properties": {"value": {"type": "integer", "minimum": 1}, "unit": {"enum": ["byte", "MiB"]}}
+    },
+    "deadline_utc": {"$ref": "urn:soma:common:0.1.0#/$defs/epoch"},
+    "analysis_horizon": {"$ref": "urn:soma:common:0.1.0#/$defs/interval"},
+    "hardware_profile_ref": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+    "relay_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}},
+    "station_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}},
+    "route_families": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["direct_to_earth", "single_lunar_relay"]}},
+    "rate_method": {"enum": ["assumed_net_rate", "link_budget"]},
+    "pointing_assumption": {"enum": ["ideal_pointing", "modeled_pointing"]},
+    "service_assumption_label": {"$ref": "urn:soma:common:0.1.0#/$defs/label"},
+    "profiles": {
+      "type": "object", "additionalProperties": false, "required": ["hardware", "relays", "stations"],
+      "properties": {
+        "hardware": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/hardware"}},
+        "relays": {"type": "array", "items": {"$ref": "#/$defs/relay"}},
+        "stations": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/station"}}
+      }
+    },
+    "input_provenance": {
+      "type": "array", "minItems": 1, "items": {
+        "type": "object", "additionalProperties": false, "required": ["scope", "input_class", "description", "source_urls"],
+        "properties": {
+          "scope": {"$ref": "urn:soma:common:0.1.0#/$defs/label"},
+          "input_class": {"enum": ["measured", "published", "synthetic", "assumed"]},
+          "description": {"$ref": "urn:soma:common:0.1.0#/$defs/label"},
+          "source_urls": {"type": "array", "items": {"type": "string", "format": "uri"}}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "terminals": {"type": "array", "minItems": 1, "items": {"$ref": "urn:soma:common:0.1.0#/$defs/terminal"}},
+    "hardware": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "input_class", "storage_capacity_bytes", "base_load_w", "battery", "panel", "terminals", "service"],
+      "properties": {
+        "id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "input_class": {"enum": ["measured", "published", "synthetic", "assumed"]},
+        "storage_capacity_bytes": {"type": "integer", "minimum": 0}, "base_load_w": {"type": "number", "exclusiveMinimum": 0},
+        "battery": {
+          "type": "object", "additionalProperties": false,
+          "required": ["capacity_wh", "initial_energy_wh", "reserve_wh", "max_charge_w", "max_discharge_w", "charge_efficiency", "discharge_efficiency"],
+          "properties": {
+            "capacity_wh": {"type": "number", "exclusiveMinimum": 0}, "initial_energy_wh": {"type": "number", "minimum": 0}, "reserve_wh": {"type": "number", "minimum": 0},
+            "max_charge_w": {"type": "number", "minimum": 0}, "max_discharge_w": {"type": "number", "minimum": 0},
+            "charge_efficiency": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}, "discharge_efficiency": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+          }
+        },
+        "panel": {
+          "type": "object", "additionalProperties": false, "required": ["kind", "area_m2", "normal_local_enu", "efficiency", "lumped_derating", "irradiance_at_1au_w_m2"],
+          "properties": {
+            "kind": {"const": "fixed"}, "area_m2": {"type": "number", "minimum": 0}, "normal_local_enu": {"$ref": "urn:soma:common:0.1.0#/$defs/vector3"},
+            "efficiency": {"type": "number", "minimum": 0, "maximum": 1}, "lumped_derating": {"type": "number", "minimum": 0, "maximum": 1}, "irradiance_at_1au_w_m2": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        "terminals": {"$ref": "#/$defs/terminals"}, "service": {"$ref": "urn:soma:common:0.1.0#/$defs/service"}
+      }
+    },
+    "relay": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "input_class", "behavior", "storage_capacity_bytes", "processing_delay_s", "trajectory", "terminals", "service", "power_assumption_label"],
+      "properties": {
+        "id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "input_class": {"enum": ["measured", "published", "synthetic", "assumed"]},
+        "behavior": {"enum": ["store_and_forward", "bent_pipe"]}, "storage_capacity_bytes": {"type": "integer", "minimum": 0}, "processing_delay_s": {"type": "number", "minimum": 0},
+        "trajectory": {
+          "type": "object", "additionalProperties": false, "required": ["kind", "reference", "origin", "frame", "time_scale", "position_unit", "coverage"],
+          "properties": {
+            "kind": {"enum": ["synthetic_contact_fixture", "synthetic_two_body_lunar_preset", "spice_spk", "documented_state_history"]},
+            "reference": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}, "origin": {"const": "MOON"}, "frame": {"enum": ["J2000", "MOON_ME_DE421"]},
+            "time_scale": {"enum": ["UTC", "TDB"]}, "position_unit": {"enum": ["m", "km"]}, "coverage": {"$ref": "urn:soma:common:0.1.0#/$defs/interval"}
+          }
+        },
+        "terminals": {"$ref": "#/$defs/terminals"}, "service": {"$ref": "urn:soma:common:0.1.0#/$defs/service"}, "power_assumption_label": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}
+      }
+    },
+    "station": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "input_class", "latitude_deg", "longitude_deg_east", "height_m", "frame", "reference_ellipsoid", "minimum_elevation_deg", "storage_capacity_bytes", "terminals", "service"],
+      "properties": {
+        "id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "input_class": {"enum": ["measured", "published", "synthetic", "assumed"]},
+        "latitude_deg": {"type": "number", "minimum": -90, "maximum": 90}, "longitude_deg_east": {"type": "number", "minimum": -180, "exclusiveMaximum": 180}, "height_m": {"type": "number"},
+        "frame": {"const": "ITRF93"}, "reference_ellipsoid": {"const": "WGS84"}, "minimum_elevation_deg": {"type": "number", "minimum": 0, "maximum": 90},
+        "storage_capacity_bytes": {"type": "integer", "minimum": 0}, "terminals": {"$ref": "#/$defs/terminals"}, "service": {"$ref": "urn:soma:common:0.1.0#/$defs/service"}
+      }
+    }
+  }
+}

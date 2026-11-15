@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "urn:soma:contact:0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["contact_id", "sender", "receiver", "sender_terminal_id", "receiver_terminal_id", "timing_convention", "source_transmit_window", "mode_id", "rate_method", "payload_rate_bps", "payload_rate_definition", "available_capacity_bits", "one_way_delay", "service_provenance", "quality_flags"],
+  "properties": {
+    "contact_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "sender": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "receiver": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+    "sender_terminal_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "receiver_terminal_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+    "timing_convention": {"const": "source_transmit_epochs"}, "source_transmit_window": {"$ref": "urn:soma:common:0.1.0#/$defs/interval"},
+    "mode_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "rate_method": {"enum": ["assumed_net_rate", "link_budget"]},
+    "payload_rate_bps": {"type": "number", "exclusiveMinimum": 0}, "payload_rate_definition": {"const": "net_payload_bits_per_second_overhead_already_applied"},
+    "available_capacity_bits": {"type": "integer", "minimum": 0},
+    "one_way_delay": {
+      "type": "object", "additionalProperties": false, "required": ["model", "seconds"],
+      "properties": {"model": {"enum": ["disabled_for_synthetic_test", "constant_assumed"]}, "seconds": {"type": "number", "minimum": 0}},
+      "if": {"properties": {"model": {"const": "disabled_for_synthetic_test"}}}, "then": {"properties": {"seconds": {"const": 0}}}
+    },
+    "service_provenance": {"$ref": "urn:soma:common:0.1.0#/$defs/label"},
+    "quality_flags": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}}
+  }
+}
