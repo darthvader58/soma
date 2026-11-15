@@ -1,0 +1,111 @@
+{
+  "manifest_version": "0.2.0",
+  "id": "de421-phase2-matched-kernel-set",
+  "frame": "MOON_ME_DE421",
+  "ephemeris": "DE421",
+  "coverage": {
+    "start_utc": "2026-11-14T00:00:00Z",
+    "end_utc": "2026-11-15T00:00:00Z"
+  },
+  "coverage_scope": "bounded_demonstration_interval; actual binary coverage also recorded per object",
+  "kernels": [
+    {
+      "role": "planetary_ephemeris",
+      "path": "de421.bsp",
+      "sha256": "08b20db2ae22488650641c5a9033e5bfda4b1c4b440cfeaf20f621cfa18ecdb3",
+      "size_bytes": 16790528,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de421.bsp",
+      "actual_coverage": {
+        "3": [
+          {
+            "start_tdb_s": -3169195200.0,
+            "end_tdb_s": 1696852800.0,
+            "start_utc": "1899-07-28T23:59:18.816695Z",
+            "end_utc": "2053-10-08T23:58:50.817654Z"
+          }
+        ],
+        "10": [
+          {
+            "start_tdb_s": -3169195200.0,
+            "end_tdb_s": 1696852800.0,
+            "start_utc": "1899-07-28T23:59:18.816695Z",
+            "end_utc": "2053-10-08T23:58:50.817654Z"
+          }
+        ],
+        "301": [
+          {
+            "start_tdb_s": -3169195200.0,
+            "end_tdb_s": 1696852800.0,
+            "start_utc": "1899-07-28T23:59:18.816695Z",
+            "end_utc": "2053-10-08T23:58:50.817654Z"
+          }
+        ],
+        "399": [
+          {
+            "start_tdb_s": -3169195200.0,
+            "end_tdb_s": 1696852800.0,
+            "start_utc": "1899-07-28T23:59:18.816695Z",
+            "end_utc": "2053-10-08T23:58:50.817654Z"
+          }
+        ]
+      }
+    },
+    {
+      "role": "leap_seconds",
+      "path": "naif0012.tls",
+      "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b",
+      "size_bytes": 5257,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
+    },
+    {
+      "role": "lunar_frame",
+      "path": "moon_080317.tf",
+      "sha256": "78732477b96f9863e7b0d65bcee3c22b8707ca5ed0db56d1173319cb2e8c7993",
+      "size_bytes": 21437,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf"
+    },
+    {
+      "role": "lunar_orientation",
+      "path": "moon_pa_de421_1900-2050.bpc",
+      "sha256": "656f90616403d75a75f0cd6c8830fc5b44f8cb4facb5ccb8915e752b397520cf",
+      "size_bytes": 1770496,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc",
+      "actual_coverage": {
+        "31006": [
+          {
+            "start_tdb_s": -3155716800.0,
+            "end_tdb_s": 1609416000.0,
+            "start_utc": "1899-12-31T23:59:18.816031Z",
+            "end_utc": "2050-12-31T23:58:50.816094Z"
+          }
+        ]
+      }
+    },
+    {
+      "role": "earth_orientation",
+      "path": "earth_000101_270208_261113.bpc",
+      "sha256": "6e77690ba455a644e509b0b9cb308b0dec1a7154ceecf3355659b917b21ca45e",
+      "size_bytes": 5163008,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_000101_270208_261113.bpc",
+      "actual_coverage": {
+        "3000": [
+          {
+            "start_tdb_s": -43135.816087188054,
+            "end_tdb_s": 855403269.1849744,
+            "start_utc": "2000-01-01T00:00:00.000000Z",
+            "end_utc": "2027-02-09T00:00:00.000000Z"
+          }
+        ]
+      }
+    }
+  ],
+  "earth_orientation_quality": "NAIF high-precision Earth PCK including predicted orientation; selected run beyond file generation epoch",
+  "aberration": "NONE",
+  "geometry_model": "same_epoch_geometric",
+  "bundled_in_repository": false,
+  "redistribution": "kernel files not bundled; source URLs and hashes provided",
+  "sources": [
+    "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/aareadme.txt",
+    "https://naif.jpl.nasa.gov/naif/spiceconcept.html"
+  ]
+}

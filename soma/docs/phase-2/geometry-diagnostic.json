@@ -1,0 +1,3348 @@
+{
+  "artifact_type": "soma_geometry_diagnostic",
+  "artifact_version": "0.2.0",
+  "scenario": {
+    "run_version": "0.1.0",
+    "scenario_id": "synthetic-relay",
+    "analysis_mode": "synthetic_fixture",
+    "dataset_manifest_ref": "synthetic-contract-v1",
+    "lander": {
+      "id": "synthetic-lander",
+      "latitude_deg": -89.03093035536243,
+      "longitude_deg_east": 1.389336784014743,
+      "frame": "MOON_ME_DE421",
+      "reference_radius_m": 1737400,
+      "elevation_datum": "height_above_reference_sphere",
+      "elevation_m": 0,
+      "antenna_height_m": 2,
+      "panel_height_m": 1,
+      "pole_reference_meridian_deg_east": 0
+    },
+    "data_ready_utc": "2026-11-14T08:50:00Z",
+    "data_volume": {
+      "value": 100,
+      "unit": "MiB"
+    },
+    "deadline_utc": "2026-11-14T10:05:00Z",
+    "analysis_horizon": {
+      "start_utc": "2026-11-14T08:50:00Z",
+      "end_utc": "2026-11-14T10:05:00Z"
+    },
+    "hardware_profile_ref": "synthetic-lander-hardware-v1",
+    "relay_refs": [
+      "synthetic-lunar-relay"
+    ],
+    "station_refs": [
+      "synthetic-earth-station"
+    ],
+    "route_families": [
+      "direct_to_earth",
+      "single_lunar_relay"
+    ],
+    "rate_method": "assumed_net_rate",
+    "pointing_assumption": "ideal_pointing",
+    "service_assumption_label": "SYNTHETIC windows at both endpoints; no booked network service",
+    "profiles": {
+      "hardware": [
+        {
+          "id": "synthetic-lander-hardware-v1",
+          "input_class": "synthetic",
+          "storage_capacity_bytes": 209715200,
+          "base_load_w": 5,
+          "battery": {
+            "capacity_wh": 100,
+            "initial_energy_wh": 80,
+            "reserve_wh": 10,
+            "max_charge_w": 50,
+            "max_discharge_w": 100,
+            "charge_efficiency": 0.9,
+            "discharge_efficiency": 0.9
+          },
+          "panel": {
+            "kind": "fixed",
+            "area_m2": 1,
+            "normal_local_enu": [
+              0,
+              0,
+              1
+            ],
+            "efficiency": 0.2,
+            "lumped_derating": 0.8,
+            "irradiance_at_1au_w_m2": 1361
+          },
+          "terminals": [
+            {
+              "id": "lander-radio",
+              "band": "SYNTHETIC_X_band",
+              "duplex": "half_duplex",
+              "mode_ids": [
+                "synthetic-direct-256k",
+                "synthetic-uplink-2m"
+              ],
+              "acquisition_s": 0,
+              "teardown_s": 0,
+              "tx_electrical_w": 20,
+              "rx_electrical_w": 5
+            }
+          ],
+          "service": {
+            "label": "SYNTHETIC service calendar; no operator allocation",
+            "input_class": "synthetic",
+            "windows": [
+              {
+                "start_utc": "2026-11-14T08:50:00Z",
+                "end_utc": "2026-11-14T10:05:00Z"
+              }
+            ]
+          }
+        }
+      ],
+      "relays": [
+        {
+          "id": "synthetic-lunar-relay",
+          "input_class": "synthetic",
+          "behavior": "store_and_forward",
+          "storage_capacity_bytes": 104857600,
+          "processing_delay_s": 0,
+          "trajectory": {
+            "kind": "synthetic_contact_fixture",
+            "reference": "SYNTHETIC contact windows only; no trajectory or ephemeris provided",
+            "origin": "MOON",
+            "frame": "J2000",
+            "time_scale": "UTC",
+            "position_unit": "m",
+            "coverage": {
+              "start_utc": "2026-11-14T08:50:00Z",
+              "end_utc": "2026-11-14T10:05:00Z"
+            }
+          },
+          "terminals": [
+            {
+              "id": "relay-radio",
+              "band": "SYNTHETIC_X_band",
+              "duplex": "half_duplex",
+              "mode_ids": [
+                "synthetic-uplink-2m",
+                "synthetic-downlink-10m"
+              ],
+              "acquisition_s": 0,
+              "teardown_s": 0,
+              "tx_electrical_w": 20,
+              "rx_electrical_w": 5
+            }
+          ],
+          "service": {
+            "label": "SYNTHETIC service calendar; no operator allocation",
+            "input_class": "synthetic",
+            "windows": [
+              {
+                "start_utc": "2026-11-14T09:00:00Z",
+                "end_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "start_utc": "2026-11-14T10:00:00Z",
+                "end_utc": "2026-11-14T10:03:00Z"
+              }
+            ]
+          },
+          "power_assumption_label": "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled"
+        }
+      ],
+      "stations": [
+        {
+          "id": "synthetic-earth-station",
+          "input_class": "synthetic",
+          "latitude_deg": 0,
+          "longitude_deg_east": 0,
+          "height_m": 0,
+          "frame": "ITRF93",
+          "reference_ellipsoid": "WGS84",
+          "minimum_elevation_deg": 10,
+          "storage_capacity_bytes": 209715200,
+          "terminals": [
+            {
+              "id": "station-radio",
+              "band": "SYNTHETIC_X_band",
+              "duplex": "half_duplex",
+              "mode_ids": [
+                "synthetic-direct-256k",
+                "synthetic-downlink-10m"
+              ],
+              "acquisition_s": 0,
+              "teardown_s": 0,
+              "tx_electrical_w": 20,
+              "rx_electrical_w": 5
+            }
+          ],
+          "service": {
+            "label": "SYNTHETIC service calendar; no operator allocation",
+            "input_class": "synthetic",
+            "windows": [
+              {
+                "start_utc": "2026-11-14T08:50:00Z",
+                "end_utc": "2026-11-14T09:10:00Z"
+              },
+              {
+                "start_utc": "2026-11-14T10:00:00Z",
+                "end_utc": "2026-11-14T10:03:00Z"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "input_provenance": [
+      {
+        "scope": "all scenario values and contact windows",
+        "input_class": "synthetic",
+        "description": "Invented contract/arithmetic test values, including location, dates, hardware, finite storage, nonzero lander base load, panel parameters and station proxy. No numerical terrain or ephemeris is supplied; no mission prediction.",
+        "source_urls": []
+      },
+      {
+        "scope": "rates, pointing, acquisition, processing and propagation",
+        "input_class": "assumed",
+        "description": "Assumed net payload rates with overhead already applied once; ideal pointing; zero acquisition/teardown and relay processing for arithmetic only; light time disabled for synthetic test, not physically zero.",
+        "source_urls": []
+      }
+    ]
+  },
+  "scenario_id": "synthetic-relay",
+  "scenario_sha256": "bc237323c4c94e287b1d00ab5d9859577d4ff91abd858f62a0961faae7de8bd1",
+  "analysis_horizon": {
+    "start_utc": "2026-11-14T08:50:00Z",
+    "end_utc": "2026-11-14T10:05:00Z"
+  },
+  "analysis_point": {
+    "id": "synthetic-lander",
+    "latitude_deg": -89.03093035536243,
+    "longitude_deg_east": 1.389336784014743,
+    "frame": "MOON_ME_DE421",
+    "reference_radius_m": 1737400,
+    "elevation_datum": "height_above_reference_sphere",
+    "elevation_m": -301.98974609375,
+    "antenna_height_m": 2,
+    "panel_height_m": 1,
+    "pole_reference_meridian_deg_east": 0
+  },
+  "requested_elevation_m": 0,
+  "elevation_resolution": {
+    "source": "pgda81-near-89s-0e-window-v1",
+    "count": 1.0,
+    "quality_flags": [
+      "positive_count_pixel"
+    ]
+  },
+  "frame": "MOON_ME_DE421",
+  "origin": "MOON",
+  "position_unit": "m",
+  "time_scale": "UTC",
+  "azimuth_convention": "east_of_north_deg; pole_uses_declared_reference_meridian",
+  "horizons": {
+    "antenna": {
+      "cache_key": "c3b41569fbd184740b555461815ad050242bb012c826ec426d9afacce48601b0",
+      "site": {
+        "latitude_deg": -89.03093035536243,
+        "longitude_deg_east": 1.389336784014743,
+        "elevation_m": -301.98974609375,
+        "height_m": 2,
+        "pole_reference_meridian_deg_east": 0,
+        "frame": "MOON_ME_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_datum": "height_above_reference_sphere"
+      },
+      "sampling": {
+        "azimuth_step_deg": 30,
+        "near_step_m": 5,
+        "far_step_m": 240,
+        "near_extent_m": 5000,
+        "extents_m": [
+          100000.0,
+          200000
+        ],
+        "convergence_tolerance_deg": 0.01,
+        "required_max_extent_m": 200000
+      },
+      "bands": [
+        {
+          "azimuth_deg": 0.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.777349547574626,
+          "unknown_samples": 1003,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 30.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.3852560611328477,
+          "unknown_samples": 1008,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 60.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.116190040571578,
+          "unknown_samples": 981,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 90.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": -0.5642457319631907,
+          "unknown_samples": 867,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 120.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": -0.9781736622351713,
+          "unknown_samples": 1004,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 150.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.2873829620992434,
+          "unknown_samples": 921,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 180.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.5851144829010029,
+          "unknown_samples": 857,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "outside_coverage",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 210.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.5306022780672692,
+          "unknown_samples": 954,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 240.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.2382969287909857,
+          "unknown_samples": 1006,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 270.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 0.14305033137489592,
+          "unknown_samples": 1007,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 300.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": -0.8883069769737543,
+          "unknown_samples": 1007,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 330.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 0.5807121560844528,
+          "unknown_samples": 1011,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        }
+      ],
+      "converged": false,
+      "maximum_change_deg": null,
+      "algorithm_version": "cartesian-sampled-horizon-1",
+      "classification_scope": "sampled_distant_target_horizon_not_finite_spacecraft"
+    },
+    "panel": {
+      "cache_key": "524f690d1bfada479e2a0a0af888dfb6cfce82ba7b0435dba6467d10f3fabd25",
+      "site": {
+        "latitude_deg": -89.03093035536243,
+        "longitude_deg_east": 1.389336784014743,
+        "elevation_m": -301.98974609375,
+        "height_m": 1,
+        "pole_reference_meridian_deg_east": 0,
+        "frame": "MOON_ME_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_datum": "height_above_reference_sphere"
+      },
+      "sampling": {
+        "azimuth_step_deg": 30,
+        "near_step_m": 5,
+        "far_step_m": 240,
+        "near_extent_m": 5000,
+        "extents_m": [
+          100000.0,
+          200000
+        ],
+        "convergence_tolerance_deg": 0.01,
+        "required_max_extent_m": 200000
+      },
+      "bands": [
+        {
+          "azimuth_deg": 0.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.777972678561675,
+          "unknown_samples": 1003,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 30.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.3925232353875223,
+          "unknown_samples": 1008,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 60.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.12054219058577,
+          "unknown_samples": 981,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 90.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": -0.5606189152115976,
+          "unknown_samples": 867,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 120.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": -0.9773205017029832,
+          "unknown_samples": 1004,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 150.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.288923340157726,
+          "unknown_samples": 921,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 180.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.5864779811019745,
+          "unknown_samples": 857,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "outside_coverage",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 210.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.5319061507147653,
+          "unknown_samples": 954,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 240.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 1.2398080905622726,
+          "unknown_samples": 1006,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 270.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 0.14472171566392902,
+          "unknown_samples": 1007,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 300.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": -0.8874746538142627,
+          "unknown_samples": 1007,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        },
+        {
+          "azimuth_deg": 330.0,
+          "elevation_deg": null,
+          "sampled_lower_bound_deg": 0.5815555257118992,
+          "unknown_samples": 1011,
+          "quality_flags": [
+            "bilinear_from_positive_count_pixels",
+            "no_atmospheric_refraction",
+            "nodata",
+            "periodic_longitude",
+            "sampled_horizon",
+            "unknown_horizon",
+            "zero_count_interpolated_fill_unknown"
+          ]
+        }
+      ],
+      "converged": false,
+      "maximum_change_deg": null,
+      "algorithm_version": "cartesian-sampled-horizon-1",
+      "classification_scope": "sampled_distant_target_horizon_not_finite_spacecraft"
+    }
+  },
+  "tracks": [
+    {
+      "target": "SUN",
+      "target_definition": "Sun_center_not_solar_disk",
+      "observer_role": "panel",
+      "observer_height_m": 1,
+      "samples": [
+        {
+          "epoch_utc": "2026-11-14T08:50:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -78590035942.3532,
+              125102324658.82571,
+              -4016611636.0543423
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.76698658037516,
+            "elevation_deg": 1.0610535523806417,
+            "range_m": 147794144140.44614,
+            "unit_vector_fixed": [
+              -0.5317535804258964,
+              0.8464633336732041,
+              -0.027165317062119252
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T08:50:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T08:55:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -78497674357.34074,
+              125160418408.71333,
+              -4016613273.194682
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.7246838492373,
+            "elevation_deg": 1.061668200228778,
+            "range_m": 147794245088.01877,
+            "unit_vector_fixed": [
+              -0.531128283654763,
+              0.8468558273148491,
+              -0.02716530958461242
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T08:55:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:00:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -78405270032.20139,
+              125218443969.66847,
+              -4016614880.0714755
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.68238117991899,
+            "elevation_deg": 1.0622831042083372,
+            "range_m": 147794346142.81342,
+            "unit_vector_fixed": [
+              -0.5305026981664679,
+              0.8472478584285253,
+              -0.02716530188263993
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:00:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:05:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -78312823017.35187,
+              125276401310.23726,
+              -4016616456.7073836
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.64007857246563,
+            "elevation_deg": 1.0628982639916276,
+            "range_m": 147794447304.7349,
+            "unit_vector_fixed": [
+              -0.5298768243044338,
+              0.8476394268020525,
+              -0.02716529395637308
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:05:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:10:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:10:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -78220333363.13042,
+              125334290399.06662,
+              -4016618003.1250434
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.59777602687613,
+            "elevation_deg": 1.063513679251483,
+            "range_m": 147794548573.68787,
+            "unit_vector_fixed": [
+              -0.529250662411551,
+              0.8480305322239368,
+              -0.027165285805983045
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:10:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:15:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:15:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -78127801120.11417,
+              125392111204.70604,
+              -4016619519.3470426
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.55547354324804,
+            "elevation_deg": 1.064129349659137,
+            "range_m": 147794649949.57687,
+            "unit_vector_fixed": [
+              -0.5286242128323257,
+              0.8484211744820294,
+              -0.027165277431640673
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:15:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:20:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:20:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -78035226338.4597,
+              125449863696.01901,
+              -4016621005.3961225
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.51317112147612,
+            "elevation_deg": 1.0647452748886905,
+            "range_m": 147794751432.3067,
+            "unit_vector_fixed": [
+              -0.5279974759084164,
+              0.8488113533663083,
+              -0.027165268833517817
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:20:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:25:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:25:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77942609068.90453,
+              125507547841.55858,
+              -4016622461.294817
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.47086876170998,
+            "elevation_deg": 1.0653614546103083,
+            "range_m": 147794853021.7818,
+            "unit_vector_fixed": [
+              -0.5273704519854118,
+              0.8492010686646566,
+              -0.027165260011784983
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:25:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:30:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:30:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77849949361.65099,
+              125565163610.26225,
+              -4016623887.065871
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.42856646384435,
+            "elevation_deg": 1.0659778884978088,
+            "range_m": 147794954717.9067,
+            "unit_vector_fixed": [
+              -0.5267431414052782,
+              0.8495903201675616,
+              -0.027165250966614096
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:30:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:35:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:35:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77757247267.36888,
+              125622710970.82872,
+              -4016625282.731894
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.38626422797684,
+            "elevation_deg": 1.0665945762218576,
+            "range_m": 147795056520.5859,
+            "unit_vector_fixed": [
+              -0.5261155445131438,
+              0.8499791076638988,
+              -0.027165241698176176
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:35:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:40:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:40:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77664502836.42056,
+              125680189892.1989,
+              -4016626648.315562
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.34396205405424,
+            "elevation_deg": 1.0672115174551984,
+            "range_m": 147795158429.72394,
+            "unit_vector_fixed": [
+              -0.5254876616520547,
+              0.8503674309441859,
+              -0.027165232206642673
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:40:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:45:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:45:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77571716119.52188,
+              125737600343.14624,
+              -4016627983.83949
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.30165994217415,
+            "elevation_deg": 1.067828711868214,
+            "range_m": 147795260445.22516,
+            "unit_vector_fixed": [
+              -0.5248594931674485,
+              0.8507552897978119,
+              -0.027165222492184667
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:45:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:50:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77478887167.08118,
+              125794942292.68596,
+              -4016629289.3263392
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.25935789228348,
+            "elevation_deg": 1.0684461591333556,
+            "range_m": 147795362566.994,
+            "unit_vector_fixed": [
+              -0.5242310394026801,
+              0.8511426840158053,
+              -0.027165212554973533
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:50:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:55:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77386016029.74579,
+              125852215709.73682,
+              -4016630564.7987967
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.21705590442762,
+            "elevation_deg": 1.0690638589215091,
+            "range_m": 147795464794.93472,
+            "unit_vector_fixed": [
+              -0.5236023007027211,
+              0.8515296133885458,
+              -0.027165202395180853
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T09:55:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T10:00:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77293102758.19862,
+              125909420563.24763,
+              -4016631810.2794333
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.17475397865772,
+            "elevation_deg": 1.0696818109032857,
+            "range_m": 147795567128.95172,
+            "unit_vector_fixed": [
+              -0.5229732774127817,
+              0.85191607770662,
+              -0.0271651920129774
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T10:00:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T10:05:00Z",
+          "state": {
+            "target": "SUN",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -77200147402.90709,
+              125966556822.35088,
+              -4016633025.7909594
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 120.13245211491643,
+            "elevation_deg": 1.070300014750794,
+            "range_m": 147795669568.94928,
+            "unit_vector_fixed": [
+              -0.5223439698766132,
+              0.852302076761861,
+              -0.027165181408534914
+            ],
+            "target": "SUN",
+            "epoch_utc": "2026-11-14T10:05:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 1,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        }
+      ],
+      "geometric_intervals": [
+        {
+          "start_utc": "2026-11-14T08:50:00Z",
+          "end_utc": "2026-11-14T10:05:00Z",
+          "classification": "unknown",
+          "reason": "horizon_missing_data_or_extent_not_converged",
+          "boundary_uncertainty_s": 300
+        }
+      ]
+    },
+    {
+      "target": "EARTH",
+      "target_definition": "Earth_center_not_a_ground_station",
+      "observer_role": "antenna",
+      "observer_height_m": 2,
+      "samples": [
+        {
+          "epoch_utc": "2026-11-14T08:50:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404225469.21117544,
+              -12270611.53980054,
+              28419716.301275894
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.87520052638416,
+            "elevation_deg": -3.2972763266894374,
+            "range_m": 405505228.48353124,
+            "unit_vector_fixed": [
+              0.9967716085826979,
+              -0.03026181416136572,
+              0.07436788908611128
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T08:50:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T08:55:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404223917.5278528,
+              -12304754.358989136,
+              28393185.222587265
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8703604191964,
+            "elevation_deg": -3.2935478451313096,
+            "range_m": 405502744.2736508,
+            "unit_vector_fixed": [
+              0.9967738884847921,
+              -0.03034619829037483,
+              0.07430291706405759
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T08:55:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:00:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404222348.6417643,
+              -12338897.879895369,
+              28366638.69398856
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.865520113594,
+            "elevation_deg": -3.2898172977877915,
+            "range_m": 405500246.39224225,
+            "unit_vector_fixed": [
+              0.9967761595977799,
+              -0.030430586209778614,
+              0.07423790864801322
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:00:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:05:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404220762.5449007,
+              -12373042.076857544,
+              28340076.729752548
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.86067961261705,
+            "elevation_deg": -3.286084686324834,
+            "range_m": 405497734.83475655,
+            "unit_vector_fixed": [
+              0.9967784219131588,
+              -0.030514977865240538,
+              0.07417286386676043
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:05:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:10:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:10:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404219159.2292738,
+              -12407186.924103698,
+              28313499.344117235
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8558389193205,
+            "elevation_deg": -3.2823500124027603,
+            "range_m": 405495209.59664965,
+            "unit_vector_fixed": [
+              0.9967806754224645,
+              -0.03059937320215495,
+              0.07410778274898538
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:10:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:15:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:15:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404217538.68692356,
+              -12441332.395568212,
+              28286906.55137024
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8509980368007,
+            "elevation_deg": -3.2786132776881085,
+            "range_m": 405492670.6733904,
+            "unit_vector_fixed": [
+              0.9967829201172687,
+              -0.030683772165194214,
+              0.07404266532348461
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:15:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:20:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:20:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404215900.9098772,
+              -12475478.46617769,
+              28260298.365764204
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8461569680134,
+            "elevation_deg": -3.2748744838419053,
+            "range_m": 405490118.0604531,
+            "unit_vector_fixed": [
+              0.9967851559890958,
+              -0.030768174701480362,
+              0.07397751161895788
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:20:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:25:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:25:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404214245.89022404,
+              -12509625.109462064,
+              28233674.80160169
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.84131571611147,
+            "elevation_deg": -3.271133632531295,
+            "range_m": 405487551.7533248,
+            "unit_vector_fixed": [
+              0.996787383029591,
+              -0.0308525807546932,
+              0.0739123216642162
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:25:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:30:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:30:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404212573.620029,
+              -12543772.300311746,
+              28207035.87315018
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.83647428405493,
+            "elevation_deg": -3.2673907254179526,
+            "range_m": 405484971.74749774,
+            "unit_vector_fixed": [
+              0.9967896012303239,
+              -0.03093699027187038,
+              0.07384709548797361
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:30:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:35:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:35:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404210884.0914084,
+              -12577920.012587784,
+              28180381.59472687
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8316326749493,
+            "elevation_deg": -3.2636457641696777,
+            "range_m": 405482378.0384773,
+            "unit_vector_fixed": [
+              0.996791810582957,
+              -0.031021403197513044,
+              0.07378183311905484
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:35:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:40:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:40:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404209177.2964767,
+              -12612068.220776448,
+              28153711.980614208
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.82679089181113,
+            "elevation_deg": -3.2598987504487527,
+            "range_m": 405479770.6217744,
+            "unit_vector_fixed": [
+              0.9967940110791327,
+              -0.03110581947766685,
+              0.07371653458618842
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:40:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:45:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:45:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404207453.2273883,
+              -12646216.898702575,
+              28127027.045144144
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8219489377504,
+            "elevation_deg": -3.256149685923618,
+            "range_m": 405477149.4929123,
+            "unit_vector_fixed": [
+              0.9967962027105594,
+              -0.031190239056748302,
+              0.07365119991821321
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:45:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:50:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404205711.876296,
+              -12680366.020815993,
+              28100326.802613787
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.81710681578824,
+            "elevation_deg": -3.252398572257172,
+            "range_m": 405474514.64742017,
+            "unit_vector_fixed": [
+              0.9967983854689251,
+              -0.03127466188071779,
+              0.07358582914387168
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:50:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:55:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404203953.235381,
+              -12714515.561273118,
+              28073611.267370053
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.81226452898704,
+            "elevation_deg": -3.248645411118566,
+            "range_m": 405471866.08084,
+            "unit_vector_fixed": [
+              0.9968005593459549,
+              -0.031359087894814085,
+              0.07352042229201725
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T09:55:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T10:00:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404202177.2968574,
+              -12748665.493752042,
+              28046880.45372467
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8074220804766,
+            "elevation_deg": -3.2448902041712198,
+            "range_m": 405469203.7887189,
+            "unit_vector_fixed": [
+              0.9968027243334403,
+              -0.03144351704309877,
+              0.07345497939140623
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T10:00:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        },
+        {
+          "epoch_utc": "2026-11-14T10:05:00Z",
+          "state": {
+            "target": "EARTH",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404200384.0529253,
+              -12782815.792993555,
+              28020134.37602863
+            ],
+            "position_unit": "m",
+            "provenance_label": "published_DE421_SPICE_same_epoch_geometric_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 356.8025794732359,
+            "elevation_deg": -3.241132953083501,
+            "range_m": 405466527.76661646,
+            "unit_vector_fixed": [
+              0.996804880423105,
+              -0.03152794927225629,
+              0.07338950047088005
+            ],
+            "target": "EARTH",
+            "epoch_utc": "2026-11-14T10:05:00Z",
+            "frame": "MOON_ME_DE421",
+            "origin": "surface_observer",
+            "observer_height_m": 2,
+            "aberration": "NONE",
+            "geometry_model": "same_epoch_geometric"
+          },
+          "classification": "unknown",
+          "classification_reason": "horizon_missing_data_or_extent_not_converged"
+        }
+      ],
+      "geometric_intervals": [
+        {
+          "start_utc": "2026-11-14T08:50:00Z",
+          "end_utc": "2026-11-14T10:05:00Z",
+          "classification": "unknown",
+          "reason": "horizon_missing_data_or_extent_not_converged",
+          "boundary_uncertainty_s": 300
+        }
+      ]
+    },
+    {
+      "target": "synthetic-earth-station",
+      "target_definition": "synthetic_configured_WGS84_ITRF93_ground_station",
+      "observer_role": "antenna",
+      "observer_height_m": 2,
+      "samples": [
+        {
+          "epoch_utc": "2026-11-14T08:50:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              405790240.4398,
+              -6089293.3713089265,
+              28572779.33637302
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7533000819524,
+            "elevation_deg": -3.30315798646508,
+            "range_m": 406936906.1769477,
+            "unit_vector_fixed": [
+              0.9971100284927514,
+              -0.014965478935181777,
+              0.0744823839536911
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T08:55:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              405667658.97690207,
+              -6095567.674359803,
+              28598716.082770918
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7521587996664,
+            "elevation_deg": -3.308086263738744,
+            "range_m": 406816706.2849984,
+            "unit_vector_fixed": [
+              0.9971033204466722,
+              -0.01498532362660455,
+              0.07456814621557031
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:00:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              405544412.61021477,
+              -6104616.375696913,
+              28624539.024548624
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7506239429473,
+            "elevation_deg": -3.313008278727603,
+            "range_m": 406695879.73624945,
+            "unit_vector_fixed": [
+              0.9970965099185366,
+              -0.01501202496982898,
+              0.07465379437496188
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:05:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              405420555.04486483,
+              -6116450.451278092,
+              28650223.112172008
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.74869371041,
+            "elevation_deg": -3.317919960255401,
+            "range_m": 406574478.5820069,
+            "unit_vector_fixed": [
+              0.9970896012257815,
+              -0.015045614271320958,
+              0.07473925754655661
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:10:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:10:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              405296140.25310767,
+              -6131079.632040242,
+              28675743.355218306
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7463664724172,
+            "elevation_deg": -3.322817234777164,
+            "range_m": 406452555.17481387,
+            "unit_vector_fixed": [
+              0.9970825986119148,
+              -0.015086119843515822,
+              0.0748244648051567
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:15:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:15:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              405171222.4509155,
+              -6148512.399531935,
+              28701074.8342615
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7436407724192,
+            "elevation_deg": -3.32769602823287,
+            "range_m": 406330162.1465043,
+            "unit_vector_fixed": [
+              0.9970755062428472,
+              -0.01513356698178126,
+              0.07490934521792288
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:20:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:20:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              405045856.0736478,
+              -6168755.983443956,
+              28726192.71288631
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7405153280368,
+            "elevation_deg": -3.332552267945411,
+            "range_m": 406207352.3852782,
+            "unit_vector_fixed": [
+              0.9970683282033446,
+              -0.015187977945860975,
+              0.07499382787739005
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:25:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:25:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404920095.75246644,
+              -6191816.356132459,
+              28751072.2495015
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7369890325815,
+            "elevation_deg": -3.3373818844995706,
+            "range_m": 406084179.0133582,
+            "unit_vector_fixed": [
+              0.99706106849387,
+              -0.015249371933692059,
+              0.0750778419341576
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:30:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:30:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404793996.28979236,
+              -6217698.232764023,
+              28775688.809267137
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.73306095579085,
+            "elevation_deg": -3.3421808136638016,
+            "range_m": 405960695.3636794,
+            "unit_vector_fixed": [
+              0.997053731027416,
+              -0.015317765068915095,
+              0.07516131663031585
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:35:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:35:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404667612.63555706,
+              -6246405.066945548,
+              28800017.875812657
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.72873034521103,
+            "elevation_deg": -3.3469449982916095,
+            "range_m": 405836954.95718324,
+            "unit_vector_fixed": [
+              0.9970463196267964,
+              -0.015393170377091118,
+              0.07524418133252536
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:40:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:40:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404540999.862527,
+              -6277939.05090824,
+              28824035.06305543
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.72399662694204,
+            "elevation_deg": -3.351670390263838,
+            "range_m": 405713011.4791566,
+            "unit_vector_fixed": [
+              0.9970388380219773,
+              -0.015475597773035758,
+              0.07532636556580107
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:45:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:45:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404414213.14241546,
+              -6312301.113354009,
+              28847716.126800865
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.71885940672024,
+            "elevation_deg": -3.3563529524092894,
+            "range_m": 405588918.75619686,
+            "unit_vector_fixed": [
+              0.997031289847796,
+              -0.015565054042265502,
+              0.07540779904692389
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:50:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404287307.7211086,
+              -6349490.920416684,
+              28871036.97642905
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7133184705635,
+            "elevation_deg": -3.3609886604640464,
+            "range_m": 405464730.7322384,
+            "unit_vector_fixed": [
+              0.9970236786417848,
+              -0.015661542830072858,
+              0.07548841171852137
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T09:55:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404160338.8946909,
+              -6389506.874988885,
+              28893973.6863558
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.70737378565144,
+            "elevation_deg": -3.3655735050079474,
+            "range_m": 405340501.44522625,
+            "unit_vector_fixed": [
+              0.9970160078423587,
+              -0.0157650646264931,
+              0.0755681337827538
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T10:00:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              404033361.9846325,
+              -6432346.117358578,
+              28916502.507564086
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.7010255010205,
+            "elevation_deg": -3.3701034934370666,
+            "range_m": 405216285.0028677,
+            "unit_vector_fixed": [
+              0.9970082807871895,
+              -0.015875616754502546,
+              0.07564689573562602
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        },
+        {
+          "epoch_utc": "2026-11-14T10:05:00Z",
+          "state": {
+            "target": "synthetic-earth-station",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              403906432.31368834,
+              -6478004.528111793,
+              28938599.878912985
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_station_WGS84_ITRF93_published_DE421_same_epoch_NONE"
+          },
+          "direction": {
+            "azimuth_deg": 357.6942739479391,
+            "elevation_deg": -3.3745746519143043,
+            "range_m": 405092135.559003,
+            "unit_vector_fixed": [
+              0.9970005007117961,
+              -0.015993193363780755,
+              0.07572462840091491
+            ]
+          },
+          "classification": "unknown",
+          "classification_reason": "station_endpoint_and_full_segment_opportunity_not_assessed"
+        }
+      ],
+      "geometric_intervals": [
+        {
+          "start_utc": "2026-11-14T08:50:00Z",
+          "end_utc": "2026-11-14T10:05:00Z",
+          "classification": "unknown",
+          "reason": "station_endpoint_and_full_segment_opportunity_not_assessed",
+          "boundary_uncertainty_s": 300
+        }
+      ]
+    },
+    {
+      "target": "diagnostic-synthetic-relay",
+      "target_definition": "synthetic_two_body_lunar_preset",
+      "not_scenario_relay_ephemeris": true,
+      "observer_role": "antenna",
+      "observer_height_m": 2,
+      "trajectory_assumptions": {
+        "label": "synthetic_two_body_lunar_preset",
+        "origin": "MOON",
+        "frame": "J2000",
+        "gm_m3_s2": 4902800066000.0,
+        "reference_radius_m": 1737400,
+        "omitted_forces": [
+          "lunar_nonspherical_gravity",
+          "Earth_and_Sun_third_body",
+          "radiation_pressure"
+        ],
+        "coverage": {
+          "start_utc": "2026-11-14T08:50:00Z",
+          "end_utc": "2026-11-14T10:05:00Z"
+        }
+      },
+      "segment_parameters": {
+        "step_m": 250,
+        "clearance_m": 1,
+        "body_radius_m": 1720000,
+        "body_radius_input_class": "assumed_conservative_inner_sphere",
+        "max_samples": 20000
+      },
+      "samples": [
+        {
+          "epoch_utc": "2026-11-14T08:50:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -635864.7355476937,
+              -1809314.8119552727,
+              29659.501042949865
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 249.26390360286777,
+            "elevation_deg": -42.84091794665564,
+            "range_m": 2615205.0087354323,
+            "unit_vector_fixed": [
+              -0.25437205124540163,
+              -0.6921167296405296,
+              0.6754770848051803
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 2615205.0087354323,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T08:55:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T08:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -445660.18443895236,
+              -1805849.8958380616,
+              470537.4391149554
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 254.9866678458151,
+            "elevation_deg": -50.02098250489342,
+            "range_m": 2891692.794374513,
+            "unit_vector_fixed": [
+              -0.16427419686996542,
+              -0.6247420975640177,
+              0.7633552906570042
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 2891692.794374513,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:00:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              -227662.5245807866,
+              -1690490.6162876422,
+              882183.1505448013
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 261.4375044375255,
+            "elevation_deg": -57.005989981209844,
+            "range_m": 3128190.5416247747,
+            "unit_vector_fixed": [
+              -0.08216662256093618,
+              -0.5406329697037773,
+              0.8372363096558839
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3128190.5416247747,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:05:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              4720.350279381033,
+              -1470718.2437301513,
+              1239170.1918015077
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 269.61119514762026,
+            "elevation_deg": -63.71084838208479,
+            "range_m": 3320003.1591839986,
+            "unit_vector_fixed": [
+              -0.007424684703692967,
+              -0.4432015571099733,
+              0.8963912392657271
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3320003.1591839986,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:10:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:10:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              237247.3870694468,
+              -1160549.350667753,
+              1519707.5815603763
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 281.38169249316445,
+            "elevation_deg": -69.9170738654227,
+            "range_m": 3463656.8767798226,
+            "unit_vector_fixed": [
+              0.06001664353979665,
+              -0.3352704144810125,
+              0.9402083554574205
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3463656.8767798226,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:15:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:15:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              455783.45784230146,
+              -779507.312083785,
+              1707010.1508357087
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 300.50094687572374,
+            "elevation_deg": -75.05513206259559,
+            "range_m": 3556789.885115492,
+            "unit_vector_fixed": [
+              0.1198870736433363,
+              -0.2193606210417678,
+              0.9682499716031017
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3556789.885115492,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:20:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:20:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              647198.0962821117,
+              -351248.4419405981,
+              1790270.1563939052
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 331.25080709430955,
+            "elevation_deg": -77.76204749079538,
+            "range_m": 3598079.3623377206,
+            "unit_vector_fixed": [
+              0.17171043412703213,
+              -0.09781906748775876,
+              0.9802790198957292
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3598079.3623377206,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:25:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:25:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              800158.0266935795,
+              98025.77766285269,
+              1765184.5396074941
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 5.39627417930986,
+            "elevation_deg": -76.52738445109081,
+            "range_m": 3587177.217514147,
+            "unit_vector_fixed": [
+              0.2148730472469201,
+              0.02712814163668832,
+              0.9762651471286695
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3587177.217514147,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:30:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:30:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              905766.16616004,
+              541236.8053598121,
+              1634039.0993057706
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 28.752473860822125,
+            "elevation_deg": -72.17069878593338,
+            "range_m": 3524647.5255193515,
+            "unit_vector_fixed": [
+              0.24864779608829612,
+              0.15335561227500025,
+              0.9563766672625347
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3524647.5255193515,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:35:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:35:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              958020.2541036748,
+              952058.4571183241,
+              1405388.0277736695
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 42.75139756106063,
+            "elevation_deg": -66.36449384513215,
+            "range_m": 3411908.518743651,
+            "unit_vector_fixed": [
+              0.2721790229868296,
+              0.27883107822551056,
+              0.9209624364009283
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3411908.518743651,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:40:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:40:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              954082.7505741428,
+              1306413.239440184,
+              1093390.9252890954
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 51.95785859628488,
+            "elevation_deg": -59.93157022203363,
+            "range_m": 3251187.5423701555,
+            "unit_vector_fixed": [
+              0.2844229720898935,
+              0.40160738080894737,
+              0.8705257518461639
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3251187.5423701555,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:45:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:45:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              894367.6202159384,
+              1583768.8643525,
+              716879.5824352499
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 58.833668142692744,
+            "elevation_deg": -53.18356573013376,
+            "range_m": 3045502.390883945,
+            "unit_vector_fixed": [
+              0.2840244998176769,
+              0.5198014432892292,
+              0.8056901036116508
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 3045502.390883945,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:50:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:50:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              782458.2364256046,
+              1768193.231619539,
+              298226.33818733704
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 64.60852564066867,
+            "elevation_deg": -46.23980002936396,
+            "range_m": 2798691.1548115723,
+            "unit_vector_fixed": [
+              0.26908575037988464,
+              0.6315383898472038,
+              0.7271534371036803
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 2798691.1548115723,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T09:55:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T09:55:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              624874.4143231486,
+              1849145.060133674,
+              -137921.06628746173
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 70.00619591460544,
+            "elevation_deg": -39.14078677961303,
+            "range_m": 2515533.223091863,
+            "unit_vector_fixed": [
+              0.23673075827622053,
+              0.734807521974018,
+              0.6356228864164415
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 2515533.223091863,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T10:00:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:00:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              430706.9183181097,
+              1821989.046076634,
+              -565982.2049945181
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 75.59620506307797,
+            "elevation_deg": -31.885230085005382,
+            "range_m": 2202056.9892693018,
+            "unit_vector_fixed": [
+              0.18225531551737748,
+              0.8270797390446977,
+              0.5317161886076218
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 2202056.9892693018,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        },
+        {
+          "epoch_utc": "2026-11-14T10:05:00Z",
+          "state": {
+            "target": "diagnostic-synthetic-relay",
+            "origin": "MOON",
+            "frame": "MOON_ME_DE421",
+            "epoch": "2026-11-14T10:05:00Z",
+            "epoch_format": "rfc3339",
+            "time_scale": "UTC",
+            "position": [
+              211136.47385997092,
+              1688229.6921056258,
+              -960815.8040553804
+            ],
+            "position_unit": "m",
+            "provenance_label": "synthetic_two_body_lunar_preset; transformed_to_MOON_ME_DE421"
+          },
+          "direction": {
+            "azimuth_deg": 82.02519754722096,
+            "elevation_deg": -24.44021510912836,
+            "range_m": 1866275.7778047135,
+            "unit_vector_fixed": [
+              0.09739511655785102,
+              0.9042165076269771,
+              0.4158205124877261
+            ]
+          },
+          "classification": "blocked",
+          "classification_reason": "solid_body_intersection",
+          "segment_test": {
+            "status": "blocked",
+            "reason": "solid_body_intersection",
+            "minimum_sampled_clearance_m": null,
+            "tested_range_m": 1866275.7778047135,
+            "sample_count": 0,
+            "quality_flags": [
+              "declared_body_radius"
+            ]
+          }
+        }
+      ],
+      "geometric_intervals": [
+        {
+          "start_utc": "2026-11-14T08:50:00Z",
+          "end_utc": "2026-11-14T10:05:00Z",
+          "classification": "blocked",
+          "reason": "solid_body_intersection",
+          "boundary_uncertainty_s": 300
+        }
+      ]
+    }
+  ],
+  "numerics": {
+    "time_step_s": 300,
+    "horizon_margin_deg": 0.1,
+    "interval_method": "adjacent_sample_classification_not_refined_events",
+    "interval_interior_verification": "not_proved; opportunities_shorter_than_step_may_be_missed"
+  },
+  "provenance": {
+    "geometry": {
+      "frame": "MOON_ME_DE421",
+      "ephemeris": "DE421",
+      "aberration": "NONE",
+      "geometry_model": "same_epoch_geometric",
+      "verified_coverage": {
+        "start_utc": "2026-11-14T00:00:00Z",
+        "end_utc": "2026-11-15T00:00:00Z"
+      },
+      "kernels": [
+        {
+          "role": "planetary_ephemeris",
+          "path": "de421.bsp",
+          "sha256": "08b20db2ae22488650641c5a9033e5bfda4b1c4b440cfeaf20f621cfa18ecdb3",
+          "size_bytes": 16790528,
+          "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de421.bsp",
+          "actual_coverage": {
+            "3": [
+              {
+                "start_tdb_s": -3169195200.0,
+                "end_tdb_s": 1696852800.0,
+                "start_utc": "1899-07-28T23:59:18.816695Z",
+                "end_utc": "2053-10-08T23:58:50.817654Z"
+              }
+            ],
+            "10": [
+              {
+                "start_tdb_s": -3169195200.0,
+                "end_tdb_s": 1696852800.0,
+                "start_utc": "1899-07-28T23:59:18.816695Z",
+                "end_utc": "2053-10-08T23:58:50.817654Z"
+              }
+            ],
+            "301": [
+              {
+                "start_tdb_s": -3169195200.0,
+                "end_tdb_s": 1696852800.0,
+                "start_utc": "1899-07-28T23:59:18.816695Z",
+                "end_utc": "2053-10-08T23:58:50.817654Z"
+              }
+            ],
+            "399": [
+              {
+                "start_tdb_s": -3169195200.0,
+                "end_tdb_s": 1696852800.0,
+                "start_utc": "1899-07-28T23:59:18.816695Z",
+                "end_utc": "2053-10-08T23:58:50.817654Z"
+              }
+            ]
+          }
+        },
+        {
+          "role": "leap_seconds",
+          "path": "naif0012.tls",
+          "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b",
+          "size_bytes": 5257,
+          "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
+        },
+        {
+          "role": "lunar_frame",
+          "path": "moon_080317.tf",
+          "sha256": "78732477b96f9863e7b0d65bcee3c22b8707ca5ed0db56d1173319cb2e8c7993",
+          "size_bytes": 21437,
+          "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf"
+        },
+        {
+          "role": "lunar_orientation",
+          "path": "moon_pa_de421_1900-2050.bpc",
+          "sha256": "656f90616403d75a75f0cd6c8830fc5b44f8cb4facb5ccb8915e752b397520cf",
+          "size_bytes": 1770496,
+          "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc",
+          "actual_coverage": {
+            "31006": [
+              {
+                "start_tdb_s": -3155716800.0,
+                "end_tdb_s": 1609416000.0,
+                "start_utc": "1899-12-31T23:59:18.816031Z",
+                "end_utc": "2050-12-31T23:58:50.816094Z"
+              }
+            ]
+          }
+        },
+        {
+          "role": "earth_orientation",
+          "path": "earth_000101_270208_261113.bpc",
+          "sha256": "6e77690ba455a644e509b0b9cb308b0dec1a7154ceecf3355659b917b21ca45e",
+          "size_bytes": 5163008,
+          "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_000101_270208_261113.bpc",
+          "actual_coverage": {
+            "3000": [
+              {
+                "start_tdb_s": -43135.816087188054,
+                "end_tdb_s": 855403269.1849744,
+                "start_utc": "2000-01-01T00:00:00.000000Z",
+                "end_utc": "2027-02-09T00:00:00.000000Z"
+              }
+            ]
+          }
+        }
+      ],
+      "spice_toolkit_version": "CSPICE_N0067"
+    },
+    "terrain": [
+      {
+        "manifest_version": "0.2.0",
+        "dataset_id": "pgda81-near-89s-0e-window-v1",
+        "status": "local_window_extracted",
+        "input_class": "published",
+        "frame": "MOON_ME_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_datum": "height_above_reference_sphere",
+        "elevation_unit": "m",
+        "pixel_size_m": 5,
+        "interpolation_policy": "unknown_if_zero_count",
+        "elevation_sha256": "79309dc0369aab9728e236de97ef5fd1eda1662c30042810bcf445e05f63fbf7",
+        "count_sha256": "86e2f7169c8588599787ae5ba123fd9f72c77d2b028d446f81be6b3fca25386a",
+        "source_urls": [
+          "https://pgda.gsfc.nasa.gov/products/81"
+        ],
+        "method_source": "https://doi.org/10.1016/j.pss.2020.105119",
+        "count_convention": "floating_point_LOLA_returns_after_field_blending",
+        "nodata_convention": "NaN; zero or masked return counts remain unknown",
+        "files": [
+          {
+            "role": "elevation",
+            "path": "lola-near-elevation.tif",
+            "sha256": "79309dc0369aab9728e236de97ef5fd1eda1662c30042810bcf445e05f63fbf7",
+            "size_bytes": 5668532,
+            "parent": {
+              "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldem_87s_5mpp.tif",
+              "size_bytes": 3465285714,
+              "etag": "W/\"ce8c1052-17c7ede95a8\"",
+              "last_modified": "Thu, 14 Oct 2021 12:54:49 GMT",
+              "parent_sha256": null
+            },
+            "parent_file_sha256": null,
+            "acquisition": "bounded_HTTP_window",
+            "source_pixel_window": [
+              19000,
+              12935,
+              2000,
+              2000
+            ],
+            "bounds_xy_m": [
+              -5000.0,
+              25325.0,
+              5000.0,
+              35325.0
+            ],
+            "transform": [
+              5.0,
+              0.0,
+              -5000.0,
+              0.0,
+              -5.0,
+              35325.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "crs_wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+            "dtype": "float32"
+          },
+          {
+            "role": "count",
+            "path": "lola-near-count.tif",
+            "sha256": "86e2f7169c8588599787ae5ba123fd9f72c77d2b028d446f81be6b3fca25386a",
+            "size_bytes": 389726,
+            "parent": {
+              "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldec_87s_5mpp.tif",
+              "size_bytes": 145895726,
+              "etag": "W/\"8b2312e-17c7f5b5b10\"",
+              "last_modified": "Thu, 14 Oct 2021 15:11:06 GMT",
+              "parent_sha256": null
+            },
+            "parent_file_sha256": "dab531d817b9e7cfddf8ac23ffde9ccfe737efe526e98763ca7ded7a2afcae04",
+            "acquisition": "window_of_cached_compact_count_mosaic",
+            "source_pixel_window": [
+              19000,
+              12935,
+              2000,
+              2000
+            ],
+            "bounds_xy_m": [
+              -5000.0,
+              25325.0,
+              5000.0,
+              35325.0
+            ],
+            "transform": [
+              5.0,
+              0.0,
+              -5000.0,
+              0.0,
+              -5.0,
+              35325.0,
+              0.0,
+              0.0,
+              1.0
+            ],
+            "crs_wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+            "dtype": "uint8"
+          }
+        ],
+        "redistribution": "not_bundled; local acquisition only; retain product citation",
+        "far_field_coverage": "not_provided_by_this_extract",
+        "software": {
+          "rasterio": "1.5.2",
+          "gdal": "3.12.2"
+        }
+      },
+      {
+        "manifest_version": "0.2.0",
+        "dataset_id": "pds-lola64-southcap-v1",
+        "input_class": "published",
+        "frame": "MOON_ME_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_datum": "height_above_reference_sphere",
+        "elevation_unit": "m",
+        "projection": "simple_cylindrical",
+        "pixels_per_degree": 64,
+        "interpolation_policy": "unknown_if_zero_count",
+        "files": [
+          {
+            "role": "elevation",
+            "path": "lola-far-elevation.tif",
+            "sha256": "b28c264941b7a390c303c7871804b612b482e97538595915785ee1249257199b",
+            "raw_extract_sha256": "b32cdfa666630f76458bb8ab7b95f36a7a8cfd1ef7c0289f7e5b51f916b71586",
+            "size_bytes": 23755273,
+            "source_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_64.img",
+            "label_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldem_64.lbl",
+            "label_sha256": "4e7a94c76c716a147b21ccf07669d004246b0d1b017b7d63d50befaa1a34142d",
+            "product_version": "V3.1",
+            "source_byte_range_inclusive": [
+              501350400,
+              530841599
+            ],
+            "source_data_stop_time_utc": "2016-11-29T05:48:19Z"
+          },
+          {
+            "role": "count",
+            "path": "lola-far-count.tif",
+            "sha256": "b9324078a697e22a1848dd04dcf5b00a9a3cfae746d39e819ed6bb493ce57bd3",
+            "raw_extract_sha256": "7d4366ebb011e429426d618db0ce1037f499dc4287bc0688dec4cf07fda635c9",
+            "size_bytes": 13302980,
+            "source_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldec_64.img",
+            "label_url": "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/cylindrical/img/ldec_64.lbl",
+            "label_sha256": "c39096be522606065f7b9cce245e60d124ab397f4d33d3bd3248ff7bc7208e36",
+            "product_version": "V3.0",
+            "source_byte_range_inclusive": [
+              501350400,
+              530841599
+            ],
+            "source_data_stop_time_utc": "2016-11-29T05:48:19Z"
+          }
+        ],
+        "elevation_sha256": "b28c264941b7a390c303c7871804b612b482e97538595915785ee1249257199b",
+        "count_sha256": "b9324078a697e22a1848dd04dcf5b00a9a3cfae746d39e819ed6bb493ce57bd3",
+        "bounds_lonlat_deg": [
+          0,
+          -90,
+          360,
+          -80
+        ],
+        "height_decode": "height_m = signed_little_endian_DN * 0.5; radius_m = height_m + 1737400",
+        "pixel_registration": "center_lat = 90-(global_row+0.5)/64; center_lon_east=(column+0.5)/64",
+        "quality_notes": [
+          "Height V3.1 and count V3.0 are separately pinned; both cover mission LRO_ES_52 through 2016-11-29.",
+          "Published grid may include interpolation and latitude-band artifacts. Zero counts remain unknown."
+        ],
+        "redistribution": "not_bundled; local range extracts only",
+        "software": {
+          "rasterio": "1.5.2",
+          "gdal": "3.12.2"
+        }
+      }
+    ]
+  },
+  "warnings": [
+    "Geometric diagnostics are not usable contacts or a delivery result.",
+    "Sun center classification is not solar visible fraction, illumination energy, or power.",
+    "Earth center is not any specific station. Station positions do not establish station visibility or service.",
+    "Same-epoch NONE geometry omits transmission light-time corrections; no delivery times are computed.",
+    "Extent convergence does not prove angular or radial sampling completeness; unresolved horizons stay unknown.",
+    "Renderer registration is absent. No map overlays are released by this diagnostic."
+  ],
+  "explicit_site_override": {
+    "latitude_deg": -89.03093035536243,
+    "longitude_deg_east": 1.389336784014743,
+    "scope": "CLI-requested diagnostic test site, not an implicit move or landing recommendation"
+  }
+}

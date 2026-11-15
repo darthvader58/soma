@@ -96,3 +96,116 @@ SOMA is a planning model under declared assumptions. The engine and interface
 are now coordinated by one team. Live integration and
 the Phase 6 product checks have not begun.
 
+## Phase 2 geometry and numerical terrain
+
+The geometry layer reads a matched, hash-pinned DE421 planetary ephemeris,
+lunar frame and orientation, leap seconds, and Earth orientation. It provides
+explicit Moon-fixed/J2000 states, local directions, coordinate round trips, a
+defined polar basis, WGS84/ITRF93 station translation, finite body tests,
+bounded state-history interpolation, and an explicitly synthetic two-body
+relay preset. Its scoped context restores the previous SPICE kernel pool.
+
+Numerical terrain uses an aligned five-meter PGDA LOLA elevation/count window
+and a coarser native 64-pixel-per-degree PDS LOLA south-polar cap. Both identify
+DE421 mean-Earth. Counts, source revisions, native pixel registration,
+extraction bounds and checksums are preserved. Zero counts, nodata and
+unsupported coverage remain unknown. Files are acquired locally and are not
+bundled in this repository.
+
+```sh
+.venv/bin/python -m soma fetch-geometry-data --data-root /private/tmp/soma-phase2-data
+.venv/bin/python -m soma verify-geometry --data-root /private/tmp/soma-phase2-data
+.venv/bin/python -m soma geometry fixtures/synthetic-relay/scenario.json \
+  --data-root /private/tmp/soma-phase2-data \
+  --latitude-deg -89.03093035536243 --longitude-deg-east 1.389336784014743 \
+  --synthetic-relay
+```
+
+The explicit override is a count-positive numerical verification point, not a
+landing recommendation. The original synthetic location has unknown measured
+terrain and is rejected; it is never moved silently. `geometry` writes a
+separate versioned artifact with Sun/Earth center directions and ranges,
+station/relay states, per-height horizons, sampled geometric intervals,
+source manifests and warnings. Intervals have sampling uncertainty and may
+miss shorter events; they are not usable contacts.
+
+The recorded real-data run retains **unknown horizons** because masked
+samples prevent convergence, even with the coarse far source. No clear
+skyline, solar generation or delivery success is inferred. The selected
+synthetic relay is blocked in that run. The independent Skyfield comparison
+passes after explicitly accounting for its single-float Julian-date rotation
+precision. This checks implementation and frame handling, not the shared JPL
+ephemeris accuracy or renderer registration. See the
+[Phase 2 evidence](soma/docs/phase-2/README.md) and
+[interface-side review](web/docs/phase-2-contract-review.md).
+
+## Interface development: Phase 1 client and Phase 2 selection
+
+[`web/`](web/README.md) contains a runnable scenario editor, captured-result
+view, contact timeline, and Cesium Moon client. It imports the canonical JSON
+schemas directly; it does not duplicate the scientific model in JavaScript.
+Python and JavaScript share RFC 8785 scenario hashes, including shared
+Unicode/number test vectors. Changing an input clears the displayed result.
+Offline mode accepts only an exact match to a captured Python result.
+
+From the repository root, after installing the Python package above:
+
+```sh
+npm --prefix web ci
+npm --prefix web run sync:fixtures
+npm --prefix web test
+npm --prefix web run build
+npm --prefix web run dev
+```
+
+The dev server serves `http://127.0.0.1:5173/`. A scoped Cesium ion token can
+be configured in `web/.env.local` using `web/.env.example`. Without a token,
+the map shows a labelled fallback while the form, text result, timeline and
+JSON downloads work. No default evaluation token is used. Aligned markers and
+contact overlays stay blocked until the engine supplies reviewed frame
+registration. Token-backed rendering and picking have not been verified.
+
+Phase 2 separates the immutable synthetic fixture analysis point from typed
+draft coordinates and display-only surface picks. A surface pick creates a
+labelled renderer marker without adopting its elevation or changing equipment
+heights. Tile/render failures clear selections and preserve text results.
+The form states its fixed absolute deadline rule and disables Earth-orbit
+routing. Timeline endpoints retain their exact supplied timestamps and offsets;
+scrubbing changes the map clock without starting analysis. See the
+[Phase 2 interface checks](web/docs/phase-2-verification.md).
+
+The interface is a **visual draft**, pending user design direction. Its
+checked-in results are the engine's actual `unknown` outputs. Hand-calculated
+relay allocations are a separately labelled reference, never a successful
+engine plan. No live HTTP service, full run-package download or integrated
+mission demo is claimed. Phase 3 scientific displays and saved comparisons
+read the separate artifacts described below. The prepared service client is tested with controlled responses
+for polling, cancellation, and stale-result rejection.
+
+## Phase 3 illumination, power, contacts and scientific display
+
+Python now evaluates a sampled solar disk with combined terrain/Earth masks,
+fixed-panel electrical generation and explicit constant-bin battery replay.
+Contact construction checks interval-wide geometry evidence, compatible radios,
+both endpoint service calendars, acquisition/teardown and propagation. Assumed
+rates remain labelled; an optional fully declared Friis/noise/mode budget checks
+margin without overriding geometry or service. These components do not select
+a delivery schedule. `plan_delivery` remains unknown until Phase 4.
+
+```sh
+.venv/bin/python -m soma environment soma/docs/phase-2/geometry-diagnostic.json --generation-time-model left_sample_piecewise_constant_assumption
+npm --prefix web run sync:science
+```
+
+The browser displays supplied horizons, Sun/Earth/station directions, solar
+fractions, power and battery samples. It separates invented algorithm fixtures
+from the recorded real LOLA site, where horizon gaps still yield unknown power.
+Two saved delivery results can be compared under an explicit fixed-deadline rule;
+missing schedule summaries stay Unknown. Scientific JSON downloads preserve the
+engine output. No browser physics or registered Moon overlays were added.
+
+See [Phase 3 methods and reproduction](soma/docs/phase-3/README.md) and
+[interface verification](web/docs/phase-3-verification.md). Generation held
+constant between samples is an explicit temporal approximation. The base-load
+trace is not evidence that transmissions are affordable; energy must constrain
+the Phase 4 scheduler.

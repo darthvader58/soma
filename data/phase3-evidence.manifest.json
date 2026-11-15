@@ -1,0 +1,52 @@
+{
+  "manifest_version": "0.3.0",
+  "purpose": "Phase 3 diagnostic evidence; no delivery solver or selected schedule",
+  "environment_artifact_version": "0.3.0",
+  "frozen_schema_changed": false,
+  "generation_time_model": "left_sample_piecewise_constant_assumption",
+  "radio_activity_selected": false,
+  "real_geometry_source": {
+    "path": "soma/docs/phase-2/geometry-diagnostic.json",
+    "sha256": "87e6e4390b9ee3b1465c7fbb6e9a07deacded9ce1f0d97a27831dab3095a3e70"
+  },
+  "artifacts": [
+    {
+      "path": "soma/docs/phase-3/environment-real.json",
+      "sha256": "44403711ef2fc33e801994a630b0684f9ad46a9b539ea71780b1d94a6f063261",
+      "scenario_sha256": "bc237323c4c94e287b1d00ab5d9859577d4ff91abd858f62a0961faae7de8bd1",
+      "solar_samples": 16,
+      "unknown_solar_samples": 16,
+      "battery_status": "unknown",
+      "usable_contacts": 0,
+      "selected_allocations": null
+    },
+    {
+      "path": "fixtures/phase-3/synthetic-direct-environment.json",
+      "sha256": "f08996644db965c7ce355dd7cee2c85dee32aa006e58f2dbbc639fec29cb9b62",
+      "scenario_sha256": "857f1772d4052a5d06c955d6b63b847c989550442ada201d8ad592a1f95375ed",
+      "solar_samples": 16,
+      "unknown_solar_samples": 0,
+      "battery_status": "satisfied_under_piecewise_constant_assumptions",
+      "usable_contacts": 1,
+      "selected_allocations": null
+    },
+    {
+      "path": "fixtures/phase-3/synthetic-relay-environment.json",
+      "sha256": "fb078e6b803267e33d592d33eaa0d6b5570fe89af65712ed65fdc25530451233",
+      "scenario_sha256": "b1d39f45c88b822029edacd515a698b928af4188751bcee364367772427f9106",
+      "solar_samples": 16,
+      "unknown_solar_samples": 0,
+      "battery_status": "satisfied_under_piecewise_constant_assumptions",
+      "usable_contacts": 3,
+      "selected_allocations": null
+    }
+  ],
+  "method_ref": "soma/docs/phase-3/README.md",
+  "interface_evidence_ref": "web/docs/phase-3-verification.md",
+  "limitations": [
+    "Sampled power is not a validated bound on interior solar variation.",
+    "Measured-terrain missing horizons remain unknown.",
+    "Synthetic sky, skyline and contact geometry are invented inputs.",
+    "No feasible delivery or radio energy claim without Phase 4 scheduling and replay."
+  ]
+}
