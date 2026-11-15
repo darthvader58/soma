@@ -1,0 +1,158 @@
+{
+  "manifest_version": "0.1.0",
+  "purpose": "Local source/fixture checksum snapshot; the scientific_analysis_performed flag refers only to captured delivery-planner results, not standalone geometry diagnostics",
+  "scientific_analysis_performed": false,
+  "schema_review": {
+    "status": "phase_1_interface_review_completed",
+    "contract_version": "0.1.0",
+    "review_type": "automated_agent_review",
+    "reviewer": "/root/web_contract_client",
+    "human_developer_b_approval": false,
+    "evidence_ref": "web/docs/contract-review.md",
+    "merge_approval": false
+  },
+  "scenario_hash_algorithm": "SHA-256 of RFC 8785 canonical JSON",
+  "kernel_files_bundled": false,
+  "dem_files_bundled": false,
+  "source_urls": [
+    "https://www.spaceappschallenge.org/2026/challenges/lunar-landing-site-navigator/",
+    "https://pgda.gsfc.nasa.gov/products/81",
+    "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/aareadme.txt",
+    "https://cesium.com/platform/cesium-ion/content/cesium-moon/"
+  ],
+  "files": [
+    {
+      "path": "data/README.md",
+      "sha256": "52e8c43dda08d57fc0e00e7b1c04d99eff337ad8cd302e8dabaf547216484c1d"
+    },
+    {
+      "path": "data/datasets.manifest.json",
+      "sha256": "e95533f4b60fc0de32c936578a1be5bd30e8087be797052c79185e7b56a06b22"
+    },
+    {
+      "path": "data/kernels.manifest.json",
+      "sha256": "5758df01d0cd5a23f06f220e749db3bd2667f836379dbd38588f3c7fc82992dc"
+    },
+    {
+      "path": "fixtures/hash-vectors.json",
+      "sha256": "802372d925016b9cfbfdaf2863ab431fc8344e762c14e0b434d17c1e9ae083d7"
+    },
+    {
+      "path": "fixtures/synthetic-direct/README.md",
+      "sha256": "53e25cf652614d5bc49d0cd1bbee3cb518009e11436bcab53c1dd5169b2f4159"
+    },
+    {
+      "path": "fixtures/synthetic-direct/contacts.json",
+      "sha256": "edbaad973d3084816e61d7887449f84c8d14d131420ed9e09a996d95c944e863"
+    },
+    {
+      "path": "fixtures/synthetic-direct/expected.json",
+      "sha256": "52a347206d214c2a9bc40bd37a9117030fb0ce4985de541e02e8b9810fa294c6"
+    },
+    {
+      "path": "fixtures/synthetic-direct/scenario.json",
+      "sha256": "f276358d28f21d1e528be880c29a0fd4bf02330f1fdc8d9770f7fea20bdfd239"
+    },
+    {
+      "path": "fixtures/synthetic-relay/README.md",
+      "sha256": "74376ff28d4889359cc9db06e4391015e3eb45fef54b70645de0b0738166044f"
+    },
+    {
+      "path": "fixtures/synthetic-relay/contacts.json",
+      "sha256": "b59b73e84b0ddae8e062ed7f97f3b31519b06c9ec1ee4eb1bb4600bd73d348d1"
+    },
+    {
+      "path": "fixtures/synthetic-relay/expected.json",
+      "sha256": "605144fa46fe345d5decad11870f481dfa87a04b9e5e9cf7cc72bbdfd95c85fe"
+    },
+    {
+      "path": "fixtures/synthetic-relay/scenario.json",
+      "sha256": "c5fe3f026cc4e0b28101a4c4f0cad93628f5e9c0b5d4564e9086d486becc69c5"
+    },
+    {
+      "path": "plan/01-Lunar-TATC-and-Analysis-Foundation.md",
+      "sha256": "1518374313b74f1770c29980c329f5407c83ac60a1d422a857e10746748bc67a"
+    },
+    {
+      "path": "plan/02-Cesium-and-Map-Interface.md",
+      "sha256": "dd30ec0af9ce67b8ab0b2d7cf816fe24be1d5746e2750defa8aa56162354044d"
+    },
+    {
+      "path": "plan/03-Communications-Relays-and-Scheduling.md",
+      "sha256": "c03a4df1d7494f699a2363de60ad9ac7bddeb1ef0152462a9b90281cd4fa394b"
+    },
+    {
+      "path": "plan/04-Sunlight-Power-and-Site-Comparison.md",
+      "sha256": "4a2e99457df46184e09f5d41d4daf8c53f4a2e1c8fd0d1dd8f82c5d0b6052d70"
+    },
+    {
+      "path": "plan/05-Python-Library-and-Application-Delivery.md",
+      "sha256": "861dcd08221934ff98cc72c7b9e23771ec4745d61f77569059c665fc5041c921"
+    },
+    {
+      "path": "plan/06-Research-and-Source-Register.md",
+      "sha256": "016bfae6c68328a1253253b3af50727b4c3f35b32f5babdd2115213dfa146700"
+    },
+    {
+      "path": "plan/README.md",
+      "sha256": "694d51617067d0bab82537f3069150056e0c924a2742cc1ccf03addd275dc435"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "54ecf8ccba64dda8c0f675d811fe0fed54c7a20442da216f9582909001cc8380"
+    },
+    {
+      "path": "schemas/allocation.schema.json",
+      "sha256": "e0e460b79036fe4a16b69657ac5dee9f3490a03c93e6dcf2bfe89046776cb7ee"
+    },
+    {
+      "path": "schemas/common.schema.json",
+      "sha256": "75c7d551406f5075e67f070a2161b0ba92faff84cc718f3aa40a171a66b405a2"
+    },
+    {
+      "path": "schemas/contact.schema.json",
+      "sha256": "8c772d772efd37b43845ce1b74c9ab7782cb2cc116bcff18fbf3758670c1069c"
+    },
+    {
+      "path": "schemas/result.schema.json",
+      "sha256": "c77d5eb3483473632bc21aaff7d0f1a0421b2fa77fa53241ae5ba5ea3e43fb17"
+    },
+    {
+      "path": "schemas/scenario.schema.json",
+      "sha256": "1a8734f97dd23256b76cc2f4ee2463f39ee372c03585246914cee182ffc94b96"
+    },
+    {
+      "path": "schemas/state.schema.json",
+      "sha256": "7426a0a6e32d58a466f3483c265e0936f1486ec017a15d17cbcbc269a3434884"
+    },
+    {
+      "path": "soma/__init__.py",
+      "sha256": "d009292c04cba2f6867d108c376a86dd19e9d320e7b8d67bdec418d69cc85052"
+    },
+    {
+      "path": "soma/__main__.py",
+      "sha256": "2cdbfc0c4aa201e9eee0571e1d6a0c4e36ecbfb5714f0e66f55718667129ec1f"
+    },
+    {
+      "path": "soma/docs/challenge-alignment.md",
+      "sha256": "5f2b479c4e556e36a9e0c9a96fb2e8d00e2bcc2062a29aad27d95118c1aaeef4"
+    },
+    {
+      "path": "soma/engine.py",
+      "sha256": "b230c460f745f5b7388c37e5cb77511b141563a844fe37cf30980cb969ef13e4"
+    },
+    {
+      "path": "soma/time/__init__.py",
+      "sha256": "a2813dcca3bc8cd233264b9464f355c0943fd915f4131f9dbd4b6527ff6c0c4e"
+    },
+    {
+      "path": "soma/validation.py",
+      "sha256": "9dc4d4e82ef614f937d415e843c630ae6f00a91389bedd7204885ea18dcea898"
+    },
+    {
+      "path": "web/docs/contract-review.md",
+      "sha256": "9c69fbc10d6b293befc520658bb8f0699360def9986f3173ef77fc16807c047a"
+    }
+  ],
+  "scientific_analysis_scope": "captured_delivery_planner_results_only"
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "$id": "urn:soma:result:0.1.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["run_version", "scenario_id", "scenario_sha256", "status", "solver_status", "model_fidelity", "assumptions", "warnings", "contacts", "allocations", "storage_intervals", "energy_history", "buffer_history", "delivered_bytes", "final_byte_arrival_utc", "provenance"],
+  "properties": {
+    "run_version": {"const": "0.1.0"}, "scenario_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "scenario_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "status": {"enum": ["feasible_under_assumptions", "infeasible_in_model", "unknown"]},
+    "solver_status": {"enum": ["feasible_incumbent", "proven_optimum", "proven_infeasible_discretized_model", "unresolved"]},
+    "model_fidelity": {"enum": ["not_implemented", "assumed_rate_simulation", "modeled_link_budget"]},
+    "assumptions": {"type": "array", "items": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}}, "warnings": {"type": "array", "items": {"$ref": "urn:soma:common:0.1.0#/$defs/label"}},
+    "contacts": {"type": "array", "items": {"$ref": "urn:soma:contact:0.1.0"}}, "allocations": {"type": "array", "items": {"$ref": "urn:soma:allocation:0.1.0"}},
+    "storage_intervals": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["node_id", "chunk_id", "byte_length", "interval"],
+      "properties": {"node_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "chunk_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "byte_length": {"type": "integer", "minimum": 1}, "interval": {"$ref": "urn:soma:common:0.1.0#/$defs/interval"}}
+    }},
+    "energy_history": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["node_id", "epoch_utc", "stored_energy_wh"],
+      "properties": {"node_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "epoch_utc": {"$ref": "urn:soma:common:0.1.0#/$defs/epoch"}, "stored_energy_wh": {"type": ["number", "null"], "minimum": 0}}
+    }},
+    "buffer_history": {"type": "array", "items": {
+      "type": "object", "additionalProperties": false, "required": ["node_id", "epoch_utc", "stored_bytes"],
+      "properties": {"node_id": {"$ref": "urn:soma:common:0.1.0#/$defs/id"}, "epoch_utc": {"$ref": "urn:soma:common:0.1.0#/$defs/epoch"}, "stored_bytes": {"type": ["integer", "null"], "minimum": 0}}
+    }},
+    "delivered_bytes": {"type": ["integer", "null"], "minimum": 0}, "final_byte_arrival_utc": {"anyOf": [{"$ref": "urn:soma:common:0.1.0#/$defs/epoch"}, {"type": "null"}]},
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["engine_version", "implementation_status", "reason", "kernel_manifest_ref", "dataset_manifest_ref", "source_urls", "input_provenance"],
+      "properties": {
+        "engine_version": {"const": "0.1.0"}, "implementation_status": {"enum": ["not_implemented", "implemented"]}, "reason": {"$ref": "urn:soma:common:0.1.0#/$defs/label"},
+        "kernel_manifest_ref": {"type": ["string", "null"]}, "dataset_manifest_ref": {"$ref": "urn:soma:common:0.1.0#/$defs/id"},
+        "source_urls": {"type": "array", "items": {"type": "string", "format": "uri"}}, "input_provenance": {"$ref": "urn:soma:scenario:0.1.0#/properties/input_provenance"}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"model_fidelity": {"const": "not_implemented"}}}, "then": {"properties": {
+      "status": {"const": "unknown"}, "solver_status": {"const": "unresolved"}, "delivered_bytes": {"type": "null"}, "final_byte_arrival_utc": {"type": "null"},
+      "contacts": {"maxItems": 0}, "allocations": {"maxItems": 0}, "storage_intervals": {"maxItems": 0}, "energy_history": {"maxItems": 0}, "buffer_history": {"maxItems": 0},
+      "provenance": {"properties": {"implementation_status": {"const": "not_implemented"}}}
+    }}},
+    {"if": {"properties": {"status": {"const": "feasible_under_assumptions"}}}, "then": {"properties": {
+      "solver_status": {"enum": ["feasible_incumbent", "proven_optimum"]}, "model_fidelity": {"enum": ["assumed_rate_simulation", "modeled_link_budget"]},
+      "delivered_bytes": {"type": "integer", "minimum": 1}, "final_byte_arrival_utc": {"$ref": "urn:soma:common:0.1.0#/$defs/epoch"}, "allocations": {"minItems": 1}
+    }}},
+    {"if": {"properties": {"status": {"const": "infeasible_in_model"}}}, "then": {"properties": {"solver_status": {"const": "proven_infeasible_discretized_model"}}}},
+    {"if": {"properties": {"status": {"const": "unknown"}}}, "then": {"properties": {"solver_status": {"const": "unresolved"}}}},
+    {"if": {"properties": {"model_fidelity": {"const": "modeled_link_budget"}}}, "then": {"properties": {"contacts": {"items": {"properties": {"rate_method": {"const": "link_budget"}}}}}}}
+  ]
+}

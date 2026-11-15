@@ -1,0 +1,41 @@
+[
+  {
+    "input": {
+      "height": 1.0,
+      "negative_zero": -0.0
+    },
+    "sha256": "ad39e610e0de8bd025dbf4308849fdfe81bc77ea67ba67978568a5226c67e8d0"
+  },
+  {
+    "input": {
+      "small": 1e-07,
+      "threshold": 1e-06,
+      "ordinary": 0.2,
+      "large": 9007199254740991
+    },
+    "sha256": "7c0be9cfe40ccd63e8da2401286c5b8d04a86a398346de609ccedc0259c4a729"
+  },
+  {
+    "input": {
+      "é": "Moon 🌙",
+      "😀": "𐀀",
+      "": "line\nquote\"backslash\\"
+    },
+    "sha256": "f5c787831da2db6b366c5f784cd4ded259e2419e02f29efd4759d0e4c118512c"
+  },
+  {
+    "input": {
+      "nested": [
+        {
+          "b": 2,
+          "a": 1
+        },
+        true,
+        null,
+        "UTC"
+      ],
+      "x": -1.25
+    },
+    "sha256": "d78ae757c8799ce0ff073232b96c31fceefb5f4d4372d69fdebc3aaa54a85378"
+  }
+]
