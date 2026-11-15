@@ -1,0 +1,108 @@
+{
+  "manifest_version": "0.2.0",
+  "dataset_id": "pgda81-near-89s-0e-window-v1",
+  "status": "local_window_extracted",
+  "input_class": "published",
+  "frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "elevation_datum": "height_above_reference_sphere",
+  "elevation_unit": "m",
+  "pixel_size_m": 5,
+  "interpolation_policy": "unknown_if_zero_count",
+  "elevation_sha256": "79309dc0369aab9728e236de97ef5fd1eda1662c30042810bcf445e05f63fbf7",
+  "count_sha256": "86e2f7169c8588599787ae5ba123fd9f72c77d2b028d446f81be6b3fca25386a",
+  "source_urls": [
+    "https://pgda.gsfc.nasa.gov/products/81"
+  ],
+  "method_source": "https://doi.org/10.1016/j.pss.2020.105119",
+  "count_convention": "floating_point_LOLA_returns_after_field_blending",
+  "nodata_convention": "NaN; zero or masked return counts remain unknown",
+  "files": [
+    {
+      "role": "elevation",
+      "path": "lola-near-elevation.tif",
+      "sha256": "79309dc0369aab9728e236de97ef5fd1eda1662c30042810bcf445e05f63fbf7",
+      "size_bytes": 5668532,
+      "parent": {
+        "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldem_87s_5mpp.tif",
+        "size_bytes": 3465285714,
+        "etag": "W/\"ce8c1052-17c7ede95a8\"",
+        "last_modified": "Thu, 14 Oct 2021 12:54:49 GMT",
+        "parent_sha256": null
+      },
+      "parent_file_sha256": null,
+      "acquisition": "bounded_HTTP_window",
+      "source_pixel_window": [
+        19000,
+        12935,
+        2000,
+        2000
+      ],
+      "bounds_xy_m": [
+        -5000.0,
+        25325.0,
+        5000.0,
+        35325.0
+      ],
+      "transform": [
+        5.0,
+        0.0,
+        -5000.0,
+        0.0,
+        -5.0,
+        35325.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "crs_wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+      "dtype": "float32"
+    },
+    {
+      "role": "count",
+      "path": "lola-near-count.tif",
+      "sha256": "86e2f7169c8588599787ae5ba123fd9f72c77d2b028d446f81be6b3fca25386a",
+      "size_bytes": 389726,
+      "parent": {
+        "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldec_87s_5mpp.tif",
+        "size_bytes": 145895726,
+        "etag": "W/\"8b2312e-17c7f5b5b10\"",
+        "last_modified": "Thu, 14 Oct 2021 15:11:06 GMT",
+        "parent_sha256": null
+      },
+      "parent_file_sha256": "dab531d817b9e7cfddf8ac23ffde9ccfe737efe526e98763ca7ded7a2afcae04",
+      "acquisition": "window_of_cached_compact_count_mosaic",
+      "source_pixel_window": [
+        19000,
+        12935,
+        2000,
+        2000
+      ],
+      "bounds_xy_m": [
+        -5000.0,
+        25325.0,
+        5000.0,
+        35325.0
+      ],
+      "transform": [
+        5.0,
+        0.0,
+        -5000.0,
+        0.0,
+        -5.0,
+        35325.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "crs_wkt": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"D_Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+      "dtype": "uint8"
+    }
+  ],
+  "redistribution": "not_bundled; local acquisition only; retain product citation",
+  "far_field_coverage": "not_provided_by_this_extract",
+  "software": {
+    "rasterio": "1.5.2",
+    "gdal": "3.12.2"
+  }
+}

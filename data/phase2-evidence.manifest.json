@@ -1,0 +1,26 @@
+{
+  "manifest_version": "0.2.0",
+  "artifact_type": "phase2_execution_evidence",
+  "geometry_diagnostics_performed": true,
+  "delivery_planning_performed": false,
+  "renderer_registration_performed": false,
+  "model_scope": "Geometric diagnostics and implementation checks; no usable contacts, power or delivery feasibility",
+  "interface_review_ref": "web/docs/phase-2-contract-review.md",
+  "records": [
+    {
+      "path": "soma/docs/phase-2/geometry-diagnostic.json",
+      "sha256": "87e6e4390b9ee3b1465c7fbb6e9a07deacded9ce1f0d97a27831dab3095a3e70"
+    },
+    {
+      "path": "soma/docs/phase-2/independent-verification.json",
+      "sha256": "f0386a1517ce02823882de2141f5c3c1347ca1f1854f0a0be2714477526e3185"
+    }
+  ],
+  "input_manifest_refs": [
+    "data/de421-phase2.manifest.json",
+    "data/lola-phase2.manifest.json",
+    "data/lola-far-phase2.manifest.json"
+  ],
+  "external_data_root_env": "SOMA_PHASE2_DATA_ROOT",
+  "code_version": "0.1.0 development; diagnostic artifact version0.2.0; source hashes in fixtures/manifest.json"
+}
