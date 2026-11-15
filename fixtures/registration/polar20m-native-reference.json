@@ -1,0 +1,52 @@
+{
+  "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_80S_20M.JP2",
+  "shape": [
+    30400,
+    30400
+  ],
+  "transform": [
+    20.0,
+    0.0,
+    -304000.0,
+    0.0,
+    -20.0,
+    304000.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "scales": [
+    1.0
+  ],
+  "offsets": [
+    0.0
+  ],
+  "nodata": null,
+  "crs": "PROJCS[\"Moon2000_spole\",GEOGCS[\"GCS_Moon\",DATUM[\"Moon_2000\",SPHEROID[\"Moon_2000_IAU_IAG\",1737400,0]],PRIMEM[\"Reference_Meridian\",0],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]]],PROJECTION[\"Polar_Stereographic\"],PARAMETER[\"latitude_of_origin\",-90],PARAMETER[\"central_meridian\",0],PARAMETER[\"false_easting\",0],PARAMETER[\"false_northing\",0],UNIT[\"metre\",1],AXIS[\"Easting\",NORTH],AXIS[\"Northing\",NORTH]]",
+  "samples": [
+    {
+      "id": "polar-0-2-2",
+      "row": 7614,
+      "column": 15200,
+      "native_dn": -1351.0
+    },
+    {
+      "id": "polar-1-2-2",
+      "row": 15200,
+      "column": 22785,
+      "native_dn": -7445.0
+    },
+    {
+      "id": "polar-2-2-2",
+      "row": 22784,
+      "column": 15332,
+      "native_dn": -7807.0
+    },
+    {
+      "id": "polar-3-2-2",
+      "row": 15200,
+      "column": 7614,
+      "native_dn": -4612.0
+    }
+  ]
+}

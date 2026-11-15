@@ -1,5 +1,12 @@
 # Renderer registration, v0.1.0
 
+Follow-up: the [deeper source audit](registration-source-audit.md) located explicit
+DE421 mean-Earth/polar-axis definitions in both advertised terrain source
+families. A vendor statement is not an absolute prerequisite for testing the
+bridge. Raw mesh measurements now exist, but their radial discrepancies and
+independent horizontal feature correspondence remain unresolved. The source
+audit is hash-bound as additional evidence; the overlay gate remains blocked.
+
 Engine-to-asset registration remains blocked. The service can expose the immutable
 scientific schedule and the versioned registration artifact; aligned landers,
 trajectories and contact overlays must remain disabled. This is a Phase 5 handoff
@@ -104,7 +111,10 @@ realization, control network or independent landmark position/residual. Regional
 `asset.extras.ion` declares georeferenced true and movable false. `asset.version`
 is a 3D Tiles format version, not an immutable dataset revision. Thus authorized
 metadata access narrows the unknowns but does not pass the map release gate.
-The remaining external requirements listed above still apply.
+That metadata-only result is a historical snapshot. The deeper source audit
+supersedes the assumption that an external vendor statement is necessary.
+Measured feature correspondence, explained radial behavior and a justified
+tolerance still have to pass; merely finding the frame name is insufficient.
 
 Run `.venv/bin/python -m pytest tests/engine/test_registration.py`. Tests reject
 invented identity, frame/unit changes, zero residuals, duplicate landmarks,

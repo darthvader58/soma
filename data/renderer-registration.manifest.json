@@ -21,6 +21,10 @@
     {
       "path": "lola-phase2.manifest.json",
       "sha256": "c360b16e987d5230b573f22c0a94136a27b62efa8fd27db626358e78702005f6"
+    },
+    {
+      "path": "renderer-registration-source-audit.manifest.json",
+      "sha256": "f920e051f992213adc5185c6c1e33de08590ca5d354c68d0ba201db8f75e55f5"
     }
   ],
   "tolerance_m": null,
@@ -125,10 +129,10 @@
     "map_registration_passed": false,
     "text_schedule_available": true,
     "blockers": [
-      "Authorized root and three regional tileset JSON hashes/transforms are recorded, but no immutable asset revision or authoritative lunar body-fixed realization is established.",
-      "Catalog control-network coordinates are not transformed into matched DE421 terrain fiducials with measured elevations.",
-      "No independent Cartesian positions of corresponding landmarks on the exact rendered asset have been measured.",
-      "Region-specific tolerance and landmark distribution review are not approved."
+      "Source labels establish DE421 provenance, but the candidate identity bridge has not passed independent mesh-feature correspondence.",
+      "Raw radial diagnostics differ from the 20 m reference grid; source/product, mesh conversion and query effects remain unresolved.",
+      "Independent horizontal terrain-fiducial positions and landmark residuals are not established.",
+      "A regional display tolerance and distribution review have not passed."
     ]
   }
 }

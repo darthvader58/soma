@@ -1,0 +1,63 @@
+{
+  "artifact_type": "soma_renderer_radial_diagnostic",
+  "format_version": "0.1.0",
+  "request_id": "lola64-polar-four-centers-precheck-v1",
+  "source_frame": "MOON_ME_DE421",
+  "renderer_frame": "unregistered_asset_world",
+  "origin": "MOON",
+  "position_unit": "m",
+  "reference_radius_m": 1737400,
+  "registration_passed": false,
+  "horizontal_correspondence_established": false,
+  "samples": [
+    {
+      "id": "polar-0-2-2",
+      "renderer_radius_m": 1737136.0960050772,
+      "reference_height_m": -675.5,
+      "radial_difference_m": 411.596005077241,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    },
+    {
+      "id": "polar-1-2-2",
+      "renderer_radius_m": 1734112.6514051347,
+      "reference_height_m": -3722.5,
+      "radial_difference_m": 435.15140513470396,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    },
+    {
+      "id": "polar-2-2-2",
+      "renderer_radius_m": 1733845.7085035986,
+      "reference_height_m": -3903.5,
+      "radial_difference_m": 349.20850359858014,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    },
+    {
+      "id": "polar-3-2-2",
+      "renderer_radius_m": 1735504.9711002554,
+      "reference_height_m": -2306.0,
+      "radial_difference_m": 410.9711002553813,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    }
+  ],
+  "warnings": [
+    "Radial ray queries do not establish independent horizontal terrain-fiducial correspondence.",
+    "A difference can arise from source resolution, pixel sampling, asset conversion or renderer query behavior.",
+    "No visual correction, DEM modification or overlay release is authorized by this diagnostic."
+  ]
+}

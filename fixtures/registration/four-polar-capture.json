@@ -1,0 +1,190 @@
+{
+  "artifact_type": "soma_raw_renderer_measurement",
+  "format_version": "0.1.0",
+  "request_id": "lola64-polar-four-centers-precheck-v1",
+  "source_frame": "MOON_ME_DE421",
+  "candidate_bridge": "identity_for_measurement_only",
+  "request": {
+    "format_version": "0.1.0",
+    "request_id": "lola64-polar-four-centers-precheck-v1",
+    "source_frame": "MOON_ME_DE421",
+    "candidate_bridge": "identity_for_measurement_only",
+    "purpose": "Raw mesh sampling; identity unvalidated, no mission or registration success",
+    "probes": [
+      {
+        "id": "polar-0-2-2",
+        "position_m": [
+          151424.38744978124,
+          0,
+          -1730788.6684645987
+        ]
+      },
+      {
+        "id": "polar-1-2-2",
+        "position_m": [
+          9.272069570161162e-12,
+          151424.38744978124,
+          -1730788.6684645987
+        ]
+      },
+      {
+        "id": "polar-2-2-2",
+        "position_m": [
+          -151401.32478213217,
+          2642.719954290264,
+          -1730788.6684645987
+        ]
+      },
+      {
+        "id": "polar-3-2-2",
+        "position_m": [
+          9.272069570161162e-12,
+          -151424.38744978124,
+          -1730788.6684645987
+        ]
+      }
+    ],
+    "source_manifest_ref": "data/lola-far-phase2.manifest.json",
+    "source_manifest_sha256": "f1bd2475133b01d07f41ddac7be7be3f696fe9d73dce0b019e6ed209ef6e7f68"
+  },
+  "started_utc": "2026-11-15T14:38:12.918Z",
+  "status": "completed",
+  "asset_id": 2684829,
+  "cesium_version": "1.147.0",
+  "ellipsoid_radii_m": [
+    1737400,
+    1737400,
+    1737400
+  ],
+  "tileset_model_matrix_column_major": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "root_transform_column_major": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "root_computed_transform_column_major": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "query_width_m": 0.1,
+  "batch_size": 32,
+  "budget_ms": 120000,
+  "vertical_exaggeration": 1,
+  "clamp_to_height_supported": true,
+  "tile_failure_count": 0,
+  "registration_status": "not_evaluated",
+  "warnings": [
+    "Raw renderer geometry only; no frame registration, fiducial correspondence or residual is established.",
+    "Maximum available mesh detail is not a claim of source accuracy.",
+    "Returned world positions already include Cesium tile and model transforms."
+  ],
+  "probes": [
+    {
+      "id": "polar-0-2-2",
+      "input_position_m": [
+        151424.38744978124,
+        0,
+        -1730788.6684645987
+      ],
+      "renderer_position_m": [
+        151401.38670108965,
+        0,
+        -1730525.7687040514
+      ],
+      "status": "measured"
+    },
+    {
+      "id": "polar-1-2-2",
+      "input_position_m": [
+        9.272069570161162e-12,
+        151424.38744978124,
+        -1730788.6684645987
+      ],
+      "renderer_position_m": [
+        9.254525812320156e-12,
+        151137.87614132528,
+        -1727513.8292236147
+      ],
+      "status": "measured"
+    },
+    {
+      "id": "polar-2-2-2",
+      "input_position_m": [
+        -151401.32478213217,
+        2642.719954290264,
+        -1730788.6684645987
+      ],
+      "renderer_position_m": [
+        -151091.5950473462,
+        2637.3136016593758,
+        -1727247.902120411
+      ],
+      "status": "measured"
+    },
+    {
+      "id": "polar-3-2-2",
+      "input_position_m": [
+        9.272069570161162e-12,
+        -151424.38744978124,
+        -1730788.6684645987
+      ],
+      "renderer_position_m": [
+        9.261956274549387e-12,
+        -151259.2247984957,
+        -1728900.8507219425
+      ],
+      "status": "measured"
+    }
+  ],
+  "elapsed_ms": 12951.300000011921,
+  "finished_utc": "2026-11-15T14:38:25.869Z",
+  "capture": {
+    "engine": "installed_chromium_headless_shell",
+    "page_errors": 0,
+    "console_errors": 0
+  }
+}
