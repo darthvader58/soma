@@ -20,9 +20,55 @@ def main(argv=None) -> int:
     ):
         command = commands.add_parser(name, help=help_text)
         command.add_argument("path", help="Path to scenario JSON")
+    geometry = commands.add_parser("geometry", help="Write Phase 2 geometric diagnostics; no delivery or usable-contact claim")
+    geometry.add_argument("path", help="Path to a standalone scenario JSON")
+    geometry.add_argument("--data-root", required=True, help="Directory holding pinned local kernels and numerical terrain")
+    geometry.add_argument("--sample-step-s", type=float, default=300)
+    geometry.add_argument("--azimuth-step-deg", type=float, default=30)
+    geometry.add_argument("--required-extent-m", type=float, default=200000)
+    geometry.add_argument("--latitude-deg", type=float, help="Explicit diagnostic site override; never moves an unsupported site silently")
+    geometry.add_argument("--longitude-deg-east", type=float, help="Explicit east-positive diagnostic site override")
+    geometry.add_argument("--synthetic-relay", action="store_true", help="Explicit diagnostic-only two-body preset, not an operational/scenario relay ephemeris")
+    fetch = commands.add_parser("fetch-geometry-data", help="Explicitly acquire pinned kernels and bounded LOLA data extracts")
+    fetch.add_argument("--data-root", required=True)
+    fetch.add_argument("--kernels-only", action="store_true")
+    verify = commands.add_parser("verify-geometry", help="Compare independent Skyfield and SPICE readers")
+    verify.add_argument("--data-root", required=True)
     args = parser.parse_args(argv)
     try:
-        if args.command == "validate":
+        if args.command in ("geometry", "verify-geometry", "fetch-geometry-data"):
+            directory = resource_directory("data")
+            kernel_path = directory / "de421-phase2.manifest.json"
+            if args.command == "fetch-geometry-data":
+                from soma.datasets import extract_lola_far_cap, extract_lola_window, fetch_kernels
+                manifest = fetch_kernels(kernel_path, args.data_root)
+                if not args.kernels_only:
+                    extract_lola_window(args.data_root, expected_manifest=load_json(directory / "lola-phase2.manifest.json"))
+                    extract_lola_far_cap(args.data_root, expected_manifest=load_json(directory / "lola-far-phase2.manifest.json"))
+                output = {"acquired": True, "kernel_manifest_id": manifest["id"], "kernels_only": args.kernels_only}
+            elif args.command == "verify-geometry":
+                from soma.geometry_verification import verify_geometry
+                output = verify_geometry(args.data_root, load_json(kernel_path))
+                if not output["passed"]:
+                    print(json.dumps(output, indent=2, allow_nan=False))
+                    return 1
+            else:
+                from soma.diagnostics import geometry_diagnostic
+                scenario = load_scenario(args.path)
+                if (args.latitude_deg is None) != (args.longitude_deg_east is None):
+                    raise ValueError("Both latitude and longitude must be supplied for an explicit site override")
+                if args.latitude_deg is not None:
+                    scenario["lander"]["latitude_deg"] = args.latitude_deg
+                    scenario["lander"]["longitude_deg_east"] = args.longitude_deg_east
+                output = geometry_diagnostic(scenario, data_root=args.data_root,
+                    kernel_manifest=load_json(kernel_path), near_manifest=load_json(directory / "lola-phase2.manifest.json"),
+                    far_manifest=load_json(directory / "lola-far-phase2.manifest.json"),
+                    sample_step_s=args.sample_step_s, azimuth_step_deg=args.azimuth_step_deg,
+                    required_extent_m=args.required_extent_m, include_synthetic_relay=args.synthetic_relay)
+                if args.latitude_deg is not None:
+                    output["explicit_site_override"] = {"latitude_deg": args.latitude_deg, "longitude_deg_east": args.longitude_deg_east,
+                                                        "scope": "CLI-requested diagnostic test site, not an implicit move or landing recommendation"}
+        elif args.command == "validate":
             scenario = load_scenario(args.path)
             output = {
                 "scenario_id": scenario["scenario_id"],

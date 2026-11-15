@@ -96,3 +96,46 @@ SOMA is a planning model under declared assumptions. The engine and interface
 are now coordinated by one team. Live integration and
 the Phase 6 product checks have not begun.
 
+## Phase 2 geometry and numerical terrain
+
+The geometry layer reads a matched, hash-pinned DE421 planetary ephemeris,
+lunar frame and orientation, leap seconds, and Earth orientation. It provides
+explicit Moon-fixed/J2000 states, local directions, coordinate round trips, a
+defined polar basis, WGS84/ITRF93 station translation, finite body tests,
+bounded state-history interpolation, and an explicitly synthetic two-body
+relay preset. Its scoped context restores the previous SPICE kernel pool.
+
+Numerical terrain uses an aligned five-meter PGDA LOLA elevation/count window
+and a coarser native 64-pixel-per-degree PDS LOLA south-polar cap. Both identify
+DE421 mean-Earth. Counts, source revisions, native pixel registration,
+extraction bounds and checksums are preserved. Zero counts, nodata and
+unsupported coverage remain unknown. Files are acquired locally and are not
+bundled in this repository.
+
+```sh
+.venv/bin/python -m soma fetch-geometry-data --data-root /private/tmp/soma-phase2-data
+.venv/bin/python -m soma verify-geometry --data-root /private/tmp/soma-phase2-data
+.venv/bin/python -m soma geometry fixtures/synthetic-relay/scenario.json \
+  --data-root /private/tmp/soma-phase2-data \
+  --latitude-deg -89.03093035536243 --longitude-deg-east 1.389336784014743 \
+  --synthetic-relay
+```
+
+The explicit override is a count-positive numerical verification point, not a
+landing recommendation. The original synthetic location has unknown measured
+terrain and is rejected; it is never moved silently. `geometry` writes a
+separate versioned artifact with Sun/Earth center directions and ranges,
+station/relay states, per-height horizons, sampled geometric intervals,
+source manifests and warnings. Intervals have sampling uncertainty and may
+miss shorter events; they are not usable contacts.
+
+The recorded real-data run retains **unknown horizons** because masked
+samples prevent convergence, even with the coarse far source. No clear
+skyline, solar generation or delivery success is inferred. The selected
+synthetic relay is blocked in that run. The independent Skyfield comparison
+passes after explicitly accounting for its single-float Julian-date rotation
+precision. This checks implementation and frame handling, not the shared JPL
+ephemeris accuracy or renderer registration. See the
+[Phase 2 evidence](soma/docs/phase-2/README.md) and
+[interface-side review](web/docs/phase-2-contract-review.md).
+

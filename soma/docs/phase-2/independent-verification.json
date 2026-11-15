@@ -1,0 +1,191 @@
+{
+  "artifact_type": "soma_geometry_independent_verification",
+  "artifact_version": "0.2.0",
+  "passed": true,
+  "checks": [
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "target": "SUN",
+      "fixed_position_raw_residual_m": 1.3132228209613557,
+      "inertial_position_residual_m": 1.52587890625e-05,
+      "rotation_epoch_quantization_s": 3.6954879760742188e-06,
+      "matched_epoch_rotation_max_element_residual": 1.0339507028334083e-12,
+      "elevation_residual_deg": 7.348122110784061e-12,
+      "inertial_position_tolerance_m": 0.01,
+      "rotation_element_tolerance": 1e-10,
+      "elevation_tolerance_deg": 1e-07,
+      "passed": true
+    },
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "target": "EARTH",
+      "fixed_position_raw_residual_m": 0.0035913636736626497,
+      "inertial_position_residual_m": 4.848284637061725e-06,
+      "rotation_epoch_quantization_s": 3.6954879760742188e-06,
+      "matched_epoch_rotation_max_element_residual": 1.0339507028334083e-12,
+      "elevation_residual_deg": 7.87370169064161e-13,
+      "inertial_position_tolerance_m": 0.01,
+      "rotation_element_tolerance": 1e-10,
+      "elevation_tolerance_deg": 1e-07,
+      "passed": true
+    },
+    {
+      "epoch_utc": "2026-11-14T09:30:00Z",
+      "target": "SUN",
+      "fixed_position_raw_residual_m": 7.537640773038774,
+      "inertial_position_residual_m": 1.52587890625e-05,
+      "rotation_epoch_quantization_s": -1.919269561767578e-05,
+      "matched_epoch_rotation_max_element_residual": 1.780797731498751e-13,
+      "elevation_residual_deg": 4.240341411332338e-11,
+      "inertial_position_tolerance_m": 0.01,
+      "rotation_element_tolerance": 1e-10,
+      "elevation_tolerance_deg": 1e-07,
+      "passed": true
+    },
+    {
+      "epoch_utc": "2026-11-14T09:30:00Z",
+      "target": "EARTH",
+      "fixed_position_raw_residual_m": 0.02062636954894326,
+      "inertial_position_residual_m": 7.2698732357762575e-06,
+      "rotation_epoch_quantization_s": -1.919269561767578e-05,
+      "matched_epoch_rotation_max_element_residual": 1.780797731498751e-13,
+      "elevation_residual_deg": 2.1795898419441073e-12,
+      "inertial_position_tolerance_m": 0.01,
+      "rotation_element_tolerance": 1e-10,
+      "elevation_tolerance_deg": 1e-07,
+      "passed": true
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "target": "SUN",
+      "fixed_position_raw_residual_m": 6.271695148353718,
+      "inertial_position_residual_m": 0.0035286423963504206,
+      "rotation_epoch_quantization_s": 1.609325408935547e-05,
+      "matched_epoch_rotation_max_element_residual": 1.7524870443708096e-13,
+      "elevation_residual_deg": 3.5398572961753416e-11,
+      "inertial_position_tolerance_m": 0.01,
+      "rotation_element_tolerance": 1e-10,
+      "elevation_tolerance_deg": 1e-07,
+      "passed": true
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "target": "EARTH",
+      "fixed_position_raw_residual_m": 0.017063365476537834,
+      "inertial_position_residual_m": 0.00011432548149306798,
+      "rotation_epoch_quantization_s": 1.609325408935547e-05,
+      "matched_epoch_rotation_max_element_residual": 1.7524870443708096e-13,
+      "elevation_residual_deg": 3.135269821541442e-13,
+      "inertial_position_tolerance_m": 0.01,
+      "rotation_element_tolerance": 1e-10,
+      "elevation_tolerance_deg": 1e-07,
+      "passed": true
+    }
+  ],
+  "method": "SpiceyPy/CSPICE versus Skyfield/jplephem SPK and binary-PCK readers, plus independent ENU arithmetic",
+  "frame": "MOON_ME_DE421",
+  "ephemeris": "DE421",
+  "aberration": "NONE",
+  "scope": "Implementation and frame handling, not independent validation of the shared JPL ephemeris or terrain",
+  "reference_precision_note": "Skyfield 1.55 rotation_at uses a single-float TDB Julian date. Raw fixed-vector differences include that time quantization; rotations are additionally checked at matching quantized epochs. SPK inertial comparisons retain split-JD precision.",
+  "tolerance_scope": "Conservative floating-point implementation comparisons, not physical ephemeris uncertainty or registration accuracy",
+  "reader_versions": {
+    "skyfield": "1.55",
+    "jplephem": "2.24",
+    "spiceypy": "8.4.0",
+    "numpy": "2.5.4"
+  },
+  "provenance": {
+    "kernels": [
+      {
+        "role": "planetary_ephemeris",
+        "path": "de421.bsp",
+        "sha256": "08b20db2ae22488650641c5a9033e5bfda4b1c4b440cfeaf20f621cfa18ecdb3",
+        "size_bytes": 16790528,
+        "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de421.bsp",
+        "actual_coverage": {
+          "3": [
+            {
+              "start_tdb_s": -3169195200.0,
+              "end_tdb_s": 1696852800.0,
+              "start_utc": "1899-07-28T23:59:18.816695Z",
+              "end_utc": "2053-10-08T23:58:50.817654Z"
+            }
+          ],
+          "10": [
+            {
+              "start_tdb_s": -3169195200.0,
+              "end_tdb_s": 1696852800.0,
+              "start_utc": "1899-07-28T23:59:18.816695Z",
+              "end_utc": "2053-10-08T23:58:50.817654Z"
+            }
+          ],
+          "301": [
+            {
+              "start_tdb_s": -3169195200.0,
+              "end_tdb_s": 1696852800.0,
+              "start_utc": "1899-07-28T23:59:18.816695Z",
+              "end_utc": "2053-10-08T23:58:50.817654Z"
+            }
+          ],
+          "399": [
+            {
+              "start_tdb_s": -3169195200.0,
+              "end_tdb_s": 1696852800.0,
+              "start_utc": "1899-07-28T23:59:18.816695Z",
+              "end_utc": "2053-10-08T23:58:50.817654Z"
+            }
+          ]
+        }
+      },
+      {
+        "role": "leap_seconds",
+        "path": "naif0012.tls",
+        "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b",
+        "size_bytes": 5257,
+        "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
+      },
+      {
+        "role": "lunar_frame",
+        "path": "moon_080317.tf",
+        "sha256": "78732477b96f9863e7b0d65bcee3c22b8707ca5ed0db56d1173319cb2e8c7993",
+        "size_bytes": 21437,
+        "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf"
+      },
+      {
+        "role": "lunar_orientation",
+        "path": "moon_pa_de421_1900-2050.bpc",
+        "sha256": "656f90616403d75a75f0cd6c8830fc5b44f8cb4facb5ccb8915e752b397520cf",
+        "size_bytes": 1770496,
+        "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc",
+        "actual_coverage": {
+          "31006": [
+            {
+              "start_tdb_s": -3155716800.0,
+              "end_tdb_s": 1609416000.0,
+              "start_utc": "1899-12-31T23:59:18.816031Z",
+              "end_utc": "2050-12-31T23:58:50.816094Z"
+            }
+          ]
+        }
+      },
+      {
+        "role": "earth_orientation",
+        "path": "earth_000101_270208_261113.bpc",
+        "sha256": "6e77690ba455a644e509b0b9cb308b0dec1a7154ceecf3355659b917b21ca45e",
+        "size_bytes": 5163008,
+        "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_000101_270208_261113.bpc",
+        "actual_coverage": {
+          "3000": [
+            {
+              "start_tdb_s": -43135.816087188054,
+              "end_tdb_s": 855403269.1849744,
+              "start_utc": "2000-01-01T00:00:00.000000Z",
+              "end_utc": "2027-02-09T00:00:00.000000Z"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
