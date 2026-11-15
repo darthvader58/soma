@@ -1,0 +1,16 @@
+{
+  "evidence_kind": "synthetic_hand_calculation_not_engine_result",
+  "input_class": "synthetic",
+  "file_bytes": 104857600,
+  "file_bits": 838860800,
+  "direct_capacity_bits": 307200000,
+  "direct_shortfall_bits": 531660800,
+  "energy_feasibility": "not_evaluated",
+  "solver_status": "not_run",
+  "replay_status": "not_implemented",
+  "propagation_note": "Light time disabled only for this arithmetic test. Physical propagation delay is additional when enabled; check arrival-time receiver service, occupancy, energy and final-byte deadline.",
+  "capacity_conclusion": "direct_contact_cannot_carry_full_file",
+  "allocations": [],
+  "storage_intervals": [],
+  "final_byte_arrival_utc": null
+}

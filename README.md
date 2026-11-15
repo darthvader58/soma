@@ -139,6 +139,49 @@ ephemeris accuracy or renderer registration. See the
 [Phase 2 evidence](soma/docs/phase-2/README.md) and
 [interface-side review](web/docs/phase-2-contract-review.md).
 
+## Interface development: Phase 1 client and Phase 2 selection
+
+[`web/`](web/README.md) contains a runnable scenario editor, captured-result
+view, contact timeline, and Cesium Moon client. It imports the canonical JSON
+schemas directly; it does not duplicate the scientific model in JavaScript.
+Python and JavaScript share RFC 8785 scenario hashes, including shared
+Unicode/number test vectors. Changing an input clears the displayed result.
+Offline mode accepts only an exact match to a captured Python result.
+
+From the repository root, after installing the Python package above:
+
+```sh
+npm --prefix web ci
+npm --prefix web run sync:fixtures
+npm --prefix web test
+npm --prefix web run build
+npm --prefix web run dev
+```
+
+The dev server serves `http://127.0.0.1:5173/`. A scoped Cesium ion token can
+be configured in `web/.env.local` using `web/.env.example`. Without a token,
+the map shows a labelled fallback while the form, text result, timeline and
+JSON downloads work. No default evaluation token is used. Aligned markers and
+contact overlays stay blocked until the engine supplies reviewed frame
+registration. Token-backed rendering and picking have not been verified.
+
+Phase 2 separates the immutable synthetic fixture analysis point from typed
+draft coordinates and display-only surface picks. A surface pick creates a
+labelled renderer marker without adopting its elevation or changing equipment
+heights. Tile/render failures clear selections and preserve text results.
+The form states its fixed absolute deadline rule and disables Earth-orbit
+routing. Timeline endpoints retain their exact supplied timestamps and offsets;
+scrubbing changes the map clock without starting analysis. See the
+[Phase 2 interface checks](web/docs/phase-2-verification.md).
+
+The interface is a **visual draft**, pending user design direction. Its
+checked-in results are the engine's actual `unknown` outputs. Hand-calculated
+relay allocations are a separately labelled reference, never a successful
+engine plan. No live HTTP service, full run-package download or integrated
+mission demo is claimed. Phase 3 scientific displays and saved comparisons
+read the separate artifacts described below. The prepared service client is tested with controlled responses
+for polling, cancellation, and stale-result rejection.
+
 ## Phase 3 illumination, power, contacts and scientific display
 
 Python now evaluates a sampled solar disk with combined terrain/Earth masks,

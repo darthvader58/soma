@@ -1,0 +1,61 @@
+{
+  "evidence_kind": "synthetic_hand_calculation_not_engine_result",
+  "input_class": "synthetic",
+  "file_bytes": 104857600,
+  "file_bits": 838860800,
+  "direct_capacity_bits": 307200000,
+  "direct_shortfall_bits": 531660800,
+  "energy_feasibility": "not_evaluated",
+  "solver_status": "not_run",
+  "replay_status": "not_implemented",
+  "propagation_note": "Light time disabled only for this arithmetic test. Physical propagation delay is additional when enabled; check arrival-time receiver service, occupancy, energy and final-byte deadline.",
+  "capacity_conclusion": "relay_capacity_and_whole_chunk_timing_sufficient_conditional_on_future_energy_solver_and_replay",
+  "uplink_duration_s": "419.4304",
+  "downlink_duration_s": "83.88608",
+  "allocations": [
+    {
+      "allocation_id": "synthetic-uplink-allocation",
+      "chunk_id": "synthetic-file",
+      "byte_offset": 0,
+      "byte_length": 104857600,
+      "contact_id": "synthetic-relay-uplink",
+      "source_transmit_interval": {
+        "start_utc": "2026-11-14T09:00:00Z",
+        "end_utc": "2026-11-14T09:06:59.4304Z"
+      },
+      "receiver_occupancy_interval": {
+        "start_utc": "2026-11-14T09:00:00Z",
+        "end_utc": "2026-11-14T09:06:59.4304Z"
+      },
+      "byte_available_utc": "2026-11-14T09:06:59.4304Z"
+    },
+    {
+      "allocation_id": "synthetic-downlink-allocation",
+      "chunk_id": "synthetic-file",
+      "byte_offset": 0,
+      "byte_length": 104857600,
+      "contact_id": "synthetic-relay-downlink",
+      "source_transmit_interval": {
+        "start_utc": "2026-11-14T10:00:00Z",
+        "end_utc": "2026-11-14T10:01:23.88608Z"
+      },
+      "receiver_occupancy_interval": {
+        "start_utc": "2026-11-14T10:00:00Z",
+        "end_utc": "2026-11-14T10:01:23.88608Z"
+      },
+      "byte_available_utc": "2026-11-14T10:01:23.88608Z"
+    }
+  ],
+  "storage_intervals": [
+    {
+      "node_id": "synthetic-lunar-relay",
+      "chunk_id": "synthetic-file",
+      "byte_length": 104857600,
+      "interval": {
+        "start_utc": "2026-11-14T09:06:59.4304Z",
+        "end_utc": "2026-11-14T10:00:00Z"
+      }
+    }
+  ],
+  "final_byte_arrival_utc": "2026-11-14T10:01:23.88608Z"
+}

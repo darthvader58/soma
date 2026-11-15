@@ -166,6 +166,10 @@
       "sha256": "7407fc624857bcdfe3f0217cce2a32a5a470628739efcf36bce4f96c085578f6"
     },
     {
+      "path": "soma/api/__init__.py",
+      "sha256": "47138a01dcf04aefb8a9af1eb10a46e221c9be57e83c86d910f160ae17db2d6c"
+    },
+    {
       "path": "soma/datasets.py",
       "sha256": "ce0a2647afb097e3194f37603be5a5e7670d9efaf29079c3094c5dc4e564e576"
     },
@@ -214,6 +218,10 @@
       "sha256": "7c925e6568e73553bf572e6e802956ac40cb81dd09cce0c9b52a51285e46e1f8"
     },
     {
+      "path": "soma/exports/__init__.py",
+      "sha256": "31ccc7ac527446d52eb7d47c3e6330edf1ae5ae200c5fb87e76fcf8c72740d5c"
+    },
+    {
       "path": "soma/geometry/__init__.py",
       "sha256": "55d86096dfe120711dd9cad27cebf235d1d0f8c8e2817712f3c94180a432ae9c"
     },
@@ -254,6 +262,10 @@
       "sha256": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd"
     },
     {
+      "path": "soma/schedule/__init__.py",
+      "sha256": "d783b2a79b686e13fcb0e313ccfa772efcc97ba0000d8335a3794bf84f769037"
+    },
+    {
       "path": "soma/terrain/__init__.py",
       "sha256": "0aabc1c1ffc7a8a1b6ceb8357947a948b77018b869ce60d6fcb3ccc0cb89e4b6"
     },
@@ -278,11 +290,200 @@
       "sha256": "9dc4d4e82ef614f937d415e843c630ae6f00a91389bedd7204885ea18dcea898"
     },
     {
+      "path": "web/README.md",
+      "sha256": "78b8e4cba32ed30b047b10a8b794a9e377065393e6c0a44d438986be8ebe03bb"
+    },
+    {
       "path": "web/docs/contract-review.md",
       "sha256": "9c69fbc10d6b293befc520658bb8f0699360def9986f3173ef77fc16807c047a"
+    },
+    {
+      "path": "web/docs/design.md",
+      "sha256": "b4fcce7054a36469fab218b018839a007ecee5bf442603883c0f39273579a4c9"
+    },
+    {
+      "path": "web/docs/phase-2-contract-review.md",
+      "sha256": "23ec105823d58d8e0c6ccf3c0d0df0fec2c9a0cf14fd7fa45b0b0ec285177094"
+    },
+    {
+      "path": "web/docs/phase-2-verification.md",
+      "sha256": "354311ecafe6da617d6ce88ecd62a0690011b99bbe40de9a1dee65c6b0da5891"
+    },
+    {
+      "path": "web/docs/phase-3-verification.md",
+      "sha256": "a7a74f9f1f975d4851d8d152bd355241dcd12ac8ec972844b8a61ad5a5ed14b1"
+    },
+    {
+      "path": "web/docs/screenshots/desktop.png",
+      "sha256": "c6f063e77f622c993742800531710db85519c1446e839c90e13be45d8abc6107"
+    },
+    {
+      "path": "web/docs/screenshots/mobile.png",
+      "sha256": "2a8cfbf24e0cf1614cbc0ab2866c0ca815ad6c94fec9fd53fec0b9e20c34f95e"
+    },
+    {
+      "path": "web/docs/screenshots/phase-2/desktop.png",
+      "sha256": "d271d386279230b4926ada95c2615c36030df59d811b1dbd1bc72a5a18993f12"
+    },
+    {
+      "path": "web/docs/screenshots/phase-2/mobile.png",
+      "sha256": "95fcb6c28370089bf6e811e1ba1f589a4af5360da92cff2f6e754ad482c6336a"
+    },
+    {
+      "path": "web/docs/screenshots/phase-2/tablet.png",
+      "sha256": "18a86026bb87823090d177aa0f1f72496d01555cbafb258c85224a27113c1eae"
+    },
+    {
+      "path": "web/docs/screenshots/phase-3/mobile-science.png",
+      "sha256": "4c8a17ec64561e1783cb200d40e59f0ddb442186fa7debc5fdbf3ecf066d36a4"
+    },
+    {
+      "path": "web/docs/screenshots/phase-3/real-science.png",
+      "sha256": "bd9611d8ea4901aade35c005f742e0483a80df7da82c39567abfb6d9a080c597"
+    },
+    {
+      "path": "web/docs/screenshots/phase-3/synthetic-science.png",
+      "sha256": "41de92824c5268aaf836af170ca15041055476ef052c9ffba73d980c19a755c1"
+    },
+    {
+      "path": "web/docs/screenshots/tablet.png",
+      "sha256": "2ecd580730240ff47ac9b7e8335aa6227442a3b62d622d1345584d970cbb3148"
+    },
+    {
+      "path": "web/docs/verification.md",
+      "sha256": "3e9c9f3cf3b041fcb12298b1544f76a92288df307726d2c55a2c65fe6d9d5efc"
+    },
+    {
+      "path": "web/docs/viewer-registration.md",
+      "sha256": "8b98971bf4108022155e08599557fafce78ab157ecb4f5eb4c4ac1ed813baa81"
+    },
+    {
+      "path": "web/fixtures/recorded-lola/environment.json",
+      "sha256": "44403711ef2fc33e801994a630b0684f9ad46a9b539ea71780b1d94a6f063261"
+    },
+    {
+      "path": "web/fixtures/synthetic-direct/contacts.json",
+      "sha256": "edbaad973d3084816e61d7887449f84c8d14d131420ed9e09a996d95c944e863"
+    },
+    {
+      "path": "web/fixtures/synthetic-direct/environment.json",
+      "sha256": "f08996644db965c7ce355dd7cee2c85dee32aa006e58f2dbbc639fec29cb9b62"
+    },
+    {
+      "path": "web/fixtures/synthetic-direct/expected.json",
+      "sha256": "52a347206d214c2a9bc40bd37a9117030fb0ce4985de541e02e8b9810fa294c6"
+    },
+    {
+      "path": "web/fixtures/synthetic-direct/result.json",
+      "sha256": "ce1a47113af3b92f50065ef550416a046b26546c41936590412fc2c48bbb5f84"
+    },
+    {
+      "path": "web/fixtures/synthetic-direct/scenario.json",
+      "sha256": "f276358d28f21d1e528be880c29a0fd4bf02330f1fdc8d9770f7fea20bdfd239"
+    },
+    {
+      "path": "web/fixtures/synthetic-relay/contacts.json",
+      "sha256": "b59b73e84b0ddae8e062ed7f97f3b31519b06c9ec1ee4eb1bb4600bd73d348d1"
+    },
+    {
+      "path": "web/fixtures/synthetic-relay/environment.json",
+      "sha256": "fb078e6b803267e33d592d33eaa0d6b5570fe89af65712ed65fdc25530451233"
+    },
+    {
+      "path": "web/fixtures/synthetic-relay/expected.json",
+      "sha256": "605144fa46fe345d5decad11870f481dfa87a04b9e5e9cf7cc72bbdfd95c85fe"
+    },
+    {
+      "path": "web/fixtures/synthetic-relay/result.json",
+      "sha256": "5178d97b3e82f767dbbd110f0300f718a720d6ec37f30c9808a4219445c67d56"
+    },
+    {
+      "path": "web/fixtures/synthetic-relay/scenario.json",
+      "sha256": "c5fe3f026cc4e0b28101a4c4f0cad93628f5e9c0b5d4564e9086d486becc69c5"
+    },
+    {
+      "path": "web/index.html",
+      "sha256": "03b728d760b0dbfc0dc833ad39effb5ace5c6bb9e214b0e21ecce83201c32b52"
+    },
+    {
+      "path": "web/package-lock.json",
+      "sha256": "caf0f1f0a1a8ea418754aa8119bb2bebdb178ee1387d506a79c5fcff5456bb94"
+    },
+    {
+      "path": "web/package.json",
+      "sha256": "374b3e28cbe3aabd35d3f0e96fb73fa2adbc10b7eda92b77d7852fe31f664781"
+    },
+    {
+      "path": "web/playwright.config.js",
+      "sha256": "6bbc661fa49f05dc72db80c63f8e9f10c100b6070ad6379106d0701cd1d7bc28"
+    },
+    {
+      "path": "web/scripts/copy-cesium.mjs",
+      "sha256": "fc5fea922c35aa701c0a7db682b016f976477f39ae271dae63a3377fe13879f2"
+    },
+    {
+      "path": "web/scripts/sync-fixtures.mjs",
+      "sha256": "4f2b63a804029a3872930212d02cbb0ea75789e43a031756aba2596c6330e736"
+    },
+    {
+      "path": "web/scripts/sync-science.mjs",
+      "sha256": "86725b97ca53d7b986bb53af683fdc5776fadbad23ef6a4e9f46f22e710592b4"
+    },
+    {
+      "path": "web/src/client.js",
+      "sha256": "e52387376099a9a9f280e2f2918e2bd6870f33b32fb3d1012b079a98414c3773"
+    },
+    {
+      "path": "web/src/comparison.js",
+      "sha256": "a2c2e3d1c96896b524bc115980377c7b04a9bed1b2703ccd4f63441636f147aa"
+    },
+    {
+      "path": "web/src/contracts.js",
+      "sha256": "fafbd5f18cbc323e4ea27f990c02a98df9dcb8211b7d706176b0e9185922bf61"
+    },
+    {
+      "path": "web/src/display-time.js",
+      "sha256": "8afbb213d95379963fb5c763787170d3f3baceee4c0c88f54ba24aef709e3fb2"
+    },
+    {
+      "path": "web/src/main.js",
+      "sha256": "226aea6eab04b717fba5308703ef4ab8370c99b527b8468b79c02d75d6833ea5"
+    },
+    {
+      "path": "web/src/phase3.css",
+      "sha256": "477f9717c7679adc16d1a8aa1789c8c617bff9c853d9642ecfa32e4bd9a4f9df"
+    },
+    {
+      "path": "web/src/result.js",
+      "sha256": "78d6bfc90e33f17431a4a8b9b085c27ce11eb771adb1ea5642d8adb01f58d12a"
+    },
+    {
+      "path": "web/src/scenario.js",
+      "sha256": "bac4b68828665b54f8ea1f0bf64cabba2e9d639550526f94ea41040ee55acb01"
+    },
+    {
+      "path": "web/src/science.js",
+      "sha256": "8bef3590c4ffe51b665e954eae47df1190dbb4af396fc8da5289103e4080c47b"
+    },
+    {
+      "path": "web/src/style.css",
+      "sha256": "440bf2f0aff7ec24bd631167ebf4cb3eec593b0c197078b8a205c5ab6be281a9"
+    },
+    {
+      "path": "web/src/timeline.js",
+      "sha256": "f53417a54d34bf88826de1d18e16ccc5c3745b39c6bc1b5d3f00a273088bd86f"
+    },
+    {
+      "path": "web/src/viewer.js",
+      "sha256": "23be6b34981b4efbb48bd351d535c8ec350599f9cf0fc636fea034c0fa41a800"
+    },
+    {
+      "path": "web/vite.config.js",
+      "sha256": "2d309057ec79a0784a6194105b2ff0a2e31d21000fd035184b00cd9b8d332335"
     }
   ],
   "scientific_analysis_scope": "captured_delivery_planner_results_only",
   "phase2_geometry_evidence_ref": "data/phase2-evidence.manifest.json",
+  "phase2_interface_evidence_ref": "web/docs/phase-2-verification.md",
   "phase3_evidence_ref": "data/phase3-evidence.manifest.json"
 }
