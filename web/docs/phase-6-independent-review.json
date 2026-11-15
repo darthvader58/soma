@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "actor": {"actor_type": "agent", "human_usability_study": false},
+  "passed": true,
+  "checks": {"same_task_controls": true, "limiting_reason_inspected": true, "stored_states_unknown": true, "export_verified": true},
+  "source_base": "29c67b7",
+  "method": "Independent automated Playwright walkthrough of the tokenless local UI and live Python service; Aside could open the page but its session reset between interactions.",
+  "cases": {
+    "direct_ready": {"status":"feasible_under_assumptions","solver_status":"proven_optimum","scenario_sha256":"da4c98fd38383172a02c659b23379864568cf31d8cb09eb224c51f95e882705a","zip_sha256":"26553ba1020b52e17249e67c04f008a5f7cdaf4139337fbe481960504af8d759","arrival_utc":"2026-11-14T08:58:45Z"},
+    "direct_later": {"status":"infeasible_in_model","solver_status":"proven_infeasible_discretized_model","scenario_sha256":"0a19a455f71c261891c1ef62e798b6e1d84fedd646c970b93464490bb744b6b2","zip_sha256":"415816a6b80358885c907870702cfc06747a1e55bf0d46ddc44b0062d7e6bdab","arrival_utc":null,"limiting_capacity_bits":76800000,"file_bits":134217728},
+    "relay_later": {"status":"feasible_under_assumptions","solver_status":"proven_optimum","scenario_sha256":"ac353a904a2a21cd9d004885b687ec2b3bae750953c80073dcc893d18509300a","zip_sha256":"55e026fa30241721e86024b5ca107c7fda1ccbf51e697793ba92ad42d3a8d697","arrival_utc":"2026-11-14T10:00:15Z"}
+  },
+  "archive_proof": {"all_three_export_verifiers_passed":true,"infeasibility_replay_limitation":"Replay does not independently prove infeasibility.","commands":[".venv/bin/python -m soma.verification.exports /private/tmp/soma-direct-ready.zip", ".venv/bin/python -m soma.verification.exports /private/tmp/soma-direct-later.zip", ".venv/bin/python -m soma.verification.exports /private/tmp/soma-relay-later.zip"]}
+}

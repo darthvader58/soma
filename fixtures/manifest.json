@@ -246,6 +246,10 @@
       "sha256": "d9b2b80cf2b7170b075d3574cf3ac61a9e76b3cb2402c2f59ed43ffc63c99391"
     },
     {
+      "path": "fixtures/phase-6/independent-review.json",
+      "sha256": "38621605f44c46b9646e06a23852ad740b23aefa96896aee2424f53d1f49ed93"
+    },
+    {
       "path": "fixtures/phase-6/manual-live/reproduction.json",
       "sha256": "3c84e93d6a8ef5a9b7d88beb65b31afab5b1d9675c7578c811bf17b603e5cc2b"
     },
@@ -588,6 +592,10 @@
     {
       "path": "soma/docs/phase-6/README.md",
       "sha256": "fac10db13b8d854346406fb62c1ae075073f059dba8fc6030a68a8ce35f11abd"
+    },
+    {
+      "path": "soma/docs/phase-6/independent-review.md",
+      "sha256": "8b4fa608a22dbaccee4b31d57f3d86d7fe849eaff7245e03b458a03fe752e97d"
     },
     {
       "path": "soma/docs/phase-6/reproduce-demo.py",
