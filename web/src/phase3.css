@@ -1,0 +1,28 @@
+.science-display, .comparison-display { min-width: 0; }
+.science-display h3, .comparison-display h3 { margin-top: 1.6rem; margin-bottom: .55rem; font-size: 1rem; }
+.science-display p, .comparison-display p { overflow-wrap: anywhere; }
+.science-display select { min-height: 44px; margin-left: .5rem; }
+.science-plot { display: block; width: 100%; height: auto; margin: .75rem 0; background: #faf9f5; }
+.science-plot text { font: 12px system-ui, sans-serif; fill: #343c3a; }
+.plot-axis { fill: none; stroke: #626d68; stroke-width: 1; }
+.plot-data { fill: none; stroke: #176653; stroke-width: 2; }
+.plot-sample { fill: #176653; }
+.plot-endpoint { fill: #faf9f5; stroke: #783d18; stroke-width: 2; }
+.plot-label-leader { fill: none; stroke: #626d68; stroke-width: 1; }
+.science-table-scroll { max-width: 100%; overflow-x: auto; }
+.science-table-scroll table { width: 100%; border-collapse: collapse; font-size: .85rem; font-variant-numeric: tabular-nums; }
+.science-table-scroll th, .science-table-scroll td { padding: .7rem .6rem; border-bottom: 1px solid #c9cdc5; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.science-provenance { font-size: .85rem; }
+.science-display details { margin: .8rem 0; }
+.science-display summary { min-height: 44px; padding: .65rem 0; cursor: pointer; }
+.comparison-display li { margin-bottom: .7rem; overflow-wrap: anywhere; }
+.comparison-changed { font-weight: 650; }
+.science-panel, .comparison-panel { padding: 1rem; }
+.science-source label { display: block; margin-bottom: .4rem; }
+.science-source select { width: 100%; }
+.science-source button { margin-bottom: .8rem; }
+@media (max-width: 600px) {
+  .science-plot text { font-size: 19px; }
+  .science-table-scroll th, .science-table-scroll td { min-width: 8rem; }
+  .science-display select { display: block; margin: .5rem 0; width: 100%; }
+}
