@@ -50,8 +50,24 @@
       "sha256": "1821628202924a200741ad1551ade78eb56e67f8cd726ac24b749d6552385cf5"
     },
     {
+      "path": "data/phase3-evidence.manifest.json",
+      "sha256": "a6f490ab73819e4cb83be1d9d89902dc6e4417d1240bf5065645eddfe454406e"
+    },
+    {
       "path": "fixtures/hash-vectors.json",
       "sha256": "802372d925016b9cfbfdaf2863ab431fc8344e762c14e0b434d17c1e9ae083d7"
+    },
+    {
+      "path": "fixtures/phase-3/README.md",
+      "sha256": "819b4942887f541e1e9bb22fea867bd0a2e14c8948af3b77ca98958a6bb1f9b8"
+    },
+    {
+      "path": "fixtures/phase-3/synthetic-direct-environment.json",
+      "sha256": "f08996644db965c7ce355dd7cee2c85dee32aa006e58f2dbbc639fec29cb9b62"
+    },
+    {
+      "path": "fixtures/phase-3/synthetic-relay-environment.json",
+      "sha256": "fb078e6b803267e33d592d33eaa0d6b5570fe89af65712ed65fdc25530451233"
     },
     {
       "path": "fixtures/synthetic-direct/README.md",
@@ -147,7 +163,7 @@
     },
     {
       "path": "soma/__main__.py",
-      "sha256": "03056b2ec00ace484790b5ed8858db61cb0027cf884b144d1153f102d5a245ab"
+      "sha256": "7407fc624857bcdfe3f0217cce2a32a5a470628739efcf36bce4f96c085578f6"
     },
     {
       "path": "soma/datasets.py",
@@ -174,8 +190,28 @@
       "sha256": "f0386a1517ce02823882de2141f5c3c1347ca1f1854f0a0be2714477526e3185"
     },
     {
+      "path": "soma/docs/phase-3/README.md",
+      "sha256": "cf3c3a984313c348a2eb755aaf82a2f39c9a6d3187561145f7c6fe1b805f8dce"
+    },
+    {
+      "path": "soma/docs/phase-3/contact-method.md",
+      "sha256": "f22e1de80b56798c2d6a208b8d3ebbace6a92b1ff228cba165192f28daba4e8e"
+    },
+    {
+      "path": "soma/docs/phase-3/environment-real.json",
+      "sha256": "44403711ef2fc33e801994a630b0684f9ad46a9b539ea71780b1d94a6f063261"
+    },
+    {
+      "path": "soma/docs/phase-3/solar-power-method.md",
+      "sha256": "ab0a2201453bdb08d68e61a183fb908722055992fb1c112d5a205ae05e2056a1"
+    },
+    {
       "path": "soma/engine.py",
       "sha256": "b230c460f745f5b7388c37e5cb77511b141563a844fe37cf30980cb969ef13e4"
+    },
+    {
+      "path": "soma/environment.py",
+      "sha256": "7c925e6568e73553bf572e6e802956ac40cb81dd09cce0c9b52a51285e46e1f8"
     },
     {
       "path": "soma/geometry/__init__.py",
@@ -196,6 +232,26 @@
     {
       "path": "soma/geometry_verification.py",
       "sha256": "c79445b5e360ce85a053dfcfd693ecd5026f8d5d550c23cd2e5bbd0d95b19989"
+    },
+    {
+      "path": "soma/illumination/__init__.py",
+      "sha256": "02569a13cf81c48e5db583655ef8eca7b6a3c9170b6f6abd459ff9fe18685077"
+    },
+    {
+      "path": "soma/links/__init__.py",
+      "sha256": "d3704bdd5242ce44ae3241d3b2aa9dc85b85f4b438a1c963252d61a2c9811c00"
+    },
+    {
+      "path": "soma/links/budget.py",
+      "sha256": "3d76d1e91028b393d4ce0ec82f3ba76df93693435061db965762c20d57bda772"
+    },
+    {
+      "path": "soma/links/contacts.py",
+      "sha256": "acc8c377ac353ff9e0aaf3bf2c7469c9619f94b16345cccf4ccb5129bdf85b20"
+    },
+    {
+      "path": "soma/power/__init__.py",
+      "sha256": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd"
     },
     {
       "path": "soma/terrain/__init__.py",
@@ -227,5 +283,6 @@
     }
   ],
   "scientific_analysis_scope": "captured_delivery_planner_results_only",
-  "phase2_geometry_evidence_ref": "data/phase2-evidence.manifest.json"
+  "phase2_geometry_evidence_ref": "data/phase2-evidence.manifest.json",
+  "phase3_evidence_ref": "data/phase3-evidence.manifest.json"
 }
