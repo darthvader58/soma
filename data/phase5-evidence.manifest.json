@@ -1,7 +1,7 @@
 {
-  "manifest_version": "0.5.0",
-  "purpose": "Actual loopback browser/service integration evidence; scientific map registration remains unfinished",
-  "status": "live_numerical_integration_verified_registration_blocked",
+  "manifest_version": "0.5.1",
+  "purpose": "Live numerical integration and measured relative display registration in the tested south-polar region",
+  "status": "live_integration_and_scoped_map_alignment_verified",
   "input_class": "synthetic",
   "scenario_sha256": "b1d39f45c88b822029edacd515a698b928af4188751bcee364367772427f9106",
   "result_status": "feasible_under_assumptions",
@@ -10,22 +10,40 @@
   "delivered_bytes": 104857600,
   "final_byte_arrival_utc": "2026-11-14T10:01:35Z",
   "replay_passed": true,
-  "map_registration_passed": false,
+  "map_registration_passed": true,
   "phase_6_started": false,
   "verification": {
     "live_browser_checks": 4,
     "fixture_browser_checks": 17,
-    "web_unit_tests": 58,
+    "web_unit_tests": 71,
     "zip_members_sha256": "all_verified",
     "schedule_csv_epochs": "exact_native_allocation_values",
-    "token_backed_moon_access": "verified_in_Aside; no credentials retained in tracked artifacts",
+    "token_backed_moon_access": "Actual production viewer and surface pick verified in Aside; corrected-scene measurements verified in calibrated installed Chromium; no credentials retained",
     "engine_tests": {
-      "command": ".venv/bin/python -m pytest tests/engine -q",
-      "passed": 299,
+      "command": ".venv/bin/pytest tests/engine -q",
+      "passed": 351,
       "skipped": 0
     },
     "production_build": "passed",
-    "independent_recorded_replay": "passed; zero errors; 104857600 unique delivered bytes"
+    "independent_recorded_replay": "passed; zero errors; 104857600 unique delivered bytes",
+    "registered_scene_queries": 1764,
+    "registered_scene_page_errors": 0,
+    "registered_scene_console_errors": 0,
+    "registered_scene_capture_sha256": "919b57f427e272fca55d2ea98ba390ce5213184e112d4f9158dc7d17ef013e0f",
+    "source_snapshot_scope": "Root and four held-out control tile fingerprints; not every streamed object",
+    "token_backed_product_qa": {
+      "status": "passed",
+      "viewport_css_px": [
+        390,
+        844
+      ],
+      "text_size_percent": 200,
+      "page_errors": 0,
+      "page_overflow": false,
+      "registered_pick_leaves_inputs_unchanged": true,
+      "artifact_ref": "fixtures/registration/product-qa.json",
+      "artifact_sha256": "bfda008b5b8aed7921ed15d1641e29712feadc9ce322048ec4e2efd68ac448d8"
+    }
   },
   "artifacts": [
     {
@@ -35,17 +53,27 @@
     {
       "path": "fixtures/phase-5/live-relay/run.zip",
       "sha256": "606eb7e1a519e95d90fa3e3cf598a88f610c5508d52ebb55faacd982dccdabe9"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/run.json",
+      "sha256": "255f5f9a63698d14d137b875c534b8daab35f96a3a11a705061a06f532c621e8"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/run.zip",
+      "sha256": "c5ec2450587f774cf50bda340c0ad6c4086b7a3b1b2ac546470df6fa8a55952a"
     }
   ],
   "evidence_refs": [
     "soma/docs/phase-5/README.md",
     "soma/docs/phase-5/registration.md",
-    "web/docs/phase-5-verification.md"
+    "web/docs/phase-5-verification.md",
+    "soma/docs/phase-5/map-alignment.md"
   ],
   "limitations": [
-    "No authoritative Moon asset frame realization or independently measured landmark residuals.",
-    "No trajectory supplied by the contact-only relay scenario; stored spacecraft state is unknown.",
+    "Relative grid-feature registration applied only in the tested latitude region -90 to -87.5 degrees; not continuous-peak localization, absolute navigation accuracy, or an all-location/LOD guarantee.",
+    "Other streamed objects are not completely checksum-pinned; source fingerprints are sampled checks.",
+    "No trajectory supplied by the contact-only relay scenario; spacecraft states remain unknown.",
     "Synthetic geometry, assumed rates and service; no lunar mission prediction.",
-    "Prior PRs and this integration require repository-owner merge before Phase6."
+    "Repository owner merge is required before Phase 6 begins."
   ]
 }

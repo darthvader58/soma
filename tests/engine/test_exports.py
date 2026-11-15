@@ -152,6 +152,13 @@ def test_display_data_preserves_environment_and_every_selected_epoch():
     with zipfile.ZipFile(io.BytesIO(package)) as archive:
         assert json.loads(archive.read('display-data.json')) == payload
         assert json.loads(archive.read('renderer-registration.json')) == payload['registration']
+        assert json.loads(archive.read('renderer-conversion.json')) == payload['renderer_conversion']
+        assert payload['renderer_conversion']['status'] == 'validated_for_region'
+    point = payload['surface_points'][0]
+    assert point['frame'] == payload['registration']['renderer_frame']
+    assert point['source_frame'] == run['scenario']['lander']['frame']
+    assert point['epoch'] is None and point['time_scale'] == 'static'
+    assert point['antenna_position_m'] != point['panel_position_m']
     payload['allocations'].clear()
     assert run['result']['allocations']
 

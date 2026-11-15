@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "51bc74dba954e612d3cbe4dbef28a0ae9d681acda64ccfc904cf9baec94d6059"
+      "sha256": "b6475dd3a79cd5b2acb7fd98c684990e06017aa141ecb48c5a4b1f0f08f2a80d"
     },
     {
       "path": "data/README.md",
@@ -67,7 +67,23 @@
     },
     {
       "path": "data/phase5-evidence.manifest.json",
-      "sha256": "7a52bd1926b9bd27a6a17b88e726d5b90b80858b7cbbb796725fbd05e7d74bd2"
+      "sha256": "f3aef471beaa14bfa5887aa533f809ec63c833c978c47bb788e3cb76bb9f6a0d"
+    },
+    {
+      "path": "data/renderer-alignment-evidence.manifest.json",
+      "sha256": "9eae848b47615a5fa62d8364e43abf572489006c51fca67a029ca6114255d00a"
+    },
+    {
+      "path": "data/renderer-conversion.manifest.json",
+      "sha256": "aa08fa4b2f9b778879d6ff9b06947fea45e5e0151034f4bafca9997d6ec9d5cd"
+    },
+    {
+      "path": "data/renderer-landmark-capture.manifest.json",
+      "sha256": "919b57f427e272fca55d2ea98ba390ce5213184e112d4f9158dc7d17ef013e0f"
+    },
+    {
+      "path": "data/renderer-landmark-reference.manifest.json",
+      "sha256": "0e2ecd51de93028c7dd522be4bd69f32ffdeef19bf693a409d4d899db17a0b04"
     },
     {
       "path": "data/renderer-registration-source-audit.manifest.json",
@@ -79,7 +95,19 @@
     },
     {
       "path": "data/renderer-registration.manifest.json",
-      "sha256": "5934a4287dfbd82847f0dfe7cf31fc7b20e5c110d910e792ea0e7c314b2444e9"
+      "sha256": "d2bebe167acab30c1f6e5c05cf98906517522ba96d06a32fe08c95682a4ce632"
+    },
+    {
+      "path": "data/renderer-transect-capture.manifest.json",
+      "sha256": "6d676717d550adde041fe72cd73ad49cf8dcb9d9601197c3164513d012a356d8"
+    },
+    {
+      "path": "data/renderer-transect-reference.manifest.json",
+      "sha256": "8b827528ae915711c1474677b1a07b4ec2bb0ee8650964ccd95e500636a19eb6"
+    },
+    {
+      "path": "data/renderer-uv-fit.manifest.json",
+      "sha256": "bc2556cd205a81db17005ea4fb62a39cf809b3ec810dcba68a8113a88eefd07b"
     },
     {
       "path": "fixtures/hash-vectors.json",
@@ -136,6 +164,18 @@
     {
       "path": "fixtures/phase-5/README.md",
       "sha256": "59f7a9769ce354b22dd4874582da51d4b705561a57c843aba256a6d672cb5221"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/README.md",
+      "sha256": "921ca84f593d123db317b3dc4ccb3d9cd2297c599ef93d066abbbfab49a17f4d"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/run.json",
+      "sha256": "255f5f9a63698d14d137b875c534b8daab35f96a3a11a705061a06f532c621e8"
+    },
+    {
+      "path": "fixtures/phase-5/aligned-relay/run.zip",
+      "sha256": "c5ec2450587f774cf50bda340c0ad6c4086b7a3b1b2ac546470df6fa8a55952a"
     },
     {
       "path": "fixtures/phase-5/live-relay/run.json",
@@ -234,6 +274,14 @@
       "sha256": "4c1d9eb04fc031fd9fbaca6c82907897784051e54cf572e067d3186ec862f2c2"
     },
     {
+      "path": "fixtures/registration/landmarks-matched.json",
+      "sha256": "5b0edff12413acf70f09418a094013fa311114f5ac803a392869fb665f748907"
+    },
+    {
+      "path": "fixtures/registration/landmarks-probes.json",
+      "sha256": "a64402e8d8f424e681400c5fd9b7213050fedbfc1cd310f6e872d14249da868e"
+    },
+    {
       "path": "fixtures/registration/polar-patches-capture.json",
       "sha256": "867726b6fcd42ef1ba4433370ea2aee52f15bcad2b0ac3c6ba469af3794f51a2"
     },
@@ -250,8 +298,20 @@
       "sha256": "d09f58e458e56f346be8212361607af123dfb511d5712fe0354db9e2e1c02155"
     },
     {
+      "path": "fixtures/registration/product-qa.json",
+      "sha256": "bfda008b5b8aed7921ed15d1641e29712feadc9ce322048ec4e2efd68ac448d8"
+    },
+    {
       "path": "fixtures/registration/radial-differences.json",
       "sha256": "ccd1b6f14c1897abd8aee24bba2d562fee2cc52c2d0a437963cbf7d11903a4d6"
+    },
+    {
+      "path": "fixtures/registration/transect-probes.json",
+      "sha256": "cc107b78bbd1d6558660fb922fa7c7c1d02b663044daf7a9d70aa624c343c937"
+    },
+    {
+      "path": "fixtures/registration/unresolved-registration-v0.1.json",
+      "sha256": "5934a4287dfbd82847f0dfe7cf31fc7b20e5c110d910e792ea0e7c314b2444e9"
     },
     {
       "path": "fixtures/synthetic-direct/README.md",
@@ -355,7 +415,11 @@
     },
     {
       "path": "soma/api/app.py",
-      "sha256": "e7ec2d3f73b272cd6e4aac282357074c5185064d89f94dd8646af28ff100209d"
+      "sha256": "64704f42381016b1e501dbb834b45c2fc9a57fc19b7734ca7edcd909ea177359"
+    },
+    {
+      "path": "soma/api/moon.py",
+      "sha256": "cbd4cb8bb735f1844171e63fe5e0ec09087628836a8c978f555d7b2da8339a57"
     },
     {
       "path": "soma/datasets.py",
@@ -415,11 +479,15 @@
     },
     {
       "path": "soma/docs/phase-5/README.md",
-      "sha256": "0ad25084feb3f1e8ca9789252315f25362ab696da410e9f75280c299a19f924d"
+      "sha256": "8aff9da582bc8541ffe0cc182ea9c148449af0be437757c759897ec8323e387d"
     },
     {
       "path": "soma/docs/phase-5/inspect-mesh.py",
       "sha256": "e65359a95c9ceda23e1c58f75d8b88ab370d5ee70321c64329c71696a5a6664b"
+    },
+    {
+      "path": "soma/docs/phase-5/map-alignment.md",
+      "sha256": "0d6c801cb9921b035e9b4c4cb31d5ab4a12d17bda7a48b04d0ce0c24a2e47666"
     },
     {
       "path": "soma/docs/phase-5/registration-source-audit.md",
@@ -427,7 +495,19 @@
     },
     {
       "path": "soma/docs/phase-5/registration.md",
-      "sha256": "350cdee2298ad4d7fb6f4da9a3191804c4e4446a84e52c39bd5fa93d71552898"
+      "sha256": "6be9ddcc2f0b8ad316b3c463636e98431b4cc558d07ac4966d210b8474c8d657"
+    },
+    {
+      "path": "soma/docs/phase-5/reproduction/build_certificate.py",
+      "sha256": "565a92fb48931ffee1d52f2db5de160c8244dc3fe768f1f0c052a922df5987ac"
+    },
+    {
+      "path": "soma/docs/phase-5/reproduction/fit_conversion.py",
+      "sha256": "3bcfc9230d11cf72fbc21c9b23474c39f4dba2b14cfbb1ca6570425f9ca317bf"
+    },
+    {
+      "path": "soma/docs/phase-5/reproduction/select_landmarks.py",
+      "sha256": "15521b83418ddd844786570bc9d61ea28334f9c8a856e92f0f418f4371de9992"
     },
     {
       "path": "soma/engine.py",
@@ -439,11 +519,11 @@
     },
     {
       "path": "soma/exports/__init__.py",
-      "sha256": "03e297f6062429718348293311867329eac51efd018eccf2f807f6487475825a"
+      "sha256": "65252c0229af6f4bfaccd1a0ec79fd04f6f37016eaed9e2ec7f9cb8dd0bc2e5c"
     },
     {
       "path": "soma/exports/display.py",
-      "sha256": "96f212b977d7cbb4e23be45740d2c63ef4efbe113bdd255eb18f03f8b70fa4e4"
+      "sha256": "6822040a51d43827569fe61e5fbda9a3f9fe64aa3f5b0fd398859b46ef46cb09"
     },
     {
       "path": "soma/geometry/__init__.py",
@@ -451,15 +531,23 @@
     },
     {
       "path": "soma/geometry/registration.py",
-      "sha256": "346cf38cd6caff4ba741fdfb0f356c0dff007fb36f8dc14456778254df2d918b"
+      "sha256": "61f17b250acb25d6bfc4e7150935dfb06f27deec0ab82f8391124ae1134616bd"
     },
     {
       "path": "soma/geometry/registration_calibration.py",
       "sha256": "07e9db63f3fd614260d08253aca916481b691a1303d5c77de00e5e72e758a602"
     },
     {
+      "path": "soma/geometry/registration_landmarks.py",
+      "sha256": "8916b3517adb3cdcc0ae46da25840cd92d128ce670253ab5575d519e8692cfc2"
+    },
+    {
       "path": "soma/geometry/registration_measurements.py",
       "sha256": "e86d773b324068b21c61d17e162af7b1850e4242181d1547b5c78bc87d31aa9b"
+    },
+    {
+      "path": "soma/geometry/renderer_mesh.py",
+      "sha256": "e65c4256ea16ce95d2dd54f09203c05061e99175b03bc082fbcc9fad813ebd31"
     },
     {
       "path": "soma/geometry/spice.py",
@@ -567,7 +655,7 @@
     },
     {
       "path": "tests/engine/test_exports.py",
-      "sha256": "ed1eb6d6b9e737ef61d2a311d99807d184bb3d12e00d6f39a4de16b15163e9c1"
+      "sha256": "f53f562169ec79d2c93f23bdac209f2b637be63b479ff59b501d9b768986aa8c"
     },
     {
       "path": "tests/engine/test_fixture_arithmetic.py",
@@ -602,6 +690,10 @@
       "sha256": "bc80a13ca68ff8faa57d05d1ecdb23142b0f7e3d0fad7805657d90fa30b95d65"
     },
     {
+      "path": "tests/engine/test_moon_display_service.py",
+      "sha256": "bb8fa6c79948b63b280373d70abf45cab4770029702a92fe4fee1ffa459bf8ee"
+    },
+    {
       "path": "tests/engine/test_phase2_integration.py",
       "sha256": "d21a919bd025aa8510246bf4c4d533a334c876cd5dd9dfb12cd622a4f957e56e"
     },
@@ -611,11 +703,15 @@
     },
     {
       "path": "tests/engine/test_registration.py",
-      "sha256": "5db6de5fc9de8633e24afe87983bf07de687a8ff5fcfef25ad53a243803cddc7"
+      "sha256": "e90f3ded45f7b867298b9e575bc888aa93564fac60edf3303748f6d90def7d16"
     },
     {
       "path": "tests/engine/test_registration_calibration.py",
       "sha256": "a617481bae4ca44429acd7453c144bda7cf491bfa23475fca3c194aa43479727"
+    },
+    {
+      "path": "tests/engine/test_registration_landmarks.py",
+      "sha256": "48f172bf4528369bcfc08d776a8bbfdb68233094575bab1e6cedc3186b471ec6"
     },
     {
       "path": "tests/engine/test_registration_measurements.py",
@@ -624,6 +720,10 @@
     {
       "path": "tests/engine/test_registration_mesh_evidence.py",
       "sha256": "3d9900a80b93ca0e0f8daf155ad7ca9962ac555a44ad5f8aa45d2b2d4b945a3a"
+    },
+    {
+      "path": "tests/engine/test_renderer_mesh.py",
+      "sha256": "95c861a179ffc4cca5b3c399a4bc8ccfe30dc3db5b1c27bccf73098b2cc34d90"
     },
     {
       "path": "tests/engine/test_replay.py",

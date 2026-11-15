@@ -1,7 +1,9 @@
+import { loadRegisteredMoon } from './registered-moon.js';
+
 export const MOON_ASSET_ID = 2684829;
 
 // This checks supplied review evidence; it does not perform frame registration.
-export function registrationGate(registration, sourceFrame = 'MOON_ME_DE421') {
+export function registrationGate(registration, sourceFrame = 'MOON_ME_DE421', position) {
   const blocked = (reason) => ({ passed: false, reason });
   if (!registration) return blocked('No engine frame registration supplied. Aligned overlays are blocked.');
   if ((typeof registration.status === 'string' && registration.status.startsWith('blocked')) ||
@@ -9,6 +11,24 @@ export function registrationGate(registration, sourceFrame = 'MOON_ME_DE421') {
     return blocked(registration.reason ?? `Engine renderer registration ${registration.version ?? 'unknown'} is blocked. ${(registration.release_gate?.blockers ?? []).join('; ')}`);
   }
   if (registration.release_gate && registration.release_gate.overlays_allowed !== true) return blocked('Engine release gate prohibits scientific overlays.');
+  const region = registration.certified_region;
+  if (registration.representation !== 'engine_corrected_mesh' ||
+      registration.renderer_frame !== 'SOMA_MOON_ME_DE421_CORRECTED_V1' ||
+      !/^[a-f0-9]{64}$/.test(registration.conversion_manifest_sha256 ?? '') ||
+      registration.release_gate?.map_registration_passed !== true ||
+      !Array.isArray(region?.latitude_deg) || !Array.isArray(region?.longitude_deg_east) ||
+      region.latitude_deg.length !== 2 || region.longitude_deg_east.length !== 2 ||
+      ![...region.latitude_deg, ...region.longitude_deg_east].every(Number.isFinite) ||
+      region.latitude_deg[0] !== -90 || region.latitude_deg[1] !== -87.5 ||
+      region.longitude_deg_east[0] !== -180 || region.longitude_deg_east[1] !== 180) {
+    return blocked('The corrected Moon scene requires its validated conversion and certified south-polar region.');
+  }
+  if (registration.scope_application?.site_inside_certified_region === false ||
+      (position && (!Number.isFinite(position.latitude_deg) || !Number.isFinite(position.longitude_deg_east) ||
+        position.latitude_deg < region.latitude_deg[0] || position.latitude_deg > region.latitude_deg[1] ||
+        position.longitude_deg_east < region.longitude_deg_east[0] || position.longitude_deg_east > region.longitude_deg_east[1]))) {
+    return blocked('This site is outside the certified south-polar registration region.');
+  }
   if (!registration.version || registration.authority !== 'soma_engine' ||
       registration.source_frame !== sourceFrame || !registration.renderer_frame ||
       registration.asset_id !== MOON_ASSET_ID || !registration.source_manifest_sha256?.match(/^[a-f0-9]{64}$/)) {
@@ -16,7 +36,8 @@ export function registrationGate(registration, sourceFrame = 'MOON_ME_DE421') {
   }
   if (!Array.isArray(registration.transform_column_major) || registration.transform_column_major.length !== 16 ||
       !registration.transform_column_major.every(Number.isFinite) ||
-      !Number.isFinite(registration.tolerance_m) || registration.tolerance_m <= 0 || !registration.tolerance_justification) {
+      !registration.transform_column_major.every((value, index) => value === (index % 5 === 0 ? 1 : 0)) ||
+      !Number.isFinite(registration.tolerance_m) || registration.tolerance_m <= 0 || registration.tolerance_m > 10 || !registration.tolerance_justification) {
     return blocked('A versioned transform and justified positive registration tolerance are required.');
   }
   const landmarks = registration.landmarks;
@@ -24,12 +45,17 @@ export function registrationGate(registration, sourceFrame = 'MOON_ME_DE421') {
       new Set(landmarks.map((point) => point.id)).size !== landmarks.length ||
       landmarks.some((point) => !point.id || !Number.isFinite(point.residual_m) || point.residual_m < 0 ||
         point.residual_m > registration.tolerance_m || !point.source_ref ||
+        !Number.isFinite(point.horizontal_grid_resolution_allowance_m) || point.horizontal_grid_resolution_allowance_m < 0 ||
+        !Number.isFinite(point.resolution_adjusted_residual_m) || point.resolution_adjusted_residual_m < point.residual_m ||
+        point.resolution_adjusted_residual_m > registration.tolerance_m ||
         !Array.isArray(point.renderer_position_m) || point.renderer_position_m.length !== 3 ||
-        !point.renderer_position_m.every(Number.isFinite)) ||
+        !point.renderer_position_m.every(Number.isFinite) ||
+        !Array.isArray(point.analysis_position_m) || point.analysis_position_m.length !== 3 ||
+        !point.analysis_position_m.every(Number.isFinite)) ||
       registration.distribution_review?.accepted !== true || !registration.distribution_review?.evidence_ref) {
     return blocked('At least four distinct, well-distributed landmarks must pass the declared tolerance and distribution review.');
   }
-  return { passed: true, reason: 'Supplied registration evidence passes the display gate; scientific review remains with the engine team.' };
+  return { passed: true, reason: 'Frame alignment verified for the tested region from -90° to -87.5° latitude.' };
 }
 
 export function isMoonSurfacePick(picked, moonTileset, depthSupported) {
@@ -40,6 +66,12 @@ export function isMoonSurfacePick(picked, moonTileset, depthSupported) {
 export async function createMoonViewer(container, {
   scenario, ionToken, onPick = () => {}, onStatus = () => {}, registration,
   loadCesium = () => import('cesium'),
+  apiBase = '/api', fetchImpl = globalThis.fetch, loadMoon = loadRegisteredMoon,
+  loadRegistration = async () => {
+    const response = await fetchImpl(`${apiBase.replace(/\/$/, '')}/moon/registration`);
+    if (!response.ok) throw new Error('Moon registration is unavailable');
+    return response.json();
+  },
 } = {}) {
   let viewer;
   let handler;
@@ -48,10 +80,18 @@ export async function createMoonViewer(container, {
   let healthy = false;
   let sceneFailed = false;
   let displayPick;
+  let sceneRegistration;
+  let conversionSha;
+  let resultEntities = [];
+  let hasCompletedDisplay = false;
   const removeListeners = [];
   const document = container.ownerDocument;
   let gate = registrationGate(registration, scenario?.lander?.frame);
-  const report = (state, message) => onStatus({ state, message, overlaysBlocked: true, registration: gate });
+  const report = (state, message) => onStatus({ state, message, overlaysBlocked: !healthy || !gate.passed || !hasCompletedDisplay, registration: gate });
+  const clearResult = () => {
+    if (viewer && !viewer.isDestroyed()) resultEntities.forEach(entity => viewer.entities.remove(entity));
+    resultEntities = [];
+  };
   const clearDisplayPick = () => {
     if (displayPick && viewer && !viewer.isDestroyed()) {
       viewer.entities.remove(displayPick);
@@ -61,6 +101,8 @@ export async function createMoonViewer(container, {
   };
   const releaseScene = () => {
     healthy = false;
+    hasCompletedDisplay = false;
+    clearResult();
     clearDisplayPick();
     removeListeners.splice(0).forEach((remove) => remove());
     handler?.destroy();
@@ -96,8 +138,41 @@ export async function createMoonViewer(container, {
       clearDisplayPick();
     },
     setDisplay(display) {
-      gate = registrationGate(display?.registration, scenario?.lander?.frame);
-      report('registration_blocked', `${gate.reason} Scientific overlays remain disabled; exact stored samples and the numerical schedule are available in text.`);
+      clearResult();
+      hasCompletedDisplay = false;
+      if (!healthy) {
+        report('scene_unavailable', 'The lunar scene is unavailable. The numerical schedule remains available; scientific overlays are blocked.');
+        return;
+      }
+      if (!display) {
+        gate = registrationGate(sceneRegistration, scenario?.lander?.frame, scenario?.lander);
+        report(gate.passed ? 'awaiting_result' : 'registration_blocked', gate.passed
+          ? `${gate.reason} Waiting for a matching completed job.` : gate.reason);
+        return;
+      }
+      gate = registrationGate(display?.registration, scenario?.lander?.frame, scenario?.lander);
+      if (gate.passed && (display.registration.conversion_manifest_sha256 !== conversionSha ||
+          display.registration.version !== sceneRegistration?.version)) {
+        gate = { passed: false, reason: 'Completed-job registration does not match the loaded Moon conversion.' };
+      }
+      if (gate.passed && healthy) {
+        const points = display.surface_points ?? [];
+        if (points.some(point => point.frame !== display.registration.renderer_frame || point.origin !== 'MOON' ||
+            point.position_unit !== 'm' || point.epoch !== null || point.time_scale !== 'static' ||
+            !point.provenance_label || !Array.isArray(point.position_m) || point.position_m.length !== 3 ||
+            !point.position_m.every(Number.isFinite))) {
+          gate = { passed: false, reason: 'Declared analysis point has incomplete display provenance.' };
+        } else for (const point of points) resultEntities.push(viewer.entities.add({
+          id: `analysis-${point.id}`, position: new cesium.Cartesian3(...point.position_m),
+          description: point.provenance_label,
+          point: { pixelSize: 10, color: cesium.Color.WHITE, outlineColor: cesium.Color.BLACK, outlineWidth: 2 },
+          label: { text: 'Declared analysis point', font: '14px sans-serif', fillColor: cesium.Color.WHITE,
+            pixelOffset: new cesium.Cartesian2(0, -24), showBackground: true, backgroundColor: cesium.Color.BLACK },
+        }));
+      }
+      viewer?.scene.requestRender();
+      hasCompletedDisplay = gate.passed;
+      report(gate.passed ? 'registered' : 'registration_blocked', `${gate.reason}${gate.passed && !display.states?.length ? ' No stored relay trajectory.' : ''}`);
     },
     setTime(epoch) {
       if (!viewer || destroyed) return;
@@ -143,7 +218,17 @@ export async function createMoonViewer(container, {
     }));
     viewer.scene.backgroundColor = cesium.Color.fromCssColorString('#101719');
     shader = new cesium.CustomShader({ lightingModel: cesium.LightingModel.UNLIT });
-    const moon = await cesium.Cesium3DTileset.fromIonAssetId(MOON_ASSET_ID, { customShader: shader });
+    sceneRegistration = registration ?? await loadRegistration();
+    gate = registrationGate(sceneRegistration, scenario?.lander?.frame);
+    if (!gate.passed) throw new Error('Registered Moon certificate is blocked');
+    const loaded = await loadMoon(cesium, { apiBase, customShader: shader,
+      expectedModelSha256: sceneRegistration.conversion_manifest_sha256 });
+    const moon = loaded.tileset;
+    conversionSha = loaded.conversion.sha256;
+    if (conversionSha !== sceneRegistration.conversion_manifest_sha256) {
+      if (!moon.isDestroyed()) moon.destroy();
+      throw new Error('Moon conversion changed');
+    }
     if (!healthy || destroyed || sceneFailed) {
       if (!moon.isDestroyed()) moon.destroy();
       return api;
@@ -155,7 +240,7 @@ export async function createMoonViewer(container, {
     });
     const notice = document.createElement('p');
     notice.className = 'viewer-notice';
-    notice.textContent = 'Cesium Moon · neutral display lighting, not modeled sunlight. Aligned overlays blocked.';
+    notice.textContent = 'Cesium Moon · neutral display lighting, not modeled sunlight. Tested registration region: -90° to -87.5° latitude.';
     container.append(notice);
     removeListeners.push(moon.tileFailed.addEventListener(() => {
       report('tile_failure', 'Moon tile request failed. Surface selection has been cleared.');
@@ -197,15 +282,19 @@ export async function createMoonViewer(container, {
           longitude_deg_east: ((cesium.Math.toDegrees(coordinates.longitude) + 180) % 360 + 360) % 360 - 180,
           display_elevation_m: coordinates.height,
           source: 'cesium_moon_display_pick', service_resolved: false,
+          frame_registered: registrationGate(sceneRegistration, scenario?.lander?.frame, {
+            latitude_deg: cesium.Math.toDegrees(coordinates.latitude),
+            longitude_deg_east: cesium.Math.toDegrees(coordinates.longitude),
+          }).passed,
         });
-        report('display_pick', 'Display point selected. Its elevation and frame are not service-resolved; numerical terrain coverage must be checked by the engine.');
+        report('display_pick', 'Display point selected. Rendered elevation is display-only; numerical terrain coverage must be checked by the engine.');
       } catch {
         report('pick_unavailable', 'Surface picking failed. Use the coordinate fields; no analysis point was created.');
       }
     }, cesium.ScreenSpaceEventType.LEFT_CLICK);
     if (scenario?.data_ready_utc) api.setTime(scenario.data_ready_utc);
     report('ready', viewer.scene.pickPositionSupported
-      ? 'Moon topography loaded. Picks are display-only. Aligned overlays remain blocked.'
+      ? `${gate.reason} Picks retain display-only elevation.`
       : 'Moon topography loaded. This device lacks surface depth picking; use coordinate entry.');
   } catch {
     if (sceneFailed || destroyed) return api;

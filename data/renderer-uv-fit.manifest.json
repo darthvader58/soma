@@ -1,0 +1,974 @@
+{
+  "description": "Height-independent ellipsoid fit from snapped quantized glTF texture coordinates; local coordinates before regional child root transform",
+  "sample_count": 261943,
+  "tile_count": 240,
+  "semimajor_m": 1738042.3511433182,
+  "semiminor_m": 1735944.5134899013,
+  "eccentricity_squared": 0.002412566753187137,
+  "d_residual_rms_m": 6.966312509035268e-05,
+  "d_residual_p01_m": -0.00020195254768623272,
+  "d_residual_p99_m": 0.00020102736423723293,
+  "hypothesis_semimajor_wgs84_times_0_2725_m": 1738042.3325,
+  "source_tiles": [
+    {
+      "path": "Moon_85s_90s/13/8419/3965.b3dm",
+      "sha256": "24631ee9925e2931ecb025ec5bdfdb26a3fa9ce10f09ce14a9fc8d67450b2697"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3966.b3dm",
+      "sha256": "a54c74db17c149dc19f40f69cb27cb6eba3d974846a6ed05e61246e349385405"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3967.b3dm",
+      "sha256": "4df962f69b1b2ba2d3874c604e1a33ca44bb7d5198b203765ab3b3823a36bd3d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/170.b3dm",
+      "sha256": "cfa4e613545d119f5a32e86944703bbfbccd2da624d80b08bbdaaf27d297bbbe"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/171.b3dm",
+      "sha256": "d8f4ac46f1c97f2ffa1b64be5a0b23a314b8be5ffa048b6577dba0531c5c5cfe"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/187.b3dm",
+      "sha256": "b50222c72d660693b6da5428217fcad7c3f250bc6cd7a2109fdc19d34c6c7cb1"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/236.b3dm",
+      "sha256": "747fa3ac0e2f2272cb85d5429ca2c95305aeb2f70698fc7192ad607998aa160f"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/255.b3dm",
+      "sha256": "d2d20cccd9cf9356843ef3c1b3adc897a3b8c08cad18e8cd752df5f7d32ba06f"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/237.b3dm",
+      "sha256": "7a7a70ddf688aea16db083282178568ba605fd9c8227af3226f917ecbc56c2d2"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/238.b3dm",
+      "sha256": "d3a46d2f945074b0a2c94d4a5ca739121b01a70740652147b04afdfc6e4d8a37"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/239.b3dm",
+      "sha256": "68ba1e72eac4996f892caf0f1cad1c15bc7d9fd88ca0d75128bdcef35518a3b5"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/233.b3dm",
+      "sha256": "5e719392ea9054e6ad1784bbf4c787fa62b6178f243daaf85b3582ed52a76000"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/231.b3dm",
+      "sha256": "746fe7747089ae25a4b6649ab616afb5e5ad94f418ddd2585e241add37e37035"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/234.b3dm",
+      "sha256": "da8a7fff15d60de65c443fc44b9d8f06a4193941b5b76b584270493973836c8d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/232.b3dm",
+      "sha256": "7ec9b5a0892f06703455535be0323616d68eb62ce565bb85d856d08ab4041ec3"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/235.b3dm",
+      "sha256": "8c43a197a7db26c1ce2729dc72d45f6c61c2a2dd18ab10d03d51414f3bb2d7f7"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/221.b3dm",
+      "sha256": "e16b0405236dff039f13b4d72e2dea51328cd2573e48d0d4327e790e7917a713"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/218.b3dm",
+      "sha256": "91db70f7d8ed6cf34d9c753a8f57bce0c0c163833ddd87e27f7b76397f58fdcb"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/220.b3dm",
+      "sha256": "e8883b412834a2692ab18cd6f4929215eab4070ac7a0c67f57da7c74c85e20af"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/253.b3dm",
+      "sha256": "000cc35aa654148c11bc468c24c5180d4aeef9254c688129342956741f057dbf"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/254.b3dm",
+      "sha256": "7cb50b3fc9293bda743a8e3933b1cf730371ed8ab3029cdb3a7dea8c31981770"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/252.b3dm",
+      "sha256": "3e754779f78a5c08e7b69a0671709a70c1924d538d0a138518e2b27212c3fdcd"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/247.b3dm",
+      "sha256": "b671bb579c670fe49f2312ce4d7e6d56c8d05d245f04b985dd2ba8be9c48ba9b"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/222.b3dm",
+      "sha256": "c8acd1c0d8774e55306fa43b664c152fdcacb96eba8be5720289074de7151258"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/224.b3dm",
+      "sha256": "af8a32ea591bfb1982f36b211ab1c8e4939887336c9ce8540262b5e607907245"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/214.b3dm",
+      "sha256": "81c9204b267d461895815f0b9d55d18db629b923d0a80aa80edb2a0b8b26b9ea"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/217.b3dm",
+      "sha256": "0b444fea6418931deb70300df5422ce89f90b2c34e02c5943959b1e81c6c05bb"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/216.b3dm",
+      "sha256": "ab845be40d69c8ca5f81d4c7260a906bad197025de6b126aeec8ee5be4a56f9d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/215.b3dm",
+      "sha256": "29de4d442e6eb13d4d3b21b1cebb4c7d984784711b2106736d00ee0ab450fc3b"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/198.b3dm",
+      "sha256": "e1cea299673bae082f4172fb3c43017413a0a4dd909207d251aebab7afe0dee0"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/197.b3dm",
+      "sha256": "7e243f05abed45d6a254e7796653fa3affe07708e497ae86ae758fa315d6b699"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/244.b3dm",
+      "sha256": "71b9bd407058b17bdaac3cbbdf801eaec096a0d90e2efab928ede7fc57182dbb"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/227.b3dm",
+      "sha256": "e5c619695d63a365f24c844d5dd423ea0359f20da28683de4264b6b68c1de3b9"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/226.b3dm",
+      "sha256": "078a2e1a324759a907436e7ae1019281b3441f5e79f9e0b59265c3ecb1d027bb"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/225.b3dm",
+      "sha256": "c2a9ad9b1c28c38c08d44a669215df13e70b66d6f96a646c73da95ec307d640d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/223.b3dm",
+      "sha256": "0df82ed4fc0684eaf0c7f09dd56b31307e22554feaea9f90eceba91bd3e3d812"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/246.b3dm",
+      "sha256": "8076d0904b55e15bd6e5e6ef02de9210b0bb50de64eeafe944201ffcf6d12465"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/242.b3dm",
+      "sha256": "e237d80dbcb52c5d0fbd36288800f185311208723bb67fabe645a10beca0d662"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/243.b3dm",
+      "sha256": "1da54e5d54e34053468f4b9431578ee39d52c0f21a37513edc9daaac03dd7920"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/185.b3dm",
+      "sha256": "333d942bc45f6d76ebb8902adb8d9efaf4d402165ec8b7989f7c20794bb81304"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/194.b3dm",
+      "sha256": "5d8542ff27e11c375f6d143569eebbf8c5cbc661d0cf97bd03cf7e3fdb257883"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/228.b3dm",
+      "sha256": "6272a76033da0f6b8d3df879cbfbcc9a5cf097e1aea3583b805ac1caba782dee"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/193.b3dm",
+      "sha256": "19f124c20e88d3a0610b8aa91a75c6ec7f081d61f4037bd36e71c673391a723d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/186.b3dm",
+      "sha256": "b11d90cc394e14842989829c70b7695a7b9f705a9a70fec417097de85807d6f2"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/240.b3dm",
+      "sha256": "f1d873044ded6f485ff0fef58002633c3e7c22abc58fccc3157bf369b8e8f7ce"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/178.b3dm",
+      "sha256": "b739c554b195d0bfebfc5bd6b9316f0af4ca0e6f6522f478128b63534a1c1d90"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/176.b3dm",
+      "sha256": "6004c7df51e2971d41f1066f0f5687c3f57ee30c6696b3a99b8e81e81a4e3d8b"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/229.b3dm",
+      "sha256": "2176a47a3b17d8682cecf514b1c7fb785b14ffc38419380cbabda47e1334cfc3"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/230.b3dm",
+      "sha256": "c068655bc3d8ab3c19f0c4ce30556eac95b8faf15798e92a8a103022c0737a51"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/174.b3dm",
+      "sha256": "09078c94dd92e80d5b0a3a46a61b624c608120f8db09304dc39f04337f01ad8d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/173.b3dm",
+      "sha256": "7b2408c26339f8cb1b7dda36d7559362c093eb29d20074b2eb119b26fb69865d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/241.b3dm",
+      "sha256": "38653d06cf7ac3cd762199853fa7e870e72092d8da7749f0ccb20e2c5356310d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/210.b3dm",
+      "sha256": "dbdae6880bf6838acc5c7473c146ad067399fb0d797c1e3381ea6280890948e1"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/213.b3dm",
+      "sha256": "8318a2475a59a3f61cac5de3deee8604d80297aea958315cb324d7b0d64d27af"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/211.b3dm",
+      "sha256": "e5f8e0a514798be3851b6931dde72ceadf0afe15194f1754e0aee932dd2990b0"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/212.b3dm",
+      "sha256": "d8a33450a07744434c7118c79f42e2f7cb0dd896a9ebf2143124ba707e049a6d"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/187.b3dm",
+      "sha256": "d0ab7e38d8276c60eba26bcb1b60a95efdaa54540613af8bdcae2a2e8dfa3fee"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/184.b3dm",
+      "sha256": "f2faa2e4b32d58027c146f3fa12f6e43f0c72252ad1ac0c4a361dd3f78d8ecd2"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/185.b3dm",
+      "sha256": "7eec9d786f26f958f3fc91b3c30b426c07510acb8ade719840082eaf0363af9b"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/209.b3dm",
+      "sha256": "85447e6bf227814ea8f700e0119e90ea5474cba02641054039eae95564766db6"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/204.b3dm",
+      "sha256": "82c789678ef6689f441b9fbddd81b1fb29eb7b038e3b784613f44a8dfed72192"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/208.b3dm",
+      "sha256": "0711f2c014c71338f2d94b17231e8628773200009c7d6016412b9e1e28871b06"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/201.b3dm",
+      "sha256": "9382115d6e77fd0404662bfb98542577d935059351a9e9fcf6a54323397f1282"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/200.b3dm",
+      "sha256": "640655f32cff07ed17a7e7f59e58cc2d0af79247bcaba19c8454022eb6009485"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/223.b3dm",
+      "sha256": "568995dfc6b6f3e05c67a58e6506c512cf548fb04d1dfe1d3a4abd11e57162c1"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/213.b3dm",
+      "sha256": "0e784e89606c56f8fe401ac10c01d535c24c958b44f7212b211503d43d525445"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/219.b3dm",
+      "sha256": "e9f96d84aa2c10b4395737b124a25f023833b66ec793940dced1de91aab1778e"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/217.b3dm",
+      "sha256": "d7c3fae9c9772022e6709727c75beb3420c24054d02970fc11761fa908148964"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/220.b3dm",
+      "sha256": "7b3b07091e006d33995088c01ac28bf91398d46c5b50e5cb80f875810f673bcc"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/222.b3dm",
+      "sha256": "d219e58c721044df3391820eb258615422b2b4526a8ade5492175e22136982e3"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/221.b3dm",
+      "sha256": "1d6eeda415dd23461ff4c6447b81303a61166197e963c0f402196e6a8fe75403"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/218.b3dm",
+      "sha256": "81db6628c7cf18571bc0047c1aa3e1b327786c48d76e6506ad7922cc013331d4"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/216.b3dm",
+      "sha256": "a5bc94214e60b86701c90af17e10ae437b751d55a3d7eff10292ab8ba86612d8"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/199.b3dm",
+      "sha256": "91bdd345c42d2f71417e9e5b6555cbcb752d970cf1b8c7f779f7dca28a86ce9f"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/196.b3dm",
+      "sha256": "8cfe204a37640144694f10dc7ff1a7761210fdaa9650cc7c386fe27f793ea907"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/201.b3dm",
+      "sha256": "4b46450deefb87dddca7adb9d66afe733e77a1701ca070a07d26d9829c100836"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/195.b3dm",
+      "sha256": "b3eec36b20644a616ea22f1e021885b5599d4b767acb701c68b434f41b8d9d0d"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/183.b3dm",
+      "sha256": "e8e81625b6942737200c1cbb9a08c4028b1753154a3000a9f8bfec60eb9c6d6a"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/182.b3dm",
+      "sha256": "eed7b882d61c70260098a509c122117dcbedf753cb9a44b5106a5aaba4c32465"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/199.b3dm",
+      "sha256": "b412ceff240032e68c1518c946c057f78228bdd3008a2002acf6268fa31a2362"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/196.b3dm",
+      "sha256": "a6f8af57dcfa28d5c4728770413a169e40f587e415ba59ebceea46124acd5d95"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/184.b3dm",
+      "sha256": "98c7221510d6a91753784764fcbb25f2b545acc59c88672ec80b6aab3c02364a"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/200.b3dm",
+      "sha256": "0255684c2229b9f5bb9b81fdf2c24916ff0f062b5306ac0a4b814058a68b1e2c"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/192.b3dm",
+      "sha256": "5cd34a6f29b0bb1253a98c8ed02d9f63b6515751e79b59ed09040899d614a6f7"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/198.b3dm",
+      "sha256": "639aab6ff483340cc9e1ea3fcdb5f4325296de480fdb9df024ab4285446bbb9d"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/204.b3dm",
+      "sha256": "0ae21f7ab7c53961f32628f74509173b0c8ff27a2acdff561d07ab770f77c0ae"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/203.b3dm",
+      "sha256": "955fa7a42f047b6875490a927a1f2c4a03b72c3851aec6c419f46fa6bb23fa1d"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/202.b3dm",
+      "sha256": "41cbdf645012d387e2ae60edd08543cd5f1608e588bd8c8c2db7da06e1b7b30e"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/177.b3dm",
+      "sha256": "907cbe9ad882fb220b4c128979a668b7a53c819bac6a2acfa56cde10f15626a4"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/193.b3dm",
+      "sha256": "252173828bb3b80eeafe9489422ddd7049e36cffedc7e7ae1d5add4bb8258dde"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/181.b3dm",
+      "sha256": "453ebac535d0b7432bbccc219de93b31acca1e618865a877e8b669532c9c98da"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/175.b3dm",
+      "sha256": "54fce2d62f9edc719cb3348d9ceffdc9ec8dd5449b8a1dac586c12b8c647f98d"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/212.b3dm",
+      "sha256": "b6b09bea4c455b10c14b867b0005c456c93aeee6abf3f09478c573c1314385be"
+    },
+    {
+      "path": "Moon_85s_85n/10/0/172.b3dm",
+      "sha256": "8fb4ad92888dd411a2dbd0a803a72c653086e24bf3fa0318b97eb9455bd51a71"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/211.b3dm",
+      "sha256": "a30f755a7972d88581d161680b113c6c6c3aa2fdbcaeaf0e3e14d0660589d096"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/210.b3dm",
+      "sha256": "182dff7e988f316600b916be1331c69506e0a6948d8aba1bb8c1d27b4d0ba96b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3964.b3dm",
+      "sha256": "eafc08ede164cd79b63cab71922d73cc931983332a9c89c0e3d9b4d8103eb8ed"
+    },
+    {
+      "path": "Moon_85s_90s/14/16480/8081.b3dm",
+      "sha256": "f98be4118444c7569a0a82092fddeaeb296c0ffdc9f9a0f1801f0403257f268d"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/208.b3dm",
+      "sha256": "7c14325a51baba594a2380cb584d8d72643288e8501c4e98d7c4d15a4c6bd594"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3963.b3dm",
+      "sha256": "17e954c9cc2c625014e504641ecc309ecdae43747278f85e6229bb8d18fa8450"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/209.b3dm",
+      "sha256": "63fb43fe5224cb0ad94f92127cec392a6a16fb9459d121f6836786f8dd0fa6db"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3954.b3dm",
+      "sha256": "9019ad1a35649099729ea366c2a5b72c5b9c1c2f53d012466339da928bcc3614"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3962.b3dm",
+      "sha256": "18ae8e4d31ac865369dc3b7b80adb10d5028461087a867564e2418edd27e4ccf"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3952.b3dm",
+      "sha256": "a1517e67a7df525c6012268173f966fc3c5cdc330a3b3e75de8ed374cfd872d4"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/207.b3dm",
+      "sha256": "c85b2cb25a83d4168eea417589428d363770ec2813f8ac07860c310a6149dab7"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/205.b3dm",
+      "sha256": "0306105857187342c3097debb25337fcf687a36ac0beed333d25796e30542395"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3951.b3dm",
+      "sha256": "fdcac6d529b8236b185fb66fc3e86a369c4916f1a903a018b9e776c91bef7d93"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3947.b3dm",
+      "sha256": "ff9a3f4348927fcaf5ca625bbccbea4948732f71827453fc07d06b73e83b4858"
+    },
+    {
+      "path": "Moon_85s_85n/10/2047/186.b3dm",
+      "sha256": "65a4f41f44ed02a9865fd0fe79a9045ff76919735625685d1e048ee94979cedf"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3956.b3dm",
+      "sha256": "242ebee6252f9e486cea1db1078c4b6252eb6a610404febee55d481cb745586a"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3955.b3dm",
+      "sha256": "0ed73aa81ac8a07656940ee12ecbadb71663cb355b9592d355a0c22254025587"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3957.b3dm",
+      "sha256": "48c5f936d441cc2e88b6d756de8b365c07031589a958e0c9c53616276c4cba89"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3950.b3dm",
+      "sha256": "ed6537d071ea1e5c1c00ed5bce683c0194438929f59eeff4c2fec763cd22e570"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3944.b3dm",
+      "sha256": "14c29fdb69b4d0a740933b5aaa4faf26b481c4964d5755969ff74ffc755aa0d7"
+    },
+    {
+      "path": "Moon_85s_90s/14/16489/8300.b3dm",
+      "sha256": "f0deb8ea721137726c369a63d6472a987e3b97eb6829a33ad63d14592535c4fc"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3945.b3dm",
+      "sha256": "1d7dafed5886fbeb341c00e14e7265868edb3e5ccfefa7a558b4ee1eb0cf9e23"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3953.b3dm",
+      "sha256": "00866e889d4e5f059edacaea83e407fe32e2114a795df9eb419ffc37ca09207f"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3958.b3dm",
+      "sha256": "1fa467f7555b6adf6f9de191fc25cab9a9d8169bec7a8f488a4666d1bc02b553"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3949.b3dm",
+      "sha256": "b20dc22a4b6e7b6a6daef8b1cf93a52b9d92aa32ec5a04ac273e3dcdf9d3fbe8"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3928.b3dm",
+      "sha256": "dddf028d6d8670eee0a8e699ba26d6150b12f1bd4a47d6b0dd883f34a27b58cf"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3930.b3dm",
+      "sha256": "bbf3cf72de6549bf4f8822f300c53706538643515d7aee11f84b4fc2f1df0c0a"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3931.b3dm",
+      "sha256": "299350626001071ea6611cdc0b4c38d6eca61545b1381ae5bf9a362317a8914e"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3924.b3dm",
+      "sha256": "7f274fdf501e9f422603dca73f25edf71a0bfee8175eb261e3db65fca48a31ab"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3922.b3dm",
+      "sha256": "4f7aa57bc1b977e27960574e4517152583474be93348ab01fb184d5b83e82040"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3925.b3dm",
+      "sha256": "6098e842168f2f9c5124a7c802425a2d83b406a2c875ea92492bbea068974a8a"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3920.b3dm",
+      "sha256": "bf36e963ca98ca2e6886b0388295c58f36da8810da4203b360ec9bca71d52a81"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3918.b3dm",
+      "sha256": "7a9e8b6ca49dc44677972ebc626e03a9039ab5a04b4cd5784a6d9f8ec9f8323c"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3921.b3dm",
+      "sha256": "7537d80ef08dd8c9086cf12475e85f569adcfd37827c3feb709ee831f7c568c1"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3926.b3dm",
+      "sha256": "83da2945688910931633343e3d0a5d67677d87bdf49582741b38ad91a451b3d4"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3923.b3dm",
+      "sha256": "223735b90b5bbf03027a437d714cf2ce44479b6afc970da835660246686a8dde"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3917.b3dm",
+      "sha256": "d66d60efc4ad971db0e3b93c3e55a3014fc8f026ed3446e5d9489be876720ba0"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3961.b3dm",
+      "sha256": "e50f263018243f980671566cb7e07b6b869861105749de7d282db1acdf1cc41f"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3910.b3dm",
+      "sha256": "d04a96b125d8a71802d2f0134284da878c45bf650ebd4e349cb877798f7813f2"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3908.b3dm",
+      "sha256": "9955edaff8f3861735ff28616870abef3fb21c82b3c9ad78c0169b74c351b0a2"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3909.b3dm",
+      "sha256": "f28a05d5eb4c7b9388ed2517a400b581a14fe9fba3f5fb076ebfc43131e9d2cf"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3960.b3dm",
+      "sha256": "3e8b96bf680ac1ca5655df7b9b1e3970785bab84adfc0cebb6ee9a940302cb26"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3959.b3dm",
+      "sha256": "a562fc68d5fb1d2cf189a491942c818db3542a919564e1a413e24994150f3771"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3901.b3dm",
+      "sha256": "ee819b6c6d3beb1126a6c23a1cda22bd4c95f5035ca850dd17451351524a3d2f"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3943.b3dm",
+      "sha256": "1301e73515cdef52a2adc3ac974226c21b58c7aa082bca4d245c4bbf763779b6"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3898.b3dm",
+      "sha256": "ddf577b08dcd25cbfc4e59097a855132d66a7f3da835b55d15c56e30feb19180"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3897.b3dm",
+      "sha256": "fb2568d80e29bfd486c632324dd2a4d2784ccb790b94783ce5c9a382a290a064"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3942.b3dm",
+      "sha256": "28d8d50a5461b1aeb518f5f73ecaa8f69b0d5e8715e39467f05e864c90e02659"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3896.b3dm",
+      "sha256": "f4e2261dec9d053296f5a1ce6561b7fee9abf8d6cdd87ba7e6cc5e39fd4a3deb"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3895.b3dm",
+      "sha256": "1f7419d27163560ab62e6a8c3389499cd0cdafa21852625afbc3bcdd22869359"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3893.b3dm",
+      "sha256": "7e353220f6860e276d50e170298a029d83dedaff28712e8f6708f817eeb21c39"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3940.b3dm",
+      "sha256": "d7e227d3b246ee32353b6c25688263b34fde4388ff52f6a4c767db990029093b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3900.b3dm",
+      "sha256": "f2acea8c30849ab76b078499efdc42c245abcaf3223224e90a5c452bae58ea80"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3939.b3dm",
+      "sha256": "e8c35748488116452de9acc4aa266e1731ee5622e488641899928256294dcd1b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3884.b3dm",
+      "sha256": "867fab57a4c643ac877129554469ad9a4f3fab13e0fc83aa510404be77912cc0"
+    },
+    {
+      "path": "Moon_85s_90s/13/8406/3868.b3dm",
+      "sha256": "8155a0cbcda6c32a5a2d9b77af2c903c7c880ece874e314b8d3a40251a8656ba"
+    },
+    {
+      "path": "Moon_85s_90s/13/8407/3868.b3dm",
+      "sha256": "f5fd33137cc121d5127b9e8fff4c3c2917e240e4179ebeead21a19d5846f1578"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3938.b3dm",
+      "sha256": "7b99cc3ca731382782c75ad84aaf3700533c70e823a4e98412bcd1e13215bb58"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3936.b3dm",
+      "sha256": "93481164c00332e9742ae9b4188bc73bff730dbdb584868a57bd1f750557221b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3937.b3dm",
+      "sha256": "7147804554226d557aea7b4d9973b26fd7072f897613f6207fe3f4d932f81a09"
+    },
+    {
+      "path": "Moon_85s_90s/13/8401/3868.b3dm",
+      "sha256": "6fa05d35e69b5be2425113a3416dd1455904d0c7a4945124f589db00a5fdb80b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8402/3868.b3dm",
+      "sha256": "a0b72ad5f7b828480315df3e35e4f6189e50cb00fe06ab7b0d57d5d4f6853ca9"
+    },
+    {
+      "path": "Moon_85s_90s/13/8403/3868.b3dm",
+      "sha256": "6c18c759795f5c8675094b063a649822b2e8fce05a22d9759856fd0578b1da47"
+    },
+    {
+      "path": "Moon_85s_90s/13/8404/3868.b3dm",
+      "sha256": "973635f03d14b54e20df49d432e8c82a632758e9d053195acd0824ff5ec60cc6"
+    },
+    {
+      "path": "Moon_85s_90s/13/8400/3868.b3dm",
+      "sha256": "486e77334b833c3e922f84530488e6cee4b4c1a2ee654c18aca42290dbad233e"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3890.b3dm",
+      "sha256": "76fd326f139e952bd3d10b10797eb6ada1ba0445bfb5395193b00342cf7854c5"
+    },
+    {
+      "path": "Moon_85s_90s/13/8399/3868.b3dm",
+      "sha256": "617ed83fb29a596f0d128852bea8d5c8cda3680a82b7aed8f32acd6e53a4bd6e"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3902.b3dm",
+      "sha256": "9fe24b55c0285b470d81bb93a1252369c7a35a6939b69f1f39ae602aba78ce3c"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3891.b3dm",
+      "sha256": "9718419bf37970341f87f1d52ef5204661f93442b0463085a783b00c945eb2dc"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3933.b3dm",
+      "sha256": "ba3c4ca078129d9778441de616797d7bd3eae446746feb6de5bd5e26e5f939bc"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3892.b3dm",
+      "sha256": "8f8f9efc66ea846c270b142ddbca3e2db583eb8f00d1745c599ea28038ff4293"
+    },
+    {
+      "path": "Moon_85s_90s/13/8398/3868.b3dm",
+      "sha256": "0e8d9293bd78f03d8826a4c9772f9ffee550eeb863e67f439d32dcabb350920f"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3899.b3dm",
+      "sha256": "e0d934a54fec6f1f7b7c8a99aeb6b2c0c095570f478f04f8886f2a8d3d1b8fa0"
+    },
+    {
+      "path": "Moon_85s_90s/13/8405/3868.b3dm",
+      "sha256": "cb220ecf6e9eb0c28996de5413bceb981b331dc2366bbb3a6b939139d15a62a3"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3906.b3dm",
+      "sha256": "a02f5fa02961057e03f6da507c30dd906140b7f5a9be04724a9760adb2e60e4a"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3904.b3dm",
+      "sha256": "9a084e64978bbdcea2cfcca8a1f50ae55ecb803fd5b5f7d569e4e240079b97b4"
+    },
+    {
+      "path": "Moon_85s_90s/13/8379/3868.b3dm",
+      "sha256": "058143563df98f3b20dd581b32633442bbfa5321e6df3c895c7804a4afac6f77"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3927.b3dm",
+      "sha256": "3246333d459ee344b8493d25c5c3b5ab482ca3f2bb06d84f7ce7b5c093e8248e"
+    },
+    {
+      "path": "Moon_85s_90s/13/8382/3868.b3dm",
+      "sha256": "e60b753bda7f3e142f884a03954ed6ebd9b70d9a137700337c488da541152a78"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3932.b3dm",
+      "sha256": "999370df7f2d9371a20ad7dc60c62423df325e4817c45593eb197d838e4ebad5"
+    },
+    {
+      "path": "Moon_85s_90s/13/8380/3868.b3dm",
+      "sha256": "ba0bfda1b1062c6a583a93b8b76cca937d901f9d46952fec5f8b0c5de2cec4f4"
+    },
+    {
+      "path": "Moon_85s_90s/13/8375/3868.b3dm",
+      "sha256": "524ee6483efbb2d68bb016d914e8efa8ca7cb7e68a651bc563a6293f5ae63448"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3916.b3dm",
+      "sha256": "00a8dbee4bf22c7290f52630c023d7c662255892486b562620ada5c94c4c2186"
+    },
+    {
+      "path": "Moon_85s_90s/13/8373/3868.b3dm",
+      "sha256": "399948f7a7dab1be477ef184c551cffe5cc43ae9de5cb3f61ec28fb53f9b3008"
+    },
+    {
+      "path": "Moon_85s_90s/13/8376/3868.b3dm",
+      "sha256": "776681fa074a2327b993bd448cb3293f71faa761c8676ef892c7e9513d54aa5b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3915.b3dm",
+      "sha256": "c40ed6c4039ba96bd3d55e7ac8f48eb9a129afcda3c77f6d0c913e919c1e51c1"
+    },
+    {
+      "path": "Moon_85s_90s/13/8377/3868.b3dm",
+      "sha256": "89f785fdd448dd2311795bf6eea16bf7aa9940bd033dbba48616e4255cf002c4"
+    },
+    {
+      "path": "Moon_85s_90s/13/8374/3868.b3dm",
+      "sha256": "66c3c5d11ca3eeff529cd3e5f1e998551a8a783cb7c7c79fe930366eb5fd5607"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3914.b3dm",
+      "sha256": "54032275da0305831574bf2967efcfdf2fa294dcacae001239c12d8d73029b72"
+    },
+    {
+      "path": "Moon_85s_90s/13/8370/3868.b3dm",
+      "sha256": "c46eda2e874ac73c02f889c4a499dd8756094e4b01733eea22748f25a04fee69"
+    },
+    {
+      "path": "Moon_85s_90s/13/8372/3868.b3dm",
+      "sha256": "7dbe425073392c5fcef0ca2f9d075dbdba24a3c5e1737b16bc96ffa253ce1f4e"
+    },
+    {
+      "path": "Moon_85s_90s/13/8384/3868.b3dm",
+      "sha256": "1d9c57c952287a36bf95b918853f12d2aed2ceaa8a775e8ae672c3d55d3e7683"
+    },
+    {
+      "path": "Moon_85s_90s/13/8383/3868.b3dm",
+      "sha256": "5372ac74627a896910810e6eac1464d20be7cc65daeac20c965c85e5b068ad30"
+    },
+    {
+      "path": "Moon_85s_90s/13/8371/3868.b3dm",
+      "sha256": "e504f32719517b1cf857452f94d03f749f9280fe66a6c620b1b88ec5208c0025"
+    },
+    {
+      "path": "Moon_85s_90s/13/8369/3868.b3dm",
+      "sha256": "49f899d4ee530e7785b677b9dfaece886b25e15bcd509630751b8bbf165ace24"
+    },
+    {
+      "path": "Moon_85s_90s/13/8368/3868.b3dm",
+      "sha256": "93f9fcb1d81fe28828138f0ebf59b32dd99f79ef38c6b371a599eafcd3c8a51b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8378/3868.b3dm",
+      "sha256": "d963149ae90a3588b3bf1ceabaeb3ef7a292ffdad8cbdea1f9a30cfda1060e36"
+    },
+    {
+      "path": "Moon_85s_90s/13/8358/3868.b3dm",
+      "sha256": "1253dacf934ae1e37f82a2cd5a36ec0331be489a442336347e037b50da923594"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3912.b3dm",
+      "sha256": "3e42074e811be205358766d117d3f9ba1bc98a32baaa74781250c9de53ecac02"
+    },
+    {
+      "path": "Moon_85s_90s/13/8419/3911.b3dm",
+      "sha256": "0dbdede14c0967791eeff8f2ea9b99d57ca20a791a12d347861552a8e079f299"
+    },
+    {
+      "path": "Moon_85s_90s/13/8397/3868.b3dm",
+      "sha256": "815fcffbdf363d0b5ece6b9ceb22785a477d14c5a05433865c41f54a459b9c63"
+    },
+    {
+      "path": "Moon_85s_90s/13/8355/3868.b3dm",
+      "sha256": "2b682d0eb938bac723a0f3b32e02182a96be33e3b21628a2c74ec8c30fe3178c"
+    },
+    {
+      "path": "Moon_85s_90s/13/8357/3868.b3dm",
+      "sha256": "93eb5e7f07d6a67e955324c5b8061a591639ebc5c23a04d36c721f377e303af7"
+    },
+    {
+      "path": "Moon_85s_90s/13/8356/3868.b3dm",
+      "sha256": "2c2f465a3c64e591b70793441b453027ec6273a36fc73481ffc869b497701122"
+    },
+    {
+      "path": "Moon_85s_90s/13/8360/3868.b3dm",
+      "sha256": "981ba9be9450af804f40221066ea8ab9ac3c5acf527e85d7938ce44963c61894"
+    },
+    {
+      "path": "Moon_85s_90s/13/8352/3868.b3dm",
+      "sha256": "a3e806b97e536d5abb78cd3f6d94fed8d1deb042144f4c6140337683fb27180e"
+    },
+    {
+      "path": "Moon_85s_90s/13/8353/3868.b3dm",
+      "sha256": "2302fde8e680002dfcabdcfeb952a8efb7e39394ca0b5f6cb6fc8f7113313867"
+    },
+    {
+      "path": "Moon_85s_90s/13/8354/3868.b3dm",
+      "sha256": "82f20b131f5c9813a5f4dfbd521effd09b2e4f76769c15412b4f3881c3407ecb"
+    },
+    {
+      "path": "Moon_85s_90s/13/8343/3868.b3dm",
+      "sha256": "f7e45b19942b4526b5af79fa01504bb293561380c27439c26a070cc62821f7a7"
+    },
+    {
+      "path": "Moon_85s_90s/13/8394/3868.b3dm",
+      "sha256": "234df757d4d87e090734af94a6294096faefa6d20d718bb41c6cc49405cad47b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8337/3868.b3dm",
+      "sha256": "63b547caa8ed40846309a3eb88674a2b1dd547b41a0d3036d6927f70cbcfae01"
+    },
+    {
+      "path": "Moon_85s_90s/13/8339/3868.b3dm",
+      "sha256": "0b61ca576a151e7cb7e19be546bc6a08174e82cf764d8cb35a04890f6b2d7ae1"
+    },
+    {
+      "path": "Moon_85s_90s/13/8338/3868.b3dm",
+      "sha256": "dbc12fe9e03b5f04f190eda50b6a6422ac590904e3e1d94cded2781a14c278f6"
+    },
+    {
+      "path": "Moon_85s_90s/13/8396/3868.b3dm",
+      "sha256": "c77ecdabd66f21eea375605a50eb62a3830cdd40455513e53d284e31898d3111"
+    },
+    {
+      "path": "Moon_85s_90s/13/8336/3868.b3dm",
+      "sha256": "7c8bc894223cae562fcb9c0cdf9a14f113fbf45192b53b64027bb85f0b7c5329"
+    },
+    {
+      "path": "Moon_85s_90s/13/8391/3868.b3dm",
+      "sha256": "2e90e0468b341dd90ed3c6f7856b2276fd14d386e6b3eb6268ccc0cf679f13b3"
+    },
+    {
+      "path": "Moon_85s_90s/13/8390/3868.b3dm",
+      "sha256": "c777d3b70a6946858b9ca68a3cbcdc82d577906b0623845fe51ac3188393da96"
+    },
+    {
+      "path": "Moon_85s_90s/13/8389/3868.b3dm",
+      "sha256": "5388c878907903385acbaffe8fad111bfdb936a18c72f914ca83551f9357c2bc"
+    },
+    {
+      "path": "Moon_85s_90s/13/8331/3868.b3dm",
+      "sha256": "371765155cb9ff41620e57b9a403fb72a0c32dda87595c8a57b42f823cfb6cba"
+    },
+    {
+      "path": "Moon_85s_90s/13/8330/3868.b3dm",
+      "sha256": "dac2bef807acf29c16c5d6b146c1da5df7076db0a65c66160832cf6bb345fbf6"
+    },
+    {
+      "path": "Moon_85s_90s/13/8332/3868.b3dm",
+      "sha256": "1d67abf4c42f18201f2643b20923c62fe707854456065529c863f03ed50bb0e1"
+    },
+    {
+      "path": "Moon_85s_90s/13/8329/3868.b3dm",
+      "sha256": "e99214de7633425182269e7869f053ed8910c9930090e0563d1e3594ca87e529"
+    },
+    {
+      "path": "Moon_85s_90s/13/8388/3868.b3dm",
+      "sha256": "3a6f53dd52e03b1bc23b90403a3af6327f687bb44b563c94ce3a4228fcbcf324"
+    },
+    {
+      "path": "Moon_85s_90s/13/8328/3868.b3dm",
+      "sha256": "7bbe3cc2c80abb7b9f214852ca16075917d351e745c51221c80aa985f8ccfb1a"
+    },
+    {
+      "path": "Moon_85s_90s/13/8324/3868.b3dm",
+      "sha256": "c1c2cbfa61f3233c8e86285ac72564440ebf0453a61bff185e5ebf5e054161fd"
+    },
+    {
+      "path": "Moon_85s_90s/13/8327/3868.b3dm",
+      "sha256": "e3f9ec8514d9ce6f7b0438cd19f8db74379653114508bec3b4d1ffc4ce667d7b"
+    },
+    {
+      "path": "Moon_85s_90s/13/8323/3868.b3dm",
+      "sha256": "d05a95aed10e11a70a3438305af26bd73e268a040d01b7868d9c615f1cbf2afa"
+    },
+    {
+      "path": "Moon_85s_90s/13/8333/3868.b3dm",
+      "sha256": "b5a772630832af3e1fc839306ae96f756ebfb967875854d45e10feeef6360805"
+    },
+    {
+      "path": "Moon_85s_90s/13/8334/3868.b3dm",
+      "sha256": "34b9db80e5398f1a721c9143ed0009adc548fad44c6d36766f9af8dc252a3d3f"
+    },
+    {
+      "path": "Moon_85s_90s/13/8325/3868.b3dm",
+      "sha256": "371bac169b2e033fe5d0d497a4b31a99e18ee17b95a6224801b1b53034b81906"
+    },
+    {
+      "path": "Moon_85s_90s/13/8387/3868.b3dm",
+      "sha256": "8b99cf9f6b9c411f53a9eafc27f965ddf8a1c5b503c64ea3bc86a9a892db0050"
+    },
+    {
+      "path": "Moon_85s_90s/13/8386/3868.b3dm",
+      "sha256": "6cd8653bf4dd04f4561b18cbd64630084b83ce8e82a7ef097b579ec979892198"
+    },
+    {
+      "path": "Moon_85s_90s/13/8367/3868.b3dm",
+      "sha256": "ba765cf565b1ae3fb20b1fea618fe12c3ce3ded165977f447bf6689d31997317"
+    },
+    {
+      "path": "Moon_85s_90s/13/8366/3868.b3dm",
+      "sha256": "2431da0a9fdcbf5d624a796d0b9bd162f7ab94cc85f35bf70967e6b7e9c371f6"
+    },
+    {
+      "path": "Moon_85s_90s/14/16285/8295.b3dm",
+      "sha256": "65f17b3658b006b2388e1c7fd4f0da1529f3e0383af534c7c7b53ec02507c655"
+    },
+    {
+      "path": "Moon_85s_90s/13/8362/3868.b3dm",
+      "sha256": "7352f1f5fc74e30df41f6967e43835cca10f9db9c37c0c81630fed9135209c22"
+    },
+    {
+      "path": "Moon_85s_90s/13/8365/3868.b3dm",
+      "sha256": "9f9a818929a77171b893e8137d77aa5604447d33d9f1479f82eaca1dde4c6f74"
+    },
+    {
+      "path": "Moon_85s_90s/13/8364/3868.b3dm",
+      "sha256": "442edfcded3236126d2e36668585dae1e3ecec2820af1c7ea8d1f50aa585d8cb"
+    },
+    {
+      "path": "Moon_85s_90s/13/8361/3868.b3dm",
+      "sha256": "fb75b707dfed0d4c3c1004bd958d97c80046346dd7d3eff68f88b4a18924dc24"
+    },
+    {
+      "path": "Moon_85s_90s/13/8335/3868.b3dm",
+      "sha256": "69e909da5595954d9d428c3f731e33c25dab979a5150d5f6775b083ecaca339c"
+    },
+    {
+      "path": "Moon_85s_90s/13/8340/3868.b3dm",
+      "sha256": "300122c1d5e5ce55de0a4257dea0fdca2f3b96e4f9ef29b4647569b49b63adaf"
+    },
+    {
+      "path": "Moon_85s_90s/13/8363/3868.b3dm",
+      "sha256": "90b7c2953a0eb5f7102226e3b495d298bd5734c7186e3492b4cf192c77a97afd"
+    },
+    {
+      "path": "Moon_85s_90s/13/8322/3868.b3dm",
+      "sha256": "6b6570c83608b6961882a0d7308b6114934419a6d412c4cd28d39bb88252f964"
+    },
+    {
+      "path": "Moon_85s_90s/13/8342/3868.b3dm",
+      "sha256": "eef36277fc4bfb0b21ff95bd7d16aeb7a9a30ba7bb8b86e8801cf2b9e5ced1ed"
+    },
+    {
+      "path": "Moon_85s_90s/13/8320/3868.b3dm",
+      "sha256": "335b8bf249b9d6b348bfce187cc0798355f2c65c5ef653b96370747d3200f3c2"
+    },
+    {
+      "path": "Moon_85s_90s/14/16299/8087.b3dm",
+      "sha256": "5eaeceb6fc1bb7287e3112c5483a6445db462b9bec4bf3cd737479b7dddff9dd"
+    }
+  ]
+}

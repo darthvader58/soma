@@ -54,7 +54,12 @@ test('live engine computes direct failure and relay delivery; display, CSV and Z
   expect(display.allocations).toEqual(result.allocations);
   expect(display.energy_history).toEqual(result.energy_history);
   expect(display.states).toEqual([]);
-  expect(display.registration.release_gate.overlays_allowed).toBe(false);
+  expect(display.registration.release_gate.overlays_allowed).toBe(true);
+  expect(display.registration.release_gate.map_registration_passed).toBe(true);
+  expect(display.registration.representation).toBe('engine_corrected_mesh');
+  expect(display.registration.status).toBe('registered_for_region');
+  expect(display.registration.certified_region).toEqual({ latitude_deg: [-90, -87.5], longitude_deg_east: [-180, 180] });
+  expect(display.registration.conversion_manifest_sha256).toMatch(/^[a-f0-9]{64}$/);
   expect(display.environment.scenario_sha256).toBe(relayJob.scenario_sha256);
   const snapshot = await page.locator('#result').textContent();
   const postRequests = [];

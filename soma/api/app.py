@@ -223,7 +223,7 @@ class JobStore:
         self.temp.cleanup()
 
 
-def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32):
+def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32, moon_provider=None):
     """Planner injection is trusted startup configuration, never request data."""
     @asynccontextmanager
     async def lifespan(app):
@@ -234,6 +234,8 @@ def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32):
             await asyncio.to_thread(app.state.jobs.close)
 
     app = FastAPI(title="SOMA local planning service", lifespan=lifespan)
+    from soma.api.moon import moon_router
+    app.include_router(moon_router(moon_provider))
 
     @app.post("/plans", status_code=202)
     async def post_plan(request: Request):

@@ -1,0 +1,868 @@
+{
+  "samples": [
+    {
+      "id": "transect-0-0",
+      "reference_height_m": -3461.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -6922,
+      "count": 1,
+      "row": 611,
+      "column": 15168,
+      "latitude_deg": -87.60013791534925,
+      "longitude_deg_east": 0.0019680479335880494,
+      "declared_seed": [
+        -87.6,
+        0
+      ],
+      "distance_from_seed_m": 4.873940679473414
+    },
+    {
+      "id": "transect-0-1",
+      "reference_height_m": -3050.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -6100,
+      "count": 1,
+      "row": 4875,
+      "column": 25461,
+      "latitude_deg": -87.60013788138156,
+      "longitude_deg_east": 45.00278324004022,
+      "declared_seed": [
+        -87.6,
+        45
+      ],
+      "distance_from_seed_m": 5.476954919640612
+    },
+    {
+      "id": "transect-0-2",
+      "reference_height_m": -1485.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2970,
+      "count": 1,
+      "row": 15167,
+      "column": 29723,
+      "latitude_deg": -87.60030273247555,
+      "longitude_deg_east": 89.9980318168565,
+      "declared_seed": [
+        -87.6,
+        90
+      ],
+      "distance_from_seed_m": 9.51812117034499
+    },
+    {
+      "id": "transect-0-3",
+      "reference_height_m": 105.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 211,
+      "count": 1,
+      "row": 25461,
+      "column": 25462,
+      "latitude_deg": -87.59990479478344,
+      "longitude_deg_east": 134.99721703033478,
+      "declared_seed": [
+        -87.6,
+        135
+      ],
+      "distance_from_seed_m": 4.5652216828554355
+    },
+    {
+      "id": "transect-0-4",
+      "reference_height_m": -1796.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -3593,
+      "count": 1,
+      "row": 29727,
+      "column": 15168,
+      "latitude_deg": -87.59964346403021,
+      "longitude_deg_east": 179.99803235758472,
+      "declared_seed": [
+        -87.6,
+        -180
+      ],
+      "distance_from_seed_m": 11.101229623243196
+    },
+    {
+      "id": "transect-0-5",
+      "reference_height_m": -1772.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -3544,
+      "count": 1,
+      "row": 25461,
+      "column": 4873,
+      "latitude_deg": -87.59990479478344,
+      "longitude_deg_east": -134.99721703033478,
+      "declared_seed": [
+        -87.6,
+        -135
+      ],
+      "distance_from_seed_m": 4.5652216828554355
+    },
+    {
+      "id": "transect-0-6",
+      "reference_height_m": -448.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -897,
+      "count": 1,
+      "row": 15169,
+      "column": 611,
+      "latitude_deg": -87.60013790402668,
+      "longitude_deg_east": -90.00590414378219,
+      "declared_seed": [
+        -87.6,
+        -90
+      ],
+      "distance_from_seed_m": 8.588090459880625
+    },
+    {
+      "id": "transect-0-7",
+      "reference_height_m": -3400.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -6800,
+      "count": 1,
+      "row": 4872,
+      "column": 4876,
+      "latitude_deg": -87.60002129562233,
+      "longitude_deg_east": -44.98886758074667,
+      "declared_seed": [
+        -87.6,
+        -45
+      ],
+      "distance_from_seed_m": 14.156946778968583
+    },
+    {
+      "id": "transect-1-0",
+      "reference_height_m": -3832.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -7664,
+      "count": 1,
+      "row": 3037,
+      "column": 15169,
+      "latitude_deg": -88.00001184036289,
+      "longitude_deg_east": 0.007084923855700876,
+      "declared_seed": [
+        -88,
+        0
+      ],
+      "distance_from_seed_m": 7.50861646382999
+    },
+    {
+      "id": "transect-1-1",
+      "reference_height_m": -3944.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -7889,
+      "count": 1,
+      "row": 6590,
+      "column": 23745,
+      "latitude_deg": -88.00002556512028,
+      "longitude_deg_east": 45.0,
+      "declared_seed": [
+        -88,
+        45
+      ],
+      "distance_from_seed_m": 0.7754562944393482
+    },
+    {
+      "id": "transect-1-2",
+      "reference_height_m": -191.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -383,
+      "count": 1,
+      "row": 15165,
+      "column": 27302,
+      "latitude_deg": -87.99935245643105,
+      "longitude_deg_east": 89.98819568612171,
+      "declared_seed": [
+        -88,
+        90
+      ],
+      "distance_from_seed_m": 23.280782168534166
+    },
+    {
+      "id": "transect-1-3",
+      "reference_height_m": 305.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 610,
+      "count": 1,
+      "row": 23747,
+      "column": 23746,
+      "latitude_deg": -87.99967588497432,
+      "longitude_deg_east": 135.00333930408254,
+      "declared_seed": [
+        -88,
+        135
+      ],
+      "distance_from_seed_m": 10.44755571103913
+    },
+    {
+      "id": "transect-1-4",
+      "reference_height_m": -250.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -500,
+      "count": 1,
+      "row": 27297,
+      "column": 15169,
+      "latitude_deg": -88.00017667957438,
+      "longitude_deg_east": 179.99291449203747,
+      "declared_seed": [
+        -88,
+        -180
+      ],
+      "distance_from_seed_m": 9.2182127826671
+    },
+    {
+      "id": "transect-1-5",
+      "reference_height_m": -1298.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2596,
+      "count": 1,
+      "row": 23743,
+      "column": 6587,
+      "latitude_deg": -87.99990892127403,
+      "longitude_deg_east": -134.98330153360607,
+      "declared_seed": [
+        -88,
+        -135
+      ],
+      "distance_from_seed_m": 17.891842510520966
+    },
+    {
+      "id": "transect-1-6",
+      "reference_height_m": 212.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 424,
+      "count": 1,
+      "row": 15168,
+      "column": 3038,
+      "latitude_deg": -88.00017669316432,
+      "longitude_deg_east": -90.00236183599822,
+      "declared_seed": [
+        -88,
+        -90
+      ],
+      "distance_from_seed_m": 5.914004303890407
+    },
+    {
+      "id": "transect-1-7",
+      "reference_height_m": -1415.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2830,
+      "count": 1,
+      "row": 6589,
+      "column": 6590,
+      "latitude_deg": -87.9999090028027,
+      "longitude_deg_east": -44.99666030663044,
+      "declared_seed": [
+        -88,
+        -45
+      ],
+      "distance_from_seed_m": 4.485312522158369
+    },
+    {
+      "id": "transect-2-0",
+      "reference_height_m": -1426.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2853,
+      "count": 1,
+      "row": 6071,
+      "column": 15166,
+      "latitude_deg": -88.50016892032914,
+      "longitude_deg_east": -0.009447993018264511,
+      "declared_seed": [
+        -88.5,
+        0
+      ],
+      "distance_from_seed_m": 9.083092648795887
+    },
+    {
+      "id": "transect-2-1",
+      "reference_height_m": -3897.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -7794,
+      "count": 1,
+      "row": 8733,
+      "column": 21601,
+      "latitude_deg": -88.49974853024271,
+      "longitude_deg_east": 44.995547421557525,
+      "declared_seed": [
+        -88.5,
+        45
+      ],
+      "distance_from_seed_m": 8.406226777524001
+    },
+    {
+      "id": "transect-2-2",
+      "reference_height_m": -768.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1536,
+      "count": 1,
+      "row": 15168,
+      "column": 24267,
+      "latitude_deg": -88.49967435492422,
+      "longitude_deg_east": 90.00314829273343,
+      "declared_seed": [
+        -88.5,
+        90
+      ],
+      "distance_from_seed_m": 10.187776034135418
+    },
+    {
+      "id": "transect-2-3",
+      "reference_height_m": 158.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 317,
+      "count": 1,
+      "row": 21599,
+      "column": 21600,
+      "latitude_deg": -88.50021482807078,
+      "longitude_deg_east": 134.9955460370493,
+      "declared_seed": [
+        -88.5,
+        135
+      ],
+      "distance_from_seed_m": 7.41299724721573
+    },
+    {
+      "id": "transect-2-4",
+      "reference_height_m": -1021.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2043,
+      "count": 1,
+      "row": 24265,
+      "column": 15168,
+      "latitude_deg": -88.50000407727032,
+      "longitude_deg_east": 179.996851015144,
+      "declared_seed": [
+        -88.5,
+        -180
+      ],
+      "distance_from_seed_m": 2.503059771226232
+    },
+    {
+      "id": "transect-2-5",
+      "reference_height_m": -2273.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -4547,
+      "count": 1,
+      "row": 21598,
+      "column": 8734,
+      "latitude_deg": -88.50021479182249,
+      "longitude_deg_east": -134.98663811136328,
+      "declared_seed": [
+        -88.5,
+        -135
+      ],
+      "distance_from_seed_m": 12.4479929381082
+    },
+    {
+      "id": "transect-2-6",
+      "reference_height_m": -1327.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2654,
+      "count": 1,
+      "row": 15166,
+      "column": 6071,
+      "latitude_deg": -88.50016892032914,
+      "longitude_deg_east": -89.99055200698174,
+      "declared_seed": [
+        -88.5,
+        -90
+      ],
+      "distance_from_seed_m": 9.083092648793587
+    },
+    {
+      "id": "transect-2-7",
+      "reference_height_m": -404.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -809,
+      "count": 4,
+      "row": 8736,
+      "column": 8736,
+      "latitude_deg": -88.5003314070669,
+      "longitude_deg_east": -45.0,
+      "declared_seed": [
+        -88.5,
+        -45
+      ],
+      "distance_from_seed_m": 10.05109437202053
+    },
+    {
+      "id": "transect-3-0",
+      "reference_height_m": -386.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -772,
+      "count": 1,
+      "row": 9103,
+      "column": 15167,
+      "latitude_deg": -89.00005342328187,
+      "longitude_deg_east": -0.004723866714754671,
+      "declared_seed": [
+        -89,
+        0
+      ],
+      "distance_from_seed_m": 2.9791015196987236
+    },
+    {
+      "id": "transect-3-1",
+      "reference_height_m": -763.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1527,
+      "count": 1,
+      "row": 10881,
+      "column": 19457,
+      "latitude_deg": -89.00011144248596,
+      "longitude_deg_east": 45.020042832500934,
+      "declared_seed": [
+        -89,
+        45
+      ],
+      "distance_from_seed_m": 11.132565520897327
+    },
+    {
+      "id": "transect-3-2",
+      "reference_height_m": -665.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1330,
+      "count": 1,
+      "row": 15169,
+      "column": 21233,
+      "latitude_deg": -88.99988851922612,
+      "longitude_deg_east": 90.01416926346016,
+      "declared_seed": [
+        -89,
+        90
+      ],
+      "distance_from_seed_m": 8.22636326561436
+    },
+    {
+      "id": "transect-3-3",
+      "reference_height_m": 998.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 1996,
+      "count": 1,
+      "row": 19457,
+      "column": 19456,
+      "latitude_deg": -88.99987832575333,
+      "longitude_deg_east": 135.00667938671643,
+      "declared_seed": [
+        -89,
+        135
+      ],
+      "distance_from_seed_m": 5.1101356001158456
+    },
+    {
+      "id": "transect-3-4",
+      "reference_height_m": -665.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1331,
+      "count": 1,
+      "row": 21231,
+      "column": 15166,
+      "latitude_deg": -89.0002182729676,
+      "longitude_deg_east": -179.98582606291475,
+      "declared_seed": [
+        -89,
+        -180
+      ],
+      "distance_from_seed_m": 10.003851215980038
+    },
+    {
+      "id": "transect-3-5",
+      "reference_height_m": -1163.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2326,
+      "count": 2,
+      "row": 19452,
+      "column": 10874,
+      "latitude_deg": -88.9998777821043,
+      "longitude_deg_east": -134.93988554133804,
+      "declared_seed": [
+        -89,
+        -135
+      ],
+      "distance_from_seed_m": 32.03300619441437
+    },
+    {
+      "id": "transect-3-6",
+      "reference_height_m": 1337.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 2674,
+      "count": 1,
+      "row": 15166,
+      "column": 9099,
+      "latitude_deg": -88.99939388864537,
+      "longitude_deg_east": -89.98583774120141,
+      "declared_seed": [
+        -89,
+        -90
+      ],
+      "distance_from_seed_m": 19.851122706719746
+    },
+    {
+      "id": "transect-3-7",
+      "reference_height_m": -1519.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -3039,
+      "count": 1,
+      "row": 10880,
+      "column": 10879,
+      "latitude_deg": -89.00011149686344,
+      "longitude_deg_east": -45.00668094440921,
+      "declared_seed": [
+        -89,
+        -45
+      ],
+      "distance_from_seed_m": 4.89224029224195
+    },
+    {
+      "id": "transect-4-0",
+      "reference_height_m": -723.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1446,
+      "count": 1,
+      "row": 12136,
+      "column": 15168,
+      "latitude_deg": -89.50014085331141,
+      "longitude_deg_east": 0.00945007075598444,
+      "declared_seed": [
+        -89.5,
+        0
+      ],
+      "distance_from_seed_m": 4.949255438628228
+    },
+    {
+      "id": "transect-4-1",
+      "reference_height_m": -395.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -791,
+      "count": 1,
+      "row": 13023,
+      "column": 17311,
+      "latitude_deg": -89.50004622194339,
+      "longitude_deg_east": 44.98663811136325,
+      "declared_seed": [
+        -89.5,
+        45
+      ],
+      "distance_from_seed_m": 3.8033833556104617
+    },
+    {
+      "id": "transect-4-2",
+      "reference_height_m": 869.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 1738,
+      "count": 2,
+      "row": 15166,
+      "column": 18200,
+      "latitude_deg": -89.49997591264747,
+      "longitude_deg_east": 89.97165913857862,
+      "declared_seed": [
+        -89.5,
+        90
+      ],
+      "distance_from_seed_m": 7.535304350884536
+    },
+    {
+      "id": "transect-4-3",
+      "reference_height_m": -1937.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -3874,
+      "count": 2,
+      "row": 17312,
+      "column": 17313,
+      "latitude_deg": -89.49981303752071,
+      "longitude_deg_east": 134.98664434068175,
+      "declared_seed": [
+        -89.5,
+        135
+      ],
+      "distance_from_seed_m": 6.681155648362285
+    },
+    {
+      "id": "transect-4-4",
+      "reference_height_m": 1017.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 2035,
+      "count": 1,
+      "row": 18199,
+      "column": 15167,
+      "latitude_deg": -89.50014085331141,
+      "longitude_deg_east": -179.99054992924403,
+      "declared_seed": [
+        -89.5,
+        -180
+      ],
+      "distance_from_seed_m": 4.94925543862729
+    },
+    {
+      "id": "transect-4-5",
+      "reference_height_m": 1757.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 3514,
+      "count": 4,
+      "row": 17310,
+      "column": 13025,
+      "latitude_deg": -89.50039601218987,
+      "longitude_deg_east": -135.0,
+      "declared_seed": [
+        -89.5,
+        -135
+      ],
+      "distance_from_seed_m": 12.008644851850725
+    },
+    {
+      "id": "transect-4-6",
+      "reference_height_m": -1195.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -2390,
+      "count": 1,
+      "row": 15168,
+      "column": 12135,
+      "latitude_deg": -89.49997596702077,
+      "longitude_deg_east": -90.00944695449199,
+      "declared_seed": [
+        -89.5,
+        -90
+      ],
+      "distance_from_seed_m": 2.603999166758312
+    },
+    {
+      "id": "transect-4-7",
+      "reference_height_m": -997.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1995,
+      "count": 1,
+      "row": 13022,
+      "column": 13023,
+      "latitude_deg": -89.49981303752071,
+      "longitude_deg_east": -44.986644340681735,
+      "declared_seed": [
+        -89.5,
+        -45
+      ],
+      "distance_from_seed_m": 6.681155648362285
+    },
+    {
+      "id": "transect-5-0",
+      "reference_height_m": 72.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 144,
+      "count": 2,
+      "row": 13955,
+      "column": 15169,
+      "latitude_deg": -89.80007161468002,
+      "longitude_deg_east": 0.07088134055712429,
+      "declared_seed": [
+        -89.8,
+        0
+      ],
+      "distance_from_seed_m": 7.809355475813964
+    },
+    {
+      "id": "transect-5-1",
+      "reference_height_m": 1236.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 2473,
+      "count": 1,
+      "row": 14309,
+      "column": 16026,
+      "latitude_deg": -89.79980755900117,
+      "longitude_deg_east": 45.0,
+      "declared_seed": [
+        -89.8,
+        45
+      ],
+      "distance_from_seed_m": 5.835473635258444
+    },
+    {
+      "id": "transect-5-2",
+      "reference_height_m": -613.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1226,
+      "count": 1,
+      "row": 15166,
+      "column": 16377,
+      "latitude_deg": -89.80056628109253,
+      "longitude_deg_east": 89.92894284811265,
+      "declared_seed": [
+        -89.8,
+        90
+      ],
+      "distance_from_seed_m": 18.74228690648985
+    },
+    {
+      "id": "transect-5-3",
+      "reference_height_m": -2107.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -4214,
+      "count": 1,
+      "row": 16025,
+      "column": 16024,
+      "latitude_deg": -89.8001573072281,
+      "longitude_deg_east": 135.03342810560798,
+      "declared_seed": [
+        -89.8,
+        135
+      ],
+      "distance_from_seed_m": 5.938321579369389
+    },
+    {
+      "id": "transect-5-4",
+      "reference_height_m": 131.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 262,
+      "count": 2,
+      "row": 16382,
+      "column": 15169,
+      "latitude_deg": -89.79974183707553,
+      "longitude_deg_east": 179.9292353844629,
+      "declared_seed": [
+        -89.8,
+        -180
+      ],
+      "distance_from_seed_m": 10.837950725233814
+    },
+    {
+      "id": "transect-5-5",
+      "reference_height_m": 1209.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 2418,
+      "count": 1,
+      "row": 16023,
+      "column": 14307,
+      "latitude_deg": -89.79992330376722,
+      "longitude_deg_east": -134.83305472794964,
+      "declared_seed": [
+        -89.8,
+        -135
+      ],
+      "distance_from_seed_m": 17.826657644059587
+    },
+    {
+      "id": "transect-5-6",
+      "reference_height_m": 55.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": 111,
+      "count": 1,
+      "row": 15167,
+      "column": 13955,
+      "latitude_deg": -89.80007175067257,
+      "longitude_deg_east": -89.97637287576686,
+      "declared_seed": [
+        -89.8,
+        -90
+      ],
+      "distance_from_seed_m": 3.314518509168971
+    },
+    {
+      "id": "transect-5-7",
+      "reference_height_m": -325.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -651,
+      "count": 1,
+      "row": 14311,
+      "column": 14310,
+      "latitude_deg": -89.8001573072281,
+      "longitude_deg_east": -45.03342810560799,
+      "declared_seed": [
+        -89.8,
+        -45
+      ],
+      "distance_from_seed_m": 5.938321579369389
+    }
+  ]
+}

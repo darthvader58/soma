@@ -67,6 +67,17 @@ C-3 PASS: No template-only section.
 C-4 PASS: Invalid input, cancellation, unknown hits, mobile and keyboard remain explicit.
 C-5 PASS: No fabricated statistic, endorsement or passing registration.
 
-This UI gate is separate from scientific map acceptance. The latter remains
-blocked while radial differences and independent feature correspondence are
-unresolved.
+This UI gate is separate from scientific map acceptance. The engine's v0.2
+certificate covers the tested application region from -90 to -87.5 degrees
+latitude in the corrected representation. Four resolved grid features and 48
+height controls were checked at the detailed 5.21 m mesh level. The 3.54 m
+grid-resolution allowance is not a continuous-peak localization bound or an
+absolute geolocation guarantee, and the test does not certify all locations or
+mesh detail levels. Root and four control-tile fingerprints are sampled
+snapshot checks, rather than a checksum pin for every regional tile.
+
+The diagnostic defaults to the unmodified asset. In development,
+`registration.html?representation=registered` uses the same engine-corrected
+loader as the application and records its conversion checksum and certificate
+version. `SOMA_REGISTRATION_URL` selects this URL for the capture script.
+Measurements remain raw observations with `registration_status: not_evaluated`.

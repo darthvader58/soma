@@ -1,8 +1,8 @@
 # SOMA fixture workspace
 
 This implements the scenario editor, stored scientific display/comparison and
-live planning-service client. Phase 5 numerical integration is verified; the
-scientific map-registration acceptance gate remains unfinished.
+live planning-service client. The engine supplies a reviewed corrected-mesh
+registration for the tested latitude region -90 to -87.5 degrees.
 It remains a **visual draft**, not a completed
 scientific product. The user delegated both developer roles to the same team;
 the engine and browser remain separate authorities. Python owns all physics
@@ -76,21 +76,21 @@ The token is a browser-visible application token, so scope it for this app.
 No evaluation token, paid service access, or unrestricted redistribution is
 assumed. Without a token or usable tiles, numerical content remains readable.
 
-See [viewer-registration.md](docs/viewer-registration.md) for the blocked
-overlay gate. There is no engine registration yet. A display pick is only a
+See [viewer-registration.md](docs/viewer-registration.md) for the scoped
+registration gate. A display pick is only a
 display observation: its marker uses the raw renderer position and is labelled
 as unresolved. It does not change the physical scenario or either equipment
 height. The immutable synthetic fixture point and edited draft inputs have
 separate readouts. Typed coordinates remain declared-frame draft inputs until
 the engine resolves them. Tile/render failures clear display selections and
 preserve the numerical view. Lighting is neutral display lighting,
-not a prediction of sunlight. Token-backed rendering/picking are unverified.
+not a prediction of sunlight.
 
 `VITE_SOMA_API_URL` defaults to `/api`; the Vite server forwards it to Python on
 port 8000. `SOMA_API_PROXY_TARGET` configures another service target. A deployed
 static build requires an equivalent reverse proxy. `VITE_SOMA_MODE=fixture`
-selects the offline client. Live integration is verified; the coordinate bridge
-remains blocked. No spacecraft position is invented for the contact-only relay
+selects the offline client. Aligned declared-point markers require a matching
+completed job and conversion certificate. No spacecraft position is invented for the contact-only relay
 fixture. Exact stored samples and the registration reasons appear beside the map.
 The protocol and automated schema review are in
 [contract-review.md](docs/contract-review.md).
