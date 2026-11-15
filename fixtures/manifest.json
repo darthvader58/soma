@@ -70,12 +70,16 @@
       "sha256": "7a52bd1926b9bd27a6a17b88e726d5b90b80858b7cbbb796725fbd05e7d74bd2"
     },
     {
+      "path": "data/renderer-registration-source-audit.manifest.json",
+      "sha256": "f920e051f992213adc5185c6c1e33de08590ca5d354c68d0ba201db8f75e55f5"
+    },
+    {
       "path": "data/renderer-registration-sources.manifest.json",
       "sha256": "ba5c377261b4f3b3d18946ee470c2a1af0595610c0a2f5681015698b3aaa168e"
     },
     {
       "path": "data/renderer-registration.manifest.json",
-      "sha256": "5b10cfc1c2ca05618dc4280c41ac348309e8dcaa024087058c43d96255fb615b"
+      "sha256": "ef1ae8dddc15261c5a6ca8cf0455330041e11864ca7e13e98e0fbf221c451e57"
     },
     {
       "path": "fixtures/hash-vectors.json",
@@ -140,6 +144,42 @@
     {
       "path": "fixtures/phase-5/live-relay/run.zip",
       "sha256": "606eb7e1a519e95d90fa3e3cf598a88f610c5508d52ebb55faacd982dccdabe9"
+    },
+    {
+      "path": "fixtures/registration/README.md",
+      "sha256": "0095bd0140293078f06711a9e0782d8bf6d0f8d1d8404b08fe1eaec01ea31c33"
+    },
+    {
+      "path": "fixtures/registration/coarse-polar-reference.json",
+      "sha256": "7fb87e8262b3a3e8e51ba4b359c5c9ebe03299129355691f2832b8524f4769ae"
+    },
+    {
+      "path": "fixtures/registration/four-polar-capture.json",
+      "sha256": "11a6a6005f0fc27582c782d6b24d4c708014a28f91800c9b9abe09e23ecef7bc"
+    },
+    {
+      "path": "fixtures/registration/four-polar-probes.json",
+      "sha256": "bfa1280117ba0f79e9ce5cc732038f5a0baa357f87903beab360a6101c2e3d9e"
+    },
+    {
+      "path": "fixtures/registration/polar-patches-capture.json",
+      "sha256": "867726b6fcd42ef1ba4433370ea2aee52f15bcad2b0ac3c6ba469af3794f51a2"
+    },
+    {
+      "path": "fixtures/registration/polar-patches-probes.json",
+      "sha256": "8de0083ecd869af693fc72958970cfbde33eadcccb2a0e3a358064dadb3d77db"
+    },
+    {
+      "path": "fixtures/registration/polar20m-native-reference.json",
+      "sha256": "9c3fe554de518a24bbda0c1148e18b01b8728b61da1277ac7babd03f3810d1f1"
+    },
+    {
+      "path": "fixtures/registration/polar20m-reference.json",
+      "sha256": "d09f58e458e56f346be8212361607af123dfb511d5712fe0354db9e2e1c02155"
+    },
+    {
+      "path": "fixtures/registration/radial-differences.json",
+      "sha256": "ccd1b6f14c1897abd8aee24bba2d562fee2cc52c2d0a437963cbf7d11903a4d6"
     },
     {
       "path": "fixtures/synthetic-direct/README.md",
@@ -306,8 +346,12 @@
       "sha256": "4946636d482598c17b5ec304f15f16f699a4cb12b7791b31ab3c385b5a30090b"
     },
     {
+      "path": "soma/docs/phase-5/registration-source-audit.md",
+      "sha256": "43002113e41f442f65ea5bf3d12709f8b734168991697a937e0eaa9aa00d2308"
+    },
+    {
       "path": "soma/docs/phase-5/registration.md",
-      "sha256": "675e14cdc67a72149d5a92bd8a2423f92fc41bf107a3a8b7cbef1c3e8386e419"
+      "sha256": "350cdee2298ad4d7fb6f4da9a3191804c4e4446a84e52c39bd5fa93d71552898"
     },
     {
       "path": "soma/engine.py",
@@ -332,6 +376,10 @@
     {
       "path": "soma/geometry/registration.py",
       "sha256": "346cf38cd6caff4ba741fdfb0f356c0dff007fb36f8dc14456778254df2d918b"
+    },
+    {
+      "path": "soma/geometry/registration_measurements.py",
+      "sha256": "e86d773b324068b21c61d17e162af7b1850e4242181d1547b5c78bc87d31aa9b"
     },
     {
       "path": "soma/geometry/spice.py",
@@ -484,6 +532,10 @@
     {
       "path": "tests/engine/test_registration.py",
       "sha256": "5db6de5fc9de8633e24afe87983bf07de687a8ff5fcfef25ad53a243803cddc7"
+    },
+    {
+      "path": "tests/engine/test_registration_measurements.py",
+      "sha256": "f80b2a8271377857f56425be306d3780d440e56edca1cadfd36e67de009c2b22"
     },
     {
       "path": "tests/engine/test_replay.py",

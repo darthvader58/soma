@@ -1,0 +1,81 @@
+{
+  "manifest_version": "0.1.0",
+  "purpose": "Primary source frame evidence and raw renderer diagnostics; no registration pass",
+  "source_labels": [
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M_JP2.LBL",
+      "sha256": "7395dfb60d7af1cf14f82c4b7d2dff32cd16fa2688cfdaf18deb8f4fdb7d5853",
+      "frame": "MOON_ME_DE421",
+      "reference_radius_m": 1737400,
+      "dn_elevation_scale_m": 0.5
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/SLDEM2015/GLOBAL/JP2/SLDEM2015_512_60S_60N_000_360_JP2.LBL",
+      "sha256": "d60c04ee8a2c701a72cd728a3768d4f672be2eb729c7164ebcc0a1b71934fec0",
+      "frame": "MOON_ME_DE421",
+      "reference_radius_m": 1737400,
+      "dn_elevation_scale_m": 0.5
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_80S_20M_JP2.LBL",
+      "sha256": "48d80b4e0fd6dac9a5224f5e49904fa2c223119899cec1d19d8dd29f968a92ce",
+      "frame": "MOON_ME_DE421",
+      "reference_radius_m": 1737400,
+      "dn_elevation_scale_m": 0.5
+    }
+  ],
+  "source_table_url": "https://cesium.com/platform/cesium-ion/content/cesium-moon/",
+  "source_table_response_sha256": "a6622d9423eb2c1f33e43d0fd127cb3862579300f14a19be96a1e2ac96990341",
+  "frame_finding": "Both advertised terrain source families explicitly name DE421 mean Earth/polar axis. An identity bridge is testable; vendor confirmation is not an absolute prerequisite.",
+  "reference_decode": "height_m=DN*0.5; radius_m=1737400+height_m",
+  "reference_raster_url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_80S_20M.JP2",
+  "full_reference_raster_sha256": null,
+  "reference_sampling": "Four remote 1x1 JP2 windows; nearest-pixel native values retained; no full-raster checksum or fine count mask acquired.",
+  "measurements": [
+    {
+      "path": "fixtures/registration/coarse-polar-reference.json",
+      "sha256": "7fb87e8262b3a3e8e51ba4b359c5c9ebe03299129355691f2832b8524f4769ae"
+    },
+    {
+      "path": "fixtures/registration/four-polar-capture.json",
+      "sha256": "11a6a6005f0fc27582c782d6b24d4c708014a28f91800c9b9abe09e23ecef7bc"
+    },
+    {
+      "path": "fixtures/registration/four-polar-probes.json",
+      "sha256": "bfa1280117ba0f79e9ce5cc732038f5a0baa357f87903beab360a6101c2e3d9e"
+    },
+    {
+      "path": "fixtures/registration/polar-patches-capture.json",
+      "sha256": "867726b6fcd42ef1ba4433370ea2aee52f15bcad2b0ac3c6ba469af3794f51a2"
+    },
+    {
+      "path": "fixtures/registration/polar-patches-probes.json",
+      "sha256": "8de0083ecd869af693fc72958970cfbde33eadcccb2a0e3a358064dadb3d77db"
+    },
+    {
+      "path": "fixtures/registration/polar20m-native-reference.json",
+      "sha256": "9c3fe554de518a24bbda0c1148e18b01b8728b61da1277ac7babd03f3810d1f1"
+    },
+    {
+      "path": "fixtures/registration/polar20m-reference.json",
+      "sha256": "d09f58e458e56f346be8212361607af123dfb511d5712fe0354db9e2e1c02155"
+    },
+    {
+      "path": "fixtures/registration/radial-differences.json",
+      "sha256": "ccd1b6f14c1897abd8aee24bba2d562fee2cc52c2d0a437963cbf7d11903a4d6"
+    }
+  ],
+  "registration_passed": false,
+  "horizontal_correspondence_established": false,
+  "radial_difference_range_m": [
+    349.20850359858014,
+    435.15140513470396
+  ],
+  "findings": [
+    "Completed raw samples have no browser page or console errors.",
+    "Radial samples do not measure independently matched horizontal fiducials.",
+    "The observed differences remain unresolved between source/product, asset conversion and query method.",
+    "No correction or tolerance has been fitted and no scientific overlay is enabled."
+  ],
+  "report_ref": "soma/docs/phase-5/registration-source-audit.md"
+}

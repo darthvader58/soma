@@ -1,0 +1,43 @@
+{
+  "format_version": "0.1.0",
+  "request_id": "lola64-polar-four-centers-precheck-v1",
+  "source_frame": "MOON_ME_DE421",
+  "candidate_bridge": "identity_for_measurement_only",
+  "purpose": "Raw mesh sampling; identity unvalidated, no mission or registration success",
+  "probes": [
+    {
+      "id": "polar-0-2-2",
+      "position_m": [
+        151424.38744978124,
+        0.0,
+        -1730788.6684645987
+      ]
+    },
+    {
+      "id": "polar-1-2-2",
+      "position_m": [
+        9.272069570161162e-12,
+        151424.38744978124,
+        -1730788.6684645987
+      ]
+    },
+    {
+      "id": "polar-2-2-2",
+      "position_m": [
+        -151401.32478213217,
+        2642.719954290264,
+        -1730788.6684645987
+      ]
+    },
+    {
+      "id": "polar-3-2-2",
+      "position_m": [
+        9.272069570161162e-12,
+        -151424.38744978124,
+        -1730788.6684645987
+      ]
+    }
+  ],
+  "source_manifest_ref": "data/lola-far-phase2.manifest.json",
+  "source_manifest_sha256": "f1bd2475133b01d07f41ddac7be7be3f696fe9d73dce0b019e6ed209ef6e7f68"
+}

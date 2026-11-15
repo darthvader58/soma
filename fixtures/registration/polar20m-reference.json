@@ -1,0 +1,36 @@
+{
+  "samples": [
+    {
+      "id": "polar-0-2-2",
+      "reference_height_m": -675.5,
+      "quality_flags": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    },
+    {
+      "id": "polar-1-2-2",
+      "reference_height_m": -3722.5,
+      "quality_flags": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    },
+    {
+      "id": "polar-2-2-2",
+      "reference_height_m": -3903.5,
+      "quality_flags": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    },
+    {
+      "id": "polar-3-2-2",
+      "reference_height_m": -2306.0,
+      "quality_flags": [
+        "published_gridded_20m_nearest_pixel",
+        "fine_count_mask_not_acquired"
+      ]
+    }
+  ]
+}
