@@ -6,15 +6,16 @@ token must be supplied by the host application; absent tokens do not trigger an
 import, asset request, or evaluation-token fallback. Keep Cesium's credit display
 visible. The copy script retains the installed package's asset notices.
 
-The current engine supplies no renderer registration. All lander, trajectory,
-Sun-direction, and contact overlays remain blocked. Topography can be browsed
-when a token is configured. Neutral UNLIT shading is display-only; source imagery
+The engine supplies a v0.2 registration for its corrected Moon mesh in the
+tested latitude region -90 to -87.5 degrees. A matching completed display may
+show the backend's declared analysis point. No relay trajectory is invented for
+the contact-only fixture. Neutral UNLIT shading is display-only; source imagery
 may contain shadows. Neither those shadows nor scene time indicates modeled
 illumination. UNLIT/CustomShader is a documented experimental Cesium API pinned
 by the application's dependency lockfile.
 
 `createMoonViewer(container, {scenario, ionToken, onPick, onStatus, registration})`
-returns a promise for `{setScenario, setTime, clearDisplayPick, destroy}`.
+returns a promise for `{setScenario, setDisplay, setTime, clearDisplayPick, destroy}`.
 `setTime` only sets the Cesium clock. `setScenario` clears display selections
 and retains input without creating aligned engine geometry.
 `onStatus` receives `{state, message, overlaysBlocked, registration}`.
@@ -27,16 +28,15 @@ keyboard and depth-unavailable alternative.
 A successful pick creates a marker at a clone of the raw scene Cartesian
 position, labelled "Display point · not service-resolved". This interaction
 marker is distinct from a registered engine lander position. No renderer
-coordinate is relabelled as `MOON_ME_DE421`, and rendered elevation never
+coordinate is adopted as a numerical terrain sample, and rendered elevation never
 replaces ground elevation or either equipment height. Restore, fixture
 switching, scenario edits, tile failure and rendering failure clear the pick.
 Failed scenes release their resources and leave the text view available.
 
-## Future registration handoff
+## Registration handoff
 
 The viewer-local evidence check is **not a scientific interchange schema** or
-a numerical registration test. No example identity transform is provided.
-Developer A must issue reviewed evidence before implementing aligned overlays:
+a numerical registration test. Developer A issues reviewed evidence:
 
 - `version`, `authority: soma_engine`, `source_frame`, `renderer_frame`,
   `asset_id: 2684829`, and `source_manifest_sha256` identifying source metadata.
@@ -45,18 +45,32 @@ Developer A must issue reviewed evidence before implementing aligned overlays:
   only when justified by those sources.
 - `tolerance_m` and `tolerance_justification` appropriate to the region and scale.
 - `landmarks`: at least four distinct IDs, each with `source_ref`,
-  `renderer_position_m` (three finite coordinates), and measured `residual_m`.
+  `analysis_position_m`, `renderer_position_m` (three finite coordinates), measured
+  `residual_m`, `horizontal_grid_resolution_allowance_m`, and
+  `resolution_adjusted_residual_m` below the declared tolerance.
 - `distribution_review: {accepted: true, evidence_ref}` referencing review of
   well-distributed lunar landmarks. Four repeated/co-located points are not a
   valid distribution test. The engine review must establish distribution and
   recompute residuals independently; this display gate only checks supplied
   evidence and residual bounds.
 
-Passing this structural gate does not enable overlays in the current viewer.
-Future implementation must bind the reviewed transform to the exact scenario,
-DEM and kernel hashes, position units, origin, frame, and coverage. An exceeded
+The loader preserves ion attribution and replaces root JSON through Cesium's
+public loading hook with the engine-corrected mesh. Root and child URLs carry
+the conversion checksum to prevent reuse across conversion revisions. The
+certificate binds the corrected renderer frame, source evidence and conversion
+checksum. A matching completed display supplies exact Cartesian surface points
+with frame, units, origin, static epoch and provenance. Missing results, stale
+conversion hashes, out-of-region sites and scene failures keep overlays blocked.
+An exceeded
 tolerance leaves the text result available and overlays blocked. Do not nudge
 positions to fit imagery or write display offsets into the analysis.
+
+Four source-selected grid features and 48 height controls test relative display
+registration at the detailed 5.21 m mesh level. The 3.54 m grid-resolution
+allowance does not bound continuous-peak localization. This is neither absolute
+lunar geodesy nor an all-location or all-LOD guarantee. Runtime root and four
+control-tile fingerprints are sampled snapshot checks, not complete content
+pinning. Numerical DEM quality remains separate from rendered terrain.
 
 ## Sources checked during implementation
 

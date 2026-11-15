@@ -155,7 +155,7 @@ export function renderScience(container, { environment, selectedTime, fixtureBac
     container.replaceChildren(); container.classList.add('science-display');
     container.append(el('p', fixtureBacked ? 'Fixture-backed engine diagnostic. Graphics read stored samples only.' : 'Engine diagnostic. Graphics read stored samples only.', 'notice'));
     if (!environment) { container.append(el('p', 'Unknown: no environment diagnostic is available.')); return; }
-    container.append(el('p', 'Directional inset only. Renderer registration is blocked; no scientific overlays are placed on the Moon.'));
+    container.append(el('p', 'Stored directional inset only. These directions are not drawn as overlays on the Moon.'));
     const label = el('label', 'Observer height '); const select = el('select'); select.setAttribute('aria-label', 'Horizon observer height');
     for (const value of ['panel','antenna']) { const option=el('option', value === 'panel' ? 'Panel' : 'Antenna'); option.value=value; select.append(option); } select.value=role;
     select.addEventListener('change', () => {

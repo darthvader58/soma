@@ -381,6 +381,7 @@ byId('download-package').addEventListener('click', async () => {
 updateLocation();
 refreshOutput();
 viewer = await createMoonViewer(byId('moon-view'), {
+  apiBase: apiUrl || '/api',
   scenario, ionToken: import.meta.env.VITE_CESIUM_ION_TOKEN,
   onStatus(status) {
     byId('map-status').textContent = status.message;
@@ -388,7 +389,7 @@ viewer = await createMoonViewer(byId('moon-view'), {
   },
   onPick(pick) {
     byId('display-pick').hidden = false;
-    byId('display-pick').textContent = `Display selection (renderer coordinates only): ${pick.latitude_deg}° latitude, ${pick.longitude_deg_east}° east; rendered elevation ${pick.display_elevation_m} m. This is not a ${scenario.lander.frame} analysis point. It awaits engine resolution of elevation, frame registration and terrain coverage. The fixture analysis point, scenario and equipment heights have not changed.`;
+    byId('display-pick').textContent = `Display selection: ${pick.latitude_deg}° latitude, ${pick.longitude_deg_east}° east; rendered elevation ${pick.display_elevation_m} m. ${pick.frame_registered ? `Frame registered to ${scenario.lander.frame} within the certified region.` : 'Frame alignment is unverified at this point.'} Numerical DEM elevation and terrain coverage await service resolution. The scenario and equipment heights have not changed.`;
   },
 });
 viewer.setScenario(scenario);

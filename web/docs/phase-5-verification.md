@@ -1,9 +1,17 @@
 # Phase 5 live interface verification
 
-The numerical browser/service integration passes. **The complete Phase 5 map
-acceptance gate remains unfinished.** Actual Cesium Moon access works, but the
-asset's exact frame realization and independent landmark residuals are not
-established. Scientific overlays remain disabled. Phase 6 has not started.
+The numerical browser/service integration and scoped corrected-mesh registration
+gate pass. The tested application region is latitude -90 to -87.5 degrees.
+Matching completed displays may show the declared analysis point; the
+contact-only fixture supplies no relay ephemeris, so no trajectory is invented.
+Phase 6 has not started.
+
+Current owner verification: 351 engine tests, 71 web unit tests and production
+build pass. The public registered diagnostic measured all 1,764 requested probes
+with zero page or console errors. The owner also inspected the live registered
+scene in Aside. Desktop/mobile visual checks and exported replay are recorded
+by the owner with the final Phase 5 evidence. Historical runs below retain their
+original counts and map limitations.
 
 The owner reviewed both developer implementations and ran the integrated
 workflow. This is engineering evidence, not a human scientific approval or
@@ -74,20 +82,24 @@ and a December 15, 2026 expiration. It is stored only in ignored
 values and credentialed URLs are absent from source, reports and run exports.
 The owner inspected actual Moon terrain loading in Aside and performed a live
 direct request in that browser. This confirms access and the numerical flow,
-not registered coordinates or mission feasibility.
+not mission feasibility.
 
-The engine's [registration report](../../soma/docs/phase-5/registration.md)
-records authenticated root and regional metadata snapshots, hashes and
-transforms. Four published catalog candidates are distinct from precision
-terrain controls. Unknown renderer coordinates, transformation, tolerance and
-residuals remain null; no identity is assumed. The current contact-only relay
-has no trajectory, so there is no stored spacecraft position to render.
+The engine's [map-alignment report](../../soma/docs/phase-5/map-alignment.md)
+and v0.2 certificate record the engine-corrected mesh, conversion checksum,
+identity frame handoff and four source-selected terrain features. Their
+resolution-adjusted residuals pass the preregistered 10 m tolerance. The 3.54 m
+grid-resolution allowance is not a continuous-peak localization bound. Four
+features and 48 height controls at detailed 5.21 m mesh resolution establish a
+relative display test, without an absolute geolocation or all-LOD guarantee.
+Runtime root and control-tile fingerprints are sampled snapshot checks rather
+than a checksum pin for every regional tile. The current contact-only relay has
+no trajectory, so there is no stored spacecraft position to render.
 
 ## UI delivery gate
 
-The owner reapplied the full gate to the scoped interface change. The unresolved
-scientific map gate above is explicitly visible in the product; it is not
-misrepresented by this UI behavior report. The existing measured palette and
+The owner reapplied the full gate to the scoped interface change. The scoped
+registration, missing-trajectory and display-only elevation limits are explicit
+in the product. The existing measured palette and
 reasons remain in the earlier verification/design records; no colors were added.
 
 R-01 PASS: Teal remains the primary action; no gradients or glow added.
@@ -141,6 +153,8 @@ C-3 PASS: No template-only section added.
 C-4 PASS: Missing map, stale job, cancel, keyboard and responsive cases remain usable.
 C-5 PASS: No fabricated outcome, statistic or endorsement.
 
-Release boundary: numerical integration is reviewable; completed scientific map
-registration, stored relay ephemeris display, merged integration and Phase 6
-acceptance are not claimed.
+Release boundary: numerical integration and the scoped corrected-mesh
+registration are reviewable. Stored relay ephemeris display, merged integration
+and Phase 6 acceptance are not claimed. The existing ENERGY 1 / RHYTHM 1 /
+MOTION 1 layout, palette, controls and focus behavior are unchanged; the new
+inset sentence reports stored directions without claiming a blocked scene.

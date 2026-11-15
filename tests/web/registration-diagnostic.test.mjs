@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { validateProbeRequest } from '../../web/src/registration-diagnostic.js';
+import { validateProbeRequest, diagnosticRepresentation } from '../../web/src/registration-diagnostic.js';
+
+test('corrected diagnostic is explicit and development-only', () => {
+  assert.equal(diagnosticRepresentation('', false), 'unmodified_asset');
+  assert.equal(diagnosticRepresentation('?representation=registered', true), 'engine_corrected_mesh');
+  assert.throws(() => diagnosticRepresentation('?representation=registered', false));
+  assert.throws(() => diagnosticRepresentation('?representation=candidate', true));
+});
 
 const request = () => ({ format_version: '0.1.0', request_id: 'reference-probes', source_frame: 'MOON_ME_DE421',
   candidate_bridge: 'identity_for_measurement_only', probes: [{ id: 'a', position_m: [1737400, 0, 0] }] });

@@ -10,13 +10,17 @@ test('missing engine registration blocks aligned overlays', () => {
 test('an identity label cannot bypass missing landmarks or exceeded residuals', () => {
   const evidence = {
     version: 'synthetic-gate-test-only', authority: 'soma_engine',
-    source_frame: 'MOON_ME_DE421', renderer_frame: 'synthetic-test-frame',
+    source_frame: 'MOON_ME_DE421', renderer_frame: 'SOMA_MOON_ME_DE421_CORRECTED_V1',
+    representation: 'engine_corrected_mesh', conversion_manifest_sha256: 'b'.repeat(64),
+    certified_region: { latitude_deg: [-90, -87.5], longitude_deg_east: [-180, 180] },
+    release_gate: { overlays_allowed: true, map_registration_passed: true },
     asset_id: 2684829, source_manifest_sha256: 'a'.repeat(64),
     transform_column_major: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
     tolerance_m: 10, tolerance_justification: 'Synthetic display-gate test only',
     landmarks: Array.from({ length: 4 }, (_, index) => ({
       id: `synthetic-${index}`, source_ref: 'synthetic-test',
-      residual_m: 1, renderer_position_m: [index, 0, 0],
+      residual_m: 1, horizontal_grid_resolution_allowance_m: 3.54, resolution_adjusted_residual_m: 4.54,
+      renderer_position_m: [index, 0, 0], analysis_position_m: [index, 0, 1],
     })),
     distribution_review: { accepted: true, evidence_ref: 'synthetic-review-test' },
   };
@@ -26,6 +30,9 @@ test('an identity label cannot bypass missing landmarks or exceeded residuals', 
   corrupt.landmarks[3].residual_m = 11;
   assert.equal(registrationGate(corrupt).passed, false);
   corrupt.landmarks[3].residual_m = 1;
+  corrupt.landmarks[3].resolution_adjusted_residual_m = 11;
+  assert.equal(registrationGate(corrupt).passed, false);
+  corrupt.landmarks[3].resolution_adjusted_residual_m = 4.54;
   corrupt.distribution_review.accepted = false;
   assert.equal(registrationGate(corrupt).passed, false);
   corrupt.distribution_review.accepted = true;

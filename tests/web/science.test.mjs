@@ -36,6 +36,9 @@ test('rendered diagnostic labels provenance, blocked reasons and contact semanti
   const {renderScience}=await import('../../web/src/science.js');const root=new Node('div');
   const env={frame:'MOON_ME_DE421',horizons:{panel:{site:{height_m:1,frame:'MOON_ME_DE421',elevation_datum:'height_above_reference_sphere'},bands:[{azimuth_deg:0,elevation_deg:null}]}},provenance:{terrain:[{elevation_sha256:'source-digest'}]},contact_decisions:[{candidate_id:'blocked-test',status:'blocked',reasons:['solid_body_intersection']}],solar_samples:[]};
   const control=renderScience(root,{environment:env,selectedTime:'a'});
+  assert.match(root.textContent,/Stored directional inset only/);
+  assert.match(root.textContent,/These directions are not drawn as overlays/);
+  assert.doesNotMatch(root.textContent,/Renderer registration is blocked/);
   assert.match(root.textContent,/Fixture-backed/);assert.match(root.textContent,/Height: 1 m/);assert.match(root.textContent,/source-digest/);assert.match(root.textContent,/solid_body_intersection/);assert.match(root.textContent,/No usable contacts supplied/);assert.match(root.textContent,/Selected transmissions appear only/);
   control.setTime('b');assert.match(root.textContent,/Selected UTC: b/);control.destroy();assert.equal(root.textContent,'');
  }finally{globalThis.document=prior;}

@@ -1,7 +1,16 @@
+import { loadRegisteredMoon } from './registered-moon.js';
+
 const ASSET_ID = 2684829;
 const BATCH_SIZE = 32;
 const BUDGET_MS = 120000;
 const QUERY_WIDTH_M = 0.1;
+
+export function diagnosticRepresentation(search, isDevelopment) {
+  const mode = new URLSearchParams(search).get('representation');
+  if (!mode) return 'unmodified_asset';
+  if (mode === 'registered' && isDevelopment) return 'engine_corrected_mesh';
+  throw new Error('unsupported_diagnostic_representation');
+}
 
 export function validateProbeRequest(value) {
   if (!value || value.format_version !== '0.1.0' || typeof value.request_id !== 'string' ||
@@ -75,6 +84,7 @@ function attachDiagnostic() {
       query_width_m: QUERY_WIDTH_M, batch_size: BATCH_SIZE, budget_ms: BUDGET_MS,
       vertical_exaggeration: 1, clamp_to_height_supported: null, tile_failure_count: 0,
       registration_status: 'not_evaluated',
+      scene_representation: 'unmodified_asset',
       warnings: ['Raw renderer geometry only; no frame registration, fiducial correspondence or residual is established.',
         'Maximum available mesh detail is not a claim of source accuracy.',
         'Returned world positions already include Cesium tile and model transforms.'],
@@ -95,6 +105,8 @@ function attachDiagnostic() {
     publish(measurement);
     try {
       byId('measurement-status').textContent = 'Loading the dedicated Moon-only scene.';
+      const representation = diagnosticRepresentation(window.location.search, import.meta.env?.DEV === true);
+      measurement.scene_representation = representation;
       const token = import.meta.env?.VITE_CESIUM_ION_TOKEN;
       if (typeof token !== 'string' || !token.trim()) throw new Error('missing_scoped_ion_token');
       const C = await bounded(import('cesium'));
@@ -116,7 +128,20 @@ function attachDiagnostic() {
       if (!measurement.clamp_to_height_supported) throw new Error('unsupported_depth_textures');
       removeRenderFailure = viewer.scene.renderError.addEventListener(() => controller.abort());
       shader = new C.CustomShader({ lightingModel: C.LightingModel.UNLIT });
-      const moonPromise = C.Cesium3DTileset.fromIonAssetId(ASSET_ID, { customShader: shader }).then(moon => {
+      const loadScene = async () => {
+        if (representation === 'unmodified_asset') return C.Cesium3DTileset.fromIonAssetId(ASSET_ID, { customShader: shader });
+        const response = await fetch('/api/moon/registration', { signal: controller.signal });
+        if (!response.ok) throw new Error('registration_unavailable');
+        const certificate = await response.json();
+        if (certificate.representation !== 'engine_corrected_mesh' || certificate.release_gate?.map_registration_passed !== true ||
+            !/^[a-f0-9]{64}$/.test(certificate.conversion_manifest_sha256 ?? '')) throw new Error('registration_unavailable');
+        const loaded = await loadRegisteredMoon(C, { customShader: shader,
+          expectedModelSha256: certificate.conversion_manifest_sha256 });
+        measurement.conversion_manifest_sha256 = loaded.conversion.sha256;
+        measurement.registration_certificate_version = certificate.version;
+        return loaded.tileset;
+      };
+      const moonPromise = loadScene().then(moon => {
         if (controller.signal.aborted || expired || !viewer || viewer.isDestroyed()) {
           if (!moon.isDestroyed()) moon.destroy();
           throw new Error('canceled');
@@ -133,7 +158,7 @@ function attachDiagnostic() {
       for (let offset = 0; offset < request.probes.length; offset += BATCH_SIZE) {
         if (controller.signal.aborted || expired) throw new Error('canceled');
         const batch = request.probes.slice(offset, offset + BATCH_SIZE);
-        byId('measurement-status').textContent = `Measuring probes ${offset + 1} to ${offset + batch.length} of ${request.probes.length}.`;
+        byId('measurement-status').textContent = `Measuring ${representation} probes ${offset + 1} to ${offset + batch.length} of ${request.probes.length}.`;
         const samples = batch.map(probe => new C.Cartesian3(...probe.position_m));
         const returned = await bounded(viewer.scene.clampToHeightMostDetailed(samples, [], QUERY_WIDTH_M));
         if (controller.signal.aborted || expired) throw new Error('canceled');
@@ -166,7 +191,7 @@ function attachDiagnostic() {
       active = undefined;
       byId('measure-probes').disabled = false;
       byId('cancel-probes').disabled = true;
-      byId('measurement-status').textContent = `Measurement ${measurement.status}. ${measurement.probes.filter(probe => probe.status === 'measured').length} of ${measurement.probes.length} raw mesh positions recorded. Registration was not evaluated.`;
+      byId('measurement-status').textContent = `Measurement ${measurement.status}. ${measurement.probes.filter(probe => probe.status === 'measured').length} of ${measurement.probes.length} raw mesh observations recorded from ${measurement.scene_representation}. Registration was not evaluated.`;
     }
   });
 }

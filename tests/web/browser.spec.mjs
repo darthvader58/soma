@@ -92,9 +92,9 @@ test('display picks leave scientific inputs and captured output unchanged; scrub
   const status = await page.locator('#job-status').textContent();
   const fixturePoint = await page.locator('#analysis-location').textContent();
   await page.getByRole('button', { name: 'Simulate renderer surface pick' }).click();
-  await expect(page.locator('#display-pick')).toContainText('renderer coordinates only');
+  await expect(page.locator('#display-pick')).toContainText('Frame alignment is unverified at this point.');
   await expect(page.locator('#display-pick')).toContainText('rendered elevation 987 m');
-  await expect(page.locator('#display-pick')).toContainText('awaits engine resolution');
+  await expect(page.locator('#display-pick')).toContainText('Numerical DEM elevation and terrain coverage await service resolution.');
   await expect(page.locator('#moon-view')).toHaveAttribute('data-marker', 'display-only');
   await expect(page.locator('#analysis-location')).toHaveText(fixturePoint);
   await expect(page.getByLabel('Planetocentric latitude (°)', { exact: true })).toHaveValue('-89');
