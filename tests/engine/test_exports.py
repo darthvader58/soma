@@ -130,3 +130,37 @@ def test_direct_summary_has_zero_relay_wait_and_manifest_keeps_run_versions():
         manifest = json.loads(archive.read('run-manifest.json'))
         assert manifest['software_versions']['evidence-specific-solver'] == 'test-version'
         assert json.loads(archive.read('summary.json')) == summary(run)
+
+
+def test_display_data_preserves_environment_and_every_selected_epoch():
+    from soma.exports import display_data
+
+    run = hand_replayed_relay_run()
+    payload = display_data(run)
+    assert payload['format_version'] == '0.5.0'
+    assert payload['run_version'] == run['scenario']['run_version']
+    assert payload['environment'] == run['analysis_inputs']['environment']
+    for key in ('contacts', 'allocations', 'storage_intervals', 'energy_history', 'buffer_history'):
+        assert payload[key] == run['result'][key]
+    assert payload['states'] == []
+    assert payload['state_status'] == 'unknown'
+    assert 'missing_relay_trajectory:synthetic-lunar-relay' in payload['state_unavailable_reasons']
+    assert payload['interpolation'] == 'none_unknown_between_samples'
+    epochs = {p['epoch_utc'] for t in payload['environment']['tracks'] for p in t['samples']}
+    assert set(payload['sample_epochs_utc']) == epochs
+    package = create_run_package(run)
+    with zipfile.ZipFile(io.BytesIO(package)) as archive:
+        assert json.loads(archive.read('display-data.json')) == payload
+        assert json.loads(archive.read('renderer-registration.json')) == payload['registration']
+    payload['allocations'].clear()
+    assert run['result']['allocations']
+
+
+def test_display_rejects_environment_for_another_scenario():
+    import pytest
+    from soma.exports import display_data
+
+    run = hand_replayed_relay_run()
+    run['analysis_inputs']['environment']['scenario_sha256'] = '0' * 64
+    with pytest.raises(ValueError, match='environment scenario hash mismatch'):
+        display_data(run)

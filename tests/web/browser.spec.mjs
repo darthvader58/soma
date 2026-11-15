@@ -46,7 +46,7 @@ test('computed direct failure and replayed relay schedule remain separate from h
 });
 
 test('Phase 2 keeps fixture analysis coordinates separate from typed drafts and preserves the deadline rule', async ({ page }) => {
-  await expect(page.locator('.phase-label')).toContainText('Phase 4');
+  await expect(page.locator('.phase-label')).toContainText('Phase 5');
   const fixturePoint = await page.locator('#analysis-location').textContent();
   await expect(page.locator('#analysis-location')).toContainText('synthetic, not service-resolved');
   await expect(page.locator('#analysis-location')).toContainText('Antenna 2 m; panel 1 m');
@@ -70,6 +70,7 @@ test('Phase 2 keeps fixture analysis coordinates separate from typed drafts and 
 test('display picks leave scientific inputs and captured output unchanged; scrub shares map time without planning', async ({ page }) => {
   // This module supplies controlled renderer events, not Moon tiles or scientific coordinates.
   await page.route('**/src/viewer.js', route => route.fulfill({ contentType: 'text/javascript', body: `
+    export function registrationGate() { return { allowed: false, reason: 'Test renderer events only; scientific overlays blocked.' }; }
     export async function createMoonViewer(container, { onPick, onStatus }) {
       const pick = document.createElement('button');
       pick.textContent = 'Simulate renderer surface pick';
@@ -81,7 +82,7 @@ test('display picks leave scientific inputs and captured output unchanged; scrub
       const clearDisplayPick = () => { container.dataset.marker = 'cleared'; };
       pick.onclick = () => { container.dataset.marker = 'display-only'; onPick({ latitude_deg: -88.75, longitude_deg_east: 15, display_elevation_m: 987, service_resolved: false }); };
       fail.onclick = () => { clearDisplayPick(); onStatus({ state: 'fallback', message: 'Simulated rendering failure. Use typed coordinates.' }); };
-      return { setScenario() { clearDisplayPick(); }, clearDisplayPick,
+      return { setScenario() { clearDisplayPick(); }, setDisplay() {}, clearDisplayPick,
         setTime(epoch) { container.dataset.selectedTime = epoch; }, destroy() {} };
     }
   ` }));
@@ -180,7 +181,7 @@ test('diagnostic downloads preserve engine bytes and edited inputs cannot reuse 
   expect(artifact.artifact_type).toBe('soma_environment_diagnostic');
   expect(artifact).not.toHaveProperty('allocations');
   await page.getByLabel('Panel height (m)', { exact: true }).fill('3');
-  await expect(page.locator('#science-context')).toContainText('No matching scientific diagnostic');
+  await expect(page.locator('#science-context')).toContainText('No matching completed-job scientific diagnostic');
   await expect(page.getByRole('button', { name: 'Download diagnostic JSON' })).toBeDisabled();
   await expect(page.locator('#science svg')).toHaveCount(0);
 });

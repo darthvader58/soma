@@ -45,6 +45,9 @@ def test_jobs_process_isolation_immutable_result_and_download(tmp_path):
         job, stages = finished(client, identifier)
         assert job['status'] == 'completed', job
         assert job['worker_pid'] != os.getpid()
+        with client.app.state.jobs.lock:
+            stored = client.app.state.jobs.get(identifier)
+            assert all(stored[key] is None for key in ('process', 'queue', 'canceled'))
         assert job['scenario_sha256'] == first.json()['scenario_sha256']
         assert 'scheduling' in stages
         original = client.get(f'/plans/{identifier}').json()
@@ -69,13 +72,27 @@ def test_cancel_queued_and_running_and_strict_json_limits(tmp_path):
             time.sleep(0.02)
         second = client.post('/plans', json=scenario).json()['job_id']
         assert client.post('/plans', json=scenario).status_code == 429
+        with client.app.state.jobs.lock:
+            store = client.app.state.jobs
+            running_process = store.get(first)['process']
+            running_queue = store.get(first)['queue']
+            queued_queue = store.get(second)['queue']
         assert client.delete(f'/plans/{second}').json()['status'] == 'canceled'
         canceled = client.delete(f'/plans/{first}').json()
         assert canceled['status'] == 'canceled'
         assert canceled['result'] is None
+        assert running_process._closed
+        assert running_queue._closed and queued_queue._closed
+        for identifier in (first, second):
+            with client.app.state.jobs.lock:
+                stored = client.app.state.jobs.get(identifier)
+                assert all(stored[key] is None for key in ('process', 'queue', 'canceled'))
+            assert client.delete(f'/plans/{identifier}').json()['status'] == 'canceled'
         time.sleep(0.1)
         assert client.get(f'/plans/{first}').json()['status'] == 'canceled'
         assert client.get(f'/plans/{first}/export').status_code == 409
+        assert client.get(f'/plans/{first}/display-data').status_code == 409
+        assert client.get(f'/plans/{first}/renderer-registration').status_code == 409
         assert client.post('/plans', content='{"a":1,"a":2}').status_code == 422
         assert client.post('/plans', content='{"a":NaN}').status_code == 422
         assert client.post('/plans', json={'scenario': scenario}).status_code == 422
@@ -132,3 +149,18 @@ def test_production_planner_runs_fixture_and_exports_same_result(tmp_path):
                 assert hashlib.sha256(archive.read(name)).hexdigest() == record['sha256']
             assert 'replay.json' in archive.namelist()
             assert 'analysis-inputs.json' in archive.namelist()
+            display = client.get(f'/plans/{identifier}/display-data').json()
+            assert display == json.loads(archive.read('display-data.json'))
+            assert display['scenario_sha256'] == submitted.json()['scenario_sha256']
+            assert display['run_version'] == scenario['run_version']
+            assert display['environment'] == json.loads(archive.read('analysis-inputs.json'))['environment']
+            assert display['allocations'] == job['result']['allocations']
+            assert display['energy_history'] == job['result']['energy_history']
+            assert display['buffer_history'] == job['result']['buffer_history']
+            assert display['states'] == []
+            assert display['registration'] == client.get(f'/plans/{identifier}/renderer-registration').json()
+            assert display['registration'] == json.loads(archive.read('renderer-registration.json'))
+            assert client.get(f'/plans/{identifier}/display').json()[0]['version'] == '1.0'
+            before = client.get(f'/plans/{identifier}/display-data').json()
+            assert client.delete(f'/plans/{identifier}').json()['status'] == 'completed'
+            assert client.get(f'/plans/{identifier}/display-data').json() == before

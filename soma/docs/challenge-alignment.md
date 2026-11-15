@@ -91,3 +91,21 @@ has unknown horizon samples, and no controlled physical two-site/date result
 has been demonstrated. Live service integration, renderer registration and
 the integrated demonstration remain Phase 5/6 gates. The original live-source
 review above remains dated; it is not a new check of event submission rules.
+
+## Phase 5 integration update
+
+The browser now submits real Python jobs and displays immutable, hash-matched
+results, exact scientific samples and complete exports. Actual-service tests
+cover the direct capacity failure, relay store-and-forward success, a genuinely
+rescheduled data-volume change and unknown coverage for an unsupported site.
+No fixture success is substituted after a live error. Moon streaming access was
+verified using a scoped local token, but authenticated tileset metadata still
+does not establish its exact frame realization or independent terrain landmark
+residuals. Registered scientific overlays remain blocked.
+
+This verifies the numerical interface boundary, not complete Phase 5 acceptance
+or the challenge's controlled physical site/date demonstration. The contact-only
+relay scenario provides no ephemeris, so its displayed spacecraft state remains
+unknown. Real measured-terrain gaps remain unknown as well. See the
+[integration report](phase-5/README.md) and
+[registration evidence](phase-5/registration.md). Phase 6 has not started.

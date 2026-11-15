@@ -4,4 +4,5 @@ public/cesium/
 .env.local
 *.local
 test-results/
+test-results-live/
 playwright-report/

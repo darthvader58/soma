@@ -3,10 +3,10 @@
 The Python engine now selects energy-constrained delivery schedules, independently
 replays them, serves isolated jobs and exports complete run packages. The current
 100 MiB synthetic direct case fails capacity; the relay case passes replay with
-optimality unproven. The browser displays captured runs. See the
-[Phase 4 run commands and limits](soma/docs/phase-4/README.md). Live browser/service
-integration and renderer registration remain Phase 5 work. SOMA is a planning
-model under declared assumptions.
+optimality unproven. The browser now runs live Python jobs by default. See the
+[Phase 4 run commands and limits](soma/docs/phase-4/README.md) and the
+[live integration guide](soma/docs/phase-5/README.md). Renderer registration remains an unfinished Phase 5
+gate. SOMA is a planning model under declared assumptions.
 
 ## What this project is
 
@@ -247,3 +247,34 @@ analysis extents remain unknown. Real LOLA horizon gaps remain unresolved.
 No ground-time booking, flight DTN, thermal-survival or relay-certification
 claim is made. The [Phase 4 evidence and reproduction guide](soma/docs/phase-4/README.md)
 states the discretization, time-limit and coverage limits.
+
+## Phase 5 live integration and remaining map gate
+
+Start the engine and browser in separate terminals from the repository root:
+
+```sh
+.venv/bin/uvicorn soma.api.app:app --host 127.0.0.1 --port 8000
+npm --prefix web run dev
+```
+
+Open `http://127.0.0.1:5173/`. The browser uses the same-origin `/api` proxy and
+displays real job results, summaries and exact stored display samples. A changed
+input creates a new scenario hash; canceled or older jobs cannot replace it.
+Set `VITE_SOMA_MODE=fixture` explicitly for offline captured results. Live errors
+never fall back to those captures. The complete ZIP preserves the native result,
+exact CSV intervals and the same versioned display/registration artifacts served
+by the job endpoints.
+
+The live 100 MiB relay case passes replay and can be downloaded, independently
+of map availability. A 16-byte input edit is genuinely rescheduled; unsupported
+site coverage remains unknown. The declared relay fixture contains no trajectory,
+so its selected spacecraft state stays Unknown. The browser does not invent one.
+
+Cesium Moon access has been verified locally using a scoped token in the ignored
+`web/.env.local`. Actual root/regional metadata was inspected, but it does not
+establish the asset's exact frame realization or independent landmark residuals.
+The [versioned registration handoff](soma/docs/phase-5/registration.md) records
+four published candidates, source hashes, known transforms and missing evidence.
+Aligned scientific overlays remain blocked. **Phase 5 is not fully accepted;
+Phase 6 has not started.** See the [integration guide](soma/docs/phase-5/README.md)
+and [interface evidence](web/docs/phase-5-verification.md).

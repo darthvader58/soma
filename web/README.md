@@ -1,7 +1,8 @@
 # SOMA fixture workspace
 
-This implements the Phase 1 fixture client, Phase 2 selection, Phase 3
-stored scientific display/comparison and Phase 4 jobs, explanations and exports.
+This implements the scenario editor, stored scientific display/comparison and
+live planning-service client. Phase 5 numerical integration is verified; the
+scientific map-registration acceptance gate remains unfinished.
 It remains a **visual draft**, not a completed
 scientific product. The user delegated both developer roles to the same team;
 the engine and browser remain separate authorities. Python owns all physics
@@ -18,6 +19,11 @@ npm run build
 npm run dev
 ```
 
+Start `.venv/bin/uvicorn soma.api.app:app --host 127.0.0.1 --port 8000` from the
+repository root in another terminal. The default browser calls `/api` through
+Vite's loopback proxy. Use `VITE_SOMA_MODE=fixture npm run dev` for explicit
+offline mode. A failed live request never loads a captured result instead.
+
 Run these commands from `web/`. The development URL is
 `http://127.0.0.1:5173/`. The fixture synchronization command copies the
 canonical scenarios/contact inputs/hand expectations and captures new result
@@ -27,7 +33,9 @@ substitutes hand expectations for the engine output. `SOMA_PYTHON` can name a Py
 installed; the default is the repository `.venv/bin/python`.
 
 Load either network fixture, edit the scenario, inspect both equipment
-heights and finite profiles, then choose **Plan delivery**. In offline mode,
+heights and finite profiles, then choose **Plan delivery**. Live mode calculates
+that scenario in Python and matches the completed job, summary and display by
+hash. In offline mode,
 only an exact matching scenario can load a captured result. Edits clear old
 results and require a matching engine response; they do not rescale fixture
 contacts. The 100 MiB direct case is infeasible in the bounded model. The relay
@@ -78,9 +86,12 @@ the engine resolves them. Tile/render failures clear display selections and
 preserve the numerical view. Lighting is neutral display lighting,
 not a prediction of sunlight. Token-backed rendering/picking are unverified.
 
-`VITE_SOMA_API_URL` selects the prepared service client. Leave it empty for the
-verified Phase 4 offline workflow. The headless HTTP service now exists; live
-browser/service integration and the coordinate bridge are Phase 5 work.
+`VITE_SOMA_API_URL` defaults to `/api`; the Vite server forwards it to Python on
+port 8000. `SOMA_API_PROXY_TARGET` configures another service target. A deployed
+static build requires an equivalent reverse proxy. `VITE_SOMA_MODE=fixture`
+selects the offline client. Live integration is verified; the coordinate bridge
+remains blocked. No spacecraft position is invented for the contact-only relay
+fixture. Exact stored samples and the registration reasons appear beside the map.
 The protocol and automated schema review are in
 [contract-review.md](docs/contract-review.md).
 
@@ -101,3 +112,8 @@ binary. Test results and local Cesium build assets are ignored. See
 [Phase 2 verification](docs/phase-2-verification.md), and
 [Phase 3 verification](docs/phase-3-verification.md), and
 [Phase 4 verification](docs/phase-4-verification.md) for evidence and limitations.
+
+The [Phase 5 report](docs/phase-5-verification.md) adds four actual-service browser
+checks and the current acceptance boundary. Run `npm run test:live` after Python
+setup to reproduce them. The local Cesium token file is ignored by Git and is
+never included in exported run packages.

@@ -69,6 +69,22 @@ test('tokenless fallback never imports Cesium and remains safe to dispose', asyn
   api.clearDisplayPick(); api.destroy(); api.destroy();
 });
 
+test('completed-job registration remains blocked and scenario replacement removes its evidence', async () => {
+  const h = harness();
+  const api = await h.start();
+  api.setDisplay({ registration: { version: '0.1.0', status: 'blocked_pending_asset_registration',
+    release_gate: { overlays_allowed: false, blockers: ['renderer_frame_unknown', 'no_measured_landmark_residuals'] } } });
+  const status = h.state.statuses.at(-1);
+  assert.equal(status.state, 'registration_blocked');
+  assert.equal(status.overlaysBlocked, true);
+  assert.equal(status.registration.passed, false);
+  assert.match(status.message, /renderer_frame_unknown.*no_measured_landmark_residuals/);
+  assert.equal(h.state.entities.length, 0);
+  api.setScenario({ lander: { frame: 'MOON_ME_DE421' } });
+  assert.match(h.state.statuses.at(-1).message, /No engine frame registration/);
+  api.destroy();
+});
+
 test('official Moon configuration, raw Cartesian marker, display contract and clearing', async () => {
   const h = harness(); const api = await h.start();
   assert.equal(h.state.assetId, MOON_ASSET_ID);

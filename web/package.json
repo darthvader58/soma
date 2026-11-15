@@ -12,7 +12,8 @@
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "node --test ../tests/web/*.test.mjs",
-    "test:browser": "playwright test --config playwright.config.js"
+    "test:browser": "playwright test --config playwright.config.js",
+    "test:live": "playwright test --config playwright.live.config.js"
   },
   "dependencies": {
     "ajv": "8.20.0",

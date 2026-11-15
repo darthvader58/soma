@@ -4,6 +4,7 @@ import asyncio
 from contextlib import asynccontextmanager
 from copy import deepcopy
 import json
+import io
 import multiprocessing
 import os
 from pathlib import Path
@@ -13,6 +14,7 @@ import tempfile
 import threading
 import time
 import uuid
+import zipfile
 
 from fastapi import FastAPI, HTTPException, Request, Response
 
@@ -107,6 +109,22 @@ class JobStore:
                 "queue": self.context.Queue(maxsize=64), "canceled": self.context.Event()}
             return {"job_id": identifier, "scenario_sha256": self.jobs[identifier]["scenario_sha256"]}
 
+    def _release_worker_resources(self, job):
+        process = job["process"]
+        if process is not None:
+            if process.is_alive():
+                raise RuntimeError("Cannot release a live worker")
+            process.join(timeout=0)
+            process.close()
+        progress_queue = job["queue"]
+        if progress_queue is not None:
+            progress_queue.close()
+            # The parent never writes progress, so it has no pending feeder work.
+            progress_queue.join_thread()
+        # SemLock cleanup belongs to the creating parent and runs when these
+        # references are released, including for workers killed during cancel.
+        job.update(process=None, queue=None, canceled=None)
+
     def _monitor(self):
         while not self.stopping.wait(0.02):
             with self.lock:
@@ -122,6 +140,7 @@ class JobStore:
                         if process.is_alive() and time.monotonic() - job["started_at"] > MAX_JOB_SECONDS:
                             _stop_process(process)
                             job.update(status="failed", error="Local worker time limit exceeded", result=None)
+                            self._release_worker_resources(job)
                             continue
                         if process.is_alive():
                             active += 1
@@ -144,13 +163,19 @@ class JobStore:
                             package = create_run_package(run)
                             if len(package) > MAX_RUN_BYTES * 2:
                                 raise ValueError("Export exceeds package limit")
-                            retained = path.stat().st_size * 2 + len(package)
+                            # Freeze display derivations with the same immutable completed run.
+                            with zipfile.ZipFile(io.BytesIO(package)) as archive:
+                                display_bytes = archive.read('display-data.json')
+                                display = json.loads(display_bytes)
+                            retained = path.stat().st_size * 2 + len(package) + len(display_bytes)
                             if self.retained_bytes + retained > MAX_RETAINED_BYTES:
                                 raise ValueError("Local retained result byte limit reached")
                             self.retained_bytes += retained
-                            job.update(run=run, result=deepcopy(run["result"]), package=package, status="completed")
+                            job.update(run=run, result=deepcopy(run["result"]), package=package, display_data=display, status="completed")
                         except Exception as error:
                             job.update(status="failed", error=f"{type(error).__name__}: {str(error)[:1000]}")
+                        finally:
+                            self._release_worker_resources(job)
                 for job in self.jobs.values():
                     if active >= self.max_workers:
                         break
@@ -162,7 +187,9 @@ class JobStore:
                         job.update(process=process, status="running", worker_pid=process.pid, started_at=time.monotonic())
                         active += 1
                     except Exception as error:
+                        process.close()
                         job.update(status="failed", error=f"Unable to start worker: {error}")
+                        self._release_worker_resources(job)
 
     def get(self, identifier):
         job = self.jobs.get(identifier)
@@ -178,13 +205,14 @@ class JobStore:
     def cancel(self, identifier):
         with self.lock:
             job = self.get(identifier)
-            if job["status"] in ("completed", "failed"):
+            if job["status"] in ("completed", "failed", "canceled"):
                 return self.snapshot(identifier)
             job["canceled"].set()
             process = job["process"]
             if process is not None:
                 _stop_process(process)
             job.update(status="canceled", result=None, run=None, package=None)
+            self._release_worker_resources(job)
             return self.snapshot(identifier)
 
     def close(self):
@@ -192,7 +220,6 @@ class JobStore:
         self.thread.join(timeout=1)
         for identifier in self.jobs:
             self.cancel(identifier)
-            self.jobs[identifier]["queue"].close()
         self.temp.cleanup()
 
 
@@ -253,6 +280,22 @@ def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32):
             if job["status"] != "completed":
                 raise HTTPException(409, "Display requires a completed job")
             return display_payload(job["run"])
+
+    @app.get("/plans/{identifier}/display-data")
+    def get_display_data(identifier: str):
+        with app.state.jobs.lock:
+            job = app.state.jobs.get(identifier)
+            if job["status"] != "completed":
+                raise HTTPException(409, "Display data requires a completed job")
+            return deepcopy(job["display_data"])
+
+    @app.get("/plans/{identifier}/renderer-registration")
+    def get_registration(identifier: str):
+        with app.state.jobs.lock:
+            job = app.state.jobs.get(identifier)
+            if job["status"] != "completed":
+                raise HTTPException(409, "Registration requires a completed job")
+            return deepcopy(job["display_data"]["registration"])
 
     return app
 

@@ -1,0 +1,214 @@
+{
+  "version": "0.1.0",
+  "inspected_utc": "2026-11-15",
+  "method": "Official pages inspected with Aside; CesiumJS Moon-fixed API checked with Context7. Subsequently used an explicitly authorized, scoped local token for read-only ion endpoint and four tileset JSON documents. Credentialed URLs, tokens and endpoint response were not retained.",
+  "sources": [
+    {
+      "url": "https://cesium.com/platform/cesium-ion/content/cesium-moon/",
+      "finding": "Official setup selects Moon ellipsoid, disabled globe and asset 2684829. Source table lists LOLA polar gridded data and a LOLA/Kaguya midlatitude merge. Page does not establish an explicit DE421 frame realization, tileset root transform, immutable asset revision or measured landmark residuals."
+    },
+    {
+      "url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_de440_250416.tf",
+      "finding": "MOON_ME_DE440_ME421 closely aligns with MOON_ME_DE421 but is not identical. Principal-axis and IAU_MOON frames differ materially. Generic aliases may select a different realization. A runtime Moon-fixed transform does not identify a terrain asset frame."
+    },
+    {
+      "url": "https://pgda.gsfc.nasa.gov/products/81",
+      "finding": "Engine dataset manifest preserves the product's DE421 mean-Earth frame and 1737400 m reference sphere; rendered LOLA-derived data does not imply the same realization or mesh."
+    },
+    {
+      "url": "https://github.com/CesiumGS/cesium/blob/main/CHANGES.md",
+      "finding": "Context7 reports the addition of lunar fixed/ICRF transformations in CesiumJS 1.120. This is API provenance, not asset registration evidence."
+    }
+  ],
+  "catalog_warning": "USGS Gazetteer coordinates are nomenclature feature centers with multiple control-network choices, not matched terrain fiducials. Active page tables displayed Planetographic, +East, -180 to 180. No DE421 realization or elevation is inferred.",
+  "authorized_asset_inspection": {
+    "inspected_utc_date": "2026-11-15",
+    "asset_id": 2684829,
+    "access_scope": "assets:read for Moon asset only; local Referer; no binary tile requests",
+    "records": [
+      {
+        "label": "asset_root",
+        "response_sha256": "63927269fae7fcb4d6be97f735ab625e0684cb3cadb646ffdf2b5fa8aafd741a",
+        "response_size_bytes": 580,
+        "asset": {
+          "version": "1.1"
+        },
+        "extensions": {
+          "3DTILES_ellipsoid": {
+            "body": "Moon",
+            "radii": [
+              1737400,
+              1737400,
+              1737400
+            ]
+          }
+        },
+        "transforms": [],
+        "frame_metadata": [],
+        "external_content_count": 3
+      },
+      {
+        "label": "regional_child_0",
+        "response_sha256": "a80757427cec6c65843cfa411e5d3dc0cf563d1d861e27cc361f660f0904e294",
+        "response_size_bytes": 192435,
+        "asset": {
+          "extras": {
+            "ion": {
+              "georeferenced": true,
+              "movable": false
+            }
+          },
+          "version": "1.0"
+        },
+        "extensions": {},
+        "transforms": [
+          {
+            "node": "/root",
+            "column_major": [
+              1.0010935881201797,
+              0,
+              0,
+              0,
+              0,
+              1.0010935881201797,
+              0,
+              0,
+              0,
+              0,
+              1.0010935881201797,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "frame_metadata": [
+          {
+            "node": "/asset",
+            "key": "extras",
+            "value": {
+              "ion": {
+                "georeferenced": true,
+                "movable": false
+              }
+            }
+          }
+        ],
+        "external_content_count": 1706
+      },
+      {
+        "label": "regional_child_1",
+        "response_sha256": "0387b29d077ea28c5359967f26f7f723f4eda5a5ea6fdacbf89c269f116427eb",
+        "response_size_bytes": 26389,
+        "asset": {
+          "extras": {
+            "ion": {
+              "georeferenced": true,
+              "movable": false
+            }
+          },
+          "version": "1.0"
+        },
+        "extensions": {},
+        "transforms": [
+          {
+            "node": "/root",
+            "column_major": [
+              6.123233995736766e-17,
+              0,
+              -1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              6.123233995736766e-17,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "frame_metadata": [
+          {
+            "node": "/asset",
+            "key": "extras",
+            "value": {
+              "ion": {
+                "georeferenced": true,
+                "movable": false
+              }
+            }
+          }
+        ],
+        "external_content_count": 230
+      },
+      {
+        "label": "regional_child_2",
+        "response_sha256": "09328f0a6e68914524946027660a5e0ec6a580e80f7ff71c22f8ab5e61d2f607",
+        "response_size_bytes": 26195,
+        "asset": {
+          "extras": {
+            "ion": {
+              "georeferenced": true,
+              "movable": false
+            }
+          },
+          "version": "1.0"
+        },
+        "extensions": {},
+        "transforms": [
+          {
+            "node": "/root",
+            "column_major": [
+              6.123233995736766e-17,
+              0,
+              1,
+              0,
+              0,
+              1,
+              0,
+              0,
+              -1,
+              0,
+              6.123233995736766e-17,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ],
+        "frame_metadata": [
+          {
+            "node": "/asset",
+            "key": "extras",
+            "value": {
+              "ion": {
+                "georeferenced": true,
+                "movable": false
+              }
+            }
+          }
+        ],
+        "external_content_count": 230
+      }
+    ],
+    "hash_definition": "SHA-256 of response bytes returned by urllib before optional gzip decompression; sizes in bytes. These observations do not pin a vendor immutable asset revision. Asset.version is the 3D Tiles format version.",
+    "finding": "Root declares Moon and 1737400 m spherical radii. Regional child transforms include a non-unit scale and opposite quarter-turn Y rotations. No inspected JSON declares the DE421 realization, a lunar control network, terrain-fiducial coordinates or independent alignment residuals. Tile-space transforms are not an analysis-frame bridge.",
+    "transform_convention": {
+      "layout": "column_major_4x4",
+      "meaning": "Each regional root matrix maps local tile coordinates into its parent asset coordinates. Ancestor and descendant transforms must compose in hierarchy order; none is the MOON_ME_DE421-to-renderer transform.",
+      "linear_component_units": "dimensionless rotation or scale",
+      "translation_units": "3D Tiles Cartesian meters; all observed translation components are zero",
+      "datum": "Unknown lunar orientation realization, source horizontal control network and vertical datum. Moon radius extension alone does not establish them."
+    }
+  }
+}
