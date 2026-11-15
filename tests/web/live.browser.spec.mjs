@@ -44,7 +44,9 @@ test('live engine computes direct failure and relay delivery; display, CSV and Z
   expect(direct.provenance.reason).toContain('307,200,000');
 
   await page.getByLabel('Declared network example').selectOption('1');
+  const relayRequest = page.waitForRequest(value => value.method() === 'POST' && new URL(value.url()).pathname === '/api/plans');
   const relayJob = await submit(page);
+  const relayScenario = (await relayRequest).postDataJSON();
   const result = await completed(page, relayJob);
   expect(result.status).toBe('feasible_under_assumptions');
   expect(result.delivered_bytes).toBe(104857600);
@@ -52,8 +54,15 @@ test('live engine computes direct failure and relay delivery; display, CSV and Z
   await expect(page.locator('#display-status')).toContainText(relayJob.scenario_sha256);
   const display = await (await page.request.get(`/api/plans/${relayJob.job_id}/display-data`)).json();
   expect(display.allocations).toEqual(result.allocations);
+  expect(display.storage_intervals).toEqual(result.storage_intervals);
   expect(display.energy_history).toEqual(result.energy_history);
   expect(display.states).toEqual([]);
+  for (const message of [...result.assumptions, ...result.warnings]) {
+    await expect(page.locator('#result')).toContainText(message);
+  }
+  for (const contact of result.contacts) {
+    await expect(page.locator('#result')).toContainText(contact.service_provenance);
+  }
   expect(display.registration.release_gate.overlays_allowed).toBe(true);
   expect(display.registration.release_gate.map_registration_passed).toBe(true);
   expect(display.registration.representation).toBe('engine_corrected_mesh');
@@ -90,9 +99,14 @@ with zipfile.ZipFile(sys.argv[1]) as z:
     result=json.loads(z.read('result.json')); display=json.loads(z.read('display-data.json'))
     assert display['allocations']==result['allocations']
     rows=list(csv.DictReader(io.StringIO(z.read('schedule.csv').decode())))
-    print(json.dumps({'result':result,'schedule':rows,'replay':json.loads(z.read('replay.json'))}))
+    print(json.dumps({'scenario':json.loads(z.read('scenario.json')),'result':result,'schedule':rows,'replay':json.loads(z.read('replay.json'))}))
 `, zipPath], { encoding: 'utf8' }));
   expect(checked.result).toEqual(result);
+  expect(checked.scenario).toEqual(relayScenario);
+  await page.getByText('Inspect engine storage', { exact: true }).click();
+  for (const storage of result.storage_intervals) {
+    await expect(page.locator('#result')).toContainText(`${storage.interval.start_utc} to ${storage.interval.end_utc}`);
+  }
   expect(checked.replay.passed).toBe(true);
   expect(checked.schedule).toHaveLength(result.allocations.length);
   for (const allocation of result.allocations) {
@@ -111,6 +125,47 @@ with zipfile.ZipFile(sys.argv[1]) as z:
   await page.screenshot({ path: test.info().outputPath('phase-5-live-mobile.png') });
 });
 
+test('controlled ready-time change preserves the task and the configured relay rescues actual engine delivery', async ({ page }) => {
+  await page.getByLabel('Declared network example').selectOption('1');
+  await page.getByRole('checkbox', { name: 'One lunar relay', exact: true }).uncheck();
+  await page.getByLabel('Data volume', { exact: true }).fill('16');
+  const submitted = [];
+  page.on('request', request => {
+    if (request.method() === 'POST' && new URL(request.url()).pathname === '/api/plans') submitted.push(request.postDataJSON());
+  });
+  const baselineJob = await submit(page);
+  const baseline = await completed(page, baselineJob);
+  expect(baseline.status).toBe('feasible_under_assumptions');
+  expect(baseline.delivered_bytes).toBe(16777216);
+  await page.getByRole('button', { name: 'Save current result as A', exact: true }).click();
+  await page.getByLabel('Data ready (UTC / qualified offset)', { exact: true }).fill('2026-11-14T09:05:00Z');
+  const delayedJob = await submit(page);
+  const delayed = await completed(page, delayedJob);
+  expect(delayed.status).toBe('infeasible_in_model');
+  await page.getByRole('button', { name: 'Save current result as B', exact: true }).click();
+  await expect(page.locator('#comparison')).toContainText('Data-ready time changed; the absolute deadline is unchanged.');
+  for (const label of ['Data volume', 'Hardware profile', 'Hardware configuration', 'Initial battery energy (Wh)', 'Network configuration']) {
+    await expect(page.locator('#comparison')).toContainText(`${label}: Unchanged`);
+  }
+  await page.getByRole('checkbox', { name: 'One lunar relay', exact: true }).check();
+  const rescuedJob = await submit(page);
+  const rescued = await completed(page, rescuedJob);
+  expect(rescued.status).toBe('feasible_under_assumptions');
+  expect(rescued.delivered_bytes).toBe(16777216);
+  expect(rescued.storage_intervals.some(value => value.node_id === 'synthetic-lunar-relay')).toBe(true);
+  expect(submitted).toHaveLength(3);
+  for (const scenario of submitted.slice(1)) {
+    for (const key of ['data_volume', 'hardware_profile_ref', 'profiles', 'deadline_utc', 'analysis_horizon', 'lander', 'relay_refs', 'station_refs']) {
+      expect(scenario[key]).toEqual(submitted[0][key]);
+    }
+  }
+  expect(submitted[1].route_families).toEqual(submitted[0].route_families);
+  expect(submitted[2].route_families).toContain('single_lunar_relay');
+  await expect(page.getByRole('heading', { name: 'Lunar terrain unavailable' })).toBeVisible();
+  await expect(page.locator('#result')).toContainText('Assumed-rate simulation');
+  await expect(page.locator('#result')).toContainText('synthetic');
+});
+
 test('changed volume is genuinely rescheduled and unsupported site coverage remains unknown', async ({ page }) => {
   await page.getByLabel('Data volume', { exact: true }).fill('16');
   await page.getByLabel('Volume unit (changing this changes the task)').selectOption('byte');
@@ -127,6 +182,7 @@ test('changed volume is genuinely rescheduled and unsupported site coverage rema
   expect(unknown.delivered_bytes).toBeNull();
   expect(unknown.warnings.join(' ')).toContain('site, frame, elevation or equipment heights');
   await expect(page.locator('#result')).toContainText('Unknown');
+  await expect(page.locator('#result')).toContainText('Solver: unresolved');
   await expect(page.locator('#result')).not.toContainText('Delivered16 bytes');
 });
 
@@ -138,6 +194,38 @@ test('a real running service job can be canceled without publishing a success', 
   await expect.poll(async () => (await (await page.request.get(`/api/plans/${job.job_id}`)).json()).status).toBe('canceled');
   await expect(page.locator('#result')).toContainText('No engine result has been loaded');
   await expect(page.getByRole('button', { name: 'Download run package (ZIP)', exact: true })).toBeDisabled();
+});
+
+test('unsupported operating day explains coverage and cannot retain a previous success', async ({ page }) => {
+  await page.getByLabel('Declared network example').selectOption('1');
+  await page.getByLabel('Data volume', { exact: true }).fill('16');
+  await page.getByLabel('Data ready (UTC / qualified offset)', { exact: true }).fill('2026-11-14T09:05:00Z');
+  const successfulJob = await submit(page);
+  const success = await completed(page, successfulJob);
+  expect(success.status).toBe('feasible_under_assumptions');
+  const scenarios = [];
+  page.on('request', request => {
+    if (request.method() === 'POST' && new URL(request.url()).pathname === '/api/plans') scenarios.push(request.postDataJSON());
+  });
+  await page.getByLabel('Data ready (UTC / qualified offset)', { exact: true }).fill('2026-11-13T09:05:00Z');
+  await page.getByLabel('Analysis begins (UTC / qualified offset)', { exact: true }).fill('2026-11-13T08:50:00Z');
+  const responsePromise = page.waitForResponse(value => value.request().method() === 'POST' && new URL(value.url()).pathname === '/api/plans');
+  await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
+  const rejection = await responsePromise;
+  expect(rejection.status()).toBe(422);
+  const detail = (await rejection.json()).detail;
+  expect(detail).toBe('Unsupported dates: horizon is outside the declared synthetic fixture domain');
+  await expect(page.locator('#validation-errors')).toContainText(`Scenario rejected: ${detail}`);
+  await expect(page.locator('#result')).toContainText('No engine result has been loaded');
+  await expect(page.getByRole('button', { name: 'Download run package (ZIP)', exact: true })).toBeDisabled();
+  const fixture = JSON.parse(await readFile(new URL('../../web/fixtures/synthetic-relay/scenario.json', import.meta.url), 'utf8'));
+  expect(scenarios).toHaveLength(1);
+  expect(scenarios[0].data_volume).toEqual({ value: 16, unit: 'MiB' });
+  for (const key of ['profiles', 'hardware_profile_ref', 'deadline_utc', 'relay_refs', 'station_refs']) expect(scenarios[0][key]).toEqual(fixture[key]);
+  expect(scenarios[0].analysis_horizon.end_utc).toBe(fixture.analysis_horizon.end_utc);
+  // Chromium reports the deliberate rejected request once; every other console error still fails.
+  await expect.poll(() => page.__somaErrors.filter(value => /^Failed to load resource: the server responded with a status of 422 \(Unprocessable (?:Entity|Content)\)$/.test(value)).length).toBe(1);
+  page.__somaErrors.splice(page.__somaErrors.findIndex(value => /^Failed to load resource: the server responded with a status of 422 \(Unprocessable (?:Entity|Content)\)$/.test(value)), 1);
 });
 
 test('editing during a real job invalidates it and only the newer scenario is displayed', async ({ page }) => {

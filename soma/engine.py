@@ -1,6 +1,7 @@
 """Authoritative bounded scheduling, gated by an independent schedule replay."""
 
 from copy import deepcopy
+from decimal import Decimal, ROUND_CEILING
 import hashlib
 import math
 from importlib.metadata import version, PackageNotFoundError
@@ -8,6 +9,31 @@ from pathlib import Path
 
 from soma import __version__
 from soma.validation import data_volume_bytes, scenario_sha256, validate_document, validate_scenario
+
+
+def _direct_capacity_upper_bound(scenario, contacts):
+    """Optimistic payload bound after readiness and before receiver deadline.
+
+    Ignore radio and energy conflicts, which can only reduce this capacity.
+    Keep fractional bits until the final upward rounding so the explanation
+    cannot mistake a floating-point underestimate for proven insufficiency.
+    """
+    from soma.time import parse_utc
+
+    ready = parse_utc(scenario['data_ready_utc'])
+    deadline = parse_utc(scenario['deadline_utc'])
+    def seconds(delta):
+        return Decimal(delta.days*86400+delta.seconds) + Decimal(delta.microseconds)/1000000
+    total = Decimal(0)
+    for contact in contacts:
+        if contact['sender'] != scenario['lander']['id'] or contact['receiver'] not in scenario['station_refs']:
+            continue
+        start = max(ready, parse_utc(contact['source_transmit_window']['start_utc']))
+        duration = min(seconds(parse_utc(contact['source_transmit_window']['end_utc'])-start),
+                       seconds(deadline-start)-Decimal(str(contact['one_way_delay']['seconds'])))
+        total += min(Decimal(contact['available_capacity_bits']),
+                     max(Decimal(0), duration)*Decimal(str(contact['payload_rate_bps'])))
+    return int(total.to_integral_value(rounding=ROUND_CEILING))
 
 
 def _base_result(scenario, *, reason, implemented=False, contacts=()):
@@ -102,10 +128,10 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
             result.update(status='infeasible_in_model',solver_status=status,delivered_bytes=0)
             result['provenance']['reason'] = 'The bounded discretized model proved no complete-file schedule under the declared route, storage, radio, service and energy constraints.'
             if set(scenario['route_families']) == {'direct_to_earth'}:
-                capacity = sum(c['available_capacity_bits'] for c in analysis['contacts'] if c['sender'] == scenario['lander']['id'] and c['receiver'] in scenario['station_refs'])
+                capacity = _direct_capacity_upper_bound(scenario, analysis['contacts'])
                 required = data_volume_bytes(scenario['data_volume'])*8
                 if capacity < required:
-                    result['provenance']['reason'] = f'Direct contacts provide at most {capacity:,} payload bits for a {required:,}-bit file; the complete file cannot fit in the declared network.'
+                    result['provenance']['reason'] = f'Direct contacts after data readiness and before the receiver deadline provide at most {capacity:,} payload bits for a {required:,}-bit file; the complete file cannot fit in the declared network.'
                     details['limiting_bound'] = {'kind':'direct_contact_capacity_upper_bound','available_bits':capacity,'required_bits':required}
         else:
             result['provenance']['reason'] = 'The bounded solver did not establish a complete replayable schedule; infeasibility is unproven.'
@@ -113,7 +139,7 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
         result['warnings'].append('Missing coverage or unsupported input assumptions remain unknown, not zero or clear.')
     result['warnings'].extend(['Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.',
                                'This result does not book service or certify navigation, relay operation or thermal survival.',
-                               'Moon renderer registration remains an unresolved Phase 5 gate; scientific map overlays are blocked.'])
+                               'Scientific map placement depends on the run\'s versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage.'])
     validate_document(result,'result')
     if progress:
         progress('export')

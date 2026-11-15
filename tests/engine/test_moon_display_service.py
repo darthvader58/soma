@@ -65,7 +65,7 @@ def test_fine_bound_moves_with_surface_and_retains_all_corrected_vertices(grid):
     assert max(np.array([fixed[3],fixed[7],fixed[11]])-half)<50
 
 
-def test_provider_retains_version_query_and_caches_converted_objects(grid):
+def test_provider_retains_version_query_without_retaining_cesium_objects(grid):
     calls=[]
     root={'asset':{'version':'1.1'},'geometricError':1,'root':{'boundingVolume':BOX,'geometricError':1}}
     endpoint={'url':'https://assets.ion.cesium.com/us-east-1/asset_depot/2684829/Moon/v6/tileset.json?v=7',
@@ -77,7 +77,7 @@ def test_provider_retains_version_query_and_caches_converted_objects(grid):
     provider.model['status']='candidate_pending_corrected_scene_landmarks'
     provider.model['geoid']['sha256']=hashlib.sha256(grid.read_bytes()).hexdigest()
     first=provider.get('tileset.json');assert first==provider.get('tileset.json')
-    assert len(calls)==2 and calls[-1][0].endswith('?v=7')
+    assert len(calls)==3 and calls[-1][0].endswith('?v=7')
     assert b'secret' not in first[0]
 
 
@@ -103,7 +103,18 @@ def test_changed_source_snapshot_blocks_registered_tiles_before_publication(grid
     provider.model['geoid']['sha256']=hashlib.sha256(grid.read_bytes()).hexdigest()
     with pytest.raises(ValueError,match='root changed'):
         provider.get('tileset.json')
-    assert not provider.snapshot_verified and not provider.cache
+    assert not provider.snapshot_verified
+
+
+def test_corrected_tile_response_disables_storage_even_with_conversion_hash():
+    class Moon:
+        model={};model_sha='0'*64
+        def get(self,path): return b'{}','application/json','1'*64
+    with TestClient(create_app(moon_provider=Moon())) as client:
+        response=client.get('/moon/tiles/tileset.json?conversion='+'0'*64)
+        assert response.status_code==200
+        assert response.headers['cache-control']=='private, no-store'
+        assert response.headers['x-soma-conversion-sha256']=='0'*64
 
 
 def test_bad_geoid_checksum_cannot_enter_display_conversion(grid):

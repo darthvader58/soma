@@ -1,42 +1,29 @@
-# SOMA: A Research-Grounded Lunar Communications Planner
+# SOMA: Lunar communications planning under declared assumptions
 
-The Python engine now selects energy-constrained delivery schedules, independently
-replays them, serves isolated jobs and exports complete run packages. The current
-100 MiB synthetic direct case fails capacity; the relay case passes replay with
-optimality unproven. The browser now runs live Python jobs by default. See the
-[Phase 4 run commands and limits](soma/docs/phase-4/README.md) and the
-[live integration guide](soma/docs/phase-5/README.md). Renderer registration remains an unfinished Phase 5
-gate. SOMA is a planning model under declared assumptions.
+SOMA's Python engine plans finite-volume data delivery through direct-to-Earth
+or one configured lunar relay. It constrains contact capacity, storage, radio
+use and lander energy, then independently replays the schedule. The browser
+submits jobs, displays exact results and downloads the same exported package.
 
-## What this project is
+The interactive planner currently supports a curated synthetic network with
+assumed rates, service windows and sky geometry. Separate real LOLA/SPICE
+geometry diagnostics preserve measured-data gaps. Arbitrary physical site/date
+planning and relay ephemerides remain unsupported; unknown coverage stays
+unknown. The regional Moon display bridge is verified at the tested resolution
+from 87.5°S to the south pole.
 
-SOMA should do one useful job: take a proposed lunar landing location, an operating date, a quantity of data, and a delivery deadline, then produce an explainable schedule for getting that data to Earth using a specified lander and network. The result should say when to transmit, which receiving asset to use, where the data waits between contacts, when the final data reaches its destination, and whether the lander's modeled energy reserve is respected. The Python library supplies the calculations. The Cesium application lets someone choose the site, inspect the terrain and moving assets, understand the schedule, and export the result. This is a proposed product definition, not a claim that SOMA has already implemented or validated these capabilities.
+Phase 6 adds a controlled computed demonstration, export reproduction and
+sensitivity evidence. The source audit records an unresolved permission question
+for the corrected ion stream before public release. See the
+[Phase 6 report and exact commands](soma/docs/phase-6/README.md),
+[source/terms audit](soma/docs/phase-6/source-and-license-audit.md), and
+[interface verification](web/docs/phase-6-verification.md).
 
-“Lunar TATC” in this plan means a lunar mission-analysis library inspired by the Tradespace Analysis Toolkit for Constellations. It does not mean a physical lunar taxi or a new spacecraft. More importantly, SOMA should not try to become a general-purpose lunar simulator. It should not optimize launch trajectories, design a whole constellation, certify a landing site, or become another all-purpose planetary atlas. Its distinctive output is a **data-delivery plan**, with site and date comparison serving that decision rather than becoming the product itself.
-
-This focus still fits the NASA Space Apps Lunar Landing Site Navigator challenge. The challenge asks for intuitive site/date evaluation, Sun and Earth positions relative to the local horizon, and information about solar-power potential and direct-to-Earth communications. SOMA turns those environmental quantities into a concrete question: “Can this lander deliver this dataset by this time, and what must it do?” A second site or date is useful because the user can see whether it changes the answer and why. The challenge does not require the relay-routing extension; that is SOMA's proposed way to make the environmental analysis actionable. ([Challenge brief, D01](06-Research-and-Source-Register.md#d01))
-
-## How the evidence is used
-
-This plan distinguishes research evidence from software documentation and from our own design decisions. Published papers support the scientific methods: terrain-horizon illumination modeling, sensitivity to elevation errors and instrument height, time-dependent communications, and lunar power budgeting. A paper is cited near the claim it supports, not merely placed in a long bibliography. The research register explains what each paper actually demonstrates and what cannot be inferred from it. NASA and CCSDS specifications supply implementation constraints and terminology. Current source code and official Cesium documentation establish what the software presently exposes. None of those sources proves the complete proposed SOMA application works. That will require implementation and testing.
-
-The strongest methodological chain is straightforward. Mazarico and colleagues establish a terrain-horizon approach to lunar illumination; Gläser and colleagues examine higher-resolution terrain and different observer heights; Barker and colleagues quantify how terrain uncertainty affects the predicted lighting. Saliwanchik and colleagues provide a concrete lunar-instrument example of translating time-varying sunlight into power generation, storage, and operating choices. Communications papers and the CCSDS routing standard establish why a route must account for contact timing, transmission capacity, and waiting between contacts. SOMA proposes to combine these methods within a deliberately limited planning task. ([P03](06-Research-and-Source-Register.md#p03), [P04](06-Research-and-Source-Register.md#p04), [P05](06-Research-and-Source-Register.md#p05), [P06](06-Research-and-Source-Register.md#p06), [P11](06-Research-and-Source-Register.md#p11), [D07](06-Research-and-Source-Register.md#d07))
-
-## The five parts
-
-[Part 1, Lunar TATC and the analysis foundation](01-Lunar-TATC-and-Analysis-Foundation.md), explains what the existing toolkit offers, which Earth-specific assumptions cannot be carried over, and how a companion Python package should handle lunar reference frames, ephemerides, terrain, and reproducible inputs. [Part 2, Cesium and the map interface](02-Cesium-and-Map-Interface.md), explains how to display the Moon correctly, place a lander, animate relays, and make a schedule understandable without letting graphics become the physics engine.
-
-[Part 3, Communications, relays, and scheduling](03-Communications-Relays-and-Scheduling.md), develops the central product: turning geometric opportunities into usable contacts and a finite-volume transfer schedule. It separates direct-to-Earth links, lunar relays, and optional Earth-orbit relays. [Part 4, Sunlight, power, and site comparison](04-Sunlight-Power-and-Site-Comparison.md), explains how local horizons and solar-array geometry affect the power available for that schedule. [Part 5, Python library and application delivery](05-Python-Library-and-Application-Delivery.md), brings the components together into an implementation sequence, public interfaces, export format, verification plan, and focused demonstration. The [research and source register](06-Research-and-Source-Register.md) is the accompanying evidence map.
-
-## The baseline and its limits
-
-The recommended first release uses a stationary lander, a small region with suitable lunar elevation data, a bounded analysis period, a small fixed relay set, and a few defined Earth receiving stations. Direct-to-Earth is considered first as the simplest available architecture; relays are selected when the stated objective or constraints justify them. This does not mean a direct link always has lower energy cost or earlier completion. All routes must compete using the same hardware assumptions, availability calendars, and data volume. Published lunar relay operations demonstrate that lunar-relay-to-ground architectures are real, while preliminary constellation studies and emulated protocol experiments must remain labeled as such. ([P07](06-Research-and-Source-Register.md#p07), [P08](06-Research-and-Source-Register.md#p08), [P10](06-Research-and-Source-Register.md#p10))
-
-A valid result is “feasible under these inputs and this model,” not “approved for flight.” A visible relay can have inadequate link margin, incompatible equipment, no service allocation, or insufficient storage. A sunny location can still exhaust a battery during transmission or a long shadow. A failed search is not proof that every possible constellation or operating strategy would fail. These boundaries should appear in the application and every exported plan, not only in documentation.
-
-## Audit date and delivery status
-
-This plan was prepared against sources inspected on **13 November 2026**. The TATC implementation audit is pinned to commit **b459b9a02b53cb8d7a171a81fa995df0856dff53**, which matched the repository's public main branch when checked. Older revisions discussed during exploration are not used as evidence of the current implementation. This folder contains a researched project plan, not a working library, deployed website, completed simulation, live network booking, or performance benchmark. Implementation schedules and acceptance thresholds below are proposed development choices.
+This is a planning model under declared assumptions. It does not book ground
+time, implement a flight DTN stack, certify relays or navigation, establish
+thermal survival, or rank a universal best landing site. The full scientific
+[project plan](plan/README.md) remains the source of requirements. Development
+history follows below.
 
 ## Engine development: Phase 1
 
@@ -283,6 +270,6 @@ that region, scientific overlays stay blocked. The contact-only relay fixture
 still has no trajectory; the viewer displays its declared analysis point and
 keeps spacecraft state Unknown. The [alignment method and reproduction guide](soma/docs/phase-5/map-alignment.md)
 records the measured controls, conversion, sampled source fingerprints and limits.
-The integration PR requires the repository owner's merge before Phase 6 begins.
+PR #11 merged the integration. Phase 6 verification and the remaining public-release conditions are documented in the Phase 6 report.
 See the [integration guide](soma/docs/phase-5/README.md) and
 [interface evidence](web/docs/phase-5-verification.md).

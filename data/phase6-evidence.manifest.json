@@ -1,0 +1,243 @@
+{
+  "version": "0.6.0",
+  "baseline_commit": "7c7033a",
+  "purpose": "Integrated replay, display, controlled comparison, export reproduction and sensitivity verification after merged Phase5",
+  "input_class": "synthetic",
+  "technical_verification_passed": true,
+  "phase_6_release_status": "pending_corrected_ion_stream_permission_clarification",
+  "phase_7_started": false,
+  "phase_7_allowed": false,
+  "verification": {
+    "engine_tests": {
+      "command": ".venv/bin/pytest tests/engine -q",
+      "passed": 363,
+      "skipped": 0
+    },
+    "web_unit_tests": 73,
+    "live_browser_checks": 6,
+    "fixture_browser_checks": 17,
+    "production_build": "passed",
+    "manual_browser": "Aside; actual loopback service, streaming disabled during terms review",
+    "export_reproduction": "Fresh source copy, installed pinned Python dependencies, no browser files or credentials; allocations identical",
+    "native_schemas_changed": false,
+    "browser_physics_added": false,
+    "map_registration": "Measured regional registration still passes; transport-only cache removal leaves mesh math unchanged"
+  },
+  "acceptance": {
+    "full_export_replay": true,
+    "byte_conservation_causality_capacity_storage_radio_energy_deadline": true,
+    "exact_native_csv_display_epochs": true,
+    "unsupported_spacecraft_state_remains_unknown": true,
+    "tile_failure_preserves_schedule": true,
+    "task_hardware_initial_battery_deadline_rule_preserved": true,
+    "computed_direct_later_ready_relay_story": true,
+    "terrain_battery_rate_service_resolution_sensitivity_recorded": true,
+    "sources_attribution_terms_reviewed": true,
+    "public_corrected_map_permission_established": false
+  },
+  "release_conditions": [
+    "Clarify permission for the coordinate-conversion use in the ion stream before public release; the working token is not treated as that permission.",
+    "Verify the intended deployment account/plan and current asset attribution requirements before hosting."
+  ],
+  "resolved_findings": [
+    "Direct capacity explanation now accounts for readiness and receiver deadline/light time.",
+    "Native warnings no longer incorrectly declare all map registration unresolved.",
+    "Dedicated converted-ion-object cache removed and responses marked private,no-store.",
+    "Unsupported-day HTTP422 now displays the bounded native coverage explanation without retaining old success."
+  ],
+  "limitations": [
+    "All delivery demonstrations use declared synthetic contacts, rates, service and sky geometry.",
+    "Data-ready-time shift is within one operating day; no new-day ephemeris or arbitrary physical site comparison is claimed.",
+    "Contact-only relay has no trajectory; empty spacecraft states remain unknown.",
+    "Static terrain margin tests and scheduler-bin changes do not establish physical convergence or a success probability.",
+    "The scientific map-registration region remains -90 to -87.5 degrees at the tested resolution; this is not absolute navigation accuracy or an all-location/LOD guarantee."
+  ],
+  "evidence_refs": [
+    "soma/docs/phase-6/README.md",
+    "soma/docs/phase-6/source-and-license-audit.md",
+    "soma/docs/phase-6/ui-delivery-gate.md",
+    "web/docs/phase-6-verification.md"
+  ],
+  "files": [
+    {
+      "path": "fixtures/phase-6/README.md",
+      "sha256": "0faa3a57b2d95eeafb0858bccf8143563b99d3ec30a973adb9ede85968022a3a",
+      "size_bytes": 1505
+    },
+    {
+      "path": "fixtures/phase-6/demo/demonstration.json",
+      "sha256": "2e10de8131c441cc94c5c3fa615fe74341e66e1c172abcf72a289ec1ed87da15",
+      "size_bytes": 177384
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-later/run.json",
+      "sha256": "cf68f028168a5dc3ca48f31ff856e7b31dc7a6fb20f62c1e6ffa126f1db4d108",
+      "size_bytes": 217793
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-later/run.zip",
+      "sha256": "534d3ff110f8968292a4e74d20ed71207f3343d75eea86e9ebbd898dea0ec3a5",
+      "size_bytes": 461605
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-later/scenario.json",
+      "sha256": "9a15a19c43bc6c7dae662fda175dcba0c30933705b2788fff0a965814e168d5b",
+      "size_bytes": 6605
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-later/verification.json",
+      "sha256": "c91d554bb54eb22df6c111b169d5c87c9b3bca8d1ae48245ad9028e83dcd9230",
+      "size_bytes": 5295
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-ready/run.json",
+      "sha256": "e0decfdd2b71f72498ef134fdfa8f76ebdb01ba811f71ce9765b397836b94cdb",
+      "size_bytes": 277802
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-ready/run.zip",
+      "sha256": "a61cb5db1f9a10ce9fea4b0e945de1efc43defbac45e2db3a2bb152c5010d8d7",
+      "size_bytes": 677683
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-ready/scenario.json",
+      "sha256": "10f4e70c442ade72288834fcc7fc37a029f427b213deaeec61ca7130c4daf6f7",
+      "size_bytes": 6605
+    },
+    {
+      "path": "fixtures/phase-6/demo/direct-ready/verification.json",
+      "sha256": "46c97250bf4f61d4ff8ce60cabbaf7fa2a58df5737deb2f53fddb00d63974b39",
+      "size_bytes": 10377
+    },
+    {
+      "path": "fixtures/phase-6/demo/relay-later/run.json",
+      "sha256": "07d3bc067f37478523a97df39a75ad6ff73be73dafb4f4f2c6e1e42db3b588a5",
+      "size_bytes": 294024
+    },
+    {
+      "path": "fixtures/phase-6/demo/relay-later/run.zip",
+      "sha256": "3192db5877c863c6426eaa9ce9d338261138e05d3589cd280ab416d416639485",
+      "size_bytes": 708734
+    },
+    {
+      "path": "fixtures/phase-6/demo/relay-later/scenario.json",
+      "sha256": "aa8fffcf6789485ad6114638da4b1b12d373ff1ec36820aba48b16d488d787e6",
+      "size_bytes": 6630
+    },
+    {
+      "path": "fixtures/phase-6/demo/relay-later/verification.json",
+      "sha256": "d9b2b80cf2b7170b075d3574cf3ac61a9e76b3cb2402c2f59ed43ffc63c99391",
+      "size_bytes": 11156
+    },
+    {
+      "path": "fixtures/phase-6/manual-live/reproduction.json",
+      "sha256": "3c84e93d6a8ef5a9b7d88beb65b31afab5b1d9675c7578c811bf17b603e5cc2b",
+      "size_bytes": 554
+    },
+    {
+      "path": "fixtures/phase-6/manual-live/run.zip",
+      "sha256": "90a892d9a631754c6bcf6eddfda7681df765292e6573c662e16b66ad1ca51c30",
+      "size_bytes": 1529181
+    },
+    {
+      "path": "fixtures/phase-6/manual-live/verification.json",
+      "sha256": "276d6ff4370632dd9100ab5e8154ff5b841ac32e2f46ef0f4fe6986bec89e015",
+      "size_bytes": 11304
+    },
+    {
+      "path": "fixtures/phase-6/sensitivity.json",
+      "sha256": "95eddf3434952941be5b4fff211187d086b2394d4b4b1fd4117d82636c01ec82",
+      "size_bytes": 232643
+    },
+    {
+      "path": "soma/api/moon.py",
+      "sha256": "35f16feb66415e306387136d9e83995fafd93279329c202d266ecc11702e3942",
+      "size_bytes": 12794
+    },
+    {
+      "path": "soma/docs/phase-6/README.md",
+      "sha256": "fac10db13b8d854346406fb62c1ae075073f059dba8fc6030a68a8ce35f11abd",
+      "size_bytes": 8957
+    },
+    {
+      "path": "soma/docs/phase-6/reproduce-demo.py",
+      "sha256": "c1ec13c735bd904cf43ab63cd9e0a4457973c3a03af763a98ce9568cff9136fd",
+      "size_bytes": 4016
+    },
+    {
+      "path": "soma/docs/phase-6/source-and-license-audit.md",
+      "sha256": "c441821e62883be5b8da3c35b871e2f13ddf37134635572b1c43f19751cc72d4",
+      "size_bytes": 13605
+    },
+    {
+      "path": "soma/docs/phase-6/ui-delivery-gate.md",
+      "sha256": "d5997ac98d05604f95265c757a3c77a02c44600aa56c3dade74aefbb0044a5cf",
+      "size_bytes": 3777
+    },
+    {
+      "path": "soma/engine.py",
+      "sha256": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b",
+      "size_bytes": 9832
+    },
+    {
+      "path": "soma/verification/exports.py",
+      "sha256": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1",
+      "size_bytes": 10619
+    },
+    {
+      "path": "soma/verification/sensitivity.py",
+      "sha256": "6d4e1e849e7ef2e5d7e8302bd186f2a81f06083356ec6da2d3f04e3efef3d4c3",
+      "size_bytes": 7332
+    },
+    {
+      "path": "tests/engine/test_engine.py",
+      "sha256": "ec6dde1e9c5bfcff618667619180c60613077371c9c5eaaea624d130c3be341e",
+      "size_bytes": 5090
+    },
+    {
+      "path": "tests/engine/test_moon_display_service.py",
+      "sha256": "7bbb5924dd609091a9f0565b02e4443ae6a2aba761d22962ac96703d8d86edc2",
+      "size_bytes": 6380
+    },
+    {
+      "path": "tests/engine/test_phase6_handoff.py",
+      "sha256": "5642a5e93ac77bf4f054979070a2441c847a0187390ad9076ba5036e5798055d",
+      "size_bytes": 3373
+    },
+    {
+      "path": "tests/engine/test_phase6_sensitivity.py",
+      "sha256": "8685b603887052e9b441053230e0eed08aec5d0ec4d776c90afe79f86574bfb5",
+      "size_bytes": 1512
+    },
+    {
+      "path": "tests/web/client.test.mjs",
+      "sha256": "95a371f2a4078853436f47ce09288a3562c7368d7d7dbf7fb35f5fbc71a42a35",
+      "size_bytes": 15383
+    },
+    {
+      "path": "tests/web/live.browser.spec.mjs",
+      "sha256": "9fcb95ff5f093b2120f1096d4bfde9ff26623eac9fff5113226ddae8df745063",
+      "size_bytes": 15504
+    },
+    {
+      "path": "web/docs/phase-6-unsupported-day.jpg",
+      "sha256": "d9b5dd424956aa85277d612fdb4060a64b6b1df1aeb9e9da62b49a1eaac6ba0f",
+      "size_bytes": 274872
+    },
+    {
+      "path": "web/docs/phase-6-verification.md",
+      "sha256": "6dec141424f0ac4e079981c24510d9f46bd00a97a42a3b3a80c5c7258b6e97d9",
+      "size_bytes": 7232
+    },
+    {
+      "path": "web/src/client.js",
+      "sha256": "91ba2eb182a07b8f244fa234486bffe761859ca00aa759d108a40bf22a0a21bc",
+      "size_bytes": 12619
+    },
+    {
+      "path": "web/src/comparison.js",
+      "sha256": "7ca1373179b0011bc9f58f77bff2d1bdbcbe9fcc15550b988c4c0b4c9c80e544",
+      "size_bytes": 6231
+    }
+  ]
+}

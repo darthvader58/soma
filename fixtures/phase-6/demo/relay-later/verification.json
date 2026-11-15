@@ -1,0 +1,481 @@
+{
+  "checks": [
+    {
+      "name": "unique_safe_member_names",
+      "passed": true
+    },
+    {
+      "name": "required_members",
+      "passed": true
+    },
+    {
+      "name": "manifest_complete",
+      "passed": true
+    },
+    {
+      "name": "checksum:analysis-inputs.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:buffer-history.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:contacts.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:display-data.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:display.czml",
+      "passed": true
+    },
+    {
+      "name": "checksum:energy.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:explanation.md",
+      "passed": true
+    },
+    {
+      "name": "checksum:renderer-conversion.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:renderer-registration.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:replay.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:result.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:scenario.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:schedule.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:summary.json",
+      "passed": true
+    },
+    {
+      "name": "schema:scenario",
+      "passed": true
+    },
+    {
+      "name": "schema:result",
+      "passed": true
+    },
+    {
+      "name": "schema:contact",
+      "passed": true
+    },
+    {
+      "name": "schema:allocation",
+      "passed": true
+    },
+    {
+      "name": "feasible_display_present",
+      "passed": true
+    },
+    {
+      "name": "scenario_hash_bindings",
+      "passed": true
+    },
+    {
+      "name": "analysis_contacts_equal_native",
+      "passed": true
+    },
+    {
+      "name": "display_environment_exact",
+      "passed": true
+    },
+    {
+      "name": "display_sample_epochs_exact",
+      "passed": true
+    },
+    {
+      "name": "environment_scenario_binding",
+      "passed": true
+    },
+    {
+      "name": "environment_scenario_exact",
+      "passed": true
+    },
+    {
+      "name": "display_native:contacts",
+      "passed": true
+    },
+    {
+      "name": "display_native:allocations",
+      "passed": true
+    },
+    {
+      "name": "display_native:storage_intervals",
+      "passed": true
+    },
+    {
+      "name": "display_native:energy_history",
+      "passed": true
+    },
+    {
+      "name": "display_native:buffer_history",
+      "passed": true
+    },
+    {
+      "name": "display_native:assumptions",
+      "passed": true
+    },
+    {
+      "name": "display_native:warnings",
+      "passed": true
+    },
+    {
+      "name": "summary_native:scenario_id",
+      "passed": true
+    },
+    {
+      "name": "summary_native:scenario_sha256",
+      "passed": true
+    },
+    {
+      "name": "summary_native:status",
+      "passed": true
+    },
+    {
+      "name": "summary_native:solver_status",
+      "passed": true
+    },
+    {
+      "name": "summary_native:model_fidelity",
+      "passed": true
+    },
+    {
+      "name": "summary_native:delivered_bytes",
+      "passed": true
+    },
+    {
+      "name": "summary_native:final_byte_arrival_utc",
+      "passed": true
+    },
+    {
+      "name": "summary_native:assumptions",
+      "passed": true
+    },
+    {
+      "name": "summary_native:warnings",
+      "passed": true
+    },
+    {
+      "name": "display_summary_exact",
+      "passed": true
+    },
+    {
+      "name": "manifest_native:warnings",
+      "passed": true
+    },
+    {
+      "name": "explanation:warnings",
+      "passed": true
+    },
+    {
+      "name": "manifest_native:assumptions",
+      "passed": true
+    },
+    {
+      "name": "explanation:assumptions",
+      "passed": true
+    },
+    {
+      "name": "explanation_outcome",
+      "passed": true
+    },
+    {
+      "name": "registration_exact",
+      "passed": true
+    },
+    {
+      "name": "conversion_exact",
+      "passed": true
+    },
+    {
+      "name": "czml_native",
+      "passed": true
+    },
+    {
+      "name": "czml_registration",
+      "passed": true
+    },
+    {
+      "name": "csv_header:schedule.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:schedule.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_header:contacts.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:contacts.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_header:energy.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:energy.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_header:buffer-history.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:buffer-history.csv",
+      "passed": true
+    },
+    {
+      "name": "analysis_complete",
+      "passed": true
+    },
+    {
+      "name": "independent_replay",
+      "passed": true
+    },
+    {
+      "name": "replay_native:delivered_bytes",
+      "passed": true
+    },
+    {
+      "name": "replay_native:final_byte_arrival_utc",
+      "passed": true
+    },
+    {
+      "name": "replay_native:energy_history",
+      "passed": true
+    },
+    {
+      "name": "replay_native:buffer_history",
+      "passed": true
+    },
+    {
+      "name": "replay_native:storage_intervals",
+      "passed": true
+    },
+    {
+      "name": "archived_replay",
+      "passed": true
+    },
+    {
+      "name": "summary_replay",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "replay": {
+    "buffer_history": [
+      {
+        "epoch_utc": "2026-11-14T08:50:00Z",
+        "node_id": "synthetic-lander",
+        "stored_bytes": 0
+      },
+      {
+        "epoch_utc": "2026-11-14T09:05:00Z",
+        "node_id": "synthetic-lander",
+        "stored_bytes": 16777216
+      },
+      {
+        "epoch_utc": "2026-11-14T09:10:00Z",
+        "node_id": "synthetic-lander",
+        "stored_bytes": 0
+      },
+      {
+        "epoch_utc": "2026-11-14T10:05:00Z",
+        "node_id": "synthetic-lander",
+        "stored_bytes": 0
+      },
+      {
+        "epoch_utc": "2026-11-14T08:50:00Z",
+        "node_id": "synthetic-lunar-relay",
+        "stored_bytes": 0
+      },
+      {
+        "epoch_utc": "2026-11-14T09:08:30Z",
+        "node_id": "synthetic-lunar-relay",
+        "stored_bytes": 16777216
+      },
+      {
+        "epoch_utc": "2026-11-14T10:00:30Z",
+        "node_id": "synthetic-lunar-relay",
+        "stored_bytes": 0
+      },
+      {
+        "epoch_utc": "2026-11-14T10:05:00Z",
+        "node_id": "synthetic-lunar-relay",
+        "stored_bytes": 0
+      },
+      {
+        "epoch_utc": "2026-11-14T08:50:00Z",
+        "node_id": "synthetic-earth-station",
+        "stored_bytes": 0
+      },
+      {
+        "epoch_utc": "2026-11-14T10:00:00Z",
+        "node_id": "synthetic-earth-station",
+        "stored_bytes": 16777216
+      },
+      {
+        "epoch_utc": "2026-11-14T10:05:00Z",
+        "node_id": "synthetic-earth-station",
+        "stored_bytes": 16777216
+      }
+    ],
+    "delivered_bytes": 16777216,
+    "details": {
+      "algorithm": "independent_whole_chunk_replay_v1",
+      "availability_policy": "declared availability may conservatively delay physical availability",
+      "buffer_conservatism": "reserve incoming whole chunk at first arrival; release at transmit end",
+      "external_power": "relay and station power follows explicit profile assumptions",
+      "setup_power_assumption": "acquisition and teardown draw the respective TX/RX electrical watts"
+    },
+    "energy_history": [
+      {
+        "epoch_utc": "2026-11-14T08:50:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 80
+      },
+      {
+        "epoch_utc": "2026-11-14T08:55:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 79.53703703703704
+      },
+      {
+        "epoch_utc": "2026-11-14T09:00:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 79.07407407407408
+      },
+      {
+        "epoch_utc": "2026-11-14T09:05:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 78.61111111111111
+      },
+      {
+        "epoch_utc": "2026-11-14T09:08:30Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 78.28703703703704
+      },
+      {
+        "epoch_utc": "2026-11-14T09:10:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 77.5925925925926
+      },
+      {
+        "epoch_utc": "2026-11-14T09:15:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 77.12962962962963
+      },
+      {
+        "epoch_utc": "2026-11-14T09:20:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 76.66666666666667
+      },
+      {
+        "epoch_utc": "2026-11-14T09:25:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 76.20494088721419
+      },
+      {
+        "epoch_utc": "2026-11-14T09:30:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 75.75226028384874
+      },
+      {
+        "epoch_utc": "2026-11-14T09:35:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 75.31948452007289
+      },
+      {
+        "epoch_utc": "2026-11-14T09:40:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 74.91821547414325
+      },
+      {
+        "epoch_utc": "2026-11-14T09:45:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 74.5580754055468
+      },
+      {
+        "epoch_utc": "2026-11-14T09:50:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 74.24637702621351
+      },
+      {
+        "epoch_utc": "2026-11-14T09:55:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 73.98028812865678
+      },
+      {
+        "epoch_utc": "2026-11-14T10:00:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 73.74254294019669
+      },
+      {
+        "epoch_utc": "2026-11-14T10:05:00Z",
+        "node_id": "synthetic-lander",
+        "stored_energy_wh": 73.53294857399288
+      }
+    ],
+    "errors": [],
+    "final_byte_arrival_utc": "2026-11-14T10:00:30Z",
+    "passed": true,
+    "storage_intervals": [
+      {
+        "byte_length": 16777216,
+        "chunk_id": "chunk-0",
+        "interval": {
+          "end_utc": "2026-11-14T09:10:00Z",
+          "start_utc": "2026-11-14T09:05:00Z"
+        },
+        "node_id": "synthetic-lander"
+      },
+      {
+        "byte_length": 16777216,
+        "chunk_id": "chunk-0",
+        "interval": {
+          "end_utc": "2026-11-14T10:00:30Z",
+          "start_utc": "2026-11-14T09:08:30Z"
+        },
+        "node_id": "synthetic-lunar-relay"
+      },
+      {
+        "byte_length": 16777216,
+        "chunk_id": "chunk-0",
+        "interval": {
+          "end_utc": "2026-11-14T10:05:00Z",
+          "start_utc": "2026-11-14T10:00:00Z"
+        },
+        "node_id": "synthetic-earth-station"
+      }
+    ]
+  },
+  "reproduce_command": ".venv/bin/python -m soma.verification.exports RUN_ZIP",
+  "scenario_sha256": "bfa8864f1f595a01af2144d0503b264ef62f01d59984fff892ca6c9ce7717998",
+  "solver_status": "proven_optimum",
+  "status": "feasible_under_assumptions",
+  "zip_sha256": "3192db5877c863c6426eaa9ce9d338261138e05d3589cd280ab416d416639485"
+}
