@@ -1,0 +1,37 @@
+{
+  "source_frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "height_decode": "height_m=DN*0.5; radius_m=1737400+height_m",
+  "sources": [
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_20M.JP2",
+      "sha256": "fff7c2017a192788066a0867d78fd1ccf783216e26974b5e65287669aa472bac",
+      "size_bytes": 21462406,
+      "role": "height",
+      "content": "raster"
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_20M.JP2",
+      "sha256": "774699ee4aeded6e6d78bfc1e5d43cc165ec427b79324dbf6ffe1c7e30d6486f",
+      "size_bytes": 19152672,
+      "role": "count",
+      "content": "raster"
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_20M_JP2.LBL",
+      "sha256": "9318f41503c7d02251ed643e6dd74b737d76378be49cd492c3abb9e05d431aaa",
+      "size_bytes": 6360,
+      "role": "height",
+      "content": "label"
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_20M_JP2.LBL",
+      "sha256": "e24f8813da85a1add0d25485643822bfaa3e0528ef0df5565b344e2e19aa79b3",
+      "size_bytes": 5922,
+      "role": "count",
+      "content": "label"
+    }
+  ],
+  "binaries_bundled": false,
+  "registration_passed": false
+}

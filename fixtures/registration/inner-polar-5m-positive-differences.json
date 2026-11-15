@@ -1,0 +1,59 @@
+{
+  "artifact_type": "soma_renderer_radial_diagnostic",
+  "format_version": "0.1.0",
+  "request_id": "inner-polar-five-meter-positive-count-v1",
+  "source_frame": "MOON_ME_DE421",
+  "renderer_frame": "unregistered_asset_world",
+  "origin": "MOON",
+  "position_unit": "m",
+  "reference_radius_m": 1737400,
+  "registration_passed": false,
+  "horizontal_correspondence_established": false,
+  "samples": [
+    {
+      "id": "five-0",
+      "renderer_radius_m": 1734172.1150041274,
+      "reference_height_m": -3886.5,
+      "radial_difference_m": 658.6150041273795,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "five-1",
+      "renderer_radius_m": 1738026.1044913258,
+      "reference_height_m": -31.0,
+      "radial_difference_m": 657.1044913257938,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "five-2",
+      "renderer_radius_m": 1735189.3783629762,
+      "reference_height_m": -2867.5,
+      "radial_difference_m": 656.8783629762474,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "five-3",
+      "renderer_radius_m": 1737541.759585891,
+      "reference_height_m": -508.5,
+      "radial_difference_m": 650.259585890919,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    }
+  ],
+  "warnings": [
+    "Radial ray queries do not establish independent horizontal terrain-fiducial correspondence.",
+    "A difference can arise from source resolution, pixel sampling, asset conversion or renderer query behavior.",
+    "No visual correction, DEM modification or overlay release is authorized by this diagnostic."
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "controls": [
+    {
+      "id": "inner-0-0-0",
+      "quadrant": 0,
+      "row": 1995,
+      "column": 5557,
+      "x_m": 35310.0,
+      "y_m": 35930.0,
+      "latitude_deg": -88.33881595663004,
+      "longitude_deg_east": 44.50136880305068,
+      "height_m": -3887.0,
+      "count": 1,
+      "minimum_drop_at_500m_m": 28.0,
+      "positive_count_4km_fraction": 0.7915893170961115
+    },
+    {
+      "id": "inner-1-0-0",
+      "quadrant": 1,
+      "row": 5634,
+      "column": 5391,
+      "x_m": 31990.0,
+      "y_m": -36850.0,
+      "latitude_deg": -88.39083811792445,
+      "longitude_deg_east": 139.03829521611274,
+      "height_m": -31.0,
+      "count": 2,
+      "minimum_drop_at_500m_m": 14.5,
+      "positive_count_4km_fraction": 0.7018638152520977
+    },
+    {
+      "id": "inner-2-0-0",
+      "quadrant": 2,
+      "row": 5535,
+      "column": 2383,
+      "x_m": -28170.0,
+      "y_m": -34870.0,
+      "latitude_deg": -88.52178013606719,
+      "longitude_deg_east": -141.06671990723223,
+      "height_m": -2867.5,
+      "count": 1,
+      "minimum_drop_at_500m_m": 10.5,
+      "positive_count_4km_fraction": 0.7162693992722953
+    },
+    {
+      "id": "inner-3-0-0",
+      "quadrant": 3,
+      "row": 2078,
+      "column": 2154,
+      "x_m": -32750.0,
+      "y_m": 34270.0,
+      "latitude_deg": -88.43686326825987,
+      "longitude_deg_east": -43.7007660805142,
+      "height_m": -509.0,
+      "count": 2,
+      "minimum_drop_at_500m_m": 28.5,
+      "positive_count_4km_fraction": 0.8162421722234598
+    }
+  ],
+  "selection": "Highest minimum four-direction 500m peak drop, positive 4km coverage >70%, within four predeclared polar quadrants; source only"
+}

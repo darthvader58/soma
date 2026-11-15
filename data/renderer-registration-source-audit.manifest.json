@@ -30,8 +30,12 @@
   "reference_decode": "height_m=DN*0.5; radius_m=1737400+height_m",
   "reference_raster_url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_80S_20M.JP2",
   "full_reference_raster_sha256": null,
-  "reference_sampling": "Four remote 1x1 JP2 windows; nearest-pixel native values retained; no full-raster checksum or fine count mask acquired.",
+  "reference_sampling": "Original -85 degree experiment only: four remote 1x1 windows in LDEM_80S_20M.JP2; no full checksum or fine count mask for that older experiment. Later 87.5S-cap 20 m and 5 m raster/count pairs are fully hashed separately below.",
   "measurements": [
+    {
+      "path": "fixtures/registration/calibration-planes.json",
+      "sha256": "3d09e11f3a98d3e39feaa072f90334a10191a61b01d704245aa032abd84585ea"
+    },
     {
       "path": "fixtures/registration/coarse-polar-reference.json",
       "sha256": "7fb87e8262b3a3e8e51ba4b359c5c9ebe03299129355691f2832b8524f4769ae"
@@ -43,6 +47,74 @@
     {
       "path": "fixtures/registration/four-polar-probes.json",
       "sha256": "bfa1280117ba0f79e9ce5cc732038f5a0baa357f87903beab360a6101c2e3d9e"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-capture.json",
+      "sha256": "bc72ae894c380d76ca0a4c8beeee078b09aaddd954556b1e00ce8aa8ea67071d"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-differences.json",
+      "sha256": "3f659c8a5770bbe5d8085000cf463c84330266d9aa34f114b1ec0ae4df931311"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-probes.json",
+      "sha256": "81f100546e5b2d10323abc2f6830eea3535fc89a57ca95bc83e5447d71107ef8"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-reference.json",
+      "sha256": "29f27d10f85fe85954772d4f1ca7729f16beff6ccb3a6a600bee746e9e3c9ee6"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-radial-differences.json",
+      "sha256": "46089dc156ab7bf3fde2b0c7af46400b5d3e2cf0b2ce7fe7cc0ae1c92494d9c1"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-reference.json",
+      "sha256": "37b42ed3fbec964d66394c584da9fe0956e6227377933816fb710078d6d97718"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-capture.json",
+      "sha256": "58bc546e4ec08f414176c7bb99753a03a75fb763c077335ab4e623cc8416bdb5"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-controls.json",
+      "sha256": "8133dd61cfa2c19c2a6cc3f16d9330ddb5c474b0dca5f193ccd3ddb08792f74c"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-cpu-intersections.json",
+      "sha256": "c552380516d1421713adf68244bfc3a6ba45d5ebd4b8d81553d243da6852aed1"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-patch-summary.json",
+      "sha256": "484460f3c1bb8c2891585cbae6b3c1bdf0daf6df3436ccc67707e5a733f2802a"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-patches-capture.json",
+      "sha256": "63ee6bb610d732b8ecc1010d2bd307f5db94b2db3497d7848624e7b5c97d08dd"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-patches-probes.json",
+      "sha256": "2f1495177470ca4613a5986b072c7081f66286b191f4137dd46181c50c3f5f9f"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-probes.json",
+      "sha256": "8fbfd614660d2b8ceff7fd04a5200bcc28e88813c1b1150dc10a27292e2cf956"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-radial-differences.json",
+      "sha256": "c799221990bb854b37a1f1b9644e9f2e0ec6f8a6b99642adfd84cb601cb5ece9"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-reference.json",
+      "sha256": "fa1747a5d5e21c4d3b89511eaa7df6f7cf47e8465aeaba3c1ae1cfae5feb2f15"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-source-products.json",
+      "sha256": "127672a6c916b66c9fa5c918dfe6e7815ad32fd3e076983f8e2d04adb16ff7fe"
+    },
+    {
+      "path": "fixtures/registration/instrument-calibration.json",
+      "sha256": "4c1d9eb04fc031fd9fbaca6c82907897784051e54cf572e067d3186ec862f2c2"
     },
     {
       "path": "fixtures/registration/polar-patches-capture.json",
@@ -72,10 +144,107 @@
     435.15140513470396
   ],
   "findings": [
-    "Completed raw samples have no browser page or console errors.",
-    "Radial samples do not measure independently matched horizontal fiducials.",
-    "The observed differences remain unresolved between source/product, asset conversion and query method.",
+    "Source labels document DE421 provenance; the source-to-renderer registration has not passed.",
+    "The synthetic-plane sampler check passes within 0.007207 m without loading the Moon asset.",
+    "Decoded level-14 asset triangles reproduce the four GPU samples within 0.057 m.",
+    "Four inner-cap patch medians differ from positive-count 20 m reference samples by about 658 to 661 m; 80 missing-count comparisons remain unknown.",
+    "Four positive-count pixels in the exact advertised 5 m product retain 650 to 659 m differences; coarser source resolution alone does not account for those four observations.",
+    "The cause remains unresolved between source-version, datum interpretation and asset-conversion differences.",
+    "Coordinate-directed radial queries and terrain correlation do not establish independent horizontal landmark residuals.",
     "No correction or tolerance has been fitted and no scientific overlay is enabled."
   ],
-  "report_ref": "soma/docs/phase-5/registration-source-audit.md"
+  "report_ref": "soma/docs/phase-5/registration-source-audit.md",
+  "inner_cap_reference_products": [
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_20M.JP2",
+      "sha256": "fff7c2017a192788066a0867d78fd1ccf783216e26974b5e65287669aa472bac",
+      "size_bytes": 21462406,
+      "role": "height",
+      "content": "raster"
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_20M.JP2",
+      "sha256": "774699ee4aeded6e6d78bfc1e5d43cc165ec427b79324dbf6ffe1c7e30d6486f",
+      "size_bytes": 19152672,
+      "role": "count",
+      "content": "raster"
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_20M_JP2.LBL",
+      "sha256": "9318f41503c7d02251ed643e6dd74b737d76378be49cd492c3abb9e05d431aaa",
+      "size_bytes": 6360,
+      "role": "height",
+      "content": "label"
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_20M_JP2.LBL",
+      "sha256": "e24f8813da85a1add0d25485643822bfaa3e0528ef0df5565b344e2e19aa79b3",
+      "size_bytes": 5922,
+      "role": "count",
+      "content": "label"
+    }
+  ],
+  "instrument_checks": {
+    "synthetic_plane_max_intersection_error_m": 0.007206348469480872,
+    "cpu_gpu_max_intersection_difference_m": 0.056687626569449985,
+    "calibration_asset_requests": 0,
+    "mesh_capture_bodies": 286,
+    "mesh_capture_bytes": 11947288,
+    "source_positive_count_comparisons": 244,
+    "source_unknown_count_queries": 80,
+    "inner_patch_median_radial_differences_m": [
+      659.0356563774403,
+      658.1221395269968,
+      658.54905964504,
+      660.6950551425107
+    ],
+    "registration_passed": false,
+    "five_meter_positive_count_radial_differences_m": [
+      658.6150041273795,
+      657.1044913257938,
+      656.8783629762474,
+      650.259585890919
+    ],
+    "five_meter_unknown_bilinear_comparisons": 324
+  },
+  "instrument_tooling": [
+    {
+      "path": "web/scripts/capture-registration-calibration.mjs",
+      "sha256": "a00e173ac805cadfdefeb3073cad0d325cf60a7a977cb13a10f671b87db08f17"
+    },
+    {
+      "path": "web/scripts/capture-registration-mesh.mjs",
+      "sha256": "4dd4b9232f85fea92be15153133591167358331e164ef789b77675c2b57eb70a"
+    },
+    {
+      "path": "soma/docs/phase-5/inspect-mesh.py",
+      "sha256": "e65359a95c9ceda23e1c58f75d8b88ab370d5ee70321c64329c71696a5a6664b"
+    },
+    {
+      "path": "soma/geometry/registration_calibration.py",
+      "sha256": "07e9db63f3fd614260d08253aca916481b691a1303d5c77de00e5e72e758a602"
+    }
+  ],
+  "five_meter_reference_products": [
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M.JP2",
+      "sha256": "c04eaf04c833ca41ba1be2dc8740b901983288afa6ddae243d9e6b161df2f588",
+      "size_bytes": 185186696
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_5M.JP2",
+      "sha256": "47d21bd4de7f7eb2bc65469d3ce7f6d403706559aee60e4b28e8b492d26c7b5a",
+      "size_bytes": 98353376
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M_JP2.LBL",
+      "sha256": "7395dfb60d7af1cf14f82c4b7d2dff32cd16fa2688cfdaf18deb8f4fdb7d5853",
+      "size_bytes": 6359
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_5M_JP2.LBL",
+      "sha256": "bc746bd45caf5c9aea196d4d4ab5563d64e3e2e899235942384109189f5e3e10",
+      "size_bytes": 5920
+    }
+  ]
 }

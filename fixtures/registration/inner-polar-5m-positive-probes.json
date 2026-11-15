@@ -1,0 +1,40 @@
+{
+  "format_version": "0.1.0",
+  "request_id": "inner-polar-five-meter-positive-count-v1",
+  "source_frame": "MOON_ME_DE421",
+  "candidate_bridge": "identity_for_measurement_only",
+  "probes": [
+    {
+      "id": "five-0",
+      "position_m": [
+        35929.94506904223,
+        35310.075408025026,
+        -1736669.513068625
+      ]
+    },
+    {
+      "id": "five-1",
+      "position_m": [
+        -36840.23346105001,
+        31991.189908947632,
+        -1736714.7494527549
+      ]
+    },
+    {
+      "id": "five-2",
+      "position_m": [
+        -34856.70004444715,
+        -28167.813036993513,
+        -1736821.9093420962
+      ]
+    },
+    {
+      "id": "five-3",
+      "position_m": [
+        34266.123108909385,
+        -32741.406857072292,
+        -1736753.4635301882
+      ]
+    }
+  ]
+}

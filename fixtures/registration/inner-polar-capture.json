@@ -1,0 +1,189 @@
+{
+  "artifact_type": "soma_raw_renderer_measurement",
+  "format_version": "0.1.0",
+  "request_id": "source-selected-inner-polar-controls-v1",
+  "source_frame": "MOON_ME_DE421",
+  "candidate_bridge": "identity_for_measurement_only",
+  "request": {
+    "format_version": "0.1.0",
+    "request_id": "source-selected-inner-polar-controls-v1",
+    "source_frame": "MOON_ME_DE421",
+    "candidate_bridge": "identity_for_measurement_only",
+    "purpose": "Independent source-first peak controls; no renderer result used in selection",
+    "probes": [
+      {
+        "id": "inner-0-0-0",
+        "position_m": [
+          35922.449824614974,
+          35302.58010874351,
+          -1736669.8205002192
+        ]
+      },
+      {
+        "id": "inner-1-0-0",
+        "position_m": [
+          -36842.733870027034,
+          31983.692171022107,
+          -1736714.8345068316
+        ]
+      },
+      {
+        "id": "inner-2-0-0",
+        "position_m": [
+          -34864.1976934643,
+          -28165.312561654413,
+          -1736821.799404733
+        ]
+      },
+      {
+        "id": "inner-3-0-0",
+        "position_m": [
+          34263.62359566754,
+          -32743.90641255068,
+          -1736753.4657201467
+        ]
+      }
+    ]
+  },
+  "started_utc": "2026-11-15T18:08:23.722Z",
+  "status": "completed",
+  "asset_id": 2684829,
+  "cesium_version": "1.147.0",
+  "ellipsoid_radii_m": [
+    1737400,
+    1737400,
+    1737400
+  ],
+  "tileset_model_matrix_column_major": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "root_transform_column_major": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "root_computed_transform_column_major": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "query_width_m": 0.1,
+  "batch_size": 32,
+  "budget_ms": 120000,
+  "vertical_exaggeration": 1,
+  "clamp_to_height_supported": true,
+  "tile_failure_count": 0,
+  "registration_status": "not_evaluated",
+  "warnings": [
+    "Raw renderer geometry only; no frame registration, fiducial correspondence or residual is established.",
+    "Maximum available mesh detail is not a claim of source accuracy.",
+    "Returned world positions already include Cesium tile and model transforms."
+  ],
+  "probes": [
+    {
+      "id": "inner-0-0-0",
+      "input_position_m": [
+        35922.449824614974,
+        35302.58010874351,
+        -1736669.8205002192
+      ],
+      "renderer_position_m": [
+        35855.708494368955,
+        35236.990451883314,
+        -1733443.2127776337
+      ],
+      "status": "measured"
+    },
+    {
+      "id": "inner-1-0-0",
+      "input_position_m": [
+        -36842.733870027034,
+        31983.692171022107,
+        -1736714.8345068316
+      ],
+      "renderer_position_m": [
+        -36856.01078347771,
+        31995.218045141162,
+        -1737340.6895977356
+      ],
+      "status": "measured"
+    },
+    {
+      "id": "inner-2-0-0",
+      "input_position_m": [
+        -34864.1976934643,
+        -28165.312561654413,
+        -1736821.799404733
+      ],
+      "renderer_position_m": [
+        -34819.822822845905,
+        -28129.4639781924,
+        -1734611.186577387
+      ],
+      "status": "measured"
+    },
+    {
+      "id": "inner-3-0-0",
+      "input_position_m": [
+        34263.62359566754,
+        -32743.90641255068,
+        -1736753.4657201467
+      ],
+      "renderer_position_m": [
+        34266.42960994131,
+        -32746.587969815522,
+        -1736895.6968828829
+      ],
+      "status": "measured"
+    }
+  ],
+  "logarithmic_depth_buffer": true,
+  "elapsed_ms": 6997.399999976158,
+  "finished_utc": "2026-11-15T18:08:30.719Z",
+  "capture": {
+    "engine": "installed_chromium_headless_shell",
+    "page_errors": 0,
+    "console_errors": 0
+  }
+}

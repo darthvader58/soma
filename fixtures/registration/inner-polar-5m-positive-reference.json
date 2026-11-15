@@ -1,0 +1,86 @@
+{
+  "source_frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "pixel_size_m": 5,
+  "source_selection": "Nearest positive-count 5m pixel to each preselected source-only 20m seed; no renderer used",
+  "sources": [
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M.JP2",
+      "sha256": "c04eaf04c833ca41ba1be2dc8740b901983288afa6ddae243d9e6b161df2f588",
+      "size_bytes": 185186696
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_5M.JP2",
+      "sha256": "47d21bd4de7f7eb2bc65469d3ce7f6d403706559aee60e4b28e8b492d26c7b5a",
+      "size_bytes": 98353376
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M_JP2.LBL",
+      "sha256": "7395dfb60d7af1cf14f82c4b7d2dff32cd16fa2688cfdaf18deb8f4fdb7d5853",
+      "size_bytes": 6359
+    },
+    {
+      "url": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_5M_JP2.LBL",
+      "sha256": "bc746bd45caf5c9aea196d4d4ab5563d64e3e2e899235942384109189f5e3e10",
+      "size_bytes": 5920
+    }
+  ],
+  "samples": [
+    {
+      "id": "five-0",
+      "reference_height_m": -3886.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -7773,
+      "count": 1,
+      "row": 7980,
+      "column": 22231,
+      "latitude_deg": -88.3384662600831,
+      "longitude_deg_east": 44.5014737653751,
+      "distance_from_source_selected_seed_m": 10.606601717798213
+    },
+    {
+      "id": "five-1",
+      "reference_height_m": -31.0,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -62,
+      "count": 1,
+      "row": 22537,
+      "column": 21567,
+      "latitude_deg": -88.39073823655994,
+      "longitude_deg_east": 139.02972165004206,
+      "distance_from_source_selected_seed_m": 7.905694150420948
+    },
+    {
+      "id": "five-2",
+      "reference_height_m": -2867.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -5735,
+      "count": 1,
+      "row": 22140,
+      "column": 9533,
+      "latitude_deg": -88.52192068273449,
+      "longitude_deg_east": -141.05820941074816,
+      "distance_from_source_selected_seed_m": 7.905694150420948
+    },
+    {
+      "id": "five-3",
+      "reference_height_m": -508.5,
+      "quality_flags": [
+        "positive_count_pixel"
+      ],
+      "native_dn": -1017,
+      "count": 1,
+      "row": 8313,
+      "column": 8618,
+      "latitude_deg": -88.43686062074835,
+      "longitude_deg_east": -43.69649375685711,
+      "distance_from_source_selected_seed_m": 3.5355339059327378
+    }
+  ]
+}

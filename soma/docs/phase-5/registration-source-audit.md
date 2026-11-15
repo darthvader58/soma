@@ -55,8 +55,9 @@ published [20 m polar DEM label](https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2
 and its JP2 product. The same DE421/radius convention applies. Native signed DN
 was decoded as elevation `DN * 0.5 m`; adding 1,737,400 m yields radius. These
 are nearest-pixel diagnostics, not precision terrain-fiducial correspondences.
-The high-resolution count mask was not acquired, so no claim of individually
-measured ground returns is made for these pixels.
+For this original -85-degree experiment, the high-resolution count mask was not
+acquired, so no claim of individually measured ground returns is made for these
+older pixels. Later count-masked inner-cap measurements are documented below.
 
 | Seed latitude / east longitude | Renderer height relative to 1,737,400 m | Source nearest-pixel height | Radial difference |
 | --- | ---: | ---: | ---: |
@@ -80,10 +81,81 @@ the radial differences above justify rewriting the numerical DEM or a global
 visual nudge. A depth-buffer variation did not produce a completed measurement;
 no conclusion is drawn from that attempted sensitivity check.
 
-A synthetic-plane instrument calibration was also attempted in an isolated,
-intercepted diagnostic scene, but timed out without a completed capture. It is
-not counted as validation of the sampler, and no calibration result is inferred.
-Instrument accuracy remains part of the unresolved measurement work.
+A later synthetic-plane calibration completed successfully. Four planes centered
+exactly 1,000 m below the reference sphere were sampled within 0.007207 m of
+their analytical intersections. The portable harness confirms its Vite module
+replacement and runtime marker, blocks asset requests, and records zero blocked
+requests, page errors and console errors in the successful run. No Moon asset is
+loaded in this calibration. An earlier interception failed to match a Vite query
+suffix and sampled the real Moon instead; that attempt is excluded. A subsequent
+overbroad request guard rejected a local credit image; its failed capture is
+also excluded. A successful simple-plane check does not establish terrain
+registration or validate the underlying asset conversion.
+
+## Inner-polar checks and independent mesh intersections
+
+The original four queries sit on the 85-degree source-resolution boundary.
+Additional controls were therefore selected from the numerical source first,
+in four declared south-polar quadrants. Within each quadrant's search window,
+selection favored a local peak with a positive measured count, a height drop in
+four directions at 500 m, and more than 70% positive-count coverage in a 4 km
+square. Renderer results were not used to select these seeds. This selection
+does not yet establish unique landmark correspondence.
+
+The complete [20 m inner-cap elevation](https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_20M_JP2.LBL)
+and [matching count product](https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEC_875S_20M_JP2.LBL)
+were acquired and hashed, including both labels and rasters. This supplements
+the earlier remote-pixel experiment; it does not retroactively add a count mask
+to those older pixels. Pixel centers and the same DE421 stereographic convention
+were preserved. Native contributing height/count values are retained in the
+new reference fixture. A zero-count contribution stays unknown.
+
+| Source-first seed latitude / east longitude | Source height | Mesh minus source height | CPU versus GPU mesh intersection |
+| --- | ---: | ---: | ---: |
+| -88.338816°, 44.501369° | -3887.0 m | +659.036 m | 0.021572 m |
+| -88.390838°, 139.038295° | -31.0 m | +657.102 m | 0.056688 m |
+| -88.521780°, -141.066720° | -2867.5 m | +656.151 m | 0.050204 m |
+| -88.436863°, -43.700766° | -509.0 m | +651.284 m | 0.020350 m |
+
+Around each seed, a 9 by 9 grid at 200 m spacing produced 324 completed mesh
+queries without page/console errors. Of those, 244 have a positive-count source
+comparison; the other 80 remain unknown. The four unshifted patch medians are
++659.036, +658.122, +658.549 and +660.695 m. Height correlations are 0.988, 0.982,
+0.917 and 0.965. No fitted shift, height correction or release tolerance is used
+in these reported statistics. Similar relief helps locate the discrepancy;
+it does not turn coordinate-directed rays into independently matched landmarks.
+
+A separate CPU calculation decoded the actual loaded level-14 south-polar
+triangles. It applied the captured tile transform, glTF axis conversion and node
+matrices once, then intersected the same radial rays with those triangles. The
+four CPU/GPU positions agree within 0.057 m. A second capture through the portable
+harness reproduced the same tile hashes and intersections. The comparison makes
+a simple depth-reading error less likely and confirms the height difference
+against this reference persists in the decoded asset geometry. It does not yet
+identify whether a source-version/resolution difference, datum interpretation or
+asset conversion causes it. The advertised finest inner-cap source is 5 m,
+whereas this independent count-masked reference is 20 m; those are explicitly
+different products.
+
+The exact advertised 5 m product was then downloaded and hashed with its count
+mask and labels. None of the 324 original query locations has four positive-count
+5 m contributors for bilinear interpolation, so all those precision reference
+comparisons remain unknown. Interpolated fill is retained as a separately named
+product value and is not used as a measured reference.
+
+To make a measured comparison at that resolution, the nearest positive-count
+5 m pixel to each predeclared source seed was selected, 3.54 to 10.61 m away.
+These four new queries completed without page/console errors. Their mesh-minus-
+source differences are +658.615, +657.104, +656.878 and +650.260 m. Each source
+pixel has one measured return. This evidence indicates that the 20 m resolution
+alone does not explain those four differences. It still does not establish the
+underlying datum or conversion cause, or a passing horizontal landmark bridge.
+
+The observed differences are not accepted frame residuals and cannot justify
+subtracting a fitted height or weakening the release tolerance. Four global
+catalog candidates remain unmeasured. The source-frame documentation is found;
+the remaining work is a verified source-to-mesh bridge and independently matched
+feature positions with a justified spatial scope and tolerance.
 
 ## Reproduce and continue the check
 
@@ -97,6 +169,26 @@ for a fresh capture:
 node web/scripts/capture-registration.mjs fixtures/registration/four-polar-probes.json /private/tmp/four-polar-capture.json
 ```
 
+The calibration requires the local Vite server but does not require ion access:
+
+```sh
+node web/scripts/capture-registration-calibration.mjs fixtures/registration/four-polar-probes.json fixtures/registration/calibration-planes.json /private/tmp/instrument-calibration.json
+```
+
+To repeat the raw mesh and CPU comparison with the scoped local token:
+
+```sh
+node web/scripts/capture-registration-mesh.mjs fixtures/registration/inner-polar-probes.json /private/tmp/soma-mesh-check
+.venv/bin/python soma/docs/phase-5/inspect-mesh.py /private/tmp/soma-mesh-check /private/tmp/cpu-intersections.json
+```
+
+Binary tiles stay outside the repository. The inspection script supports the
+observed uncompressed float-position, matrix-node v6 tile profile and rejects
+unsupported inputs. The retained fixture contains a few measured triangle
+coordinates and hashes, not tile binaries. `inner-polar-reference.json` retains
+the source samples and count masks needed to recompute the recorded radial
+differences without downloading the full raster again.
+
 Set `SOMA_BROWSER_EXECUTABLE` to an installed Chromium when necessary. The local
 developer page is `http://127.0.0.1:5173/registration.html`; it is not included in
 the production entry point. Requests and capture work have explicit bounds, and
@@ -108,17 +200,19 @@ numerical source patches and the actual mesh, separate horizontal/radial
 differences, test query repeatability and justify a tolerance for the intended
 display scale. The available source documents now support that work. No user
 needs to locate or purchase additional coordinates merely because the ion JSON
-omits a frame name. PR #8's guarded numerical integration can merge while this
-measurement investigation remains separate. Full Phase 5 map acceptance and
-Phase 6 are not claimed.
+omits a frame name. PRs #8 and #9 have merged. They supply the guarded numerical
+integration and source investigation; merging them does not establish the
+missing alignment evidence. Full Phase 5 map acceptance and Phase 6 remain
+unclaimed.
 
 ## Verification of this research handoff
 
-The owner ran 307 engine tests, 60 interface unit tests and the production build;
-all pass. The recorded live relay run independently replays with zero errors and
+The owner ran 319 engine tests, 60 interface unit tests and the production build;
+all pass. A fresh relay run independently replays with zero errors and
 104,857,600 unique delivered bytes. Source/fixture hashes are checked. New tests
 reject duplicate or foreign measurements, nonfinite values, excessive probe
-work and falsely registered requests. Missing reference or mesh samples remain
+work and falsely registered requests. Calibration, CPU triangle intersections
+and count-mask preservation are checked separately. Missing reference or mesh samples remain
 unknown. No native scenario/result schema or scheduling equation changed.
 
 The diagnostic is a draft developer tool, ENERGY 1 / RHYTHM 1 / MOTION 1. Its

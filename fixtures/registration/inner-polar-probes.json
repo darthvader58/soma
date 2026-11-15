@@ -1,0 +1,41 @@
+{
+  "format_version": "0.1.0",
+  "request_id": "source-selected-inner-polar-controls-v1",
+  "source_frame": "MOON_ME_DE421",
+  "candidate_bridge": "identity_for_measurement_only",
+  "purpose": "Independent source-first peak controls; no renderer result used in selection",
+  "probes": [
+    {
+      "id": "inner-0-0-0",
+      "position_m": [
+        35922.449824614974,
+        35302.58010874351,
+        -1736669.8205002192
+      ]
+    },
+    {
+      "id": "inner-1-0-0",
+      "position_m": [
+        -36842.733870027034,
+        31983.692171022107,
+        -1736714.8345068316
+      ]
+    },
+    {
+      "id": "inner-2-0-0",
+      "position_m": [
+        -34864.1976934643,
+        -28165.312561654413,
+        -1736821.799404733
+      ]
+    },
+    {
+      "id": "inner-3-0-0",
+      "position_m": [
+        34263.62359566754,
+        -32743.90641255068,
+        -1736753.4657201467
+      ]
+    }
+  ]
+}
