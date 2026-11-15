@@ -1,0 +1,51 @@
+{
+  "manifest_version": "0.5.0",
+  "purpose": "Actual loopback browser/service integration evidence; scientific map registration remains unfinished",
+  "status": "live_numerical_integration_verified_registration_blocked",
+  "input_class": "synthetic",
+  "scenario_sha256": "b1d39f45c88b822029edacd515a698b928af4188751bcee364367772427f9106",
+  "result_status": "feasible_under_assumptions",
+  "solver_status": "feasible_incumbent",
+  "model_fidelity": "assumed_rate_simulation",
+  "delivered_bytes": 104857600,
+  "final_byte_arrival_utc": "2026-11-14T10:01:35Z",
+  "replay_passed": true,
+  "map_registration_passed": false,
+  "phase_6_started": false,
+  "verification": {
+    "live_browser_checks": 4,
+    "fixture_browser_checks": 17,
+    "web_unit_tests": 58,
+    "zip_members_sha256": "all_verified",
+    "schedule_csv_epochs": "exact_native_allocation_values",
+    "token_backed_moon_access": "verified_in_Aside; no credentials retained in tracked artifacts",
+    "engine_tests": {
+      "command": ".venv/bin/python -m pytest tests/engine -q",
+      "passed": 299,
+      "skipped": 0
+    },
+    "production_build": "passed",
+    "independent_recorded_replay": "passed; zero errors; 104857600 unique delivered bytes"
+  },
+  "artifacts": [
+    {
+      "path": "fixtures/phase-5/live-relay/run.json",
+      "sha256": "be86103647712539166f3871812c883a9c6e868806e348b59e92944a82f6d359"
+    },
+    {
+      "path": "fixtures/phase-5/live-relay/run.zip",
+      "sha256": "606eb7e1a519e95d90fa3e3cf598a88f610c5508d52ebb55faacd982dccdabe9"
+    }
+  ],
+  "evidence_refs": [
+    "soma/docs/phase-5/README.md",
+    "soma/docs/phase-5/registration.md",
+    "web/docs/phase-5-verification.md"
+  ],
+  "limitations": [
+    "No authoritative Moon asset frame realization or independently measured landmark residuals.",
+    "No trajectory supplied by the contact-only relay scenario; stored spacecraft state is unknown.",
+    "Synthetic geometry, assumed rates and service; no lunar mission prediction.",
+    "Prior PRs and this integration require repository-owner merge before Phase6."
+  ]
+}

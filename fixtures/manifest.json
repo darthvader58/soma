@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "2159ee73ff001e66d02d81b1268ef1cb1fc932fb271406315a05e742a7192f06"
+      "sha256": "51bc74dba954e612d3cbe4dbef28a0ae9d681acda64ccfc904cf9baec94d6059"
     },
     {
       "path": "data/README.md",
@@ -64,6 +64,18 @@
     {
       "path": "data/phase4-synthetic.manifest.json",
       "sha256": "76d38a5a3d2e8afcdca101d33e934f0ce668a6dcdfebc0d76710db6e97373fc8"
+    },
+    {
+      "path": "data/phase5-evidence.manifest.json",
+      "sha256": "7a52bd1926b9bd27a6a17b88e726d5b90b80858b7cbbb796725fbd05e7d74bd2"
+    },
+    {
+      "path": "data/renderer-registration-sources.manifest.json",
+      "sha256": "ba5c377261b4f3b3d18946ee470c2a1af0595610c0a2f5681015698b3aaa168e"
+    },
+    {
+      "path": "data/renderer-registration.manifest.json",
+      "sha256": "5b10cfc1c2ca05618dc4280c41ac348309e8dcaa024087058c43d96255fb615b"
     },
     {
       "path": "fixtures/hash-vectors.json",
@@ -116,6 +128,18 @@
     {
       "path": "fixtures/phase-4/synthetic-relay/summary.json",
       "sha256": "25775aee376a901f05c1565d0e37d4f4c795105d5abf112688a02462a721193c"
+    },
+    {
+      "path": "fixtures/phase-5/README.md",
+      "sha256": "59f7a9769ce354b22dd4874582da51d4b705561a57c843aba256a6d672cb5221"
+    },
+    {
+      "path": "fixtures/phase-5/live-relay/run.json",
+      "sha256": "be86103647712539166f3871812c883a9c6e868806e348b59e92944a82f6d359"
+    },
+    {
+      "path": "fixtures/phase-5/live-relay/run.zip",
+      "sha256": "606eb7e1a519e95d90fa3e3cf598a88f610c5508d52ebb55faacd982dccdabe9"
     },
     {
       "path": "fixtures/synthetic-direct/README.md",
@@ -219,7 +243,7 @@
     },
     {
       "path": "soma/api/app.py",
-      "sha256": "b4116d7ea7fe1960e8be1ccf9f7c4970a5efa9345a13982c0fb8acbbcd1a5674"
+      "sha256": "e7ec2d3f73b272cd6e4aac282357074c5185064d89f94dd8646af28ff100209d"
     },
     {
       "path": "soma/datasets.py",
@@ -231,7 +255,7 @@
     },
     {
       "path": "soma/docs/challenge-alignment.md",
-      "sha256": "adfef6521fa0d39679979a85ce1e6f90b349109c2235169517014c5c6c1036fd"
+      "sha256": "f23d8a884b1e6c3fa3478545258cb4a896ea707425110ed0047c77cc1ce229e2"
     },
     {
       "path": "soma/docs/phase-2/README.md",
@@ -278,8 +302,16 @@
       "sha256": "9095dd3367fde803c747923a1e28962c97ba7ca574129504c17db5605cd7c9de"
     },
     {
+      "path": "soma/docs/phase-5/README.md",
+      "sha256": "4946636d482598c17b5ec304f15f16f699a4cb12b7791b31ab3c385b5a30090b"
+    },
+    {
+      "path": "soma/docs/phase-5/registration.md",
+      "sha256": "675e14cdc67a72149d5a92bd8a2423f92fc41bf107a3a8b7cbef1c3e8386e419"
+    },
+    {
       "path": "soma/engine.py",
-      "sha256": "83f2cfdc8e962c0c016da0a61197b89bfb960f3b1ec8355a0dd0c703440a5a46"
+      "sha256": "e265faa6c7583f02cf811826dc0baac0e83b80e7e5e4ca671033d407908728c5"
     },
     {
       "path": "soma/environment.py",
@@ -287,11 +319,19 @@
     },
     {
       "path": "soma/exports/__init__.py",
-      "sha256": "d40229d6c2800391d12d93a53de3f953d1c133749aa2daef2f1dcd9c8da9b303"
+      "sha256": "03e297f6062429718348293311867329eac51efd018eccf2f807f6487475825a"
+    },
+    {
+      "path": "soma/exports/display.py",
+      "sha256": "96f212b977d7cbb4e23be45740d2c63ef4efbe113bdd255eb18f03f8b70fa4e4"
     },
     {
       "path": "soma/geometry/__init__.py",
       "sha256": "55d86096dfe120711dd9cad27cebf235d1d0f8c8e2817712f3c94180a432ae9c"
+    },
+    {
+      "path": "soma/geometry/registration.py",
+      "sha256": "346cf38cd6caff4ba741fdfb0f356c0dff007fb36f8dc14456778254df2d918b"
     },
     {
       "path": "soma/geometry/spice.py",
@@ -375,7 +415,7 @@
     },
     {
       "path": "tests/engine/test_api.py",
-      "sha256": "8349241ec653b09a597c6a877bf560a6692a35d1f1053a9455e9aeb6de55b468"
+      "sha256": "a2853c42c171191a14fc68ee7fc5fab9b33643dc390fe93d3ab9af07026c4408"
     },
     {
       "path": "tests/engine/test_cli.py",
@@ -399,7 +439,7 @@
     },
     {
       "path": "tests/engine/test_exports.py",
-      "sha256": "bc210276e52ecfdc2693605e24014b57f4e7bdcf7b4c176bcede603cadc62727"
+      "sha256": "ed1eb6d6b9e737ef61d2a311d99807d184bb3d12e00d6f39a4de16b15163e9c1"
     },
     {
       "path": "tests/engine/test_fixture_arithmetic.py",
@@ -407,7 +447,7 @@
     },
     {
       "path": "tests/engine/test_fixture_manifest.py",
-      "sha256": "749e005f18cb0ec7d9be368dc787a4b5b4da8091efa2903598ac8ffce1dfd163"
+      "sha256": "328cd2664d1022ddffd26033da614c6aa817a07ff0c673368a9b9c1fe5216656"
     },
     {
       "path": "tests/engine/test_geometry.py",
@@ -442,6 +482,10 @@
       "sha256": "16ffbbdea44088de842240ab2afef5721c33f771f82cdd2f1be96b08ecf51931"
     },
     {
+      "path": "tests/engine/test_registration.py",
+      "sha256": "5db6de5fc9de8633e24afe87983bf07de687a8ff5fcfef25ad53a243803cddc7"
+    },
+    {
       "path": "tests/engine/test_replay.py",
       "sha256": "26e86063c4f7bc8a95de734ecd0a09632c326bc40ea53b12d248e41972719349"
     },
@@ -470,5 +514,5 @@
   "phase2_geometry_evidence_ref": "data/phase2-evidence.manifest.json",
   "phase2_interface_evidence_ref": "web/docs/phase-2-verification.md",
   "phase3_evidence_ref": "data/phase3-evidence.manifest.json",
-  "analysis_scope": "phase_4_synthetic_assumed_rate_delivery_runs"
+  "analysis_scope": "synthetic_assumed_rate_delivery_runs_through_phase_5"
 }

@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 def test_handoff_file_checksums_and_review_status():
     manifest = json.loads((ROOT / "fixtures/manifest.json").read_text())
     assert manifest["scientific_analysis_performed"] is True
-    assert manifest["analysis_scope"] == "phase_4_synthetic_assumed_rate_delivery_runs"
+    assert manifest["analysis_scope"] == "synthetic_assumed_rate_delivery_runs_through_phase_5"
     assert manifest["schema_review"]["status"] == "phase_1_interface_review_completed"
     assert manifest["schema_review"]["review_type"] == "automated_agent_review"
     assert manifest["schema_review"]["human_developer_b_approval"] is False
