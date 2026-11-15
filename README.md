@@ -139,3 +139,30 @@ ephemeris accuracy or renderer registration. See the
 [Phase 2 evidence](soma/docs/phase-2/README.md) and
 [interface-side review](web/docs/phase-2-contract-review.md).
 
+## Phase 3 illumination, power, contacts and scientific display
+
+Python now evaluates a sampled solar disk with combined terrain/Earth masks,
+fixed-panel electrical generation and explicit constant-bin battery replay.
+Contact construction checks interval-wide geometry evidence, compatible radios,
+both endpoint service calendars, acquisition/teardown and propagation. Assumed
+rates remain labelled; an optional fully declared Friis/noise/mode budget checks
+margin without overriding geometry or service. These components do not select
+a delivery schedule. `plan_delivery` remains unknown until Phase 4.
+
+```sh
+.venv/bin/python -m soma environment soma/docs/phase-2/geometry-diagnostic.json --generation-time-model left_sample_piecewise_constant_assumption
+npm --prefix web run sync:science
+```
+
+The browser displays supplied horizons, Sun/Earth/station directions, solar
+fractions, power and battery samples. It separates invented algorithm fixtures
+from the recorded real LOLA site, where horizon gaps still yield unknown power.
+Two saved delivery results can be compared under an explicit fixed-deadline rule;
+missing schedule summaries stay Unknown. Scientific JSON downloads preserve the
+engine output. No browser physics or registered Moon overlays were added.
+
+See [Phase 3 methods and reproduction](soma/docs/phase-3/README.md) and
+[interface verification](web/docs/phase-3-verification.md). Generation held
+constant between samples is an explicit temporal approximation. The base-load
+trace is not evidence that transmissions are affordable; energy must constrain
+the Phase 4 scheduler.

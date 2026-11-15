@@ -20,6 +20,13 @@ def main(argv=None) -> int:
     ):
         command = commands.add_parser(name, help=help_text)
         command.add_argument("path", help="Path to scenario JSON")
+    environment = commands.add_parser("environment", help="Compute Phase 3 diagnostics from a versioned geometry artifact; no delivery result")
+    environment.add_argument("path", help="Path to a Phase 2 geometry diagnostic JSON")
+    environment.add_argument("--generation-time-model", required=True, choices=["left_sample_piecewise_constant_assumption"])
+    environment.add_argument("--contact-candidates", help="Explicit interval-wide candidates JSON; never inferred from sampled directions")
+    example = commands.add_parser("environment-fixture", help="Compute explicitly synthetic Phase 3 algorithm/display fixture")
+    example.add_argument("path", help="Path to a synthetic scenario JSON")
+    example.add_argument("--contacts", required=True, help="Path to synthetic contact input JSON")
     geometry = commands.add_parser("geometry", help="Write Phase 2 geometric diagnostics; no delivery or usable-contact claim")
     geometry.add_argument("path", help="Path to a standalone scenario JSON")
     geometry.add_argument("--data-root", required=True, help="Directory holding pinned local kernels and numerical terrain")
@@ -68,6 +75,16 @@ def main(argv=None) -> int:
                 if args.latitude_deg is not None:
                     output["explicit_site_override"] = {"latitude_deg": args.latitude_deg, "longitude_deg_east": args.longitude_deg_east,
                                                         "scope": "CLI-requested diagnostic test site, not an implicit move or landing recommendation"}
+        elif args.command == "environment":
+            from soma.environment import environment_diagnostic
+            output = environment_diagnostic(load_json(args.path), generation_time_model=args.generation_time_model,
+                candidates=load_json(args.contact_candidates) if args.contact_candidates else ())
+        elif args.command == "environment-fixture":
+            from soma.environment import synthetic_environment_fixture
+            scenario = load_scenario(args.path)
+            if scenario["analysis_mode"] != "synthetic_fixture":
+                raise ValueError("Synthetic environment fixture requires synthetic_fixture analysis mode")
+            output = synthetic_environment_fixture(scenario, load_json(args.contacts))
         elif args.command == "validate":
             scenario = load_scenario(args.path)
             output = {
