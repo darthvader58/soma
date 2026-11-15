@@ -14,16 +14,21 @@ test.beforeEach(async ({ page }) => {
 
 test.afterEach(async ({ page }) => { expect(page.__somaErrors).toEqual([]); });
 
-test('direct and relay reference stay separate from unresolved engine result', async ({ page }) => {
+test('computed direct failure and replayed relay schedule remain separate from hand arithmetic', async ({ page }) => {
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
-  await expect(page.locator('#job-status')).toContainText('unknown');
-  await expect(page.locator('#result')).toContainText('Solver: unresolved');
-  await expect(page.locator('#result')).toContainText('Model fidelity: not_implemented');
-  await expect(page.locator('#result')).toContainText('DeliveredUnknown');
+  await expect(page.locator('#job-status')).toContainText('infeasible_in_model');
+  await expect(page.locator('#result')).toContainText('Solver: proven_infeasible_discretized_model');
+  await expect(page.locator('#result')).toContainText('Model fidelity: assumed_rate_simulation');
+  await expect(page.locator('#result')).toContainText('Delivered0 bytes');
   await page.getByLabel('Declared network example').selectOption('1');
   await expect(page.getByRole('checkbox', { name: 'One lunar relay', exact: true })).toBeChecked();
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
-  await expect(page.locator('#job-status')).toContainText('unknown');
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await expect(page.locator('#result')).toContainText('104,857,600 bytes');
+  await expect(page.locator('#result')).toContainText('Assumed-rate simulation');
+  await expect(page.locator('#result')).toContainText('receiver payload occupancy');
+  await page.getByText('Scheduled transmissions and storage (14 transmissions)', { exact: true }).click();
+  await expect(page.locator('#timeline .timeline-allocation').first()).toBeVisible();
   await page.getByLabel('Show hand-calculated reference').check();
   await expect(page.locator('#result')).toContainText('2026-11-14T09:06:59.4304Z');
   await expect(page.locator('#result')).toContainText('2026-11-14T10:01:23.88608Z');
@@ -41,7 +46,7 @@ test('direct and relay reference stay separate from unresolved engine result', a
 });
 
 test('Phase 2 keeps fixture analysis coordinates separate from typed drafts and preserves the deadline rule', async ({ page }) => {
-  await expect(page.locator('.phase-label')).toContainText('Phase 3');
+  await expect(page.locator('.phase-label')).toContainText('Phase 4');
   const fixturePoint = await page.locator('#analysis-location').textContent();
   await expect(page.locator('#analysis-location')).toContainText('synthetic, not service-resolved');
   await expect(page.locator('#analysis-location')).toContainText('Antenna 2 m; panel 1 m');
@@ -183,7 +188,8 @@ test('diagnostic downloads preserve engine bytes and edited inputs cannot reuse 
 test('two saved results expose task differences and remain immutable after edits', async ({ page }) => {
   await expect(page.locator('#comparison')).toContainText('Network configuration: Changed');
   await expect(page.locator('#comparison')).toContainText('Initial battery energy (Wh): Unchanged');
-  await expect(page.locator('#comparison')).toContainText('Selected routeUnknownUnknown');
+  await expect(page.locator('#comparison')).toContainText('synthetic-lunar-relay');
+  await expect(page.locator('#comparison')).toContainText('Mean relay wait per byte (s)');
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
   await page.getByRole('button', { name: 'Save current result as A' }).click();
   await page.getByLabel('Declared network example').selectOption('1');
@@ -243,6 +249,55 @@ test('JSON downloads preserve edited scenario fields and exact captured result b
   expect(invalidDownloads).toHaveLength(0);
 });
 
+test('complete fixture package downloads byte-for-byte and the selected schedule stays readable without tiles', async ({ page }) => {
+  await page.getByLabel('Declared network example').selectOption('1');
+  await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await expect(page.getByRole('heading', { name: 'Lunar terrain unavailable' })).toBeVisible();
+  await expect(page.locator('#result .details-list')).toContainText('104,857,600 bytes');
+  await page.getByText('Inspect structured schedule explanation', { exact: true }).click();
+  const explanation = page.locator('#result .result-section').filter({ has: page.getByRole('heading', { name: 'Structured schedule explanation', exact: true }) });
+  await expect(explanation).toContainText('synthetic-lunar-relay to synthetic-earth-station');
+  await expect(explanation).toContainText('bytes available');
+  await page.getByText('Inspect engine battery history', { exact: true }).click();
+  await expect(page.locator('#result')).toContainText('Stored energy (Wh)');
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download fixture run package (ZIP)' }).click();
+  const downloaded = await readFile(await (await pending).path());
+  const original = await readFile(new URL('../../web/fixtures/synthetic-relay/run.zip', import.meta.url));
+  expect(downloaded.equals(original)).toBe(true);
+  await page.getByRole('heading', { name: 'Delivery result', exact: true }).scrollIntoViewIfNeeded();
+  await page.screenshot({ path: test.info().outputPath('phase-4-relay-result.png'), fullPage: false });
+  await page.setViewportSize({ width: 390, height: 1000 });
+  await page.getByRole('heading', { name: 'Delivery result', exact: true }).scrollIntoViewIfNeeded();
+  await page.screenshot({ path: test.info().outputPath('phase-4-mobile-result.png'), fullPage: false });
+});
+
+test('an explicitly delayed fixture job can be canceled without a stale success card', async ({ page }) => {
+  const original = await readFile(new URL('../../web/src/client.js', import.meta.url), 'utf8');
+  await page.route('**/src/client.js', route => route.fulfill({ contentType: 'text/javascript', body: original.replace('fixtureDelayMs = 0', 'fixtureDelayMs = 1500') }));
+  await page.reload();
+  await page.getByLabel('Declared network example').selectOption('1');
+  await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
+  await expect(page.locator('#job-status')).toContainText('Explicit delayed fixture test');
+  await page.getByRole('button', { name: 'Cancel job', exact: true }).click();
+  await expect(page.locator('#job-status')).toContainText('Job canceled');
+  await page.waitForTimeout(1700);
+  await expect(page.locator('#result')).toContainText('No engine result has been loaded');
+  await expect(page.getByRole('button', { name: 'Download fixture run package (ZIP)' })).toBeDisabled();
+});
+
+test('retry retains the edited scenario and restore clears the retry action', async ({ page }) => {
+  await page.getByLabel('Antenna height (m)', { exact: true }).fill('3');
+  await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
+  await expect(page.locator('#validation-errors')).toContainText('no captured engine result matches');
+  await page.getByRole('button', { name: 'Retry same scenario', exact: true }).click();
+  await expect(page.locator('#validation-errors')).toContainText('no captured engine result matches');
+  await expect(page.getByLabel('Antenna height (m)', { exact: true })).toHaveValue('3');
+  await page.getByRole('button', { name: 'Restore fixture', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Retry same scenario', exact: true })).toBeHidden();
+});
+
 test('all editable scenario fields round trip while hidden scientific metadata is preserved', async ({ page }) => {
   await page.getByLabel('Declared network example').selectOption('1');
   for (const [name, value] of [
@@ -281,7 +336,7 @@ for (const width of [390, 820, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.getByRole('button', { name: 'Plan delivery', exact: true }).focus();
     await page.keyboard.press('Enter');
-    await expect(page.locator('#job-status')).toContainText('unknown');
+    await expect(page.locator('#job-status')).toContainText('infeasible_in_model');
     await page.getByLabel('Show hand-calculated reference').check();
     const dimensions = await page.evaluate(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth }));
     expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.width);

@@ -191,6 +191,7 @@ export function renderScience(container, { environment, selectedTime, fixtureBac
     plot(container,samples,s=>Date.parse(s.epoch_utc),s=>s.visible_fraction,[times[0]??0,times.at(-1)??1,0,1],'Engine solar disk visible fraction; unknown samples are gaps',`${text(samples[0]?.epoch_utc)} to ${text(samples.at(-1)?.epoch_utc)} UTC`,'fraction');
     const details=el('details');details.append(el('summary','Solar sample values'));table(details,['Epoch (UTC)','Visible fraction','Lower / upper bound','Status / method'],samples.map(s=>[s.epoch_utc,s.visible_fraction,`${text(s.lower_bound)} / ${text(s.upper_bound)}`,`${text(s.status)} / ${text(s.method)}`]),'Unknown: no solar disk samples supplied.');container.append(details);
     container.append(el('h3', 'Engine electrical power and battery'));
+    container.append(el('p', 'This diagnostic battery trace includes base load only. The delivery result contains the selected schedule battery history including radio activity.'));
     container.append(el('p', `Selected generated power: ${text(model.power?.generated_power_w)} W. Selected stored energy: ${text(model.battery?.stored_energy_wh)} Wh. Battery status: ${text(environment.battery?.status)}. These records do not establish schedule energy feasibility.`));
     table(container, ['Epoch (UTC)', 'Generated power (W)', 'Status / method'],
       (environment.power_samples ?? []).map(sample => [

@@ -18,20 +18,26 @@ const network = scenario => ({
 
 export function comparisonViewModel(entries = []) {
   const selected = entries.slice(0, 2);
-  const rows = selected.map(({ name, scenario = {}, result }) => ({
+  const rows = selected.map(({ name, scenario = {}, result, summary }) => {
+    const supplied = summary?.artifact_type === 'soma_run_summary' && summary?.format_version === '0.4.0'
+      && /^[a-f0-9]{64}$/.test(summary.scenario_sha256 ?? '')
+      && summary.scenario_sha256 === result?.scenario_sha256 && summary.status === result?.status
+      && summary.solver_status === result?.solver_status && result?.status === 'feasible_under_assumptions'
+      && summary.replay?.passed === true ? summary : undefined;
+    return ({
     name,
     status: result?.status,
     solver: result?.solver_status,
     fidelity: result?.model_fidelity,
-    // The frozen result contract has no schedule-summary metrics.
-    route: undefined,
-    wait: undefined,
-    energy: undefined,
-    minimumReserve: undefined,
+    route: Array.isArray(supplied?.route_nodes) ? supplied.route_nodes.join(' → ') : undefined,
+    wait: supplied?.mean_relay_wait_s,
+    energy: supplied?.lander_communications_energy_wh,
+    minimumReserve: supplied?.minimum_margin_above_reserve_wh,
     completion: result?.final_byte_arrival_utc,
     limitingReason: result?.provenance?.reason,
     scenario,
-  }));
+  });
+  });
   const a = selected[0]?.scenario;
   const b = selected[1]?.scenario;
   const differences = [];
@@ -96,9 +102,9 @@ export function renderComparison(container, { entries = [] }) {
       ['Model fidelity', 'fidelity'],
       ['Selected route', 'route'],
       ['Final byte arrival (UTC)', 'completion'],
-      ['Wait time (s)', 'wait'],
+      ['Mean relay wait per byte (s)', 'wait'],
       ['Communications energy (Wh)', 'energy'],
-      ['Minimum reserve (Wh)', 'minimumReserve'],
+      ['Minimum margin above reserve (Wh)', 'minimumReserve'],
       ['Limiting reason', 'limitingReason'],
     ];
     for (const [label, key] of metrics) {
@@ -123,7 +129,7 @@ export function renderComparison(container, { entries = [] }) {
       controls.append(line);
     }
     container.append(controls);
-    container.append(el('p', 'Changed task controls prevent attributing an outcome to site or date alone. Route, wait, energy and minimum reserve summaries are unavailable in the current result contract.'));
+    container.append(el('p', 'Changed task controls prevent attributing an outcome to site or date alone. Metrics read a versioned, scenario-matched Python summary; missing summaries remain Unknown. Relay wait is a byte-weighted mean after chunk availability and before forwarding.'));
   }
   render();
   return {

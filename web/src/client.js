@@ -16,6 +16,14 @@ function checkedResult(result, hash) {
   if (result.scenario_sha256 !== hash) throw new Error('Engine result does not match the submitted scenario hash.');
   return frozen(structuredClone(result));
 }
+function checkedSummary(summary, hash, result) {
+  if (summary?.artifact_type !== 'soma_run_summary' || summary?.format_version !== '0.4.0' || summary.scenario_sha256 !== hash) {
+    throw new Error('Run summary has an unsupported version or mismatched scenario hash.');
+  }
+  if (result && ['scenario_id','status','solver_status','model_fidelity','delivered_bytes','final_byte_arrival_utc']
+    .some(key => summary[key] !== result[key])) throw new Error('Run summary metadata differs from its completed result.');
+  return frozen(structuredClone(summary));
+}
 function wait(ms, signal) {
   return new Promise((resolve, reject) => {
     if (signal.aborted) { reject(abortError()); return; }
@@ -37,6 +45,7 @@ async function packageBytes(response, hash) {
 export function createFixtureClient(fixtures, { fetchImpl = globalThis.fetch, fixtureDelayMs = 0 } = {}) {
   if (!Number.isFinite(fixtureDelayMs) || fixtureDelayMs < 0) throw new Error('Fixture test delay must be nonnegative.');
   const captured = fixtures.map(value => ({ ...value, scenario: structuredClone(value.scenario), result: structuredClone(value.result),
+    ...(value.summary ? { summary: structuredClone(value.summary) } : {}),
     ...(value.packageBytes ? { packageBytes: new Uint8Array(value.packageBytes) } : {}) }));
   let generation = 0;
   let active;
@@ -74,7 +83,7 @@ export function createFixtureClient(fixtures, { fetchImpl = globalThis.fetch, fi
       const result = checkedResult(fixture.result, hash);
       onProgress({ status: 'completed', stage: 'captured_engine_fixture', scenario_sha256: hash });
       assertCurrent(current, run);
-      completed = { fixture, hash, current, scenarioId: snapshot.scenario_id };
+      completed = { fixture, hash, current, scenarioId: snapshot.scenario_id, result };
       return result;
     } catch (error) {
       if (current === generation && error.name !== 'AbortError' && hash) failed = frozen({ scenario: snapshot, hash });
@@ -86,6 +95,12 @@ export function createFixtureClient(fixtures, { fetchImpl = globalThis.fetch, fi
     retry(options) {
       if (!failed) return Promise.reject(new Error('No failed immutable scenario is available to retry.'));
       return plan(failed.scenario, options);
+    },
+    async getSummary(scenario) {
+      const artifact = completed;
+      const hash = await canonicalScenarioHash(scenario);
+      if (!artifact || artifact !== completed || artifact.hash !== hash) throw new Error('No completed summary matches this scenario.');
+      return checkedSummary(artifact.fixture.summary, hash, artifact.result);
     },
     async exportRun(scenario) {
       const artifact = completed;
@@ -159,7 +174,7 @@ export function createPlanClient({ baseUrl = '', fetchImpl = globalThis.fetch, p
         if (progress.status === 'canceled') throw abortError();
         if (progress.status === 'failed') throw new Error(progress.error || 'Planning service failed.');
         if (progress.status === 'completed') {
-          completed = { id: run.id, hash, current, scenarioId: snapshot.scenario_id };
+          completed = { id: run.id, hash, current, scenarioId: snapshot.scenario_id, result };
           return result;
         }
         if (!['queued', 'running', 'cancel_requested', 'canceling'].includes(progress.status)) throw new Error('Planning service returned an unknown job state.');
@@ -181,6 +196,14 @@ export function createPlanClient({ baseUrl = '', fetchImpl = globalThis.fetch, p
     retry(options) {
       if (!failed) return Promise.reject(new Error('No failed immutable scenario is available to retry.'));
       return plan(failed.scenario, options);
+    },
+    async getSummary(scenario) {
+      const artifact = completed;
+      const hash = await canonicalScenarioHash(scenario);
+      if (!artifact || artifact !== completed || artifact.hash !== hash) throw new Error('No completed summary matches this scenario.');
+      const value = await request(`/plans/${encodeURIComponent(artifact.id)}/summary`);
+      if (completed !== artifact || generation !== artifact.current) throw abortError();
+      return checkedSummary(value, hash, artifact.result);
     },
     async exportRun(scenario) {
       const artifact = completed;

@@ -1,47 +1,99 @@
 {
-  "run_version": "0.1.0",
-  "scenario_id": "synthetic-direct",
-  "scenario_sha256": "857f1772d4052a5d06c955d6b63b847c989550442ada201d8ad592a1f95375ed",
-  "status": "unknown",
-  "solver_status": "unresolved",
-  "model_fidelity": "not_implemented",
+  "allocations": [],
   "assumptions": [
     "Rate method: assumed_net_rate",
     "Pointing: ideal_pointing",
     "Service: SYNTHETIC windows at both endpoints; no booked network service",
-    "Synthetic fixture inputs do not establish lunar visibility or link closure."
+    "Sky directions and skylines are invented Phase 3 inputs held at the fixed absolute horizon.",
+    "Contact geometry is declared synthetic interval-wide input, not a computed mission opportunity.",
+    "Rates are assumed net payload bits per second; light time is disabled only for the synthetic fixture.",
+    "Changing coordinates, heights, station geometry, trajectory or analysis extent requires new analysis inputs.",
+    "left_sample_piecewise_constant_assumption",
+    "Battery diagnostic includes base load only; no radio schedule was selected.",
+    "Fixed-panel center-ray projection times sampled uniform solar disk fraction.",
+    "Spherical opaque Earth eclipse mask combined with terrain on the same solar samples.",
+    "Contact event guard is explicitly zero for this diagnostic; not an operational margin.",
+    "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+    "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+    "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+    "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+    "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+    "Ground sink retains all received chunks with finite configured station storage.",
+    "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+    "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
   ],
-  "warnings": [
-    "The integrated delivery-planning pipeline, energy-constrained optimization and independent schedule replay are not implemented. Standalone Phase 2 geometry and Phase 3 illumination, power and contact diagnostics do not establish delivery feasibility.",
-    "No feasibility or delivery metrics have been calculated."
-  ],
-  "contacts": [],
-  "allocations": [],
-  "storage_intervals": [],
-  "energy_history": [],
   "buffer_history": [],
-  "delivered_bytes": null,
+  "contacts": [
+    {
+      "available_capacity_bits": 307200000,
+      "contact_id": "synthetic-direct-contact",
+      "mode_id": "synthetic-direct-256k",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0.0
+      },
+      "payload_rate_bps": 256000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "geometry_not_computed",
+        "ideal_pointing",
+        "input_class_synthetic",
+        "light_time_disabled_for_arithmetic",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "same_epoch_geometry",
+        "synthetic_contact_fixture"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-earth-station",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "SYNTHETIC windows at both endpoints; no booked network service; sender: SYNTHETIC service calendar; no operator allocation; receiver: SYNTHETIC service calendar; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T09:10:00Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    }
+  ],
+  "delivered_bytes": 0,
+  "energy_history": [],
   "final_byte_arrival_utc": null,
+  "model_fidelity": "assumed_rate_simulation",
   "provenance": {
-    "engine_version": "0.1.0",
-    "implementation_status": "not_implemented",
-    "reason": "The delivery planner has not selected or validated a schedule. Geometry, illumination, power and contact diagnostics are separate artifacts.",
-    "kernel_manifest_ref": null,
     "dataset_manifest_ref": "synthetic-contract-v1",
-    "source_urls": [],
+    "engine_version": "0.1.0",
+    "implementation_status": "implemented",
     "input_provenance": [
       {
-        "scope": "all scenario values and contact windows",
-        "input_class": "synthetic",
         "description": "Invented contract/arithmetic test values, including location, dates, hardware, finite storage, nonzero lander base load, panel parameters and station proxy. No numerical terrain or ephemeris is supplied; no mission prediction.",
+        "input_class": "synthetic",
+        "scope": "all scenario values and contact windows",
         "source_urls": []
       },
       {
-        "scope": "rates, pointing, acquisition, processing and propagation",
-        "input_class": "assumed",
         "description": "Assumed net payload rates with overhead already applied once; ideal pointing; zero acquisition/teardown and relay processing for arithmetic only; light time disabled for synthetic test, not physically zero.",
+        "input_class": "assumed",
+        "scope": "rates, pointing, acquisition, processing and propagation",
         "source_urls": []
       }
-    ]
-  }
+    ],
+    "kernel_manifest_ref": null,
+    "reason": "Direct contacts provide at most 307,200,000 payload bits for a 838,860,800-bit file; the complete file cannot fit in the declared network.",
+    "source_urls": []
+  },
+  "run_version": "0.1.0",
+  "scenario_id": "synthetic-direct",
+  "scenario_sha256": "857f1772d4052a5d06c955d6b63b847c989550442ada201d8ad592a1f95375ed",
+  "solver_status": "proven_infeasible_discretized_model",
+  "status": "infeasible_in_model",
+  "storage_intervals": [],
+  "warnings": [
+    "No complete dataset schedule satisfies the declared discrete route, capacity, storage, service, radio and energy constraints.",
+    "Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.",
+    "This result does not book service or certify navigation, relay operation or thermal survival.",
+    "Moon renderer registration and live browser integration remain Phase 5 gates."
+  ]
 }

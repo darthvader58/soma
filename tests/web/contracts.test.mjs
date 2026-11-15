@@ -8,22 +8,27 @@ import { validateScenario, validateResult, canonicalScenarioHash } from '../../w
 const read = name => JSON.parse(readFileSync(new URL(`../../${name}`, import.meta.url), 'utf8'));
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const python = process.env.SOMA_PYTHON || `${root}.venv/bin/python`;
-const capture = name => JSON.parse(execFileSync(python, ['-m', 'soma', 'plan', `fixtures/${name}/scenario.json`], { cwd: root, encoding: 'utf8' }));
+const capture = name => JSON.parse(execFileSync(python, ['-m', 'soma', 'validate', `fixtures/${name}/scenario.json`], { cwd: root, encoding: 'utf8' }));
 
 for (const name of ['synthetic-direct', 'synthetic-relay']) {
   test(`${name} validates and hashes identically in Python and browser`, async () => {
     const scenario = read(`fixtures/${name}/scenario.json`);
-    const result = capture(name);
+    const result = read(`web/fixtures/${name}/result.json`);
+    const validated = capture(name);
     assert.deepEqual(validateScenario(scenario), { valid: true, errors: [] });
     assert.equal(validateResult(result).valid, true);
     assert.equal(await canonicalScenarioHash(scenario), result.scenario_sha256);
-    assert.equal(result.delivered_bytes, null);
+    assert.equal(validated.scenario_sha256, result.scenario_sha256);
     for (const property of ['status', 'solver_status', 'model_fidelity']) {
       const broken = structuredClone(result);
       delete broken[property];
       assert.equal(validateResult(broken).valid, false);
     }
-    const fabricated = { ...result, delivered_bytes: 0 };
+    const unknown = { ...result, status: 'unknown', solver_status: 'unresolved', model_fidelity: 'not_implemented',
+      delivered_bytes: null, final_byte_arrival_utc: null, contacts: [], allocations: [], storage_intervals: [], energy_history: [], buffer_history: [],
+      provenance: { ...result.provenance, implementation_status: 'not_implemented' } };
+    assert.equal(validateResult(unknown).valid, true);
+    const fabricated = { ...unknown, delivered_bytes: 0 };
     assert.equal(validateResult(fabricated).valid, false);
   });
 }
