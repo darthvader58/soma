@@ -71,7 +71,7 @@
     },
     {
       "path": "data/renderer-registration-source-audit.manifest.json",
-      "sha256": "f920e051f992213adc5185c6c1e33de08590ca5d354c68d0ba201db8f75e55f5"
+      "sha256": "f43219347b099a354759b8255d5e791417389874c348c90f9cb75e6cf5826c7a"
     },
     {
       "path": "data/renderer-registration-sources.manifest.json",
@@ -79,7 +79,7 @@
     },
     {
       "path": "data/renderer-registration.manifest.json",
-      "sha256": "ef1ae8dddc15261c5a6ca8cf0455330041e11864ca7e13e98e0fbf221c451e57"
+      "sha256": "5934a4287dfbd82847f0dfe7cf31fc7b20e5c110d910e792ea0e7c314b2444e9"
     },
     {
       "path": "fixtures/hash-vectors.json",
@@ -147,7 +147,11 @@
     },
     {
       "path": "fixtures/registration/README.md",
-      "sha256": "0095bd0140293078f06711a9e0782d8bf6d0f8d1d8404b08fe1eaec01ea31c33"
+      "sha256": "edcd007fadbb226a3fbbc4c13dfaacd6b9dfa0786fcbef3a3c0878fb059b1275"
+    },
+    {
+      "path": "fixtures/registration/calibration-planes.json",
+      "sha256": "3d09e11f3a98d3e39feaa072f90334a10191a61b01d704245aa032abd84585ea"
     },
     {
       "path": "fixtures/registration/coarse-polar-reference.json",
@@ -160,6 +164,74 @@
     {
       "path": "fixtures/registration/four-polar-probes.json",
       "sha256": "bfa1280117ba0f79e9ce5cc732038f5a0baa357f87903beab360a6101c2e3d9e"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-capture.json",
+      "sha256": "bc72ae894c380d76ca0a4c8beeee078b09aaddd954556b1e00ce8aa8ea67071d"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-differences.json",
+      "sha256": "3f659c8a5770bbe5d8085000cf463c84330266d9aa34f114b1ec0ae4df931311"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-probes.json",
+      "sha256": "81f100546e5b2d10323abc2f6830eea3535fc89a57ca95bc83e5447d71107ef8"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-positive-reference.json",
+      "sha256": "29f27d10f85fe85954772d4f1ca7729f16beff6ccb3a6a600bee746e9e3c9ee6"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-radial-differences.json",
+      "sha256": "46089dc156ab7bf3fde2b0c7af46400b5d3e2cf0b2ce7fe7cc0ae1c92494d9c1"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-5m-reference.json",
+      "sha256": "37b42ed3fbec964d66394c584da9fe0956e6227377933816fb710078d6d97718"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-capture.json",
+      "sha256": "58bc546e4ec08f414176c7bb99753a03a75fb763c077335ab4e623cc8416bdb5"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-controls.json",
+      "sha256": "8133dd61cfa2c19c2a6cc3f16d9330ddb5c474b0dca5f193ccd3ddb08792f74c"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-cpu-intersections.json",
+      "sha256": "c552380516d1421713adf68244bfc3a6ba45d5ebd4b8d81553d243da6852aed1"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-patch-summary.json",
+      "sha256": "484460f3c1bb8c2891585cbae6b3c1bdf0daf6df3436ccc67707e5a733f2802a"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-patches-capture.json",
+      "sha256": "63ee6bb610d732b8ecc1010d2bd307f5db94b2db3497d7848624e7b5c97d08dd"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-patches-probes.json",
+      "sha256": "2f1495177470ca4613a5986b072c7081f66286b191f4137dd46181c50c3f5f9f"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-probes.json",
+      "sha256": "8fbfd614660d2b8ceff7fd04a5200bcc28e88813c1b1150dc10a27292e2cf956"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-radial-differences.json",
+      "sha256": "c799221990bb854b37a1f1b9644e9f2e0ec6f8a6b99642adfd84cb601cb5ece9"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-reference.json",
+      "sha256": "fa1747a5d5e21c4d3b89511eaa7df6f7cf47e8465aeaba3c1ae1cfae5feb2f15"
+    },
+    {
+      "path": "fixtures/registration/inner-polar-source-products.json",
+      "sha256": "127672a6c916b66c9fa5c918dfe6e7815ad32fd3e076983f8e2d04adb16ff7fe"
+    },
+    {
+      "path": "fixtures/registration/instrument-calibration.json",
+      "sha256": "4c1d9eb04fc031fd9fbaca6c82907897784051e54cf572e067d3186ec862f2c2"
     },
     {
       "path": "fixtures/registration/polar-patches-capture.json",
@@ -343,11 +415,15 @@
     },
     {
       "path": "soma/docs/phase-5/README.md",
-      "sha256": "4946636d482598c17b5ec304f15f16f699a4cb12b7791b31ab3c385b5a30090b"
+      "sha256": "0ad25084feb3f1e8ca9789252315f25362ab696da410e9f75280c299a19f924d"
+    },
+    {
+      "path": "soma/docs/phase-5/inspect-mesh.py",
+      "sha256": "e65359a95c9ceda23e1c58f75d8b88ab370d5ee70321c64329c71696a5a6664b"
     },
     {
       "path": "soma/docs/phase-5/registration-source-audit.md",
-      "sha256": "43002113e41f442f65ea5bf3d12709f8b734168991697a937e0eaa9aa00d2308"
+      "sha256": "caa7d565e632e4febdb5e8fb5bec1ed88c84b64a16e91f2859f24b10e0100db6"
     },
     {
       "path": "soma/docs/phase-5/registration.md",
@@ -376,6 +452,10 @@
     {
       "path": "soma/geometry/registration.py",
       "sha256": "346cf38cd6caff4ba741fdfb0f356c0dff007fb36f8dc14456778254df2d918b"
+    },
+    {
+      "path": "soma/geometry/registration_calibration.py",
+      "sha256": "07e9db63f3fd614260d08253aca916481b691a1303d5c77de00e5e72e758a602"
     },
     {
       "path": "soma/geometry/registration_measurements.py",
@@ -534,8 +614,16 @@
       "sha256": "5db6de5fc9de8633e24afe87983bf07de687a8ff5fcfef25ad53a243803cddc7"
     },
     {
+      "path": "tests/engine/test_registration_calibration.py",
+      "sha256": "a617481bae4ca44429acd7453c144bda7cf491bfa23475fca3c194aa43479727"
+    },
+    {
       "path": "tests/engine/test_registration_measurements.py",
       "sha256": "f80b2a8271377857f56425be306d3780d440e56edca1cadfd36e67de009c2b22"
+    },
+    {
+      "path": "tests/engine/test_registration_mesh_evidence.py",
+      "sha256": "3d9900a80b93ca0e0f8daf155ad7ca9962ac555a44ad5f8aa45d2b2d4b945a3a"
     },
     {
       "path": "tests/engine/test_replay.py",

@@ -24,7 +24,7 @@
     },
     {
       "path": "renderer-registration-source-audit.manifest.json",
-      "sha256": "f920e051f992213adc5185c6c1e33de08590ca5d354c68d0ba201db8f75e55f5"
+      "sha256": "f43219347b099a354759b8255d5e791417389874c348c90f9cb75e6cf5826c7a"
     }
   ],
   "tolerance_m": null,
@@ -130,7 +130,7 @@
     "text_schedule_available": true,
     "blockers": [
       "Source labels establish DE421 provenance, but the candidate identity bridge has not passed independent mesh-feature correspondence.",
-      "Raw radial diagnostics differ from the 20 m reference grid; source/product, mesh conversion and query effects remain unresolved.",
+      "Calibrated queries and decoded asset triangles reproduce substantial height differences; four positive-count pixels in the advertised 5 m source retain 650 to 659 m differences. Source-version, datum or asset-conversion causes remain unresolved.",
       "Independent horizontal terrain-fiducial positions and landmark residuals are not established.",
       "A regional display tolerance and distribution review have not passed."
     ]

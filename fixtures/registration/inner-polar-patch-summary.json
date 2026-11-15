@@ -1,0 +1,59 @@
+{
+  "registration_passed": false,
+  "hypothesis": "unregistered_identity",
+  "sampling": "9x9 probes per source-selected peak, 200m spacing, no fitted shift or correction",
+  "reports": [
+    {
+      "quadrant": 0,
+      "total_queries": 81,
+      "positive_count_comparisons": 57,
+      "unknown_reference_queries": 24,
+      "median_radial_difference_m": 659.0356563774403,
+      "radial_difference_min_max_m": [
+        633.4439320282545,
+        669.0140281366184
+      ],
+      "unshifted_height_correlation": 0.9879809165751557,
+      "horizontal_correspondence_established": false
+    },
+    {
+      "quadrant": 1,
+      "total_queries": 81,
+      "positive_count_comparisons": 67,
+      "unknown_reference_queries": 14,
+      "median_radial_difference_m": 658.1221395269968,
+      "radial_difference_min_max_m": [
+        647.4531708159484,
+        673.55558767193
+      ],
+      "unshifted_height_correlation": 0.9821883459767453,
+      "horizontal_correspondence_established": false
+    },
+    {
+      "quadrant": 2,
+      "total_queries": 81,
+      "positive_count_comparisons": 59,
+      "unknown_reference_queries": 22,
+      "median_radial_difference_m": 658.54905964504,
+      "radial_difference_min_max_m": [
+        625.4245145842433,
+        685.8616399490274
+      ],
+      "unshifted_height_correlation": 0.9172559393476827,
+      "horizontal_correspondence_established": false
+    },
+    {
+      "quadrant": 3,
+      "total_queries": 81,
+      "positive_count_comparisons": 61,
+      "unknown_reference_queries": 20,
+      "median_radial_difference_m": 660.6950551425107,
+      "radial_difference_min_max_m": [
+        642.9043702350464,
+        671.7957035533618
+      ],
+      "unshifted_height_correlation": 0.964895215160683,
+      "horizontal_correspondence_established": false
+    }
+  ]
+}

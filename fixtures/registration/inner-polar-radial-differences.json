@@ -1,0 +1,3259 @@
+{
+  "artifact_type": "soma_renderer_radial_diagnostic",
+  "format_version": "0.1.0",
+  "request_id": "source-selected-inner-polar-patches-v1",
+  "source_frame": "MOON_ME_DE421",
+  "renderer_frame": "unregistered_asset_world",
+  "origin": "MOON",
+  "position_unit": "m",
+  "reference_radius_m": 1737400,
+  "registration_passed": false,
+  "horizontal_correspondence_established": false,
+  "samples": [
+    {
+      "id": "inner-0-0-0",
+      "renderer_radius_m": 1734132.5828780488,
+      "reference_height_m": -3924.0,
+      "radial_difference_m": 656.5828780487645,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-0-1",
+      "renderer_radius_m": 1734135.4722633879,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-0-2",
+      "renderer_radius_m": 1734139.9669947294,
+      "reference_height_m": -3917.5,
+      "radial_difference_m": 657.4669947293587,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-0-3",
+      "renderer_radius_m": 1734119.3903157017,
+      "reference_height_m": -3933.0,
+      "radial_difference_m": 652.3903157017194,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-0-4",
+      "renderer_radius_m": 1734135.6641150538,
+      "reference_height_m": -3921.0,
+      "radial_difference_m": 656.6641150538344,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-0-5",
+      "renderer_radius_m": 1734132.2431477855,
+      "reference_height_m": -3925.5,
+      "radial_difference_m": 657.7431477855425,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-0-6",
+      "renderer_radius_m": 1734129.6387664746,
+      "reference_height_m": -3926.5,
+      "radial_difference_m": 656.1387664745562,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-0-7",
+      "renderer_radius_m": 1734132.8775384359,
+      "reference_height_m": -3927.0,
+      "radial_difference_m": 659.8775384358596,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-0-8",
+      "renderer_radius_m": 1734127.5036030256,
+      "reference_height_m": -3931.0,
+      "radial_difference_m": 658.5036030255724,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-1-0",
+      "renderer_radius_m": 1734139.347857042,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-1-1",
+      "renderer_radius_m": 1734146.3236495412,
+      "reference_height_m": -3917.0,
+      "radial_difference_m": 663.323649541242,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-1-2",
+      "renderer_radius_m": 1734152.537346276,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-1-3",
+      "renderer_radius_m": 1734147.4683059717,
+      "reference_height_m": -3921.0,
+      "radial_difference_m": 668.4683059717063,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-1-4",
+      "renderer_radius_m": 1734141.17657399,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-1-5",
+      "renderer_radius_m": 1734136.6224714867,
+      "reference_height_m": -3924.5,
+      "radial_difference_m": 661.1224714866839,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-1-6",
+      "renderer_radius_m": 1734135.4766843028,
+      "reference_height_m": -3926.0,
+      "radial_difference_m": 661.4766843027901,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-1-7",
+      "renderer_radius_m": 1734133.9079543792,
+      "reference_height_m": -3927.0,
+      "radial_difference_m": 660.9079543792177,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-1-8",
+      "renderer_radius_m": 1734127.9902249062,
+      "reference_height_m": -3929.0,
+      "radial_difference_m": 656.9902249062434,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-0",
+      "renderer_radius_m": 1734149.2626457524,
+      "reference_height_m": -3913.5,
+      "radial_difference_m": 662.762645752402,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-1",
+      "renderer_radius_m": 1734157.667938066,
+      "reference_height_m": -3904.0,
+      "radial_difference_m": 661.667938065948,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-2",
+      "renderer_radius_m": 1734164.973367675,
+      "reference_height_m": -3896.5,
+      "radial_difference_m": 661.4733676749747,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-3",
+      "renderer_radius_m": 1734161.6698055696,
+      "reference_height_m": -3901.0,
+      "radial_difference_m": 662.6698055695742,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-4",
+      "renderer_radius_m": 1734152.703471609,
+      "reference_height_m": -3910.0,
+      "radial_difference_m": 662.7034716089256,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-5",
+      "renderer_radius_m": 1734142.9545329406,
+      "reference_height_m": -3920.5,
+      "radial_difference_m": 663.4545329406392,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-6",
+      "renderer_radius_m": 1734132.6375355248,
+      "reference_height_m": -3925.5,
+      "radial_difference_m": 658.1375355247874,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-7",
+      "renderer_radius_m": 1734129.8658813622,
+      "reference_height_m": -3927.5,
+      "radial_difference_m": 657.3658813622314,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-2-8",
+      "renderer_radius_m": 1734127.8414776586,
+      "reference_height_m": -3930.0,
+      "radial_difference_m": 657.8414776585996,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-3-0",
+      "renderer_radius_m": 1734142.5653375012,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-3-1",
+      "renderer_radius_m": 1734151.8374446123,
+      "reference_height_m": -3902.0,
+      "radial_difference_m": 653.8374446122907,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-3-2",
+      "renderer_radius_m": 1734161.8042348148,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-3-3",
+      "renderer_radius_m": 1734170.0259084404,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-3-4",
+      "renderer_radius_m": 1734167.87131398,
+      "reference_height_m": -3896.5,
+      "radial_difference_m": 664.371313980082,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-3-5",
+      "renderer_radius_m": 1734156.7114652675,
+      "reference_height_m": -3906.5,
+      "radial_difference_m": 663.2114652674645,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-3-6",
+      "renderer_radius_m": 1734142.5458239971,
+      "reference_height_m": -3921.5,
+      "radial_difference_m": 664.0458239971194,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-3-7",
+      "renderer_radius_m": 1734129.354317311,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-3-8",
+      "renderer_radius_m": 1734136.055881836,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-4-0",
+      "renderer_radius_m": 1734099.8618782128,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-4-1",
+      "renderer_radius_m": 1734114.9117874845,
+      "reference_height_m": -3922.5,
+      "radial_difference_m": 637.4117874845397,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-4-2",
+      "renderer_radius_m": 1734135.7476317696,
+      "reference_height_m": -3909.5,
+      "radial_difference_m": 645.2476317696273,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-4-3",
+      "renderer_radius_m": 1734159.3206349814,
+      "reference_height_m": -3890.0,
+      "radial_difference_m": 649.3206349813845,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-4-4",
+      "renderer_radius_m": 1734172.0356563774,
+      "reference_height_m": -3887.0,
+      "radial_difference_m": 659.0356563774403,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-4-5",
+      "renderer_radius_m": 1734167.784275208,
+      "reference_height_m": -3895.5,
+      "radial_difference_m": 663.2842752079014,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-4-6",
+      "renderer_radius_m": 1734158.4823331842,
+      "reference_height_m": -3907.0,
+      "radial_difference_m": 665.4823331842199,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-4-7",
+      "renderer_radius_m": 1734149.0140281366,
+      "reference_height_m": -3920.0,
+      "radial_difference_m": 669.0140281366184,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-4-8",
+      "renderer_radius_m": 1734144.16274597,
+      "reference_height_m": -3917.5,
+      "radial_difference_m": 661.6627459700685,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-5-0",
+      "renderer_radius_m": 1734029.3143722834,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-5-1",
+      "renderer_radius_m": 1734053.7697346837,
+      "reference_height_m": -3981.5,
+      "radial_difference_m": 635.2697346836794,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-5-2",
+      "renderer_radius_m": 1734079.9439320283,
+      "reference_height_m": -3953.5,
+      "radial_difference_m": 633.4439320282545,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-5-3",
+      "renderer_radius_m": 1734122.799310761,
+      "reference_height_m": -3916.0,
+      "radial_difference_m": 638.7993107610382,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-5-4",
+      "renderer_radius_m": 1734158.545444065,
+      "reference_height_m": -3887.0,
+      "radial_difference_m": 645.5454440650064,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-5-5",
+      "renderer_radius_m": 1734175.052159125,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-5-6",
+      "renderer_radius_m": 1734175.9851335627,
+      "reference_height_m": -3892.0,
+      "radial_difference_m": 667.9851335627027,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-5-7",
+      "renderer_radius_m": 1734161.5624064358,
+      "reference_height_m": -3900.0,
+      "radial_difference_m": 661.5624064358417,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-5-8",
+      "renderer_radius_m": 1734156.7975221206,
+      "reference_height_m": -3907.0,
+      "radial_difference_m": 663.7975221206434,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-6-0",
+      "renderer_radius_m": 1733983.6400848322,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-6-1",
+      "renderer_radius_m": 1734011.0193696348,
+      "reference_height_m": -4034.0,
+      "radial_difference_m": 645.0193696347997,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-6-2",
+      "renderer_radius_m": 1734043.081157015,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-6-3",
+      "renderer_radius_m": 1734085.0196185282,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-6-4",
+      "renderer_radius_m": 1734131.8036289192,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-6-5",
+      "renderer_radius_m": 1734181.9923416518,
+      "reference_height_m": -3874.5,
+      "radial_difference_m": 656.4923416518141,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-6-6",
+      "renderer_radius_m": 1734181.534310214,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-6-7",
+      "renderer_radius_m": 1734168.1053386237,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-6-8",
+      "renderer_radius_m": 1734160.4461509404,
+      "reference_height_m": -3900.5,
+      "radial_difference_m": 660.9461509403773,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-7-0",
+      "renderer_radius_m": 1733962.8426658507,
+      "reference_height_m": -4087.5,
+      "radial_difference_m": 650.3426658506505,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-7-1",
+      "renderer_radius_m": 1733993.3483093944,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-7-2",
+      "renderer_radius_m": 1734034.8015573004,
+      "reference_height_m": -4016.0,
+      "radial_difference_m": 650.8015573003795,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-7-3",
+      "renderer_radius_m": 1734079.3231345906,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-7-4",
+      "renderer_radius_m": 1734124.8909812844,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-7-5",
+      "renderer_radius_m": 1734178.5439555226,
+      "reference_height_m": -3878.5,
+      "radial_difference_m": 657.0439555225894,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-7-6",
+      "renderer_radius_m": 1734182.053066648,
+      "reference_height_m": -3876.5,
+      "radial_difference_m": 658.5530666480772,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-7-7",
+      "renderer_radius_m": 1734173.273259546,
+      "reference_height_m": -3887.5,
+      "radial_difference_m": 660.7732595459092,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-7-8",
+      "renderer_radius_m": 1734164.3605676317,
+      "reference_height_m": -3896.5,
+      "radial_difference_m": 660.8605676316656,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-8-0",
+      "renderer_radius_m": 1733961.498065624,
+      "reference_height_m": -4096.0,
+      "radial_difference_m": 657.4980656239204,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-8-1",
+      "renderer_radius_m": 1733995.480286521,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-8-2",
+      "renderer_radius_m": 1734037.9206110265,
+      "reference_height_m": -4023.5,
+      "radial_difference_m": 661.420611026464,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-8-3",
+      "renderer_radius_m": 1734082.5614177207,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-8-4",
+      "renderer_radius_m": 1734133.6440835218,
+      "reference_height_m": -3927.5,
+      "radial_difference_m": 661.1440835217945,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-8-5",
+      "renderer_radius_m": 1734183.7583296387,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-0-8-6",
+      "renderer_radius_m": 1734187.0412206722,
+      "reference_height_m": -3873.0,
+      "radial_difference_m": 660.0412206721958,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-8-7",
+      "renderer_radius_m": 1734177.0551289972,
+      "reference_height_m": -3881.0,
+      "radial_difference_m": 658.0551289971918,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-0-8-8",
+      "renderer_radius_m": 1734163.1818541621,
+      "reference_height_m": -3894.0,
+      "radial_difference_m": 657.1818541621324,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-0-0",
+      "renderer_radius_m": 1738022.6270821593,
+      "reference_height_m": -49.5,
+      "radial_difference_m": 672.127082159277,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-0-1",
+      "renderer_radius_m": 1738026.3120190327,
+      "reference_height_m": -45.5,
+      "radial_difference_m": 671.812019032659,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-0-2",
+      "renderer_radius_m": 1738026.048396481,
+      "reference_height_m": -39.0,
+      "radial_difference_m": 665.0483964809682,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-0-3",
+      "renderer_radius_m": 1738024.322958856,
+      "reference_height_m": -37.5,
+      "radial_difference_m": 661.8229588558897,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-0-4",
+      "renderer_radius_m": 1738017.7827022474,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-0-5",
+      "renderer_radius_m": 1738003.7716382002,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-0-6",
+      "renderer_radius_m": 1737985.7662210637,
+      "reference_height_m": -71.5,
+      "radial_difference_m": 657.2662210636772,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-0-7",
+      "renderer_radius_m": 1737957.4114619615,
+      "reference_height_m": -95.5,
+      "radial_difference_m": 652.9114619614556,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-0-8",
+      "renderer_radius_m": 1737937.5432122904,
+      "reference_height_m": -117.0,
+      "radial_difference_m": 654.5432122903876,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-1-0",
+      "renderer_radius_m": 1737993.3950111785,
+      "reference_height_m": -74.5,
+      "radial_difference_m": 667.8950111784507,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-1-1",
+      "renderer_radius_m": 1738003.219196319,
+      "reference_height_m": -62.0,
+      "radial_difference_m": 665.2191963191144,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-1-2",
+      "renderer_radius_m": 1738013.1481607638,
+      "reference_height_m": -50.0,
+      "radial_difference_m": 663.1481607637834,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-1-3",
+      "renderer_radius_m": 1738018.7565972377,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-1-4",
+      "renderer_radius_m": 1738015.4126396845,
+      "reference_height_m": -43.5,
+      "radial_difference_m": 658.9126396845095,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-1-5",
+      "renderer_radius_m": 1738007.935483239,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-1-6",
+      "renderer_radius_m": 1737990.6063026167,
+      "reference_height_m": -65.0,
+      "radial_difference_m": 655.6063026166521,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-1-7",
+      "renderer_radius_m": 1737968.4202198773,
+      "reference_height_m": -84.0,
+      "radial_difference_m": 652.4202198772691,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-1-8",
+      "renderer_radius_m": 1737947.926610194,
+      "reference_height_m": -106.0,
+      "radial_difference_m": 653.9266101939138,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-0",
+      "renderer_radius_m": 1737981.122139527,
+      "reference_height_m": -77.0,
+      "radial_difference_m": 658.1221395269968,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-1",
+      "renderer_radius_m": 1737993.328080767,
+      "reference_height_m": -71.0,
+      "radial_difference_m": 664.3280807670671,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-2",
+      "renderer_radius_m": 1737998.8693545535,
+      "reference_height_m": -62.5,
+      "radial_difference_m": 661.3693545535207,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-3",
+      "renderer_radius_m": 1738007.4540845435,
+      "reference_height_m": -50.5,
+      "radial_difference_m": 657.9540845435113,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-4",
+      "renderer_radius_m": 1738011.9473672058,
+      "reference_height_m": -43.0,
+      "radial_difference_m": 654.9473672057502,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-5",
+      "renderer_radius_m": 1738011.693904654,
+      "reference_height_m": -43.5,
+      "radial_difference_m": 655.1939046538901,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-6",
+      "renderer_radius_m": 1737998.3563226599,
+      "reference_height_m": -69.0,
+      "radial_difference_m": 667.3563226598781,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-7",
+      "renderer_radius_m": 1737981.6031100908,
+      "reference_height_m": -72.0,
+      "radial_difference_m": 653.6031100908294,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-2-8",
+      "renderer_radius_m": 1737957.9089648216,
+      "reference_height_m": -95.5,
+      "radial_difference_m": 653.4089648216031,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-3-0",
+      "renderer_radius_m": 1737982.3888763937,
+      "reference_height_m": -76.0,
+      "radial_difference_m": 658.3888763936702,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-3-1",
+      "renderer_radius_m": 1737982.891058852,
+      "reference_height_m": -73.5,
+      "radial_difference_m": 656.3910588519648,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-3-2",
+      "renderer_radius_m": 1737994.8755435548,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-3-3",
+      "renderer_radius_m": 1738008.3501336232,
+      "reference_height_m": -47.0,
+      "radial_difference_m": 655.3501336232293,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-3-4",
+      "renderer_radius_m": 1738019.2392312067,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-3-5",
+      "renderer_radius_m": 1738019.07126211,
+      "reference_height_m": -37.5,
+      "radial_difference_m": 656.5712621100247,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-3-6",
+      "renderer_radius_m": 1738005.5620711604,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-3-7",
+      "renderer_radius_m": 1737990.7441538689,
+      "reference_height_m": -64.0,
+      "radial_difference_m": 654.7441538688727,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-3-8",
+      "renderer_radius_m": 1737970.994836638,
+      "reference_height_m": -86.0,
+      "radial_difference_m": 656.9948366379831,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-0",
+      "renderer_radius_m": 1737982.3602449824,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-4-1",
+      "renderer_radius_m": 1737984.4886363433,
+      "reference_height_m": -71.5,
+      "radial_difference_m": 655.9886363432743,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-2",
+      "renderer_radius_m": 1737999.5422918869,
+      "reference_height_m": -55.5,
+      "radial_difference_m": 655.0422918868717,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-3",
+      "renderer_radius_m": 1738014.1160430375,
+      "reference_height_m": -40.0,
+      "radial_difference_m": 654.1160430375021,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-4",
+      "renderer_radius_m": 1738026.1020020854,
+      "reference_height_m": -31.0,
+      "radial_difference_m": 657.1020020854194,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-5",
+      "renderer_radius_m": 1738021.5165434943,
+      "reference_height_m": -36.5,
+      "radial_difference_m": 658.0165434943046,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-6",
+      "renderer_radius_m": 1738011.8695830882,
+      "reference_height_m": -50.5,
+      "radial_difference_m": 662.3695830882061,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-7",
+      "renderer_radius_m": 1737992.7920718521,
+      "reference_height_m": -69.0,
+      "radial_difference_m": 661.7920718521345,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-4-8",
+      "renderer_radius_m": 1737973.6371281121,
+      "reference_height_m": -86.5,
+      "radial_difference_m": 660.1371281121392,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-5-0",
+      "renderer_radius_m": 1737990.5792380564,
+      "reference_height_m": -65.5,
+      "radial_difference_m": 656.079238056438,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-5-1",
+      "renderer_radius_m": 1737996.42783635,
+      "reference_height_m": -56.5,
+      "radial_difference_m": 652.9278363499325,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-5-2",
+      "renderer_radius_m": 1738009.3993446121,
+      "reference_height_m": -43.0,
+      "radial_difference_m": 652.3993446121458,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-5-3",
+      "renderer_radius_m": 1738020.3741614886,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-5-4",
+      "renderer_radius_m": 1738026.626744908,
+      "reference_height_m": -34.5,
+      "radial_difference_m": 661.1267449080478,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-5-5",
+      "renderer_radius_m": 1738020.2297861213,
+      "reference_height_m": -41.5,
+      "radial_difference_m": 661.7297861212865,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-5-6",
+      "renderer_radius_m": 1738005.6489762363,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-5-7",
+      "renderer_radius_m": 1737987.6714730128,
+      "reference_height_m": -77.5,
+      "radial_difference_m": 665.1714730127715,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-5-8",
+      "renderer_radius_m": 1737967.0073052635,
+      "reference_height_m": -96.5,
+      "radial_difference_m": 663.5073052635416,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-6-0",
+      "renderer_radius_m": 1738005.9475157803,
+      "reference_height_m": -46.5,
+      "radial_difference_m": 652.447515780339,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-6-1",
+      "renderer_radius_m": 1738015.1648931252,
+      "reference_height_m": -35.0,
+      "radial_difference_m": 650.1648931251839,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-6-2",
+      "renderer_radius_m": 1738021.4158792465,
+      "reference_height_m": -32.5,
+      "radial_difference_m": 653.915879246546,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-6-3",
+      "renderer_radius_m": 1738025.5357396659,
+      "reference_height_m": -32.5,
+      "radial_difference_m": 658.035739665851,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-6-4",
+      "renderer_radius_m": 1738022.7294320331,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-6-5",
+      "renderer_radius_m": 1738010.760375663,
+      "reference_height_m": -54.0,
+      "radial_difference_m": 664.7603756629396,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-6-6",
+      "renderer_radius_m": 1737994.3319613724,
+      "reference_height_m": -72.0,
+      "radial_difference_m": 666.3319613724016,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-6-7",
+      "renderer_radius_m": 1737971.8385021638,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-6-8",
+      "renderer_radius_m": 1737952.2198598667,
+      "reference_height_m": -116.0,
+      "radial_difference_m": 668.2198598666582,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-0",
+      "renderer_radius_m": 1738022.453170816,
+      "reference_height_m": -25.0,
+      "radial_difference_m": 647.4531708159484,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-1",
+      "renderer_radius_m": 1738032.199457196,
+      "reference_height_m": -21.0,
+      "radial_difference_m": 653.1994571960531,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-2",
+      "renderer_radius_m": 1738030.2248446206,
+      "reference_height_m": -27.0,
+      "radial_difference_m": 657.2248446205631,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-3",
+      "renderer_radius_m": 1738023.7646877614,
+      "reference_height_m": -36.5,
+      "radial_difference_m": 660.2646877614316,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-4",
+      "renderer_radius_m": 1738011.7441068208,
+      "reference_height_m": -50.5,
+      "radial_difference_m": 662.2441068207845,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-5",
+      "renderer_radius_m": 1737995.2596506327,
+      "reference_height_m": -71.0,
+      "radial_difference_m": 666.2596506327391,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-6",
+      "renderer_radius_m": 1737970.0853455574,
+      "reference_height_m": -97.0,
+      "radial_difference_m": 667.0853455574252,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-7",
+      "renderer_radius_m": 1737947.055587672,
+      "reference_height_m": -126.5,
+      "radial_difference_m": 673.55558767193,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-7-8",
+      "renderer_radius_m": 1737928.263874904,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-8-0",
+      "renderer_radius_m": 1738042.6420957725,
+      "reference_height_m": -10.0,
+      "radial_difference_m": 652.6420957725495,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-8-1",
+      "renderer_radius_m": 1738042.240687915,
+      "reference_height_m": -11.5,
+      "radial_difference_m": 653.7406879148912,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-8-2",
+      "renderer_radius_m": 1738034.93208883,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-1-8-3",
+      "renderer_radius_m": 1738022.6404466867,
+      "reference_height_m": -40.5,
+      "radial_difference_m": 663.1404466866516,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-8-4",
+      "renderer_radius_m": 1737998.981672928,
+      "reference_height_m": -60.5,
+      "radial_difference_m": 659.4816729279701,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-8-5",
+      "renderer_radius_m": 1737980.3680152714,
+      "reference_height_m": -88.0,
+      "radial_difference_m": 668.3680152713787,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-8-6",
+      "renderer_radius_m": 1737951.2857531116,
+      "reference_height_m": -116.0,
+      "radial_difference_m": 667.2857531115878,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-8-7",
+      "renderer_radius_m": 1737921.5791963278,
+      "reference_height_m": -147.0,
+      "radial_difference_m": 668.5791963278316,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-1-8-8",
+      "renderer_radius_m": 1737898.033694396,
+      "reference_height_m": -175.0,
+      "radial_difference_m": 673.0336943960283,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-0-0",
+      "renderer_radius_m": 1735171.288690201,
+      "reference_height_m": -2893.5,
+      "radial_difference_m": 664.7886902010068,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-0-1",
+      "renderer_radius_m": 1735169.9779563118,
+      "reference_height_m": -2894.0,
+      "radial_difference_m": 663.9779563117772,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-0-2",
+      "renderer_radius_m": 1735168.8053103532,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-0-3",
+      "renderer_radius_m": 1735165.4970763687,
+      "reference_height_m": -2895.0,
+      "radial_difference_m": 660.4970763686579,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-0-4",
+      "renderer_radius_m": 1735171.8737482913,
+      "reference_height_m": -2888.5,
+      "radial_difference_m": 660.3737482912838,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-0-5",
+      "renderer_radius_m": 1735168.488196883,
+      "reference_height_m": -2889.5,
+      "radial_difference_m": 657.988196882885,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-0-6",
+      "renderer_radius_m": 1735167.027259456,
+      "reference_height_m": -2894.5,
+      "radial_difference_m": 661.5272594559938,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-0-7",
+      "renderer_radius_m": 1735170.7446511455,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-0-8",
+      "renderer_radius_m": 1735172.3523672803,
+      "reference_height_m": -2886.0,
+      "radial_difference_m": 658.3523672802839,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-1-0",
+      "renderer_radius_m": 1735168.907949752,
+      "reference_height_m": -2884.0,
+      "radial_difference_m": 652.9079497519415,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-1-1",
+      "renderer_radius_m": 1735169.4360052017,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-1-2",
+      "renderer_radius_m": 1735172.4438260656,
+      "reference_height_m": -2885.5,
+      "radial_difference_m": 657.9438260656316,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-1-3",
+      "renderer_radius_m": 1735171.6910656453,
+      "reference_height_m": -2885.5,
+      "radial_difference_m": 657.191065645311,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-1-4",
+      "renderer_radius_m": 1735171.858452166,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-1-5",
+      "renderer_radius_m": 1735172.049059645,
+      "reference_height_m": -2886.5,
+      "radial_difference_m": 658.54905964504,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-1-6",
+      "renderer_radius_m": 1735166.8706290121,
+      "reference_height_m": -2883.0,
+      "radial_difference_m": 649.870629012119,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-1-7",
+      "renderer_radius_m": 1735173.8165131756,
+      "reference_height_m": -2881.5,
+      "radial_difference_m": 655.3165131756105,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-1-8",
+      "renderer_radius_m": 1735172.8745755262,
+      "reference_height_m": -2883.0,
+      "radial_difference_m": 655.8745755262207,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-2-0",
+      "renderer_radius_m": 1735173.048475833,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-2-1",
+      "renderer_radius_m": 1735159.1913069107,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-2-2",
+      "renderer_radius_m": 1735170.7113091142,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-2-3",
+      "renderer_radius_m": 1735173.7689316163,
+      "reference_height_m": -2886.5,
+      "radial_difference_m": 660.2689316163305,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-2-4",
+      "renderer_radius_m": 1735172.3313612833,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-2-5",
+      "renderer_radius_m": 1735175.8081830083,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-2-6",
+      "renderer_radius_m": 1735180.3506195971,
+      "reference_height_m": -2887.5,
+      "radial_difference_m": 667.8506195971277,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-2-7",
+      "renderer_radius_m": 1735180.8153287626,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-2-8",
+      "renderer_radius_m": 1735179.3508566446,
+      "reference_height_m": -2878.0,
+      "radial_difference_m": 657.3508566445671,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-3-0",
+      "renderer_radius_m": 1735173.6885057928,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-3-1",
+      "renderer_radius_m": 1735174.7490650956,
+      "reference_height_m": -2890.0,
+      "radial_difference_m": 664.7490650955588,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-3-2",
+      "renderer_radius_m": 1735172.9629965592,
+      "reference_height_m": -2883.0,
+      "radial_difference_m": 655.9629965592176,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-3-3",
+      "renderer_radius_m": 1735171.7523705421,
+      "reference_height_m": -2884.0,
+      "radial_difference_m": 655.7523705421481,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-3-4",
+      "renderer_radius_m": 1735179.6381591402,
+      "reference_height_m": -2875.0,
+      "radial_difference_m": 654.638159140246,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-3-5",
+      "renderer_radius_m": 1735171.1636408255,
+      "reference_height_m": -2900.5,
+      "radial_difference_m": 671.6636408255436,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-3-6",
+      "renderer_radius_m": 1735129.361639949,
+      "reference_height_m": -2956.5,
+      "radial_difference_m": 685.8616399490274,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-3-7",
+      "renderer_radius_m": 1735147.7327689829,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-3-8",
+      "renderer_radius_m": 1735176.45534667,
+      "reference_height_m": -2895.0,
+      "radial_difference_m": 671.4553466700017,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-4-0",
+      "renderer_radius_m": 1735178.0005490512,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-4-1",
+      "renderer_radius_m": 1735157.8054193433,
+      "reference_height_m": -2882.0,
+      "radial_difference_m": 639.8054193432909,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-4-2",
+      "renderer_radius_m": 1735172.4046912026,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-4-3",
+      "renderer_radius_m": 1735176.4800096138,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-4-4",
+      "renderer_radius_m": 1735188.651243583,
+      "reference_height_m": -2867.5,
+      "radial_difference_m": 656.1512435830664,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-4-5",
+      "renderer_radius_m": 1735140.499875581,
+      "reference_height_m": -2918.5,
+      "radial_difference_m": 658.999875580892,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-4-6",
+      "renderer_radius_m": 1735078.7495450198,
+      "reference_height_m": -2980.5,
+      "radial_difference_m": 659.2495450198185,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-4-7",
+      "renderer_radius_m": 1735089.097688263,
+      "reference_height_m": -2970.0,
+      "radial_difference_m": 659.0976882630493,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-4-8",
+      "renderer_radius_m": 1735157.9742874452,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-5-0",
+      "renderer_radius_m": 1735183.0170150169,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-5-1",
+      "renderer_radius_m": 1735177.7474029867,
+      "reference_height_m": -2881.5,
+      "radial_difference_m": 659.2474029867444,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-5-2",
+      "renderer_radius_m": 1735172.6685503325,
+      "reference_height_m": -2885.0,
+      "radial_difference_m": 657.6685503325425,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-5-3",
+      "renderer_radius_m": 1735168.432129513,
+      "reference_height_m": -2882.5,
+      "radial_difference_m": 650.9321295130067,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-5-4",
+      "renderer_radius_m": 1735190.9977945301,
+      "reference_height_m": -2871.0,
+      "radial_difference_m": 661.9977945301216,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-5-5",
+      "renderer_radius_m": 1735161.4609897516,
+      "reference_height_m": -2884.0,
+      "radial_difference_m": 645.4609897516202,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-5-6",
+      "renderer_radius_m": 1735096.4245145842,
+      "reference_height_m": -2929.0,
+      "radial_difference_m": 625.4245145842433,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-5-7",
+      "renderer_radius_m": 1735103.5244776083,
+      "reference_height_m": -2929.0,
+      "radial_difference_m": 632.5244776082691,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-5-8",
+      "renderer_radius_m": 1735172.294083568,
+      "reference_height_m": -2881.5,
+      "radial_difference_m": 653.7940835680347,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-6-0",
+      "renderer_radius_m": 1735180.9678155417,
+      "reference_height_m": -2882.0,
+      "radial_difference_m": 662.9678155416623,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-6-1",
+      "renderer_radius_m": 1735178.7587477344,
+      "reference_height_m": -2879.0,
+      "radial_difference_m": 657.7587477343623,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-6-2",
+      "renderer_radius_m": 1735176.7567145831,
+      "reference_height_m": -2879.5,
+      "radial_difference_m": 656.2567145831417,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-6-3",
+      "renderer_radius_m": 1735177.121167962,
+      "reference_height_m": -2882.5,
+      "radial_difference_m": 659.6211679619737,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-6-4",
+      "renderer_radius_m": 1735182.269626294,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-6-5",
+      "renderer_radius_m": 1735185.7553016148,
+      "reference_height_m": -2879.0,
+      "radial_difference_m": 664.7553016147576,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-6-6",
+      "renderer_radius_m": 1735171.7567954045,
+      "reference_height_m": -2878.5,
+      "radial_difference_m": 650.2567954044789,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-6-7",
+      "renderer_radius_m": 1735174.2750469826,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-6-8",
+      "renderer_radius_m": 1735181.1096478538,
+      "reference_height_m": -2874.0,
+      "radial_difference_m": 655.1096478537656,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-0",
+      "renderer_radius_m": 1735185.3329741869,
+      "reference_height_m": -2869.0,
+      "radial_difference_m": 654.3329741868656,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-1",
+      "renderer_radius_m": 1735185.1104114817,
+      "reference_height_m": -2872.5,
+      "radial_difference_m": 657.610411481699,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-2",
+      "renderer_radius_m": 1735184.0663525283,
+      "reference_height_m": -2875.5,
+      "radial_difference_m": 659.5663525282871,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-3",
+      "renderer_radius_m": 1735178.3178694856,
+      "reference_height_m": -2880.5,
+      "radial_difference_m": 658.8178694855887,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-4",
+      "renderer_radius_m": 1735181.013706126,
+      "reference_height_m": -2878.5,
+      "radial_difference_m": 659.5137061260175,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-5",
+      "renderer_radius_m": 1735171.9452420112,
+      "reference_height_m": -2905.5,
+      "radial_difference_m": 677.4452420112211,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-6",
+      "renderer_radius_m": 1735177.8188739526,
+      "reference_height_m": -2899.0,
+      "radial_difference_m": 676.8188739526086,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-7",
+      "renderer_radius_m": 1735185.3417320873,
+      "reference_height_m": -2875.0,
+      "radial_difference_m": 660.3417320873123,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-7-8",
+      "renderer_radius_m": 1735181.1061343872,
+      "reference_height_m": -2883.0,
+      "radial_difference_m": 664.1061343871988,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-8-0",
+      "renderer_radius_m": 1735191.9392980207,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-8-1",
+      "renderer_radius_m": 1735187.728772327,
+      "reference_height_m": -2871.0,
+      "radial_difference_m": 658.728772327071,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-8-2",
+      "renderer_radius_m": 1735185.550840145,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-8-3",
+      "renderer_radius_m": 1735180.0147056333,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-2-8-4",
+      "renderer_radius_m": 1735180.9927509585,
+      "reference_height_m": -2878.5,
+      "radial_difference_m": 659.4927509585395,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-8-5",
+      "renderer_radius_m": 1735157.3806294433,
+      "reference_height_m": -2886.0,
+      "radial_difference_m": 643.3806294433307,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-8-6",
+      "renderer_radius_m": 1735160.8290054325,
+      "reference_height_m": -2891.5,
+      "radial_difference_m": 652.329005432548,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-8-7",
+      "renderer_radius_m": 1735178.0340874933,
+      "reference_height_m": -2877.5,
+      "radial_difference_m": 655.5340874933172,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-2-8-8",
+      "renderer_radius_m": 1735179.3406869753,
+      "reference_height_m": -2880.5,
+      "radial_difference_m": 659.8406869752798,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-0",
+      "renderer_radius_m": 1737436.462415447,
+      "reference_height_m": -630.5,
+      "radial_difference_m": 666.962415446993,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-1",
+      "renderer_radius_m": 1737442.5835284847,
+      "reference_height_m": -626.0,
+      "radial_difference_m": 668.5835284846835,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-2",
+      "renderer_radius_m": 1737452.3492848882,
+      "reference_height_m": -618.0,
+      "radial_difference_m": 670.3492848882452,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-3",
+      "renderer_radius_m": 1737466.421772372,
+      "reference_height_m": -605.0,
+      "radial_difference_m": 671.4217723719776,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-4",
+      "renderer_radius_m": 1737485.2037652077,
+      "reference_height_m": -584.5,
+      "radial_difference_m": 669.7037652076688,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-5",
+      "renderer_radius_m": 1737495.798343988,
+      "reference_height_m": -570.5,
+      "radial_difference_m": 666.2983439879026,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-6",
+      "renderer_radius_m": 1737496.2631341103,
+      "reference_height_m": -567.0,
+      "radial_difference_m": 663.2631341102533,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-7",
+      "renderer_radius_m": 1737484.292447414,
+      "reference_height_m": -574.5,
+      "radial_difference_m": 658.7924474140164,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-0-8",
+      "renderer_radius_m": 1737458.653051349,
+      "reference_height_m": -606.0,
+      "radial_difference_m": 664.6530513491016,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-1-0",
+      "renderer_radius_m": 1737457.7078388107,
+      "reference_height_m": -609.0,
+      "radial_difference_m": 666.7078388107475,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-1-1",
+      "renderer_radius_m": 1737468.511470122,
+      "reference_height_m": -599.0,
+      "radial_difference_m": 667.51147012203,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-1-2",
+      "renderer_radius_m": 1737480.327347736,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-1-3",
+      "renderer_radius_m": 1737496.2960352064,
+      "reference_height_m": -574.5,
+      "radial_difference_m": 670.796035206411,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-1-4",
+      "renderer_radius_m": 1737509.7945023482,
+      "reference_height_m": -560.5,
+      "radial_difference_m": 670.2945023481734,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-1-5",
+      "renderer_radius_m": 1737510.8737805297,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-1-6",
+      "renderer_radius_m": 1737503.1678520977,
+      "reference_height_m": -559.5,
+      "radial_difference_m": 662.6678520976566,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-1-7",
+      "renderer_radius_m": 1737486.3037135645,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-1-8",
+      "renderer_radius_m": 1737459.87500977,
+      "reference_height_m": -594.0,
+      "radial_difference_m": 653.8750097700395,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-0",
+      "renderer_radius_m": 1737480.0209196713,
+      "reference_height_m": -589.5,
+      "radial_difference_m": 669.5209196712822,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-1",
+      "renderer_radius_m": 1737493.5090572257,
+      "reference_height_m": -575.0,
+      "radial_difference_m": 668.5090572256595,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-2",
+      "renderer_radius_m": 1737508.1856838826,
+      "reference_height_m": -562.0,
+      "radial_difference_m": 670.1856838825624,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-3",
+      "renderer_radius_m": 1737524.2957035534,
+      "reference_height_m": -547.5,
+      "radial_difference_m": 671.7957035533618,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-4",
+      "renderer_radius_m": 1737530.2784170539,
+      "reference_height_m": -537.0,
+      "radial_difference_m": 667.2784170538653,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-5",
+      "renderer_radius_m": 1737527.6521845437,
+      "reference_height_m": -538.0,
+      "radial_difference_m": 665.6521845436655,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-6",
+      "renderer_radius_m": 1737510.1119785002,
+      "reference_height_m": -550.0,
+      "radial_difference_m": 660.1119785001501,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-7",
+      "renderer_radius_m": 1737486.0026760395,
+      "reference_height_m": -572.5,
+      "radial_difference_m": 658.5026760394685,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-2-8",
+      "renderer_radius_m": 1737459.875272559,
+      "reference_height_m": -598.0,
+      "radial_difference_m": 657.875272559002,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-3-0",
+      "renderer_radius_m": 1737496.893309708,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-3-1",
+      "renderer_radius_m": 1737507.6047644108,
+      "reference_height_m": -556.5,
+      "radial_difference_m": 664.1047644107603,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-3-2",
+      "renderer_radius_m": 1737527.2900140597,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-3-3",
+      "renderer_radius_m": 1737544.6631083873,
+      "reference_height_m": -524.0,
+      "radial_difference_m": 668.6631083872635,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-3-4",
+      "renderer_radius_m": 1737546.404838323,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-3-5",
+      "renderer_radius_m": 1737541.2141057171,
+      "reference_height_m": -525.5,
+      "radial_difference_m": 666.7141057171393,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-3-6",
+      "renderer_radius_m": 1737518.9746965135,
+      "reference_height_m": -547.0,
+      "radial_difference_m": 665.9746965134982,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-3-7",
+      "renderer_radius_m": 1737495.6098918915,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-3-8",
+      "renderer_radius_m": 1737473.1231454953,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-4-0",
+      "renderer_radius_m": 1737505.807532802,
+      "reference_height_m": -559.5,
+      "radial_difference_m": 665.3075328019913,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-4-1",
+      "renderer_radius_m": 1737511.2611890174,
+      "reference_height_m": -546.0,
+      "radial_difference_m": 657.2611890174448,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-4-2",
+      "renderer_radius_m": 1737535.6601275497,
+      "reference_height_m": -526.0,
+      "radial_difference_m": 661.660127549665,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-4-3",
+      "renderer_radius_m": 1737547.2777809792,
+      "reference_height_m": -508.5,
+      "radial_difference_m": 655.7777809791733,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-4-4",
+      "renderer_radius_m": 1737542.284110563,
+      "reference_height_m": -509.0,
+      "radial_difference_m": 651.2841105631087,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-4-5",
+      "renderer_radius_m": 1737541.1325400418,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-4-6",
+      "renderer_radius_m": 1737525.6220168604,
+      "reference_height_m": -534.0,
+      "radial_difference_m": 659.622016860405,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-4-7",
+      "renderer_radius_m": 1737507.2136960241,
+      "reference_height_m": -557.5,
+      "radial_difference_m": 664.7136960241478,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-4-8",
+      "renderer_radius_m": 1737490.265198733,
+      "reference_height_m": -574.5,
+      "radial_difference_m": 664.7651987329591,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-5-0",
+      "renderer_radius_m": 1737511.102061002,
+      "reference_height_m": -546.5,
+      "radial_difference_m": 657.6020610020496,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-5-1",
+      "renderer_radius_m": 1737519.219441491,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-5-2",
+      "renderer_radius_m": 1737527.082221284,
+      "reference_height_m": -527.0,
+      "radial_difference_m": 654.082221284043,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-5-3",
+      "renderer_radius_m": 1737533.622992268,
+      "reference_height_m": -517.0,
+      "radial_difference_m": 650.622992268065,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-5-4",
+      "renderer_radius_m": 1737535.1024051032,
+      "reference_height_m": -519.5,
+      "radial_difference_m": 654.6024051031563,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-5-5",
+      "renderer_radius_m": 1737534.9144806608,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-5-6",
+      "renderer_radius_m": 1737527.0849076938,
+      "reference_height_m": -531.5,
+      "radial_difference_m": 658.5849076937884,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-5-7",
+      "renderer_radius_m": 1737512.283377244,
+      "reference_height_m": -549.0,
+      "radial_difference_m": 661.2833772439044,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-5-8",
+      "renderer_radius_m": 1737497.6275729176,
+      "reference_height_m": -565.5,
+      "radial_difference_m": 663.1275729176123,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-6-0",
+      "renderer_radius_m": 1737492.8963836154,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-6-1",
+      "renderer_radius_m": 1737499.6681566872,
+      "reference_height_m": -547.0,
+      "radial_difference_m": 646.6681566871703,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-6-2",
+      "renderer_radius_m": 1737508.7984468876,
+      "reference_height_m": -542.0,
+      "radial_difference_m": 650.7984468876384,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-6-3",
+      "renderer_radius_m": 1737513.3212041059,
+      "reference_height_m": -537.0,
+      "radial_difference_m": 650.3212041058578,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-6-4",
+      "renderer_radius_m": 1737518.9061850542,
+      "reference_height_m": -533.0,
+      "radial_difference_m": 651.9061850542203,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-6-5",
+      "renderer_radius_m": 1737517.80990689,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-6-6",
+      "renderer_radius_m": 1737522.015119329,
+      "reference_height_m": -534.5,
+      "radial_difference_m": 656.5151193290949,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-6-7",
+      "renderer_radius_m": 1737513.9151235372,
+      "reference_height_m": -545.0,
+      "radial_difference_m": 658.9151235371828,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-6-8",
+      "renderer_radius_m": 1737504.1950551425,
+      "reference_height_m": -556.5,
+      "radial_difference_m": 660.6950551425107,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-7-0",
+      "renderer_radius_m": 1737479.1520437524,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-7-1",
+      "renderer_radius_m": 1737481.2472020548,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-7-2",
+      "renderer_radius_m": 1737479.904370235,
+      "reference_height_m": -563.0,
+      "radial_difference_m": 642.9043702350464,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-7-3",
+      "renderer_radius_m": 1737483.9760843392,
+      "reference_height_m": -562.5,
+      "radial_difference_m": 646.4760843391996,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-7-4",
+      "renderer_radius_m": 1737494.808850647,
+      "reference_height_m": -553.5,
+      "radial_difference_m": 648.3088506469503,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-7-5",
+      "renderer_radius_m": 1737504.0427776873,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-7-6",
+      "renderer_radius_m": 1737513.477578293,
+      "reference_height_m": -541.5,
+      "radial_difference_m": 654.9775782930665,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-7-7",
+      "renderer_radius_m": 1737513.2460079666,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-7-8",
+      "renderer_radius_m": 1737502.1346961297,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-8-0",
+      "renderer_radius_m": 1737462.5121563897,
+      "reference_height_m": -590.5,
+      "radial_difference_m": 653.0121563896537,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-8-1",
+      "renderer_radius_m": 1737459.075776817,
+      "reference_height_m": -591.5,
+      "radial_difference_m": 650.5757768170442,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-8-2",
+      "renderer_radius_m": 1737456.0957996212,
+      "reference_height_m": -593.0,
+      "radial_difference_m": 649.0957996211946,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-8-3",
+      "renderer_radius_m": 1737456.5749166305,
+      "reference_height_m": -591.0,
+      "radial_difference_m": 647.5749166305177,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-8-4",
+      "renderer_radius_m": 1737469.7940477717,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-8-5",
+      "renderer_radius_m": 1737489.3711519865,
+      "reference_height_m": null,
+      "radial_difference_m": null,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "zero_count_interpolated_fill_unknown"
+      ]
+    },
+    {
+      "id": "inner-3-8-6",
+      "renderer_radius_m": 1737504.4097412906,
+      "reference_height_m": -550.5,
+      "radial_difference_m": 654.9097412906121,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-8-7",
+      "renderer_radius_m": 1737507.2498469064,
+      "reference_height_m": -547.5,
+      "radial_difference_m": 654.7498469064012,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    },
+    {
+      "id": "inner-3-8-8",
+      "renderer_radius_m": 1737507.4697871895,
+      "reference_height_m": -556.5,
+      "radial_difference_m": 663.9697871895041,
+      "horizontal_landmark_residual_m": null,
+      "reference_quality": [
+        "positive_count_pixel"
+      ]
+    }
+  ],
+  "warnings": [
+    "Radial ray queries do not establish independent horizontal terrain-fiducial correspondence.",
+    "A difference can arise from source resolution, pixel sampling, asset conversion or renderer query behavior.",
+    "No visual correction, DEM modification or overlay release is authorized by this diagnostic."
+  ]
+}

@@ -4,9 +4,12 @@ The browser now submits real jobs to the Python service by default. The live
 numerical workflow passes: direct and relay planning, rescheduling changed
 inputs, unknown coverage, cancellation, immutable display samples and exact ZIP
 downloads. **Phase 5 is not fully accepted:** the engine-to-Moon-asset coordinate
-bridge still lacks an authoritative frame realization and independent terrain
-landmark residuals. Aligned scientific entities stay disabled, and Phase 6 has
-not begun.
+bridge has not passed independent terrain-landmark verification. The advertised
+source grids explicitly document DE421 mean Earth/polar axis, but measured mesh
+heights differ substantially from the independent numerical reference. See the
+[source audit](registration-source-audit.md) for calibrated sampling and CPU
+intersection evidence. Aligned scientific entities stay disabled, and Phase 6
+has not begun. PRs #8 and #9 are merged; their merge does not clear this gate.
 
 ## Start the integrated application
 
@@ -69,8 +72,10 @@ pass registration before an asset can appear as scientific geometry.
 
 ## Evidence and acceptance boundary
 
-Owner verification passes **299 engine tests, 58 Node tests, four live Chromium
-checks, seventeen fixture Chromium checks and the production build**. A fresh
+Latest owner verification passes **319 engine tests, 60 Node tests and the
+production build**. The earlier integration verification includes four live
+Chromium checks and seventeen fixture Chromium checks; this diagnostic change
+does not modify product UI code. A fresh
 CLI replay of the downloaded relay run passes with zero errors and 104,857,600
 unique delivered bytes. No engine tests were skipped. Existing pinned-library
 deprecation warnings remain visible in test output.
