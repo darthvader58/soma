@@ -1,15 +1,13 @@
 # Phase 5 integration handoff
 
-The browser now submits real jobs to the Python service by default. The live
-numerical workflow passes: direct and relay planning, rescheduling changed
-inputs, unknown coverage, cancellation, immutable display samples and exact ZIP
-downloads. **Phase 5 is not fully accepted:** the engine-to-Moon-asset coordinate
-bridge has not passed independent terrain-landmark verification. The advertised
-source grids explicitly document DE421 mean Earth/polar axis, but measured mesh
-heights differ substantially from the independent numerical reference. See the
-[source audit](registration-source-audit.md) for calibrated sampling and CPU
-intersection evidence. Aligned scientific entities stay disabled, and Phase 6
-has not begun. PRs #8 and #9 are merged; their merge does not clear this gate.
+The live numerical workflow and the regional map-alignment gate now pass.
+The engine reverses the observed ingestion conversion in the official Cesium
+Moon v6 mesh and publishes a versioned identity bridge to the corrected static
+representation. Four source-selected terrain features match within the declared
+10 m relative display tolerance at the tested grid resolution. See
+[map-alignment.md](map-alignment.md) for the method, measurements and limits.
+The raw asset remains unregistered. Phase 6 begins only after the integrated
+changes are merged by the repository owner.
 
 ## Start the integrated application
 
@@ -51,7 +49,7 @@ URL access. A working token establishes access, not scientific registration.
 Completed jobs expose `/plans/{id}/display-data` and
 `/plans/{id}/renderer-registration` in addition to the native result, summary,
 CZML and exact ZIP. The ZIP contains the same `display-data.json` and
-`renderer-registration.json` bytes. The service caches them at completion;
+`renderer-registration.json` values, plus the pinned `renderer-conversion.json` parameters. The service caches them at completion;
 later source/manifest edits cannot change a completed job.
 
 Display format 0.5.0 binds scenario ID/hash, run version and model fidelity. It
@@ -72,8 +70,7 @@ pass registration before an asset can appear as scientific geometry.
 
 ## Evidence and acceptance boundary
 
-Latest owner verification passes **319 engine tests, 60 Node tests and the
-production build**. The earlier integration verification includes four live
+Current verification commands are listed below; the final counts and capture hashes are recorded in `data/phase5-evidence.manifest.json`. The earlier integration verification includes four live
 Chromium checks and seventeen fixture Chromium checks; this diagnostic change
 does not modify product UI code. A fresh
 CLI replay of the downloaded relay run passes with zero errors and 104,857,600
@@ -101,16 +98,17 @@ checks use their own loopback ports with the real engine. The token-backed
 Moon was also inspected separately through Aside. This distinguishes missing-map
 resilience from actual asset access.
 
-See [registration.md](registration.md) for inspected primary metadata, four
-published landmark candidates and the exact missing scientific evidence. Catalog
-sphere algebra is tested separately and is not reported as map residuals.
+See [registration.md](registration.md) for the handoff contract and
+[map-alignment.md](map-alignment.md) for the measured evidence. The earlier
+[source audit](registration-source-audit.md) preserves the raw asset discrepancy
+and sampler calibration; it is historical evidence, not the current gate.
 The [interface verification](../../../web/docs/phase-5-verification.md) records
-the interaction checks and delivery gate. The recorded live export under
-`fixtures/phase-5/` permits independent replay without browser state.
+interaction checks and the delivery gate. The recorded live export under
+`fixtures/phase-5/` permits independent replay without browser state; its older
+registration file documents the state when that run was produced. New runs
+export the current certificate and conversion without rewriting old results.
 
 All delivery examples remain synthetic, assumed-rate planning calculations.
 Real LOLA horizon gaps remain unknown. No booking, flight certification,
-thermal-survival, universal site-ranking or complete challenge claim is made.
-The integration PR is reviewable while map registration remains an explicit
-unfinished acceptance gate. The repository owner merges PRs; Phase 6 requires
-the integrated merge and the outstanding gate to pass.
+thermal-survival, universal site-ranking or absolute-navigation claim is made.
+A registered map does not make an unsupported numerical terrain sample known.

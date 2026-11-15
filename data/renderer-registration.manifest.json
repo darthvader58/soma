@@ -1,16 +1,34 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "authority": "soma_engine",
-  "status": "blocked_pending_asset_registration",
+  "status": "registered_for_region",
   "source_frame": "MOON_ME_DE421",
-  "renderer_frame": null,
+  "renderer_frame": "SOMA_MOON_ME_DE421_CORRECTED_V1",
   "asset_id": 2684829,
+  "representation": "engine_corrected_mesh",
   "origin": "MOON",
   "position_unit": "m",
   "epoch": null,
-  "time_scale": "not_applicable_static_catalog",
-  "transform_column_major": null,
-  "transform_meaning": "Unestablished. Future reviewed matrix maps Moon-centered source column [x_m,y_m,z_m,1] to renderer column [x_m,y_m,z_m,1]; translation in m. No identity implied. Time-dependent bridge must instead declare epochs and coverage.",
+  "time_scale": "not_applicable_static_terrain",
+  "transform_column_major": [
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ],
+  "transform_meaning": "Moon-centered DE421 mean-Earth Cartesian source columns map identically to the corrected renderer. The streamed asset vertices are first converted by the versioned engine display conversion; this identity never applies to raw ion tiles.",
   "source_manifest_ref": "renderer-registration-sources.manifest.json",
   "source_manifest_sha256": "ba5c377261b4f3b3d18946ee470c2a1af0595610c0a2f5681015698b3aaa168e",
   "source_bindings": [
@@ -23,116 +41,188 @@
       "sha256": "c360b16e987d5230b573f22c0a94136a27b62efa8fd27db626358e78702005f6"
     },
     {
-      "path": "renderer-registration-source-audit.manifest.json",
-      "sha256": "f43219347b099a354759b8255d5e791417389874c348c90f9cb75e6cf5826c7a"
+      "path": "renderer-conversion.manifest.json",
+      "sha256": "aa08fa4b2f9b778879d6ff9b06947fea45e5e0151034f4bafca9997d6ec9d5cd"
+    },
+    {
+      "path": "renderer-alignment-evidence.manifest.json",
+      "sha256": "9eae848b47615a5fa62d8364e43abf572489006c51fca67a029ca6114255d00a"
     }
   ],
-  "tolerance_m": null,
-  "tolerance_justification": "Unapproved until rendered LOD, independent control uncertainty, region and intended overlay scale are known. Five-meter source pixel size is not an asset registration accuracy.",
+  "conversion_manifest_ref": "renderer-conversion.manifest.json",
+  "conversion_manifest_sha256": "aa08fa4b2f9b778879d6ff9b06947fea45e5e0151034f4bafca9997d6ec9d5cd",
+  "evidence_manifest_ref": "renderer-alignment-evidence.manifest.json",
+  "certified_region": {
+    "latitude_deg": [
+      -90,
+      -87.5
+    ],
+    "longitude_deg_east": [
+      -180,
+      180
+    ]
+  },
+  "tolerance_m": 10,
+  "tolerance_justification": "Declared before corrected-scene landmark queries: 10 m relative display tolerance for the pinned 5 m source grid and detailed 5.21 m mesh. Resolved grid-feature residual plus a 3.54 m grid-resolution allowance must pass. This is a discrete relative-registration acceptance test, not a bound on continuous-peak localization, absolute navigation accuracy, or uncertainty probability.",
   "landmarks": [
     {
-      "id": "tycho",
-      "name": "Tycho",
-      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/6163",
-      "catalog_coordinates": {
-        "latitude_deg": -43.3,
-        "longitude_deg_east": -11.22,
-        "coordinate_type": "planetographic_as_displayed_by_catalog",
-        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
-        "reference_radius_m": 1737400,
-        "elevation_m": null
-      },
-      "catalog_reference_position_m": [
-        1240265.6659178922,
-        -246029.15413833119,
-        -1191540.8063760232
+      "id": "polar-peak-0",
+      "analysis_position_m": [
+        27805.11709870272,
+        39117.70218792288,
+        -1732867.5298079378
       ],
-      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
-      "analysis_position_m": null,
-      "renderer_position_m": null,
-      "residual_m": null
+      "renderer_position_m": [
+        27805.1134027729,
+        39117.69698829427,
+        -1732867.2994705955
+      ],
+      "residual_m": 0.23042566538576972,
+      "radial_residual_m": -0.23042566538576975,
+      "resolved_horizontal_residual_m": 1.3296088018868456e-11,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.7659595713185077,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true,
+      "name": "LOLA source-defined polar terrain peak 1",
+      "source_ref": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M_JP2.LBL",
+      "source_pixel_center": {
+        "source_center_row": 9593,
+        "source_center_column": 23010
+      },
+      "coordinates": {
+        "latitude_deg": -88.41356119738752,
+        "longitude_deg_east": 54.594537678151326,
+        "elevation_m": -3868.0
+      },
+      "reference_interpretation": "Identifiable peak in the pinned published numerical product, with a measured laser-return pixel; inherits source geolocation uncertainty"
     },
     {
-      "id": "plato",
-      "name": "Plato",
-      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/4757",
-      "catalog_coordinates": {
-        "latitude_deg": 51.62,
-        "longitude_deg_east": -9.38,
-        "coordinate_type": "planetographic_as_displayed_by_catalog",
-        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
-        "reference_radius_m": 1737400,
-        "elevation_m": null
-      },
-      "catalog_reference_position_m": [
-        1064283.5367329947,
-        -175809.3323374016,
-        1361965.6354336496
+      "id": "polar-peak-1",
+      "analysis_position_m": [
+        -34255.09668776135,
+        31305.303643058836,
+        -1736968.2277055986
       ],
-      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
-      "analysis_position_m": null,
-      "renderer_position_m": null,
-      "residual_m": null
+      "renderer_position_m": [
+        -34255.09637299951,
+        31305.303355401942,
+        -1736968.2117447415
+      ],
+      "residual_m": 0.01596655187979541,
+      "radial_residual_m": -0.01596655187979373,
+      "resolved_horizontal_residual_m": 7.32718530495169e-09,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.551500457812533,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true,
+      "name": "LOLA source-defined polar terrain peak 2",
+      "source_ref": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M_JP2.LBL",
+      "source_pixel_center": {
+        "source_center_row": 22019,
+        "source_center_column": 21429
+      },
+      "coordinates": {
+        "latitude_deg": -88.46964137787887,
+        "longitude_deg_east": 137.57620118277646,
+        "elevation_m": 188.0
+      },
+      "reference_interpretation": "Identifiable peak in the pinned published numerical product, with a measured laser-return pixel; inherits source geolocation uncertainty"
     },
     {
-      "id": "tsiolkovskiy",
-      "name": "Tsiolkovskiy",
-      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/6108",
-      "catalog_coordinates": {
-        "latitude_deg": -20.38,
-        "longitude_deg_east": 128.97,
-        "coordinate_type": "planetographic_as_displayed_by_catalog",
-        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
-        "reference_radius_m": 1737400,
-        "elevation_m": null
-      },
-      "catalog_reference_position_m": [
-        -1024276.6683630894,
-        1266231.3887630093,
-        -605040.6075283787
+      "id": "polar-peak-2",
+      "analysis_position_m": [
+        -32535.015648923494,
+        -38814.88518269345,
+        -1734232.101899059
       ],
-      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
-      "analysis_position_m": null,
-      "renderer_position_m": null,
-      "residual_m": null
+      "renderer_position_m": [
+        -32535.014033902506,
+        -38814.88325594305,
+        -1734232.0158129043
+      ],
+      "residual_m": 0.08612285810347373,
+      "radial_residual_m": -0.0861228581034735,
+      "resolved_horizontal_residual_m": 6.150509163931835e-09,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.6216567640362114,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true,
+      "name": "LOLA source-defined polar terrain peak 3",
+      "source_ref": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M_JP2.LBL",
+      "source_pixel_center": {
+        "source_center_row": 21685,
+        "source_center_column": 7392
+      },
+      "coordinates": {
+        "latitude_deg": -88.32719218785954,
+        "longitude_deg_east": -129.9700672025313,
+        "elevation_m": -2428.5
+      },
+      "reference_interpretation": "Identifiable peak in the pinned published numerical product, with a measured laser-return pixel; inherits source geolocation uncertainty"
     },
     {
-      "id": "shackleton",
-      "name": "Shackleton",
-      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/5450",
-      "catalog_coordinates": {
-        "latitude_deg": -89.67,
-        "longitude_deg_east": 129.78,
-        "coordinate_type": "planetographic_as_displayed_by_catalog",
-        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
-        "reference_radius_m": 1737400,
-        "elevation_m": null
-      },
-      "catalog_reference_position_m": [
-        -6402.669936848942,
-        7690.179985212382,
-        -1737371.1828361477
+      "id": "polar-peak-3",
+      "analysis_position_m": [
+        24608.547304597174,
+        -33277.15492799414,
+        -1736874.4572984271
       ],
-      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
-      "analysis_position_m": null,
-      "renderer_position_m": null,
-      "residual_m": null
+      "renderer_position_m": [
+        24608.544007833247,
+        -33277.150469912056,
+        -1736874.224612402
+      ],
+      "residual_m": 0.23275207715652269,
+      "radial_residual_m": -0.23275207715652269,
+      "resolved_horizontal_residual_m": 4.533921878565553e-12,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.7682859830892603,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true,
+      "name": "LOLA source-defined polar terrain peak 4",
+      "source_ref": "https://imbrium.mit.edu/DATA/LOLA_GDR/POLAR/JP2/LDEM_875S_5M_JP2.LBL",
+      "source_pixel_center": {
+        "source_center_row": 10245,
+        "source_center_column": 8511
+      },
+      "coordinates": {
+        "latitude_deg": -88.6349633183826,
+        "longitude_deg_east": -53.516972925668256,
+        "elevation_m": -32.5
+      },
+      "reference_interpretation": "Identifiable peak in the pinned published numerical product, with a measured laser-return pixel; inherits source geolocation uncertainty"
     }
   ],
   "distribution_review": {
-    "accepted": false,
-    "evidence_ref": "soma/docs/phase-5/registration.md",
-    "candidate_extent": "Northern and southern near side, southern far side and south pole; additional western/far-northern and local-site controls needed for review."
+    "accepted": true,
+    "evidence_ref": "soma/docs/phase-5/map-alignment.md",
+    "extent": "Four source-defined terrain peaks across four polar quadrants; minimum separation 57.47 km. Additional 48 height controls span -87.6 to -89.8 degrees."
   },
   "release_gate": {
-    "overlays_allowed": false,
-    "map_registration_passed": false,
+    "overlays_allowed": true,
+    "map_registration_passed": true,
     "text_schedule_available": true,
-    "blockers": [
-      "Source labels establish DE421 provenance, but the candidate identity bridge has not passed independent mesh-feature correspondence.",
-      "Calibrated queries and decoded asset triangles reproduce substantial height differences; four positive-count pixels in the advertised 5 m source retain 650 to 659 m differences. Source-version, datum or asset-conversion causes remain unresolved.",
-      "Independent horizontal terrain-fiducial positions and landmark residuals are not established.",
-      "A regional display tolerance and distribution review have not passed."
-    ]
-  }
+    "blockers": []
+  },
+  "limitations": [
+    "Registration is applied only for latitude -90 to -87.5 degrees in the corrected representation, based on four grid features and 48 height checks at the detailed mesh level; this is not an all-location or all-LOD accuracy guarantee.",
+    "The 3.54 m grid-resolution allowance does not bound continuous terrain-peak localization between samples.",
+    "Only the root and control tile fingerprints are checked at runtime; other streamed content is not completely checksum-pinned.",
+    "LOLA reference and mesh may share source observations. Independent extraction validates the display conversion, not independent absolute geodesy.",
+    "Unmodified streamed coordinates remain unregistered. Numerical DEM quality and coverage are independent of rendering.",
+    "No spacecraft ephemeris is invented for the synthetic contact-only relay fixture."
+  ]
 }

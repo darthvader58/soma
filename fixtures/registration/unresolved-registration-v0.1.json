@@ -1,0 +1,138 @@
+{
+  "version": "0.1.0",
+  "authority": "soma_engine",
+  "status": "blocked_pending_asset_registration",
+  "source_frame": "MOON_ME_DE421",
+  "renderer_frame": null,
+  "asset_id": 2684829,
+  "origin": "MOON",
+  "position_unit": "m",
+  "epoch": null,
+  "time_scale": "not_applicable_static_catalog",
+  "transform_column_major": null,
+  "transform_meaning": "Unestablished. Future reviewed matrix maps Moon-centered source column [x_m,y_m,z_m,1] to renderer column [x_m,y_m,z_m,1]; translation in m. No identity implied. Time-dependent bridge must instead declare epochs and coverage.",
+  "source_manifest_ref": "renderer-registration-sources.manifest.json",
+  "source_manifest_sha256": "ba5c377261b4f3b3d18946ee470c2a1af0595610c0a2f5681015698b3aaa168e",
+  "source_bindings": [
+    {
+      "path": "de421-phase2.manifest.json",
+      "sha256": "f39c7e8951834cad1cc9104127bf9c31ffe6b41eac71db9df53af243d6255c01"
+    },
+    {
+      "path": "lola-phase2.manifest.json",
+      "sha256": "c360b16e987d5230b573f22c0a94136a27b62efa8fd27db626358e78702005f6"
+    },
+    {
+      "path": "renderer-registration-source-audit.manifest.json",
+      "sha256": "f43219347b099a354759b8255d5e791417389874c348c90f9cb75e6cf5826c7a"
+    }
+  ],
+  "tolerance_m": null,
+  "tolerance_justification": "Unapproved until rendered LOD, independent control uncertainty, region and intended overlay scale are known. Five-meter source pixel size is not an asset registration accuracy.",
+  "landmarks": [
+    {
+      "id": "tycho",
+      "name": "Tycho",
+      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/6163",
+      "catalog_coordinates": {
+        "latitude_deg": -43.3,
+        "longitude_deg_east": -11.22,
+        "coordinate_type": "planetographic_as_displayed_by_catalog",
+        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_m": null
+      },
+      "catalog_reference_position_m": [
+        1240265.6659178922,
+        -246029.15413833119,
+        -1191540.8063760232
+      ],
+      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
+      "analysis_position_m": null,
+      "renderer_position_m": null,
+      "residual_m": null
+    },
+    {
+      "id": "plato",
+      "name": "Plato",
+      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/4757",
+      "catalog_coordinates": {
+        "latitude_deg": 51.62,
+        "longitude_deg_east": -9.38,
+        "coordinate_type": "planetographic_as_displayed_by_catalog",
+        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_m": null
+      },
+      "catalog_reference_position_m": [
+        1064283.5367329947,
+        -175809.3323374016,
+        1361965.6354336496
+      ],
+      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
+      "analysis_position_m": null,
+      "renderer_position_m": null,
+      "residual_m": null
+    },
+    {
+      "id": "tsiolkovskiy",
+      "name": "Tsiolkovskiy",
+      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/6108",
+      "catalog_coordinates": {
+        "latitude_deg": -20.38,
+        "longitude_deg_east": 128.97,
+        "coordinate_type": "planetographic_as_displayed_by_catalog",
+        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_m": null
+      },
+      "catalog_reference_position_m": [
+        -1024276.6683630894,
+        1266231.3887630093,
+        -605040.6075283787
+      ],
+      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
+      "analysis_position_m": null,
+      "renderer_position_m": null,
+      "residual_m": null
+    },
+    {
+      "id": "shackleton",
+      "name": "Shackleton",
+      "source_ref": "https://planetarynames.wr.usgs.gov/Feature/5450",
+      "catalog_coordinates": {
+        "latitude_deg": -89.67,
+        "longitude_deg_east": 129.78,
+        "coordinate_type": "planetographic_as_displayed_by_catalog",
+        "control_network": "active_default_on_2026-11-15_not_yet_mapped_to_DE421",
+        "reference_radius_m": 1737400,
+        "elevation_m": null
+      },
+      "catalog_reference_position_m": [
+        -6402.669936848942,
+        7690.179985212382,
+        -1737371.1828361477
+      ],
+      "catalog_position_label": "assumed_reference_sphere_for_algebraic_check_only_not_registered_terrain",
+      "analysis_position_m": null,
+      "renderer_position_m": null,
+      "residual_m": null
+    }
+  ],
+  "distribution_review": {
+    "accepted": false,
+    "evidence_ref": "soma/docs/phase-5/registration.md",
+    "candidate_extent": "Northern and southern near side, southern far side and south pole; additional western/far-northern and local-site controls needed for review."
+  },
+  "release_gate": {
+    "overlays_allowed": false,
+    "map_registration_passed": false,
+    "text_schedule_available": true,
+    "blockers": [
+      "Source labels establish DE421 provenance, but the candidate identity bridge has not passed independent mesh-feature correspondence.",
+      "Calibrated queries and decoded asset triangles reproduce substantial height differences; four positive-count pixels in the advertised 5 m source retain 650 to 659 m differences. Source-version, datum or asset-conversion causes remain unresolved.",
+      "Independent horizontal terrain-fiducial positions and landmark residuals are not established.",
+      "A regional display tolerance and distribution review have not passed."
+    ]
+  }
+}

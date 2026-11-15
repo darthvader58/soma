@@ -1,0 +1,113 @@
+{
+  "artifact_type": "soma_terrain_feature_registration",
+  "version": "0.1.0",
+  "source_frame": "MOON_ME_DE421",
+  "renderer_frame": "SOMA_MOON_ME_DE421_CORRECTED_V1",
+  "origin": "MOON",
+  "position_unit": "m",
+  "epoch": null,
+  "time_scale": "static_terrain",
+  "tolerance_m": 10,
+  "landmarks": [
+    {
+      "id": "polar-peak-0",
+      "analysis_position_m": [
+        27805.11709870272,
+        39117.70218792288,
+        -1732867.5298079378
+      ],
+      "renderer_position_m": [
+        27805.1134027729,
+        39117.69698829427,
+        -1732867.2994705955
+      ],
+      "residual_m": 0.23042566538576972,
+      "radial_residual_m": -0.23042566538576975,
+      "resolved_horizontal_residual_m": 1.3296088018868456e-11,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.7659595713185077,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true
+    },
+    {
+      "id": "polar-peak-1",
+      "analysis_position_m": [
+        -34255.09668776135,
+        31305.303643058836,
+        -1736968.2277055986
+      ],
+      "renderer_position_m": [
+        -34255.09637299951,
+        31305.303355401942,
+        -1736968.2117447415
+      ],
+      "residual_m": 0.01596655187979541,
+      "radial_residual_m": -0.01596655187979373,
+      "resolved_horizontal_residual_m": 7.32718530495169e-09,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.551500457812533,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true
+    },
+    {
+      "id": "polar-peak-2",
+      "analysis_position_m": [
+        -32535.015648923494,
+        -38814.88518269345,
+        -1734232.101899059
+      ],
+      "renderer_position_m": [
+        -32535.014033902506,
+        -38814.88325594305,
+        -1734232.0158129043
+      ],
+      "residual_m": 0.08612285810347373,
+      "radial_residual_m": -0.0861228581034735,
+      "resolved_horizontal_residual_m": 6.150509163931835e-09,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.6216567640362114,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true
+    },
+    {
+      "id": "polar-peak-3",
+      "analysis_position_m": [
+        24608.547304597174,
+        -33277.15492799414,
+        -1736874.4572984271
+      ],
+      "renderer_position_m": [
+        24608.544007833247,
+        -33277.150469912056,
+        -1736874.224612402
+      ],
+      "residual_m": 0.23275207715652269,
+      "radial_residual_m": -0.23275207715652269,
+      "resolved_horizontal_residual_m": 4.533921878565553e-12,
+      "horizontal_grid_resolution_allowance_m": 3.5355339059327378,
+      "resolution_adjusted_residual_m": 3.7682859830892603,
+      "acceptance_tolerance_m": 10,
+      "source_peak_band_pixels": 1,
+      "renderer_peak_band_pixels": 1,
+      "source_positive_count_peak_pixels": 1,
+      "passed": true
+    }
+  ],
+  "minimum_control_separation_m": 57472.03916212963,
+  "distribution_passed": true,
+  "registration_passed": true,
+  "warnings": [
+    "Horizontal correspondence is resolved at the five-meter search-grid scale; near-zero resolved displacement is not exact lunar geolocation.",
+    "Published interpolated heights identify the surrounding feature; positive-count support is required at its reference peak.",
+    "This validates the corrected representation in the declared region, not the unmodified asset or absolute navigation accuracy."
+  ]
+}

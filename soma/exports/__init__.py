@@ -93,13 +93,15 @@ def _lander_radio_energy_wh(scenario, records):
     return energy
 
 
-def display_payload(run):
-    """Preserve exact epochs; positions await Phase 5 frame registration."""
+def display_payload(run, display=None):
+    """Preserve exact epochs and the registration status of this run."""
     result = run["result"]
+    registration = (display or display_data(run))['registration']
     return [{"id": "document", "version": "1.0", "name": "SOMA planning result"}, {
         "id": "soma-run", "properties": {
             "scenario_sha256": result["scenario_sha256"],
-            "registration_status": "blocked_until_phase_5_registration",
+            "registration_status": registration['status'],
+            "map_registration_passed": registration['release_gate']['map_registration_passed'],
             "model_fidelity": result["model_fidelity"],
             "allocations_json": json.dumps(result["allocations"], sort_keys=True, allow_nan=False),
             "warnings_json": json.dumps(result["warnings"], ensure_ascii=False),
@@ -115,7 +117,7 @@ def _csv(headers, rows):
     return output.getvalue().encode("utf-8")
 
 
-def explanation(run):
+def explanation(run, display=None):
     result = run["result"]
     lines = ["# SOMA delivery plan", "", f"Outcome: {result['status']}.",
              f"Solver: {result['solver_status']}. Model: {result['model_fidelity']}.",
@@ -133,7 +135,10 @@ def explanation(run):
     for label in ("assumptions", "warnings"):
         lines.extend(["", label.capitalize() + ":", ""])
         lines.extend("- " + value for value in result[label])
-    lines.extend(["", "Planning details: " + json.dumps(run.get("details", {}), sort_keys=True, ensure_ascii=False), "", "Display positions are blocked pending Phase 5 frame registration. Schedule epochs are unchanged.", ""])
+    registration = (display or display_data(run))['registration']
+    lines.extend(["", "Planning details: " + json.dumps(run.get("details", {}), sort_keys=True, ensure_ascii=False), "",
+                  f"Renderer registration: {registration['status']}; map gate passed for this site: {registration['release_gate']['map_registration_passed']}.",
+                  "Registration applies only to the corrected representation within its certified region. Missing spacecraft states remain unknown. Schedule epochs are unchanged.", ""])
     return "\n".join(lines).encode("utf-8")
 
 
@@ -156,10 +161,12 @@ def create_run_package(run):
         raise ValueError("Result scenario hash does not match the exported scenario")
     display = display_data(run)
     files = {"scenario.json": json_bytes(scenario), "result.json": json_bytes(result),
-             "summary.json": json_bytes(summary(run)), "display.czml": json_bytes(display_payload(run)),
+             "summary.json": json_bytes(summary(run)), "display.czml": json_bytes(display_payload(run, display)),
              "display-data.json": json_bytes(display),
              "renderer-registration.json": json_bytes(display['registration']),
-             "explanation.md": explanation(run)}
+             "explanation.md": explanation(run, display)}
+    if display.get('renderer_conversion') is not None:
+        files['renderer-conversion.json'] = json_bytes(display['renderer_conversion'])
     if "analysis_inputs" in run:
         files["analysis-inputs.json"] = json_bytes(run["analysis_inputs"])
     if "validation" in run:

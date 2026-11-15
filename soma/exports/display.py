@@ -36,6 +36,18 @@ def display_data(run):
         'interpolation': 'none_unknown_between_samples',
         'summary': summary(run),
     }
+    from soma.geometry.registration import load_renderer_conversion, renderer_registration_for_site
+    from soma.geometry.surface import SurfacePoint
+    site=SurfacePoint.from_lander(scenario['lander'])
+    payload['registration']=renderer_registration_for_site(scenario['lander'])
+    payload['renderer_conversion']=load_renderer_conversion(payload['registration'])
+    payload['surface_points']=[{'id':scenario['lander']['id'],'position_m':site.position_m().tolist(),
+        'antenna_position_m':site.position_m(site.antenna_height_m).tolist(),
+        'panel_position_m':site.position_m(site.panel_height_m).tolist(),
+        'frame':payload['registration']['renderer_frame'] or site.frame,'source_frame':site.frame,
+        'origin':'MOON','position_unit':'m','epoch':None,'time_scale':'static',
+        'elevation_m':site.elevation_m,'antenna_height_m':site.antenna_height_m,'panel_height_m':site.panel_height_m,
+        'provenance_label':'Declared scenario elevation; synthetic fixtures use an assumed reference-sphere surface. Rendering does not resolve numerical DEM coverage.'}]
     for key in ('contacts', 'allocations', 'storage_intervals', 'energy_history',
                 'buffer_history', 'assumptions', 'warnings'):
         payload[key] = deepcopy(result[key])
