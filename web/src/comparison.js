@@ -80,8 +80,8 @@ export function renderComparison(container, { entries = [] }) {
     container.append(el('p', 'Deadline rule: fixed absolute UTC. No deadline moves automatically with the data-ready date.'));
     if (model.dateChanged) {
       container.append(el('p', model.deadlineChanged
-        ? 'Data-ready date changed; the absolute deadline also changed.'
-        : 'Data-ready date changed; the absolute deadline is unchanged.'));
+        ? 'Data-ready time changed; the absolute deadline also changed.'
+        : 'Data-ready time changed; the absolute deadline is unchanged.'));
     }
     const wrapper = el('div');
     wrapper.className = 'science-table-scroll';

@@ -11,6 +11,36 @@ const display = () => ({ ...structuredClone(result), artifact_type: 'soma_displa
   states: [], sample_epochs_utc: [], environment: null, interpolation: 'none_unknown_between_samples',
   registration: { status: 'blocked_pending_asset_registration' }, state_status: 'unknown' });
 
+test('422 exposes only bounded string detail and other errors retain their HTTP status', async () => {
+  for (const [status, body, expected] of [
+    [422, { detail: 'Relay trajectory coverage must contain the analysis horizon' }, 'Scenario rejected: Relay trajectory coverage must contain the analysis horizon'],
+    [422, { detail: 'x'.repeat(2100) }, `Scenario rejected: ${'x'.repeat(2000)}`],
+    [422, { detail: [{ msg: 'unapproved structure' }] }, 'Planning service returned HTTP 422.'],
+    [422, { detail: '' }, 'Planning service returned HTTP 422.'],
+    [500, { detail: 'private server internals' }, 'Planning service returned HTTP 500.'],
+  ]) {
+    const client = createPlanClient({ fetchImpl: async () => ({ ok: false, status, json: async () => body }) });
+    await assert.rejects(client.plan(scenario), { message: expected });
+  }
+  const malformed = createPlanClient({ fetchImpl: async () => ({ ok: false, status: 422, json: async () => { throw new SyntaxError('invalid JSON'); } }) });
+  await assert.rejects(malformed.plan(scenario), { message: 'Planning service returned HTTP 422.' });
+});
+
+test('canceling while 422 detail parses cannot publish a rejected stale scenario', async () => {
+  let release, reached;
+  const parsing = new Promise(resolve => { reached = resolve; });
+  const client = createPlanClient({ fetchImpl: async () => ({ ok: false, status: 422, json: async () => {
+    reached(); return new Promise(resolve => { release = resolve; });
+  } }) });
+  const pending = client.plan(scenario);
+  const rejected = assert.rejects(pending, { name: 'AbortError' });
+  await parsing;
+  await client.cancel();
+  release({ detail: 'old unsupported scenario' });
+  await rejected;
+  await assert.rejects(client.retry(), /No failed immutable scenario/);
+});
+
 test('offline mode returns only captured exact matching scenario', async () => {
   const client = createFixtureClient([{ scenario, result }]);
   assert.deepEqual(await client.plan(scenario), result);

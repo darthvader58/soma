@@ -132,7 +132,17 @@ export function createPlanClient({ baseUrl = '', fetchImpl = globalThis.fetch, p
   const endpoint = path => `${baseUrl.replace(/\/$/, '')}${path}`;
   async function request(path, options = {}) {
     const response = await fetchImpl(endpoint(path), options);
-    if (!response.ok) throw new Error(`Planning service returned HTTP ${response.status}.`);
+    if (!response.ok) {
+      let detail;
+      if (response.status === 422) {
+        try {
+          const body = await response.json();
+          if (typeof body?.detail === 'string' && body.detail.trim()) detail = body.detail.slice(0, 2000);
+        } catch { /* A malformed error body retains the HTTP status message. */ }
+      }
+      if (options.signal?.aborted) throw abortError();
+      throw new Error(detail ? `Scenario rejected: ${detail}` : `Planning service returned HTTP ${response.status}.`);
+    }
     return response.status === 204 ? null : response.json();
   }
   async function remove(run) {
