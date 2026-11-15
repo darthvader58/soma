@@ -74,3 +74,20 @@ brief without claiming complete challenge fulfillment, evaluated usability,
 operational service access or landing safety. Current evidence is in
 [Phase 3 methods](phase-3/README.md) and
 [interface verification](../../web/docs/phase-3-verification.md).
+
+## Implementation update through Phase 4
+
+The engine now builds usable synthetic contacts and generation, constrains a
+bounded delivery schedule, independently replays it and serves/export its
+evidence. The 100 MiB direct case has an insufficient-capacity explanation;
+the relay case delivers all unique bytes under assumed rates with a feasible
+incumbent and unproven optimality. The interface's Phase 4 fixture workflow
+preserves that distinction and downloads the exact Python-authored package.
+See [Phase 4 evidence](phase-4/README.md).
+
+This scheduling extension does not complete the challenge's site/date task.
+The supported synthetic horizon is fixed, the real numerical terrain still
+has unknown horizon samples, and no controlled physical two-site/date result
+has been demonstrated. Live service integration, renderer registration and
+the integrated demonstration remain Phase 5/6 gates. The original live-source
+review above remains dated; it is not a new check of event submission rules.

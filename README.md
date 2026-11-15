@@ -1,5 +1,13 @@
 # SOMA: A Research-Grounded Lunar Communications Planner
 
+The Python engine now selects energy-constrained delivery schedules, independently
+replays them, serves isolated jobs and exports complete run packages. The current
+100 MiB synthetic direct case fails capacity; the relay case passes replay with
+optimality unproven. The browser displays captured runs. See the
+[Phase 4 run commands and limits](soma/docs/phase-4/README.md). Live browser/service
+integration and renderer registration remain Phase 5 work. SOMA is a planning
+model under declared assumptions.
+
 ## What this project is
 
 SOMA should do one useful job: take a proposed lunar landing location, an operating date, a quantity of data, and a delivery deadline, then produce an explainable schedule for getting that data to Earth using a specified lander and network. The result should say when to transmit, which receiving asset to use, where the data waits between contacts, when the final data reaches its destination, and whether the lander's modeled energy reserve is respected. The Python library supplies the calculations. The Cesium application lets someone choose the site, inspect the terrain and moving assets, understand the schedule, and export the result. This is a proposed product definition, not a claim that SOMA has already implemented or validated these capabilities.
@@ -52,7 +60,7 @@ The contract-only package still supports Python 3.11.
 
 ```sh
 python3 -m venv .venv
-.venv/bin/python -m pip install --editable '.[test,analysis,verification]'
+.venv/bin/python -m pip install --editable '.[test,analysis,verification,planning,service]'
 .venv/bin/python -m pytest tests/engine -q
 .venv/bin/python -m soma validate fixtures/synthetic-direct/scenario.json
 .venv/bin/python -m soma validate fixtures/synthetic-relay/scenario.json
@@ -61,22 +69,21 @@ python3 -m venv .venv
 
 The library entry point is `from soma import plan_delivery`. The CLI emits
 JSON to stdout and rejects invalid inputs with a nonzero exit code and a
-diagnostic on stderr. It works without a browser. The planner currently returns
-`unknown`, `unresolved`, and `not_implemented`, with empty computed histories
-and `null` delivery metrics. Illumination, power integration, usable contacts,
-optimization, independent schedule replay, the HTTP service, and display
-exports are not implemented in the delivery pipeline. Phase 2 geometry and
-terrain diagnostics are available separately, as described below.
-There is no service start command at this phase.
+diagnostic on stderr. It works without a browser. Phase 1 originally returned
+`unknown` placeholders. The current pipeline calculates synthetic usable
+contacts and generation, constrains scheduling with energy, independently
+replays allocations and exports the resulting evidence. Unsupported analysis
+coverage remains `unknown`. Start the loopback service with
+`.venv/bin/uvicorn soma.api.app:app --host 127.0.0.1 --port 8000`.
 
 The [direct fixture](fixtures/synthetic-direct/README.md) proves by arithmetic
 that the supplied 256,000 net bit/s contact cannot carry 100 MiB. The
 [single-relay fixture](fixtures/synthetic-relay/README.md) records the
 419.4304 s uplink, storage wait, and 83.88608 s downlink expected from the
 plan's invented example. These are hand calculations, with propagation
-disabled only for the arithmetic test. Energy feasibility and solver
-optimality have not been evaluated. `expected.json` is never loaded as the
-planner's output. To run the fixture/schema checks alone:
+disabled only for the synthetic test. The separately captured Phase 4 relay
+schedule passes energy replay, with solver optimality unproven. `expected.json`
+is never loaded as the planner's output. To run the fixture/schema checks alone:
 
 ```sh
 .venv/bin/python -m pytest tests/engine/test_contract.py tests/engine/test_fixture_arithmetic.py -q
@@ -175,12 +182,11 @@ scrubbing changes the map clock without starting analysis. See the
 [Phase 2 interface checks](web/docs/phase-2-verification.md).
 
 The interface is a **visual draft**, pending user design direction. Its
-checked-in results are the engine's actual `unknown` outputs. Hand-calculated
-relay allocations are a separately labelled reference, never a successful
-engine plan. No live HTTP service, full run-package download or integrated
-mission demo is claimed. Phase 3 scientific displays and saved comparisons
-read the separate artifacts described below. The prepared service client is tested with controlled responses
-for polling, cancellation, and stale-result rejection.
+checked-in results come from Python, with hand-calculated relay allocations
+kept as a separately labelled reference. The Phase 4 interface branch adds
+the actual captured schedules and complete package downloads; its live client
+has controlled tests for polling, cancellation, retry and stale responses.
+Connecting the browser to the running service remains Phase 5 work.
 
 ## Phase 3 illumination, power, contacts and scientific display
 
@@ -189,8 +195,8 @@ fixed-panel electrical generation and explicit constant-bin battery replay.
 Contact construction checks interval-wide geometry evidence, compatible radios,
 both endpoint service calendars, acquisition/teardown and propagation. Assumed
 rates remain labelled; an optional fully declared Friis/noise/mode budget checks
-margin without overriding geometry or service. These components do not select
-a delivery schedule. `plan_delivery` remains unknown until Phase 4.
+margin without overriding geometry or service. Phase 3 supplied these components
+without selecting a schedule; Phase 4 now connects them to the bounded planner.
 
 ```sh
 .venv/bin/python -m soma environment soma/docs/phase-2/geometry-diagnostic.json --generation-time-model left_sample_piecewise_constant_assumption
@@ -208,4 +214,36 @@ See [Phase 3 methods and reproduction](soma/docs/phase-3/README.md) and
 [interface verification](web/docs/phase-3-verification.md). Generation held
 constant between samples is an explicit temporal approximation. The base-load
 trace is not evidence that transmissions are affordable; energy must constrain
-the Phase 4 scheduler.
+the Phase 4 scheduler, as implemented below.
+
+## Phase 4 scheduler, service and exports
+
+The engine constrains complete-file direct or single-lunar-relay delivery using
+finite capacities, storage, both endpoint radios, arrival-time service, causal
+forwarding and lander energy. PuLP/CBC distinguishes proven optimum, feasible
+incumbent, proven infeasible discretized model and unresolved run. Independent
+replay is required before a schedule can be released as feasible.
+
+```sh
+.venv/bin/python -m soma run fixtures/synthetic-direct/scenario.json --output-dir /private/tmp/soma-direct-run
+.venv/bin/python -m soma run fixtures/synthetic-relay/scenario.json --output-dir /private/tmp/soma-relay-run
+.venv/bin/python -m soma replay /private/tmp/soma-relay-run/run.json
+.venv/bin/uvicorn soma.api.app:app --host 127.0.0.1 --port 8000
+```
+
+POST a complete scenario to `/plans`, poll `/plans/{id}`, cancel with DELETE,
+and download the completed immutable `/plans/{id}/export`. Fresh spawned
+processes isolate each job. Exports retain exact allocation epochs, source URLs,
+input/source checksums and explicit units. CSV blanks mean unknown. The ZIP
+contains no numerical raster, kernel or tiles. CZML has metadata only until
+the frame-registration gate passes.
+
+The [recorded runs](fixtures/phase-4/README.md) contain actual solver output:
+the direct 100 MiB case is infeasible in the bounded model; the relay delivers
+all bytes and passes replay, with `feasible_incumbent` and assumed-rate fidelity.
+The fixed synthetic geometry/horizon supports software acceptance, not a lunar
+site recommendation. Changed unsupported sites, heights, trajectories or
+analysis extents remain unknown. Real LOLA horizon gaps remain unresolved.
+No ground-time booking, flight DTN, thermal-survival or relay-certification
+claim is made. The [Phase 4 evidence and reproduction guide](soma/docs/phase-4/README.md)
+states the discretization, time-limit and coverage limits.

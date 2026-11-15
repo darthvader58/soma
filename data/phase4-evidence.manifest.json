@@ -1,0 +1,106 @@
+{
+  "manifest_version": "0.4.0",
+  "purpose": "Recorded synthetic Phase 4 scheduling, independent replay and package evidence",
+  "input_class": "synthetic",
+  "records": [
+    {
+      "fixture": "synthetic-direct",
+      "scenario_ref": "fixtures/synthetic-direct/scenario.json",
+      "scenario_sha256": "857f1772d4052a5d06c955d6b63b847c989550442ada201d8ad592a1f95375ed",
+      "status": "infeasible_in_model",
+      "solver_status": "proven_infeasible_discretized_model",
+      "model_fidelity": "assumed_rate_simulation",
+      "delivered_bytes": 0,
+      "final_byte_arrival_utc": null,
+      "allocation_count": 0,
+      "replay_passed": null,
+      "scheduler_options": {
+        "bin_s": 5,
+        "chunk_bytes": 16777216,
+        "time_limit_s": 15
+      },
+      "artifacts": [
+        {
+          "path": "fixtures/phase-4/synthetic-direct/result.json",
+          "sha256": "cf4448bc1075564876fab2b1a2e95ba16660f6d9ec1c615cbd351c06619645cf"
+        },
+        {
+          "path": "fixtures/phase-4/synthetic-direct/run.json",
+          "sha256": "a9a9e84ed4f3695718bf162f9323edb0759b1badd9950f49bc90f14fe6a06dd5"
+        },
+        {
+          "path": "fixtures/phase-4/synthetic-direct/run.zip",
+          "sha256": "94322ef25d1f561a385ca27df73b9cc663f10eb4d4037d4b9013364d34736c70"
+        },
+        {
+          "path": "fixtures/phase-4/synthetic-direct/summary.json",
+          "sha256": "6be4ea766e0a30f3c990e872b1455334bb1051ab648701fcf51204b61c934100"
+        }
+      ]
+    },
+    {
+      "fixture": "synthetic-relay",
+      "scenario_ref": "fixtures/synthetic-relay/scenario.json",
+      "scenario_sha256": "b1d39f45c88b822029edacd515a698b928af4188751bcee364367772427f9106",
+      "status": "feasible_under_assumptions",
+      "solver_status": "feasible_incumbent",
+      "model_fidelity": "assumed_rate_simulation",
+      "delivered_bytes": 104857600,
+      "final_byte_arrival_utc": "2026-11-14T10:01:35Z",
+      "allocation_count": 14,
+      "replay_passed": true,
+      "scheduler_options": {
+        "bin_s": 5,
+        "chunk_bytes": 16777216,
+        "time_limit_s": 15
+      },
+      "artifacts": [
+        {
+          "path": "fixtures/phase-4/synthetic-relay/result.json",
+          "sha256": "f7b623c21c4650af0bc9f8ec57e2b073a98a4837ec9e1af1d72c1624631bbb63"
+        },
+        {
+          "path": "fixtures/phase-4/synthetic-relay/run.json",
+          "sha256": "3d321f4eb3a33b4d517702d64d449d2cc4692abaf74b531d00cb90c59d627dfd"
+        },
+        {
+          "path": "fixtures/phase-4/synthetic-relay/run.zip",
+          "sha256": "bf8866ce33504f9e48154903feb29e48c6416336090e8a2935df49ccb475c59c"
+        },
+        {
+          "path": "fixtures/phase-4/synthetic-relay/summary.json",
+          "sha256": "25775aee376a901f05c1565d0e37d4f4c795105d5abf112688a02462a721193c"
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "recorded_relay_replay": "passed; 104857600 unique bytes, zero replay errors",
+    "zip_member_checksums": "passed for both captures",
+    "frozen_schemas_changed": false,
+    "engine_tests": {
+      "command": ".venv/bin/python -m pytest tests/engine -q",
+      "passed": 281,
+      "skipped": 0
+    }
+  },
+  "limitations": [
+    "Invented sky/contact geometry, assumed net payload rates, ideal pointing and assumed service.",
+    "Propagation disabled only for synthetic arithmetic inputs.",
+    "Event-grid duration padding is conservative; time-limited CBC incumbent optimality is unproven.",
+    "Fresh optimization may choose a different valid incumbent; captured replay and export hashes reproduce stored evidence.",
+    "No registered map positions or live browser/service integration before Phase 5.",
+    "Real measured DEM horizon gaps remain unknown."
+  ],
+  "source_urls": [
+    "https://www.spaceappschallenge.org/2026/challenges/lunar-landing-site-navigator/",
+    "https://github.com/coin-or/pulp",
+    "https://github.com/coin-or/Cbc"
+  ],
+  "evidence_refs": [
+    "soma/docs/phase-4/README.md",
+    "soma/docs/phase-4/scheduler.md",
+    "soma/docs/phase-4/replay.md",
+    "soma/docs/phase-4/service-exports.md"
+  ]
+}
