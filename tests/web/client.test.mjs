@@ -1,13 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
 import { createFixtureClient, createPlanClient } from '../../web/src/client.js';
 
 const scenario = JSON.parse(readFileSync(new URL('../../fixtures/synthetic-direct/scenario.json', import.meta.url), 'utf8'));
-const root = fileURLToPath(new URL('../../', import.meta.url));
-const result = JSON.parse(execFileSync(process.env.SOMA_PYTHON || `${root}.venv/bin/python`, ['-m', 'soma', 'plan', 'fixtures/synthetic-direct/scenario.json'], { cwd: root, encoding: 'utf8' }));
+const result = JSON.parse(readFileSync(new URL('../../web/fixtures/synthetic-direct/result.json', import.meta.url), 'utf8'));
 const response = value => ({ ok: true, status: 200, json: async () => value });
 const completed = { status: 'completed', stage: 'complete', scenario_sha256: result.scenario_sha256, result };
 
@@ -17,6 +14,21 @@ test('offline mode returns only captured exact matching scenario', async () => {
   const changed = structuredClone(scenario);
   changed.lander.antenna_height_m++;
   await assert.rejects(client.plan(changed), /Offline.*exact scenario/);
+});
+
+test('versioned summaries must match the completed result and cannot survive cancellation', async () => {
+  const summary = JSON.parse(readFileSync(new URL('../../web/fixtures/synthetic-direct/summary.json', import.meta.url), 'utf8'));
+  const client = createFixtureClient([{ scenario, result, summary }]);
+  await client.plan(scenario);
+  assert.deepEqual(await client.getSummary(scenario), summary);
+  client.cancel();
+  await assert.rejects(client.getSummary(scenario), /No completed summary/);
+  const mismatched = createFixtureClient([{ scenario, result, summary: { ...summary, status: 'unknown' } }]);
+  await mismatched.plan(scenario);
+  await assert.rejects(mismatched.getSummary(scenario), /differs/);
+  const invalid = createFixtureClient([{ scenario, result, summary: { ...summary, format_version: 'unapproved' } }]);
+  await invalid.plan(scenario);
+  await assert.rejects(invalid.getSummary(scenario), /unsupported version/);
 });
 
 test('live client polls stages and validates the final hash', async () => {

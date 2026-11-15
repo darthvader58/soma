@@ -25,10 +25,14 @@ import relayEnvironment from '../fixtures/synthetic-relay/environment.json' with
 import relayEnvironmentText from '../fixtures/synthetic-relay/environment.json?raw';
 import realEnvironment from '../fixtures/recorded-lola/environment.json' with { type: 'json' };
 import realEnvironmentText from '../fixtures/recorded-lola/environment.json?raw';
+import directPackageUrl from '../fixtures/synthetic-direct/run.zip?url';
+import relayPackageUrl from '../fixtures/synthetic-relay/run.zip?url';
+import directSummary from '../fixtures/synthetic-direct/summary.json' with { type: 'json' };
+import relaySummary from '../fixtures/synthetic-relay/summary.json' with { type: 'json' };
 
 const fixtures = [
-  { name: 'Direct to Earth', scenario: directScenario, contacts: directContacts, expected: directExpected, result: directResult, resultText: directResultText, environment: directEnvironment, environmentText: directEnvironmentText },
-  { name: 'One lunar relay', scenario: relayScenario, contacts: relayContacts, expected: relayExpected, result: relayResult, resultText: relayResultText, environment: relayEnvironment, environmentText: relayEnvironmentText },
+  { name: 'Direct to Earth', scenario: directScenario, contacts: directContacts, expected: directExpected, result: directResult, resultText: directResultText, environment: directEnvironment, environmentText: directEnvironmentText, packageUrl: directPackageUrl, summary: directSummary },
+  { name: 'One lunar relay', scenario: relayScenario, contacts: relayContacts, expected: relayExpected, result: relayResult, resultText: relayResultText, environment: relayEnvironment, environmentText: relayEnvironmentText, packageUrl: relayPackageUrl, summary: relaySummary },
 ];
 const apiUrl = import.meta.env.VITE_SOMA_API_URL;
 const client = apiUrl ? createPlanClient({ baseUrl: apiUrl }) : createFixtureClient(fixtures);
@@ -36,16 +40,16 @@ const root = document.querySelector('#app');
 root.innerHTML = `
   <header class="app-header">
     <div class="identity"><span class="wordmark">SOMA</span><span class="identity-rule" aria-hidden="true"></span><span>Lunar delivery planner</span></div>
-    <span class="phase-label">Phase 3 · Visual draft</span>
+    <span class="phase-label">Phase 4 · Visual draft</span>
   </header>
   <main>
     <div class="page-heading"><div><h1>Plan a delivery from the Moon</h1><p>Inspect the site, data and network assumptions behind a delivery request.</p></div><p class="workspace-mode" id="workspace-mode"></p></div>
-    <p class="project-notice">Fixture workspace. Scientific graphics read saved Python diagnostics, with synthetic inputs and measured-terrain examples labeled separately. Delivery results remain unknown until scheduling is implemented.</p>
+    <p class="project-notice">Fixture workspace. Delivery schedules are computed by Python under declared synthetic geometry, service and rate assumptions. Measured-terrain diagnostics remain separate; missing coverage stays unknown.</p>
     <div class="workspace">
       <aside class="scenario-panel panel" id="scenario" aria-labelledby="scenario-title">
         <div class="panel-heading"><h2 id="scenario-title">Scenario</h2><span class="section-index">01</span></div>
         <div class="fixture-control"><label for="fixture-select">Declared network example</label><select id="fixture-select"><option value="0">Direct to Earth</option><option value="1">One lunar relay</option></select><p class="muted">Both examples use the same 100 MiB task and hardware. All contact windows are synthetic.</p></div>
-        <div class="scenario-actions"><button class="primary" id="plan-button" type="button">Plan delivery</button><button id="cancel-button" type="button" hidden>Cancel job</button><button id="restore-button" type="button">Restore fixture</button></div>
+        <div class="scenario-actions"><button class="primary" id="plan-button" type="button">Plan delivery</button><button id="cancel-button" type="button" hidden>Cancel job</button><button id="restore-button" type="button">Restore fixture</button><button id="retry-button" type="button" hidden>Retry same scenario</button></div>
         <p id="job-status" role="status" aria-live="polite">Ready to inspect the captured engine result.</p>
         <div id="validation-errors" class="error-message" role="alert" hidden></div>
         <div id="scenario-form"></div>
@@ -66,8 +70,8 @@ root.innerHTML = `
           <div class="panel-heading"><h2 id="result-title">Delivery result</h2><span class="section-index">04</span></div>
           <p id="result-context" class="muted">Choose Plan delivery to load the captured engine output for this exact fixture.</p>
           <div id="result"></div>
-          <div class="download-actions"><button id="download-scenario" type="button">Download scenario JSON</button><button id="download-result" type="button" disabled>Download result JSON</button></div>
-          <p class="muted">These JSON downloads preserve the captured records. Scientific diagnostics have a separate download below; a complete run package belongs to Phase 4.</p>
+          <div class="download-actions"><button id="download-scenario" type="button">Download scenario JSON</button><button id="download-result" type="button" disabled>Download result JSON</button><button id="download-package" type="button" disabled>Download fixture run package (ZIP)</button></div>
+          <p class="muted">The package preserves the engine scenario, result, manifest, contacts, schedule, energy, buffers, replay, display metadata and structured explanation. No files are reconstructed in this browser.</p>
         </section>
         <section class="panel science-panel" aria-labelledby="science-title">
           <div class="panel-heading"><h2 id="science-title">Sun, horizon and electrical power</h2><span class="section-index">05</span></div>
@@ -87,9 +91,11 @@ root.innerHTML = `
 
 const byId = id => document.getElementById(id);
 byId('workspace-mode').textContent = apiUrl ? 'Configured planning service' : 'Offline · Captured fixtures';
+if (apiUrl) byId('download-package').textContent = 'Download run package (ZIP)';
 let activeFixture = fixtures[0];
 let scenario = structuredClone(activeFixture.scenario);
 let result = null;
+let currentSummary;
 let modified = false;
 let pendingFields = false;
 let generation = 0;
@@ -97,7 +103,7 @@ let selectedTime = scenario.data_ready_utc;
 let timeline;
 let viewer;
 let science;
-const capturedComparisons = () => fixtures.map(item => structuredClone({ name: item.name, scenario: item.scenario, result: item.result }));
+const capturedComparisons = () => fixtures.map(item => structuredClone({ name: item.name, scenario: item.scenario, result: item.result, summary: item.summary }));
 let comparisonEntries = capturedComparisons();
 const comparison = renderComparison(byId('comparison'), { entries: comparisonEntries });
 
@@ -159,6 +165,7 @@ function refreshOutput() {
   if (selectedTime) viewer?.setTime(selectedTime);
   refreshScience();
   byId('download-result').disabled = !result;
+  byId('download-package').disabled = !result;
   byId('hand-reference').disabled = modified;
   byId('save-a').disabled = !result;
   byId('save-b').disabled = !result;
@@ -172,8 +179,10 @@ function setBusy(busy) {
 
 function cancelCurrent(message) {
   generation++;
+  currentSummary = undefined;
   Promise.resolve(client.cancel()).catch(error => showErrors([error.message]));
   setBusy(false);
+  byId('retry-button').hidden = true;
   if (message) byId('job-status').textContent = message;
 }
 
@@ -233,7 +242,7 @@ byId('cancel-button').addEventListener('click', () => cancelCurrent('Job cancele
 byId('science-source').addEventListener('change', refreshScience);
 for (const [id, index] of [['save-a', 0], ['save-b', 1]]) byId(id).addEventListener('click', () => {
   if (!result) return;
-  comparisonEntries[index] = structuredClone({ name: `Saved ${index === 0 ? 'A' : 'B'}: ${scenario.scenario_id}`, scenario, result });
+  comparisonEntries[index] = structuredClone({ name: `Saved ${index === 0 ? 'A' : 'B'}: ${scenario.scenario_id}`, scenario, result, summary: currentSummary });
   comparison.setEntries(comparisonEntries);
   byId('comparison-status').textContent = `Saved the exact scenario and result as ${index === 0 ? 'A' : 'B'}. Later edits do not change this snapshot.`;
 });
@@ -242,23 +251,38 @@ byId('reset-comparison').addEventListener('click', () => {
   comparison.setEntries(comparisonEntries);
   byId('comparison-status').textContent = 'A and B contain the captured direct and relay fixtures.';
 });
-byId('plan-button').addEventListener('click', async () => {
+const stages = {
+  validation: 'Validating scenario', horizon_preparation: 'Preparing horizon data',
+  contact_construction: 'Constructing usable contacts', scheduling: 'Scheduling transfers',
+  replay: 'Replaying constraints', export: 'Building exports', captured_engine_fixture: 'Loading captured engine run',
+};
+async function requestPlan(retry = false) {
   if (!byId('scenario-form').querySelector('form').reportValidity()) return;
   const snapshot = form.getScenario();
   const validity = validateScenario(snapshot);
   if (!validity.valid) { showErrors(validity.errors); return; }
   const current = ++generation;
+  result = null;
+  currentSummary = undefined;
+  refreshOutput();
   showErrors();
   setBusy(true);
+  byId('retry-button').hidden = true;
   byId('job-status').textContent = apiUrl ? 'Submitting scenario to the planning service.' : 'Checking the exact scenario against captured engine fixtures.';
   try {
-    const nextResult = await client.plan(snapshot, {
+    const callbacks = {
       onProgress(progress) {
-        if (current === generation) byId('job-status').textContent = `Stage: ${progress.stage}.`;
+        if (current === generation) byId('job-status').textContent = progress.message ?? `${stages[progress.stage] ?? progress.stage}.`;
       },
-    });
+    };
+    const nextResult = retry ? await client.retry(callbacks) : await client.plan(snapshot, callbacks);
+    if (current !== generation) return;
+    let nextSummary;
+    try { nextSummary = await client.getSummary(snapshot); }
+    catch (error) { if (current === generation && error.name !== 'AbortError') showErrors([`Summary unavailable: ${error.message}`]); }
     if (current !== generation) return;
     result = nextResult;
+    currentSummary = nextSummary;
     const matching = fixtures.find(item => item.result.scenario_sha256 === result.scenario_sha256);
     if (matching) { activeFixture = matching; modified = false; pendingFields = false; }
     updateLocation();
@@ -270,12 +294,15 @@ byId('plan-button').addEventListener('click', async () => {
     result = null;
     byId('job-status').textContent = 'No delivery result is available for this request.';
     showErrors([error.message]);
+    byId('retry-button').hidden = false;
     refreshOutput();
   } finally { if (current === generation) setBusy(false); }
-});
+}
+byId('plan-button').addEventListener('click', () => requestPlan());
+byId('retry-button').addEventListener('click', () => requestPlan(true));
 
-function download(text, filename) {
-  const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
+function download(text, filename, type = 'application/json') {
+  const url = URL.createObjectURL(new Blob([text], { type }));
   const link = document.createElement('a');
   link.href = url;
   link.download = filename;
@@ -300,6 +327,19 @@ byId('download-result').addEventListener('click', () => {
 byId('download-environment').addEventListener('click', () => {
   const { environment, raw } = selectedEnvironment();
   if (environment && raw) download(raw, `${environment.scenario_id}-environment.json`);
+});
+byId('download-package').addEventListener('click', async () => {
+  if (!result) return;
+  const current = generation;
+  byId('download-package').disabled = true;
+  try {
+    const archive = await client.exportRun(form.getScenario());
+    if (current === generation) download(archive.bytes, archive.filename, 'application/zip');
+  } catch (error) {
+    if (current === generation) showErrors([error.message]);
+  } finally {
+    if (current === generation) byId('download-package').disabled = !result;
+  }
 });
 
 updateLocation();

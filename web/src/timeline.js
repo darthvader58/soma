@@ -38,7 +38,7 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
     container.append(el('p', 'Enter an analysis end later than its valid start before scrubbing. No map time was changed.', 'notice'));
     return { setTime() {}, getTime: () => null, destroy() { container.replaceChildren(); } };
   }
-  function lane(title, interval, kind) {
+  function lane(title, interval, kind, parent = container) {
     const row = el('div', undefined, 'timeline-lane');
     row.append(el('p', title));
     const track = el('div', undefined, 'timeline-track');
@@ -47,7 +47,7 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
     const right = Math.min(100, (Date.parse(interval.end_utc) - start) / (end - start) * 100);
     segment.style.marginLeft = `${left}%`; segment.style.width = `${Math.max(0, right - left)}%`;
     segment.setAttribute('aria-hidden', 'true'); track.append(segment); row.append(track);
-    row.append(el('small', `${interval.start_utc} to ${interval.end_utc}`)); container.append(row);
+    row.append(el('small', `${interval.start_utc} to ${interval.end_utc}`)); parent.append(row);
   }
   const engineContacts = result?.contacts ?? [];
   for (const contact of engineContacts) {
@@ -56,13 +56,16 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
   }
   for (const contact of contacts.filter(value => !engineContacts.some(engine => engine.contact_id === value.contact_id))) lane(`Synthetic source-window reference: ${contact.sender} to ${contact.receiver} / ${contact.contact_id}`, contact.source_transmit_window, 'timeline-window');
   if (!result?.allocations?.length) container.append(el('p', 'No computed transmission supplied. Read the engine status and explanation; missing allocations do not establish success.', 'notice'));
+  const scheduled = el('details');
+  scheduled.append(el('summary', `Scheduled transmissions and storage (${result?.allocations?.length ?? 0} transmissions)`));
+  if (result?.allocations?.length) container.append(scheduled);
   for (const allocation of result?.allocations ?? []) {
     const contact = engineContacts.find(value => value.contact_id === allocation.contact_id);
     const endpoints = contact ? `${contact.sender} to ${contact.receiver}` : 'Unknown endpoints';
-    lane(`Engine source transmission: ${endpoints} / ${allocation.contact_id}`, allocation.source_transmit_interval, 'timeline-allocation');
-    lane(`Engine receiver payload occupancy: ${endpoints}. Bytes available ${allocation.byte_available_utc}`, allocation.receiver_occupancy_interval, 'timeline-allocation');
+    lane(`Engine source transmission: ${endpoints} / ${allocation.contact_id}`, allocation.source_transmit_interval, 'timeline-allocation', scheduled);
+    lane(`Engine receiver payload occupancy: ${endpoints}. Bytes available ${allocation.byte_available_utc}`, allocation.receiver_occupancy_interval, 'timeline-allocation', scheduled);
   }
-  for (const storage of result?.storage_intervals ?? []) lane(`Engine storage reservation: ${storage.node_id} / ${storage.chunk_id} (${storage.byte_length.toLocaleString('en-US')} bytes)`, storage.interval, 'timeline-storage');
+  for (const storage of result?.storage_intervals ?? []) lane(`Engine storage reservation: ${storage.node_id} / ${storage.chunk_id} (${storage.byte_length.toLocaleString('en-US')} bytes)`, storage.interval, 'timeline-storage', scheduled);
   if (expected?.allocations?.length) {
     container.append(el('p', 'Hand calculation preview only. Energy, geometry and replay not evaluated.', 'notice'));
     for (const allocation of expected.allocations) lane(`Synthetic expected transmission: ${allocation.contact_id}`, allocation.source_transmit_interval, 'timeline-expected');

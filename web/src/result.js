@@ -31,6 +31,13 @@ const interval = value => value ? `${value.start_utc} to ${value.end_utc}` : 'Un
 function section(container, title) {
   const node = el('section', undefined, 'result-section'); node.append(el('h3', title)); container.append(node); return node;
 }
+function records(container, title) {
+  const group = section(container, title);
+  const details = el('details');
+  details.append(el('summary', `Inspect ${title.toLowerCase()}`));
+  group.append(details);
+  return details;
+}
 
 function table(container, headers, rows, empty) {
   if (!rows.length) { container.append(el('p', empty, 'muted')); return; }
@@ -61,20 +68,20 @@ export function renderResult(container, { result, scenario, contacts = [], expec
   if (!result) { container.append(el('p', 'No engine result has been loaded.', 'notice')); return; }
   container.append(el('p', result.provenance?.reason ?? 'Unknown: no reason supplied.', 'notice'));
   if (result.model_fidelity === 'assumed_rate_simulation') container.append(el('p', 'Assumed-rate simulation. A feasible status retains the declared rate and service assumptions.', 'notice'));
-  const explanation = section(container, 'Structured schedule explanation');
-  for (const line of explainResult(result)) explanation.append(el('p', line));
   const facts = el('dl', undefined, 'details-list');
   for (const [label, value] of [['Delivered', formatValue(result.delivered_bytes, 'bytes')], ['Final byte arrival (UTC)', formatValue(result.final_byte_arrival_utc)], ['Scenario', result.scenario_id], ['Scenario SHA-256', result.scenario_sha256]]) facts.append(el('dt', label), el('dd', value));
   container.append(facts);
+  const explanation = records(container, 'Structured schedule explanation');
+  for (const line of explainResult(result)) explanation.append(el('p', line));
   table(section(container, 'Engine contacts'), ['Endpoints / contact', 'Source transmit window (UTC)', 'Net payload rate (bps)', 'Capacity (bits)', 'Service / quality flags', 'Allocation use / unused reason'], (result.contacts ?? []).map(contact => [
     `${contact.sender} to ${contact.receiver} / ${contact.contact_id}`, interval(contact.source_transmit_window), contact.payload_rate_bps, contact.available_capacity_bits,
     `${contact.service_provenance}; ${contact.quality_flags.join('; ')}`,
     (result.allocations ?? []).some(value => value.contact_id === contact.contact_id) ? 'Allocated; see source and receiver intervals below.' : 'Unused. Reason: Unknown; no reason field supplied by the frozen contact contract.'
   ]), 'No computed usable contacts. Unknown: no usable-contact records were supplied.');
   allocations(section(container, 'Engine allocations'), result.allocations, result.contacts);
-  table(section(container, 'Engine storage'), ['Node', 'Payload (bytes)', 'Stored interval (UTC)'], (result.storage_intervals ?? []).map(value => [value.node_id, value.byte_length, interval(value.interval)]), 'No computed storage history.');
-  table(section(container, 'Engine battery history'), ['Node', 'Epoch (UTC)', 'Stored energy (Wh)'], (result.energy_history ?? []).map(value => [value.node_id, value.epoch_utc, value.stored_energy_wh]), 'Battery state has not been computed. No energy feasibility claim is available.');
-  table(section(container, 'Engine buffer history'), ['Node', 'Epoch (UTC)', 'Stored payload (bytes)'], (result.buffer_history ?? []).map(value => [value.node_id, value.epoch_utc, value.stored_bytes]), 'No computed buffer history.');
+  table(records(container, 'Engine storage'), ['Node', 'Payload (bytes)', 'Stored interval (UTC)'], (result.storage_intervals ?? []).map(value => [value.node_id, value.byte_length, interval(value.interval)]), 'No computed storage history.');
+  table(records(container, 'Engine battery history'), ['Node', 'Epoch (UTC)', 'Stored energy (Wh)'], (result.energy_history ?? []).map(value => [value.node_id, value.epoch_utc, value.stored_energy_wh]), 'Battery state has not been computed. No energy feasibility claim is available.');
+  table(records(container, 'Engine buffer history'), ['Node', 'Epoch (UTC)', 'Stored payload (bytes)'], (result.buffer_history ?? []).map(value => [value.node_id, value.epoch_utc, value.stored_bytes]), 'No computed buffer history.');
   const caveats = section(container, 'Assumptions and warnings');
   for (const [title, values] of [['Assumptions', result.assumptions], ['Warnings', result.warnings]]) {
     caveats.append(el('h4', title)); const list = el('ul');

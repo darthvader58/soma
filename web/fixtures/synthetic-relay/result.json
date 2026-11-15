@@ -1,47 +1,892 @@
 {
-  "run_version": "0.1.0",
-  "scenario_id": "synthetic-relay",
-  "scenario_sha256": "b1d39f45c88b822029edacd515a698b928af4188751bcee364367772427f9106",
-  "status": "unknown",
-  "solver_status": "unresolved",
-  "model_fidelity": "not_implemented",
+  "allocations": [
+    {
+      "allocation_id": "allocation-0",
+      "byte_available_utc": "2026-11-14T09:01:15Z",
+      "byte_length": 16777216,
+      "byte_offset": 0,
+      "chunk_id": "chunk-0",
+      "contact_id": "synthetic-relay-uplink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T09:01:15Z",
+        "start_utc": "2026-11-14T09:00:05Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T09:01:15Z",
+        "start_utc": "2026-11-14T09:00:05Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-1",
+      "byte_available_utc": "2026-11-14T09:02:25Z",
+      "byte_length": 16777216,
+      "byte_offset": 16777216,
+      "chunk_id": "chunk-1",
+      "contact_id": "synthetic-relay-uplink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T09:02:25Z",
+        "start_utc": "2026-11-14T09:01:15Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T09:02:25Z",
+        "start_utc": "2026-11-14T09:01:15Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-2",
+      "byte_available_utc": "2026-11-14T09:04:25Z",
+      "byte_length": 16777216,
+      "byte_offset": 33554432,
+      "chunk_id": "chunk-2",
+      "contact_id": "synthetic-relay-uplink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T09:04:25Z",
+        "start_utc": "2026-11-14T09:03:15Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T09:04:25Z",
+        "start_utc": "2026-11-14T09:03:15Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-3",
+      "byte_available_utc": "2026-11-14T09:05:15Z",
+      "byte_length": 4194304,
+      "byte_offset": 100663296,
+      "chunk_id": "chunk-6",
+      "contact_id": "synthetic-relay-uplink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T09:05:15Z",
+        "start_utc": "2026-11-14T09:04:55Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T09:05:15Z",
+        "start_utc": "2026-11-14T09:04:55Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-4",
+      "byte_available_utc": "2026-11-14T09:06:50Z",
+      "byte_length": 16777216,
+      "byte_offset": 50331648,
+      "chunk_id": "chunk-3",
+      "contact_id": "synthetic-relay-uplink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T09:06:50Z",
+        "start_utc": "2026-11-14T09:05:40Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T09:06:50Z",
+        "start_utc": "2026-11-14T09:05:40Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-5",
+      "byte_available_utc": "2026-11-14T09:08:40Z",
+      "byte_length": 16777216,
+      "byte_offset": 67108864,
+      "chunk_id": "chunk-4",
+      "contact_id": "synthetic-relay-uplink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T09:08:40Z",
+        "start_utc": "2026-11-14T09:07:30Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T09:08:40Z",
+        "start_utc": "2026-11-14T09:07:30Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-6",
+      "byte_available_utc": "2026-11-14T09:09:50Z",
+      "byte_length": 16777216,
+      "byte_offset": 83886080,
+      "chunk_id": "chunk-5",
+      "contact_id": "synthetic-relay-uplink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T09:09:50Z",
+        "start_utc": "2026-11-14T09:08:40Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T09:09:50Z",
+        "start_utc": "2026-11-14T09:08:40Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-7",
+      "byte_available_utc": "2026-11-14T10:00:15Z",
+      "byte_length": 16777216,
+      "byte_offset": 0,
+      "chunk_id": "chunk-0",
+      "contact_id": "synthetic-relay-downlink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T10:00:15Z",
+        "start_utc": "2026-11-14T10:00:00Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T10:00:15Z",
+        "start_utc": "2026-11-14T10:00:00Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-8",
+      "byte_available_utc": "2026-11-14T10:00:30Z",
+      "byte_length": 16777216,
+      "byte_offset": 16777216,
+      "chunk_id": "chunk-1",
+      "contact_id": "synthetic-relay-downlink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T10:00:30Z",
+        "start_utc": "2026-11-14T10:00:15Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T10:00:30Z",
+        "start_utc": "2026-11-14T10:00:15Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-9",
+      "byte_available_utc": "2026-11-14T10:00:45Z",
+      "byte_length": 16777216,
+      "byte_offset": 33554432,
+      "chunk_id": "chunk-2",
+      "contact_id": "synthetic-relay-downlink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T10:00:45Z",
+        "start_utc": "2026-11-14T10:00:30Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T10:00:45Z",
+        "start_utc": "2026-11-14T10:00:30Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-10",
+      "byte_available_utc": "2026-11-14T10:01:00Z",
+      "byte_length": 16777216,
+      "byte_offset": 50331648,
+      "chunk_id": "chunk-3",
+      "contact_id": "synthetic-relay-downlink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T10:01:00Z",
+        "start_utc": "2026-11-14T10:00:45Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T10:01:00Z",
+        "start_utc": "2026-11-14T10:00:45Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-11",
+      "byte_available_utc": "2026-11-14T10:01:05Z",
+      "byte_length": 4194304,
+      "byte_offset": 100663296,
+      "chunk_id": "chunk-6",
+      "contact_id": "synthetic-relay-downlink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T10:01:05Z",
+        "start_utc": "2026-11-14T10:01:00Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T10:01:05Z",
+        "start_utc": "2026-11-14T10:01:00Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-12",
+      "byte_available_utc": "2026-11-14T10:01:20Z",
+      "byte_length": 16777216,
+      "byte_offset": 67108864,
+      "chunk_id": "chunk-4",
+      "contact_id": "synthetic-relay-downlink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T10:01:20Z",
+        "start_utc": "2026-11-14T10:01:05Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T10:01:20Z",
+        "start_utc": "2026-11-14T10:01:05Z"
+      }
+    },
+    {
+      "allocation_id": "allocation-13",
+      "byte_available_utc": "2026-11-14T10:01:35Z",
+      "byte_length": 16777216,
+      "byte_offset": 83886080,
+      "chunk_id": "chunk-5",
+      "contact_id": "synthetic-relay-downlink",
+      "receiver_occupancy_interval": {
+        "end_utc": "2026-11-14T10:01:35Z",
+        "start_utc": "2026-11-14T10:01:20Z"
+      },
+      "source_transmit_interval": {
+        "end_utc": "2026-11-14T10:01:35Z",
+        "start_utc": "2026-11-14T10:01:20Z"
+      }
+    }
+  ],
   "assumptions": [
     "Rate method: assumed_net_rate",
     "Pointing: ideal_pointing",
     "Service: SYNTHETIC windows at both endpoints; no booked network service",
-    "Synthetic fixture inputs do not establish lunar visibility or link closure."
+    "Sky directions and skylines are invented Phase 3 inputs held at the fixed absolute horizon.",
+    "Contact geometry is declared synthetic interval-wide input, not a computed mission opportunity.",
+    "Rates are assumed net payload bits per second; light time is disabled only for the synthetic fixture.",
+    "Changing coordinates, heights, station geometry, trajectory or analysis extent requires new analysis inputs.",
+    "left_sample_piecewise_constant_assumption",
+    "Battery diagnostic includes base load only; no radio schedule was selected.",
+    "Fixed-panel center-ray projection times sampled uniform solar disk fraction.",
+    "Spherical opaque Earth eclipse mask combined with terrain on the same solar samples.",
+    "Contact event guard is explicitly zero for this diagnostic; not an operational margin.",
+    "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+    "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+    "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+    "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+    "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+    "Ground sink retains all received chunks with finite configured station storage.",
+    "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+    "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+    "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
   ],
-  "warnings": [
-    "The integrated delivery-planning pipeline, energy-constrained optimization and independent schedule replay are not implemented. Standalone Phase 2 geometry and Phase 3 illumination, power and contact diagnostics do not establish delivery feasibility.",
-    "No feasibility or delivery metrics have been calculated."
+  "buffer_history": [
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 104857600
+    },
+    {
+      "epoch_utc": "2026-11-14T09:01:15Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T09:02:25Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T09:04:25Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 54525952
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:15Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 50331648
+    },
+    {
+      "epoch_utc": "2026-11-14T09:06:50Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T09:08:40Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T09:09:50Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T09:00:05Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T09:01:15Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T09:03:15Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 50331648
+    },
+    {
+      "epoch_utc": "2026-11-14T09:04:55Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 54525952
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:40Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T09:07:30Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T09:08:40Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 104857600
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:15Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:30Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:45Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 54525952
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 37748736
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:05Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:20Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:35Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:00Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:15Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:30Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 50331648
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:45Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 67108864
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:00Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:05Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:20Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 104857600
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 104857600
+    }
   ],
-  "contacts": [],
-  "allocations": [],
-  "storage_intervals": [],
-  "energy_history": [],
-  "buffer_history": [],
-  "delivered_bytes": null,
-  "final_byte_arrival_utc": null,
+  "contacts": [
+    {
+      "available_capacity_bits": 307200000,
+      "contact_id": "synthetic-direct-contact",
+      "mode_id": "synthetic-direct-256k",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0.0
+      },
+      "payload_rate_bps": 256000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "geometry_not_computed",
+        "ideal_pointing",
+        "input_class_synthetic",
+        "light_time_disabled_for_arithmetic",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "same_epoch_geometry",
+        "synthetic_contact_fixture"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-earth-station",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "SYNTHETIC windows at both endpoints; no booked network service; sender: SYNTHETIC service calendar; no operator allocation; receiver: SYNTHETIC service calendar; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T09:10:00Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 1200000000,
+      "contact_id": "synthetic-relay-uplink",
+      "mode_id": "synthetic-uplink-2m",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0.0
+      },
+      "payload_rate_bps": 2000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "geometry_not_computed",
+        "ideal_pointing",
+        "input_class_synthetic",
+        "light_time_disabled_for_arithmetic",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "same_epoch_geometry",
+        "synthetic_contact_fixture"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-lunar-relay",
+      "receiver_terminal_id": "relay-radio",
+      "sender": "synthetic-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "SYNTHETIC windows at both endpoints; no booked network service; sender: SYNTHETIC service calendar; no operator allocation; receiver: SYNTHETIC service calendar; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T09:10:00Z",
+        "start_utc": "2026-11-14T09:00:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 1800000000,
+      "contact_id": "synthetic-relay-downlink",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0.0
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "geometry_not_computed",
+        "ideal_pointing",
+        "input_class_synthetic",
+        "light_time_disabled_for_arithmetic",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "same_epoch_geometry",
+        "synthetic_contact_fixture"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-earth-station",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "SYNTHETIC windows at both endpoints; no booked network service; sender: SYNTHETIC service calendar; no operator allocation; receiver: SYNTHETIC service calendar; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T10:03:00Z",
+        "start_utc": "2026-11-14T10:00:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    }
+  ],
+  "delivered_bytes": 104857600,
+  "energy_history": [
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 80
+    },
+    {
+      "epoch_utc": "2026-11-14T08:55:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 79.53703703703704
+    },
+    {
+      "epoch_utc": "2026-11-14T09:00:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 79.07407407407408
+    },
+    {
+      "epoch_utc": "2026-11-14T09:00:05Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 79.06635802469135
+    },
+    {
+      "epoch_utc": "2026-11-14T09:01:15Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 78.52623456790123
+    },
+    {
+      "epoch_utc": "2026-11-14T09:02:25Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 77.9861111111111
+    },
+    {
+      "epoch_utc": "2026-11-14T09:03:15Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 77.90895061728394
+    },
+    {
+      "epoch_utc": "2026-11-14T09:04:25Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 77.36882716049381
+    },
+    {
+      "epoch_utc": "2026-11-14T09:04:55Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 77.32253086419752
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 77.28395061728394
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:15Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 77.16820987654319
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:40Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 77.1296296296296
+    },
+    {
+      "epoch_utc": "2026-11-14T09:06:50Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 76.58950617283948
+    },
+    {
+      "epoch_utc": "2026-11-14T09:07:30Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 76.52777777777774
+    },
+    {
+      "epoch_utc": "2026-11-14T09:08:40Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 75.98765432098762
+    },
+    {
+      "epoch_utc": "2026-11-14T09:09:50Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 75.44753086419749
+    },
+    {
+      "epoch_utc": "2026-11-14T09:10:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 75.43209876543206
+    },
+    {
+      "epoch_utc": "2026-11-14T09:15:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 74.9691358024691
+    },
+    {
+      "epoch_utc": "2026-11-14T09:20:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 74.50617283950614
+    },
+    {
+      "epoch_utc": "2026-11-14T09:25:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 74.04444706005366
+    },
+    {
+      "epoch_utc": "2026-11-14T09:30:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 73.5917664566882
+    },
+    {
+      "epoch_utc": "2026-11-14T09:35:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 73.15899069291235
+    },
+    {
+      "epoch_utc": "2026-11-14T09:40:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 72.75772164698272
+    },
+    {
+      "epoch_utc": "2026-11-14T09:45:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 72.39758157838627
+    },
+    {
+      "epoch_utc": "2026-11-14T09:50:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 72.08588319905297
+    },
+    {
+      "epoch_utc": "2026-11-14T09:55:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 71.81979430149624
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 71.58204911303615
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 71.37245474683235
+    }
+  ],
+  "final_byte_arrival_utc": "2026-11-14T10:01:35Z",
+  "model_fidelity": "assumed_rate_simulation",
   "provenance": {
-    "engine_version": "0.1.0",
-    "implementation_status": "not_implemented",
-    "reason": "The delivery planner has not selected or validated a schedule. Geometry, illumination, power and contact diagnostics are separate artifacts.",
-    "kernel_manifest_ref": null,
     "dataset_manifest_ref": "synthetic-contract-v1",
-    "source_urls": [],
+    "engine_version": "0.1.0",
+    "implementation_status": "implemented",
     "input_provenance": [
       {
-        "scope": "all scenario values and contact windows",
-        "input_class": "synthetic",
         "description": "Invented contract/arithmetic test values, including location, dates, hardware, finite storage, nonzero lander base load, panel parameters and station proxy. No numerical terrain or ephemeris is supplied; no mission prediction.",
+        "input_class": "synthetic",
+        "scope": "all scenario values and contact windows",
         "source_urls": []
       },
       {
-        "scope": "rates, pointing, acquisition, processing and propagation",
-        "input_class": "assumed",
         "description": "Assumed net payload rates with overhead already applied once; ideal pointing; zero acquisition/teardown and relay processing for arithmetic only; light time disabled for synthetic test, not physically zero.",
+        "input_class": "assumed",
+        "scope": "rates, pointing, acquisition, processing and propagation",
         "source_urls": []
       }
-    ]
-  }
+    ],
+    "kernel_manifest_ref": null,
+    "reason": "The complete dataset schedule passed independent byte, timing, resource and energy replay under the declared assumptions.",
+    "source_urls": []
+  },
+  "run_version": "0.1.0",
+  "scenario_id": "synthetic-relay",
+  "scenario_sha256": "b1d39f45c88b822029edacd515a698b928af4188751bcee364367772427f9106",
+  "solver_status": "feasible_incumbent",
+  "status": "feasible_under_assumptions",
+  "storage_intervals": [
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-14T09:01:15Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-14T10:00:15Z",
+        "start_utc": "2026-11-14T09:00:05Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-1",
+      "interval": {
+        "end_utc": "2026-11-14T09:02:25Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-1",
+      "interval": {
+        "end_utc": "2026-11-14T10:00:30Z",
+        "start_utc": "2026-11-14T09:01:15Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-2",
+      "interval": {
+        "end_utc": "2026-11-14T09:04:25Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-2",
+      "interval": {
+        "end_utc": "2026-11-14T10:00:45Z",
+        "start_utc": "2026-11-14T09:03:15Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 4194304,
+      "chunk_id": "chunk-6",
+      "interval": {
+        "end_utc": "2026-11-14T09:05:15Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 4194304,
+      "chunk_id": "chunk-6",
+      "interval": {
+        "end_utc": "2026-11-14T10:01:05Z",
+        "start_utc": "2026-11-14T09:04:55Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-3",
+      "interval": {
+        "end_utc": "2026-11-14T09:06:50Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-3",
+      "interval": {
+        "end_utc": "2026-11-14T10:01:00Z",
+        "start_utc": "2026-11-14T09:05:40Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-4",
+      "interval": {
+        "end_utc": "2026-11-14T09:08:40Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-4",
+      "interval": {
+        "end_utc": "2026-11-14T10:01:20Z",
+        "start_utc": "2026-11-14T09:07:30Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-5",
+      "interval": {
+        "end_utc": "2026-11-14T09:09:50Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-5",
+      "interval": {
+        "end_utc": "2026-11-14T10:01:35Z",
+        "start_utc": "2026-11-14T09:08:40Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:00Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-1",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:15Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-2",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:30Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-3",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:45Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 4194304,
+      "chunk_id": "chunk-6",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:01:00Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-4",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:01:05Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-5",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:01:20Z"
+      },
+      "node_id": "synthetic-earth-station"
+    }
+  ],
+  "warnings": [
+    "Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.",
+    "This result does not book service or certify navigation, relay operation or thermal survival.",
+    "Moon renderer registration and live browser integration remain Phase 5 gates."
+  ]
 }
