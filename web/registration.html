@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SOMA | Raw Moon mesh measurement</title>
+    <link rel="stylesheet" href="/node_modules/cesium/Build/Cesium/Widgets/widgets.css" />
+    <style>
+      body { margin: 0 auto; padding: 24px; max-width: 1100px; font: 16px/1.5 system-ui, sans-serif; color: #202b2b; background: #f5f3ee; }
+      h1 { font-size: 1.7rem; } label { display: block; font-weight: 600; margin-top: 20px; }
+      textarea { box-sizing: border-box; width: 100%; min-height: 150px; padding: 12px; font: 13px/1.5 monospace; }
+      button { min-height: 44px; padding: 8px 16px; margin: 12px 8px 12px 0; font: inherit; cursor: pointer; }
+      button:hover:not(:disabled) { background: #e2e7df; } button:active:not(:disabled) { background: #cedbd6; }
+      button:disabled { cursor: not-allowed; }
+      :focus-visible { outline: 3px solid #006d68; outline-offset: 3px; }
+      #measurement-view { width: 100%; height: 420px; position: relative; background: #101719; }
+      #probe-result { min-height: 220px; } p { max-width: 90ch; }
+      @media (max-width: 600px) { body { padding: 16px; } #measurement-view { height: 300px; } }
+    </style>
+  </head>
+  <body>
+    <main>
+    <h1>Raw Moon mesh measurement</h1>
+    <p>Developer diagnostic. Queries Cesium Moon geometry under a candidate identity bridge for measurement only. It does not calculate residuals, establish a frame transform, or enable scientific overlays. Unknown hits remain null. Numerical DEM analysis stays in Python.</p>
+    <label for="probe-request">Probe request JSON</label>
+    <textarea id="probe-request" spellcheck="false" aria-describedby="probe-limits"></textarea>
+    <p id="probe-limits">Up to 4096 declared Moon-centered Cartesian positions in meters. Queries run in batches of 32 with a total 120-second budget, including asset loading. The scoped ion token stays in memory.</p>
+    <button id="measure-probes" type="button">Measure raw mesh</button>
+    <button id="cancel-probes" type="button" disabled>Cancel measurement</button>
+    <p id="measurement-status" role="status" aria-live="polite">Ready for a declared probe request.</p>
+    <div id="measurement-view" aria-label="Diagnostic Moon scene"></div>
+    <label for="probe-result">Raw measurement JSON</label>
+    <textarea id="probe-result" readonly spellcheck="false"></textarea>
+    <button id="download-probes" type="button" disabled>Download measurement JSON</button>
+    </main>
+    <script type="module" src="/src/registration-diagnostic.js"></script>
+  </body>
+</html>
