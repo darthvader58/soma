@@ -113,7 +113,7 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
         result['warnings'].append('Missing coverage or unsupported input assumptions remain unknown, not zero or clear.')
     result['warnings'].extend(['Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.',
                                'This result does not book service or certify navigation, relay operation or thermal survival.',
-                               'Moon renderer registration and live browser integration remain Phase 5 gates.'])
+                               'Moon renderer registration remains an unresolved Phase 5 gate; scientific map overlays are blocked.'])
     validate_document(result,'result')
     if progress:
         progress('export')

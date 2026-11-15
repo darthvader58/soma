@@ -4,6 +4,11 @@ export const MOON_ASSET_ID = 2684829;
 export function registrationGate(registration, sourceFrame = 'MOON_ME_DE421') {
   const blocked = (reason) => ({ passed: false, reason });
   if (!registration) return blocked('No engine frame registration supplied. Aligned overlays are blocked.');
+  if ((typeof registration.status === 'string' && registration.status.startsWith('blocked')) ||
+      (typeof registration.registration_status === 'string' && registration.registration_status.startsWith('blocked'))) {
+    return blocked(registration.reason ?? `Engine renderer registration ${registration.version ?? 'unknown'} is blocked. ${(registration.release_gate?.blockers ?? []).join('; ')}`);
+  }
+  if (registration.release_gate && registration.release_gate.overlays_allowed !== true) return blocked('Engine release gate prohibits scientific overlays.');
   if (!registration.version || registration.authority !== 'soma_engine' ||
       registration.source_frame !== sourceFrame || !registration.renderer_frame ||
       registration.asset_id !== MOON_ASSET_ID || !registration.source_manifest_sha256?.match(/^[a-f0-9]{64}$/)) {
@@ -45,7 +50,7 @@ export async function createMoonViewer(container, {
   let displayPick;
   const removeListeners = [];
   const document = container.ownerDocument;
-  const gate = registrationGate(registration, scenario?.lander?.frame);
+  let gate = registrationGate(registration, scenario?.lander?.frame);
   const report = (state, message) => onStatus({ state, message, overlaysBlocked: true, registration: gate });
   const clearDisplayPick = () => {
     if (displayPick && viewer && !viewer.isDestroyed()) {
@@ -85,7 +90,15 @@ export async function createMoonViewer(container, {
   };
   const api = {
     clearDisplayPick,
-    setScenario(nextScenario) { scenario = nextScenario; clearDisplayPick(); },
+    setScenario(nextScenario) {
+      scenario = nextScenario;
+      api.setDisplay(undefined);
+      clearDisplayPick();
+    },
+    setDisplay(display) {
+      gate = registrationGate(display?.registration, scenario?.lander?.frame);
+      report('registration_blocked', `${gate.reason} Scientific overlays remain disabled; exact stored samples and the numerical schedule are available in text.`);
+    },
     setTime(epoch) {
       if (!viewer || destroyed) return;
       if (typeof epoch !== 'string' || !/^\d{4}-\d{2}-\d{2}T.*(Z|[+-]\d{2}:\d{2})$/.test(epoch)) {

@@ -7,6 +7,9 @@ const scenario = JSON.parse(readFileSync(new URL('../../fixtures/synthetic-direc
 const result = JSON.parse(readFileSync(new URL('../../web/fixtures/synthetic-direct/result.json', import.meta.url), 'utf8'));
 const response = value => ({ ok: true, status: 200, json: async () => value });
 const completed = { status: 'completed', stage: 'complete', scenario_sha256: result.scenario_sha256, result };
+const display = () => ({ ...structuredClone(result), artifact_type: 'soma_display_payload', format_version: '0.5.0',
+  states: [], sample_epochs_utc: [], environment: null, interpolation: 'none_unknown_between_samples',
+  registration: { status: 'blocked_pending_asset_registration' }, state_status: 'unknown' });
 
 test('offline mode returns only captured exact matching scenario', async () => {
   const client = createFixtureClient([{ scenario, result }]);
@@ -216,4 +219,57 @@ test('mismatched completed result cannot be published through progress or export
   await assert.rejects(client.plan(scenario, { onProgress: () => { published = true; } }), /result does not match/);
   assert.equal(published, false);
   await assert.rejects(client.exportRun(scenario), /No completed/);
+});
+
+test('live display fetch binds exact job, immutable result, scenario hash and artifact version', async () => {
+  const paths = [];
+  let supplied = display();
+  const client = createPlanClient({ fetchImpl: async (url, options = {}) => {
+    paths.push(url);
+    if (options.method === 'POST') return response({ job_id: 'display/job' });
+    return response(url.endsWith('/display-data') ? supplied : completed);
+  } });
+  await client.plan(scenario);
+  const artifact = await client.getDisplay(scenario);
+  assert.equal(paths.at(-1), '/plans/display%2Fjob/display-data');
+  assert.deepEqual(artifact.allocations, result.allocations);
+  assert.ok(Object.isFrozen(artifact.registration));
+  supplied = { ...display(), format_version: 'unapproved' };
+  await assert.rejects(client.getDisplay(scenario), /unsupported version/);
+  supplied = { ...display(), scenario_sha256: '0'.repeat(64) };
+  await assert.rejects(client.getDisplay(scenario), /mismatched scenario hash/);
+  const changed = structuredClone(scenario); changed.lander.antenna_height_m++;
+  await assert.rejects(client.getDisplay(changed), /No completed display/);
+});
+
+test('canceling or replacing a completion rejects a late display artifact even for same hash', async () => {
+  for (const replace of [false, true]) {
+    let release, reached;
+    const started = new Promise(resolve => { reached = resolve; });
+    const client = createPlanClient({ fetchImpl: async (url, options = {}) => {
+      if (options.method === 'POST') return response({ job_id: 'display' });
+      if (url.endsWith('/display-data')) {
+        reached();
+        return new Promise(resolve => { release = () => resolve(response(display())); });
+      }
+      return response(completed);
+    } });
+    await client.plan(scenario);
+    const pending = client.getDisplay(scenario);
+    const rejected = assert.rejects(pending, { name: 'AbortError' });
+    await started;
+    if (replace) await client.plan(scenario); else await client.cancel();
+    release();
+    await rejected;
+  }
+});
+
+test('offline display data is explicit captured input and is invalidated with its completion', async () => {
+  const captured = display();
+  const client = createFixtureClient([{ scenario, result, display: captured }]);
+  await client.plan(scenario);
+  captured.registration.status = 'tampered';
+  assert.equal((await client.getDisplay(scenario)).registration.status, 'blocked_pending_asset_registration');
+  client.cancel();
+  await assert.rejects(client.getDisplay(scenario), /No completed display/);
 });

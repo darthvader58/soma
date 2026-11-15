@@ -14,6 +14,7 @@ import zipfile
 from soma import __version__
 from soma.time import parse_utc
 from soma.validation import scenario_sha256, validate_document
+from soma.exports.display import display_data, renderer_registration
 
 
 def json_bytes(value):
@@ -153,8 +154,11 @@ def create_run_package(run):
     validate_document(result, "result")
     if scenario_sha256(scenario) != result["scenario_sha256"]:
         raise ValueError("Result scenario hash does not match the exported scenario")
+    display = display_data(run)
     files = {"scenario.json": json_bytes(scenario), "result.json": json_bytes(result),
              "summary.json": json_bytes(summary(run)), "display.czml": json_bytes(display_payload(run)),
+             "display-data.json": json_bytes(display),
+             "renderer-registration.json": json_bytes(display['registration']),
              "explanation.md": explanation(run)}
     if "analysis_inputs" in run:
         files["analysis-inputs.json"] = json_bytes(run["analysis_inputs"])

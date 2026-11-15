@@ -1,4 +1,5 @@
 import { canonicalScenarioHash, validateScenario, validateResult } from './contracts.js';
+import { validateDisplayPayload } from './display.js';
 
 const abortError = () => new DOMException('Planning canceled or superseded.', 'AbortError');
 function assertValid(check, label) {
@@ -46,6 +47,7 @@ export function createFixtureClient(fixtures, { fetchImpl = globalThis.fetch, fi
   if (!Number.isFinite(fixtureDelayMs) || fixtureDelayMs < 0) throw new Error('Fixture test delay must be nonnegative.');
   const captured = fixtures.map(value => ({ ...value, scenario: structuredClone(value.scenario), result: structuredClone(value.result),
     ...(value.summary ? { summary: structuredClone(value.summary) } : {}),
+    ...(value.display ? { display: structuredClone(value.display) } : {}),
     ...(value.packageBytes ? { packageBytes: new Uint8Array(value.packageBytes) } : {}) }));
   let generation = 0;
   let active;
@@ -101,6 +103,12 @@ export function createFixtureClient(fixtures, { fetchImpl = globalThis.fetch, fi
       const hash = await canonicalScenarioHash(scenario);
       if (!artifact || artifact !== completed || artifact.hash !== hash) throw new Error('No completed summary matches this scenario.');
       return checkedSummary(artifact.fixture.summary, hash, artifact.result);
+    },
+    async getDisplay(scenario) {
+      const artifact = completed;
+      const hash = await canonicalScenarioHash(scenario);
+      if (!artifact || artifact !== completed || artifact.hash !== hash) throw new Error('No completed display matches this scenario.');
+      return frozen(structuredClone(validateDisplayPayload(artifact.fixture.display, hash, artifact.result)));
     },
     async exportRun(scenario) {
       const artifact = completed;
@@ -204,6 +212,14 @@ export function createPlanClient({ baseUrl = '', fetchImpl = globalThis.fetch, p
       const value = await request(`/plans/${encodeURIComponent(artifact.id)}/summary`);
       if (completed !== artifact || generation !== artifact.current) throw abortError();
       return checkedSummary(value, hash, artifact.result);
+    },
+    async getDisplay(scenario) {
+      const artifact = completed;
+      const hash = await canonicalScenarioHash(scenario);
+      if (!artifact || artifact !== completed || artifact.hash !== hash) throw new Error('No completed display matches this scenario.');
+      const value = await request(`/plans/${encodeURIComponent(artifact.id)}/display-data`);
+      if (completed !== artifact || generation !== artifact.current) throw abortError();
+      return frozen(structuredClone(validateDisplayPayload(value, hash, artifact.result)));
     },
     async exportRun(scenario) {
       const artifact = completed;

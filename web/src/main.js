@@ -6,7 +6,8 @@ import { renderResult } from './result.js';
 import { renderTimeline } from './timeline.js';
 import { createFixtureClient, createPlanClient } from './client.js';
 import { validateScenario } from './contracts.js';
-import { createMoonViewer } from './viewer.js';
+import { createMoonViewer, registrationGate } from './viewer.js';
+import { displayTimeText } from './display.js';
 import { renderScience } from './science.js';
 import { renderComparison } from './comparison.js';
 import directScenario from '../fixtures/synthetic-direct/scenario.json' with { type: 'json' };
@@ -34,13 +35,14 @@ const fixtures = [
   { name: 'Direct to Earth', scenario: directScenario, contacts: directContacts, expected: directExpected, result: directResult, resultText: directResultText, environment: directEnvironment, environmentText: directEnvironmentText, packageUrl: directPackageUrl, summary: directSummary },
   { name: 'One lunar relay', scenario: relayScenario, contacts: relayContacts, expected: relayExpected, result: relayResult, resultText: relayResultText, environment: relayEnvironment, environmentText: relayEnvironmentText, packageUrl: relayPackageUrl, summary: relaySummary },
 ];
-const apiUrl = import.meta.env.VITE_SOMA_API_URL;
-const client = apiUrl ? createPlanClient({ baseUrl: apiUrl }) : createFixtureClient(fixtures);
+const fixtureMode = import.meta.env.VITE_SOMA_MODE === 'fixture';
+const apiUrl = fixtureMode ? undefined : import.meta.env.VITE_SOMA_API_URL || '/api';
+const client = fixtureMode ? createFixtureClient(fixtures) : createPlanClient({ baseUrl: apiUrl });
 const root = document.querySelector('#app');
 root.innerHTML = `
   <header class="app-header">
     <div class="identity"><span class="wordmark">SOMA</span><span class="identity-rule" aria-hidden="true"></span><span>Lunar delivery planner</span></div>
-    <span class="phase-label">Phase 4 · Visual draft</span>
+    <span class="phase-label">Phase 5 · Visual draft</span>
   </header>
   <main>
     <div class="page-heading"><div><h1>Plan a delivery from the Moon</h1><p>Inspect the site, data and network assumptions behind a delivery request.</p></div><p class="workspace-mode" id="workspace-mode"></p></div>
@@ -58,7 +60,7 @@ root.innerHTML = `
         <section class="map-panel panel" aria-labelledby="map-title">
           <div class="panel-heading"><div><h2 id="map-title">Lunar context</h2><p class="muted">Terrain display. Scientific analysis comes from the Python engine.</p></div><span class="section-index">02</span></div>
           <div id="moon-view" class="moon-view" aria-label="Moon terrain viewport"></div>
-          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
+          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
         </section>
         <section class="panel timeline-panel" aria-labelledby="timeline-title">
           <div class="panel-heading"><h2 id="timeline-title">Contact timeline</h2><span class="section-index">03</span></div>
@@ -90,12 +92,18 @@ root.innerHTML = `
   </main>`;
 
 const byId = id => document.getElementById(id);
-byId('workspace-mode').textContent = apiUrl ? 'Configured planning service' : 'Offline · Captured fixtures';
-if (apiUrl) byId('download-package').textContent = 'Download run package (ZIP)';
+byId('workspace-mode').textContent = apiUrl ? 'Live · Python planning service' : 'Offline · Captured fixtures';
+if (apiUrl) {
+  byId('download-package').textContent = 'Download run package (ZIP)';
+  document.querySelector('.project-notice').textContent = 'Live planning service. The declared examples use synthetic geometry, service and rate assumptions. Results come from Python; failed service requests do not load a fixture result.';
+  byId('job-status').textContent = 'Ready to submit the declared scenario to Python.';
+  byId('result-context').textContent = 'Choose Plan delivery to request a result from the live service.';
+}
 let activeFixture = fixtures[0];
 let scenario = structuredClone(activeFixture.scenario);
 let result = null;
 let currentSummary;
+let currentDisplay;
 let modified = false;
 let pendingFields = false;
 let generation = 0;
@@ -109,6 +117,7 @@ const comparison = renderComparison(byId('comparison'), { entries: comparisonEnt
 
 function selectedEnvironment() {
   if (byId('science-source').value === 'recorded') return { environment: realEnvironment, raw: realEnvironmentText };
+  if (apiUrl) return currentDisplay?.environment ? { environment: currentDisplay.environment, raw: `${JSON.stringify(currentDisplay.environment, null, 2)}\n` } : {};
   return modified ? {} : { environment: activeFixture.environment, raw: activeFixture.environmentText };
 }
 
@@ -116,12 +125,12 @@ function refreshScience() {
   const { environment } = selectedEnvironment();
   science?.destroy();
   const recorded = byId('science-source').value === 'recorded';
-  science = renderScience(byId('science'), { environment, selectedTime, fixtureBacked: !recorded });
+  science = renderScience(byId('science'), { environment, selectedTime, fixtureBacked: !apiUrl && !recorded });
   byId('download-environment').disabled = !environment;
   const point = environment?.analysis_point;
   byId('science-context').textContent = !environment
-    ? 'No matching scientific diagnostic for these edits. Saved fixture graphics are hidden.'
-    : `${recorded ? 'Separate recorded case using real LOLA and DE421 data; it does not change the scenario or delivery result.' : 'Synthetic algorithm example: all directions, skyline and contact geometry are invented inputs, processed by Python.'} Site ${point.latitude_deg}° planetocentric, ${point.longitude_deg_east}° east; ${point.frame}. Antenna ${point.antenna_height_m} m; panel ${point.panel_height_m} m. Scenario SHA-256 ${environment.scenario_sha256}.`;
+    ? 'No matching completed-job scientific diagnostic. Saved fixture graphics are hidden.'
+    : `${recorded ? 'Separate recorded case using real LOLA and DE421 data; it does not change the scenario or delivery result.' : apiUrl ? 'Exact completed-job diagnostic from Python. Input provenance and synthetic labels are preserved below.' : 'Synthetic algorithm example: all directions, skyline and contact geometry are invented inputs, processed by Python.'} Site ${point.latitude_deg}° planetocentric, ${point.longitude_deg_east}° east; ${point.frame}. Antenna ${point.antenna_height_m} m; panel ${point.panel_height_m} m. Scenario SHA-256 ${environment.scenario_sha256}.`;
 }
 
 function showErrors(messages = []) {
@@ -136,14 +145,16 @@ function showErrors(messages = []) {
 }
 
 function updateLocation() {
-  const fixturePoint = activeFixture.scenario.lander;
-  byId('analysis-location').textContent = `Fixture analysis point (synthetic, not service-resolved): ${fixturePoint.latitude_deg}° planetocentric, ${fixturePoint.longitude_deg_east}° east. ${fixturePoint.frame}. Declared elevation ${fixturePoint.elevation_m} m (${fixturePoint.elevation_datum}); reference radius ${fixturePoint.reference_radius_m} m. Antenna ${fixturePoint.antenna_height_m} m; panel ${fixturePoint.panel_height_m} m above declared ground.`;
+  const fixturePoint = apiUrl ? scenario.lander : activeFixture.scenario.lander;
+  const label = apiUrl ? 'Declared scenario point (not renderer-resolved)' : 'Fixture analysis point (synthetic, not service-resolved)';
+  byId('analysis-location').textContent = `${label}: ${fixturePoint.latitude_deg}° planetocentric, ${fixturePoint.longitude_deg_east}° east. ${fixturePoint.frame}. Declared elevation ${fixturePoint.elevation_m} m (${fixturePoint.elevation_datum}); reference radius ${fixturePoint.reference_radius_m} m. Antenna ${fixturePoint.antenna_height_m} m; panel ${fixturePoint.panel_height_m} m above declared ground.`;
   const draft = byId('draft-location');
   draft.hidden = !modified;
   const lander = scenario.lander;
+  const reference = apiUrl ? 'The declared point has not been registered to the renderer.' : 'The fixture point above is a reference only.';
   draft.textContent = pendingFields
-    ? 'Draft fields are being edited. No new analysis point has been resolved. The fixture point above is a reference only.'
-    : `Draft scenario point: ${lander.latitude_deg}° planetocentric, ${lander.longitude_deg_east}° east in declared ${lander.frame}. Antenna ${lander.antenna_height_m} m; panel ${lander.panel_height_m} m. Elevation, frame registration and terrain coverage have not been resolved for these edits; the fixture point above is a reference only.`;
+    ? `Draft fields are being edited. No new analysis point has been resolved. ${reference}`
+    : `Draft scenario point: ${lander.latitude_deg}° planetocentric, ${lander.longitude_deg_east}° east in declared ${lander.frame}. Antenna ${lander.antenna_height_m} m; panel ${lander.panel_height_m} m. Elevation, frame registration and terrain coverage have not been resolved for these edits. ${reference}`;
 }
 
 function clearDisplayPick() {
@@ -152,23 +163,28 @@ function clearDisplayPick() {
 }
 
 function refreshOutput() {
-  const contacts = modified ? [] : activeFixture.contacts;
+  const contacts = apiUrl ? result?.contacts ?? [] : modified ? [] : activeFixture.contacts;
   const expected = !modified && byId('hand-reference').checked ? activeFixture.expected : undefined;
   renderResult(byId('result'), { result, scenario, contacts, expected });
   timeline?.destroy();
   timeline = renderTimeline(byId('timeline'), {
     scenario, result, contacts, expected,
-    onTimeChange(epoch) { selectedTime = epoch; viewer?.setTime(epoch); science?.setTime(epoch); },
+    onTimeChange(epoch) { selectedTime = epoch; viewer?.setTime(epoch); science?.setTime(epoch); refreshSelectedState(); },
   });
   timeline.setTime(selectedTime);
   selectedTime = timeline.getTime();
   if (selectedTime) viewer?.setTime(selectedTime);
   refreshScience();
+  refreshSelectedState();
   byId('download-result').disabled = !result;
   byId('download-package').disabled = !result;
   byId('hand-reference').disabled = modified;
   byId('save-a').disabled = !result;
   byId('save-b').disabled = !result;
+}
+
+function refreshSelectedState() {
+  byId('selected-state').textContent = displayTimeText(currentDisplay, selectedTime);
 }
 
 function setBusy(busy) {
@@ -180,7 +196,11 @@ function setBusy(busy) {
 function cancelCurrent(message) {
   generation++;
   currentSummary = undefined;
-  Promise.resolve(client.cancel()).catch(error => showErrors([error.message]));
+  currentDisplay = undefined;
+  viewer?.setDisplay(undefined);
+  byId('display-status').textContent = 'No current display artifact. Aligned overlays remain blocked.';
+  const canceledGeneration = generation;
+  Promise.resolve(client.cancel()).catch(error => { if (generation === canceledGeneration) showErrors([error.message]); });
   setBusy(false);
   byId('retry-button').hidden = true;
   if (message) byId('job-status').textContent = message;
@@ -216,7 +236,7 @@ byId('scenario-form').addEventListener('input', () => {
 });
 
 function restoreFixture() {
-  cancelCurrent('Fixture restored. Ready to inspect its captured engine result.');
+  cancelCurrent(apiUrl ? 'Example restored. Ready to submit it to Python.' : 'Fixture restored. Ready to inspect its captured engine result.');
   scenario = structuredClone(activeFixture.scenario);
   result = null;
   modified = false;
@@ -224,7 +244,7 @@ function restoreFixture() {
   selectedTime = scenario.data_ready_utc;
   byId('hand-reference').checked = false;
   clearDisplayPick();
-  byId('result-context').textContent = 'Choose Plan delivery to load the captured engine output for this exact fixture.';
+  byId('result-context').textContent = apiUrl ? 'Choose Plan delivery to request a live result for this scenario.' : 'Choose Plan delivery to load the captured engine output for this exact fixture.';
   form.setScenario(scenario);
   showErrors();
   updateLocation();
@@ -238,7 +258,11 @@ byId('fixture-select').addEventListener('change', event => {
 });
 byId('restore-button').addEventListener('click', restoreFixture);
 byId('hand-reference').addEventListener('change', refreshOutput);
-byId('cancel-button').addEventListener('click', () => cancelCurrent('Job canceled. No partial success result is displayed.'));
+byId('cancel-button').addEventListener('click', () => {
+  cancelCurrent('Job canceled. No partial success result is displayed.');
+  result = null;
+  refreshOutput();
+});
 byId('science-source').addEventListener('change', refreshScience);
 for (const [id, index] of [['save-a', 0], ['save-b', 1]]) byId(id).addEventListener('click', () => {
   if (!result) return;
@@ -264,6 +288,9 @@ async function requestPlan(retry = false) {
   const current = ++generation;
   result = null;
   currentSummary = undefined;
+  currentDisplay = undefined;
+  viewer?.setDisplay(undefined);
+  byId('display-status').textContent = 'No current display artifact. Waiting for the new completed job.';
   refreshOutput();
   showErrors();
   setBusy(true);
@@ -277,14 +304,23 @@ async function requestPlan(retry = false) {
     };
     const nextResult = retry ? await client.retry(callbacks) : await client.plan(snapshot, callbacks);
     if (current !== generation) return;
-    let nextSummary;
-    try { nextSummary = await client.getSummary(snapshot); }
-    catch (error) { if (current === generation && error.name !== 'AbortError') showErrors([`Summary unavailable: ${error.message}`]); }
+    result = nextResult;
+    byId('job-status').textContent = `Result loaded: ${result.status}. Loading completed-job summary and display.`;
+    byId('result-context').textContent = apiUrl ? 'Engine result matched to the submitted scenario hash.' : 'Captured Python engine output for this exact scenario. This offline client performed no scientific calculation.';
+    refreshOutput();
+    const artifacts = await Promise.allSettled([client.getSummary(snapshot), client.getDisplay(snapshot)]);
     if (current !== generation) return;
+    const nextSummary = artifacts[0].status === 'fulfilled' ? artifacts[0].value : undefined;
+    const nextDisplay = artifacts[1].status === 'fulfilled' ? artifacts[1].value : undefined;
+    const errors = artifacts.flatMap((artifact, index) => artifact.status === 'rejected' && artifact.reason.name !== 'AbortError' && (apiUrl || index === 0) ? [`${index === 0 ? 'Summary' : 'Display'} unavailable: ${artifact.reason.message}`] : []);
+    showErrors(errors);
     result = nextResult;
     currentSummary = nextSummary;
+    currentDisplay = nextDisplay;
+    viewer?.setDisplay(nextDisplay);
+    byId('display-status').textContent = nextDisplay ? `Completed-job display ${nextDisplay.format_version}; scenario SHA-256 ${nextDisplay.scenario_sha256}. ${registrationGate(nextDisplay.registration, scenario.lander.frame).reason}` : 'Display artifact unavailable. Numerical schedule and exact run package remain usable; aligned overlays are blocked.';
     const matching = fixtures.find(item => item.result.scenario_sha256 === result.scenario_sha256);
-    if (matching) { activeFixture = matching; modified = false; pendingFields = false; }
+    if (matching && !apiUrl) { activeFixture = matching; modified = false; pendingFields = false; }
     updateLocation();
     byId('job-status').textContent = `Result loaded: ${result.status}. Solver: ${result.solver_status}.`;
     byId('result-context').textContent = apiUrl ? 'Engine result matched to the submitted scenario hash.' : 'Captured Python engine output for this exact scenario. This offline client performed no scientific calculation.';
