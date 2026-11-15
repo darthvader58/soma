@@ -35,7 +35,7 @@
     },
     {
       "path": "soma/api/moon.py",
-      "sha256": "cbd4cb8bb735f1844171e63fe5e0ec09087628836a8c978f555d7b2da8339a57"
+      "sha256": "35f16feb66415e306387136d9e83995fafd93279329c202d266ecc11702e3942"
     },
     {
       "path": "soma/exports/display.py",

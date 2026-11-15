@@ -4,7 +4,6 @@ Only asset 2684829's declared revision is reachable. Credentials and licensed
 binary content stay out of manifests, application results and exported runs.
 """
 
-from collections import OrderedDict
 from copy import deepcopy
 import gzip
 import hashlib
@@ -26,7 +25,6 @@ from soma.geometry.registration import _data_directory
 DATA = _data_directory()
 PUBLIC_BASE = '/api/moon/tiles/'
 MAX_OBJECT = 32 * 1024 * 1024
-MAX_CACHE = 128 * 1024 * 1024
 REGIONS = ('Moon_85s_85n', 'Moon_85s_90s', 'Moon_85n_90n')
 
 
@@ -169,8 +167,6 @@ class RegisteredMoon:
             str(Path(tempfile.gettempdir()) / 'soma-renderer-data' / (self.model['geoid']['sha256']+'.tif'))))
         self.endpoint = None
         self.snapshot_verified = False
-        self.cache = OrderedDict()
-        self.cache_bytes = 0
         self.lock = threading.RLock()
 
     def prepare(self):
@@ -214,10 +210,6 @@ class RegisteredMoon:
     def get(self, path):
         valid_path(path)
         self.prepare()
-        with self.lock:
-            if path in self.cache:
-                self.cache.move_to_end(path)
-                return self.cache[path]
         endpoint = self.endpoint
         content = self.fetch(self.source_url(path), endpoint['accessToken'])
         source_sha = hashlib.sha256(content).hexdigest()
@@ -233,15 +225,7 @@ class RegisteredMoon:
             from soma.geometry.renderer_mesh import correct_b3dm
             converted = correct_b3dm(content, path, self.grid, self.model)
             media = 'application/octet-stream'
-        item = converted, media, source_sha
-        with self.lock:
-            if path not in self.cache:
-                while self.cache and self.cache_bytes+len(converted) > MAX_CACHE:
-                    _, removed = self.cache.popitem(last=False)
-                    self.cache_bytes -= len(removed[0])
-                self.cache[path] = item
-                self.cache_bytes += len(converted)
-        return item
+        return converted, media, source_sha
 
 
 def moon_router(provider=None):
@@ -267,7 +251,7 @@ def moon_router(provider=None):
             content, media, source_sha = provider.get(path)
             return Response(content, media_type=media, headers={
                 'X-SOMA-Source-SHA256': source_sha, 'X-SOMA-Conversion-SHA256': provider.model_sha,
-                'Cache-Control': 'private, max-age=3600, immutable' if conversion else 'private, no-store'})
+                'Cache-Control': 'private, no-store'})
         except ValueError as error:
             # Transport errors can carry signed ion URLs, so error messages are
             # never relayed to the browser or the planning result.

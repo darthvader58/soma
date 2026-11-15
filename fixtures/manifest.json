@@ -71,7 +71,7 @@
     },
     {
       "path": "data/renderer-alignment-evidence.manifest.json",
-      "sha256": "9eae848b47615a5fa62d8364e43abf572489006c51fca67a029ca6114255d00a"
+      "sha256": "32b0fe938a8519fae376d6596848172f300f7dfdd2d3c0469b237d58339f0088"
     },
     {
       "path": "data/renderer-conversion.manifest.json",
@@ -95,7 +95,7 @@
     },
     {
       "path": "data/renderer-registration.manifest.json",
-      "sha256": "d2bebe167acab30c1f6e5c05cf98906517522ba96d06a32fe08c95682a4ce632"
+      "sha256": "31f4dc045b5d0f0ca8fa7cea150a0a09d412505518f54bfd5b23009cdf4e39cc"
     },
     {
       "path": "data/renderer-transect-capture.manifest.json",
@@ -419,7 +419,7 @@
     },
     {
       "path": "soma/api/moon.py",
-      "sha256": "cbd4cb8bb735f1844171e63fe5e0ec09087628836a8c978f555d7b2da8339a57"
+      "sha256": "35f16feb66415e306387136d9e83995fafd93279329c202d266ecc11702e3942"
     },
     {
       "path": "soma/datasets.py",
@@ -691,7 +691,7 @@
     },
     {
       "path": "tests/engine/test_moon_display_service.py",
-      "sha256": "bb8fa6c79948b63b280373d70abf45cab4770029702a92fe4fee1ffa459bf8ee"
+      "sha256": "7bbb5924dd609091a9f0565b02e4443ae6a2aba761d22962ac96703d8d86edc2"
     },
     {
       "path": "tests/engine/test_phase2_integration.py",
