@@ -1,0 +1,150 @@
+{
+  "allocations": [],
+  "assumptions": [
+    "Rate method: assumed_net_rate",
+    "Pointing: ideal_pointing",
+    "Service: SYNTHETIC windows at both endpoints; no booked network service",
+    "SYNTHETIC fixture contacts; zero generation over the whole horizon; light time disabled for arithmetic.",
+    "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+    "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+    "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+    "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+    "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+    "Ground sink retains all received chunks with finite configured station storage.",
+    "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+    "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+    "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
+  ],
+  "buffer_history": [],
+  "contacts": [
+    {
+      "available_capacity_bits": 307200000,
+      "contact_id": "synthetic-direct-contact",
+      "mode_id": "synthetic-direct-256k",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0
+      },
+      "payload_rate_bps": 256000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "synthetic_contact_fixture",
+        "assumed_net_rate",
+        "ideal_pointing",
+        "geometry_not_computed",
+        "link_budget_not_computed",
+        "light_time_disabled_for_arithmetic"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-earth-station",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "SYNTHETIC endpoint calendars in scenario.json; no operator service",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T09:10:00Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 1200000000,
+      "contact_id": "synthetic-relay-uplink",
+      "mode_id": "synthetic-uplink-2m",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0
+      },
+      "payload_rate_bps": 2000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "synthetic_contact_fixture",
+        "assumed_net_rate",
+        "ideal_pointing",
+        "geometry_not_computed",
+        "link_budget_not_computed",
+        "light_time_disabled_for_arithmetic"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-lunar-relay",
+      "receiver_terminal_id": "relay-radio",
+      "sender": "synthetic-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "SYNTHETIC endpoint calendars in scenario.json; no operator service",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T09:10:00Z",
+        "start_utc": "2026-11-14T09:00:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 1800000000,
+      "contact_id": "synthetic-relay-downlink",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "synthetic_contact_fixture",
+        "assumed_net_rate",
+        "ideal_pointing",
+        "geometry_not_computed",
+        "link_budget_not_computed",
+        "light_time_disabled_for_arithmetic"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-earth-station",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "SYNTHETIC endpoint calendars in scenario.json; no operator service",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T10:03:00Z",
+        "start_utc": "2026-11-14T10:00:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    }
+  ],
+  "delivered_bytes": 0,
+  "energy_history": [],
+  "final_byte_arrival_utc": null,
+  "model_fidelity": "assumed_rate_simulation",
+  "provenance": {
+    "dataset_manifest_ref": "synthetic-contract-v1",
+    "engine_version": "0.1.0",
+    "implementation_status": "implemented",
+    "input_provenance": [
+      {
+        "description": "Invented contract/arithmetic test values, including location, dates, hardware, finite storage, nonzero lander base load, panel parameters and station proxy. No numerical terrain or ephemeris is supplied; no mission prediction.",
+        "input_class": "synthetic",
+        "scope": "all scenario values and contact windows",
+        "source_urls": []
+      },
+      {
+        "description": "Assumed net payload rates with overhead already applied once; ideal pointing; zero acquisition/teardown and relay processing for arithmetic only; light time disabled for synthetic test, not physically zero.",
+        "input_class": "assumed",
+        "scope": "rates, pointing, acquisition, processing and propagation",
+        "source_urls": []
+      }
+    ],
+    "kernel_manifest_ref": null,
+    "reason": "The bounded discretized model proved no complete-file schedule under the declared route, storage, radio, service and energy constraints.",
+    "source_urls": []
+  },
+  "run_version": "0.1.0",
+  "scenario_id": "synthetic-relay",
+  "scenario_sha256": "d7c1b741ddc6c648b21acb532671563080bf141d0afbdfff5217d81b20f3496e",
+  "solver_status": "proven_infeasible_discretized_model",
+  "status": "infeasible_in_model",
+  "storage_intervals": [],
+  "warnings": [
+    "No numerical lunar terrain or ephemeris; no mission prediction.",
+    "No complete dataset schedule satisfies the declared discrete route, capacity, storage, service, radio and energy constraints.",
+    "Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.",
+    "This result does not book service or certify navigation, relay operation or thermal survival.",
+    "Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage."
+  ]
+}

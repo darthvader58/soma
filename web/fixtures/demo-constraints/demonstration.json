@@ -1,0 +1,351 @@
+{
+  "artifact_type": "synthetic_constraint_demonstration",
+  "baseline_replay_passed": true,
+  "cases": [
+    {
+      "baseline_counterfactual_errors": [
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:01:10Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:01:20Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:02:30Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:03:40Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:04:50Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:05:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:05:20Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:06:10Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:07:20Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T09:08:30Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-14T10:05:00Z"
+        }
+      ],
+      "baseline_counterfactual_rejected": true,
+      "case_id": "battery-low",
+      "changed_control": "initial_energy_wh",
+      "changed_value": 11,
+      "constraint_explanation": "Only initial battery energy changes from 80 Wh to 11 Wh, with a 10 Wh reserve. Synthetic generation is zero. The 5 W base load alone over 75 minutes needs 6.25 Wh of delivered electricity, or 6.944444444444445 Wh removed at 0.9 discharge efficiency. The 1 Wh initial margin above reserve cannot sustain even that base load, before radio use.",
+      "delivered_bytes": 0,
+      "export_verified": true,
+      "files": {
+        "battery-low/analysis-inputs.json": {
+          "sha256": "8b1357d11f81b0e302b2bc4d1cdf40b714380beff965891f24409de691a7c8a4",
+          "size_bytes": 4043
+        },
+        "battery-low/baseline-counterfactual-replay.json": {
+          "sha256": "ec33586dd2fdb046e7c86e10aaf5771054cd55c0cb3f57eba65872dc2a9f6a0e",
+          "size_bytes": 12748
+        },
+        "battery-low/buffer-history.csv": {
+          "sha256": "59a731671982aae79cff358b04cd847ce0714ad7d20f977b36a0b4ebea4e81b7",
+          "size_bytes": 31
+        },
+        "battery-low/contacts.csv": {
+          "sha256": "8a20e028acbd59d0ec06bc2a87a75a9551b1188ed24fbca7f356c6f66d077755",
+          "size_bytes": 1478
+        },
+        "battery-low/display-data.json": {
+          "sha256": "9fd211e5d45da177e5b6e0eb274f66b9d1d444e0e10767c6a3a9ec320e9006f4",
+          "size_bytes": 28188
+        },
+        "battery-low/display.czml": {
+          "sha256": "80c9bb2347749fb4baf4b6dbb1cc22ccb63a42870c3891a6a11c81455c132443",
+          "size_bytes": 1009
+        },
+        "battery-low/energy.csv": {
+          "sha256": "edb40563f8f3ab30e6287f4bdd52b6132ae60fdb4d10989280c55ed5e999c6aa",
+          "size_bytes": 35
+        },
+        "battery-low/explanation.md": {
+          "sha256": "6c13b05b981782ae45e849346fe6c6af367eb68ecb979fcdd9ac51ccf214761e",
+          "size_bytes": 7732
+        },
+        "battery-low/renderer-conversion.json": {
+          "sha256": "5810f9c662b59136eac702be59dda25eb82edf47fad99f1e33777490dfc29714",
+          "size_bytes": 2724
+        },
+        "battery-low/renderer-registration.json": {
+          "sha256": "3165c7a2a558425331d947bf54488dbcb885a8a459c4426a830376e085fcbdc9",
+          "size_bytes": 9104
+        },
+        "battery-low/replay.json": {
+          "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+          "size_bytes": 5
+        },
+        "battery-low/result.json": {
+          "sha256": "5c634608b5b55e660aeb9450f66aebc4820c81068fe9ecda77de8a29caef662a",
+          "size_bytes": 6825
+        },
+        "battery-low/run-manifest.json": {
+          "sha256": "6c52a18f01ae6a3581c9f969896920c4e5c8dffd87130f8256fab4cf6e900017",
+          "size_bytes": 11701
+        },
+        "battery-low/run.json": {
+          "sha256": "4a398e2de024c601996cf1cc5199ce6f22ed24d5ac75f35443746fd2cbf66817",
+          "size_bytes": 24277
+        },
+        "battery-low/run.zip": {
+          "sha256": "25c15a3a4ef4d29e486c8b3d854b7350dede720a7eb5cd207ab7461482daeab3",
+          "size_bytes": 89744
+        },
+        "battery-low/scenario.json": {
+          "sha256": "83d4882904fce3b4841f58627d4a68fb25b6589acf23675374d04db605912f72",
+          "size_bytes": 6270
+        },
+        "battery-low/schedule.csv": {
+          "sha256": "21f812f345c5490e22d7d26f53cacae375d18dee7317f7ce2ad855af3ca431e1",
+          "size_bytes": 211
+        },
+        "battery-low/summary.json": {
+          "sha256": "8983543106cba636d787899d515f87ca2413888e4ffe063c9bf5e4f7952bb37b",
+          "size_bytes": 8768
+        },
+        "battery-low/verification.json": {
+          "sha256": "5b9d9c668179996dfddc1599a6a1b4bf0db6aef8f472c389f5c49e744f23100e",
+          "size_bytes": 5058
+        }
+      },
+      "final_byte_arrival_utc": null,
+      "input_class": "synthetic",
+      "labels": [
+        "Synthetic contact geometry and service",
+        "Assumed net radio rates",
+        "Declared zero generation",
+        "Light time disabled for arithmetic",
+        "No numerical terrain or ephemeris",
+        "No spacecraft trajectory; map states remain unknown",
+        "Not a lunar mission prediction"
+      ],
+      "limiting_reason": "The bounded discretized model proved no complete-file schedule under the declared route, storage, radio, service and energy constraints.",
+      "model_fidelity": "assumed_rate_simulation",
+      "package_ref": "battery-low/run.zip",
+      "package_sha256": "25c15a3a4ef4d29e486c8b3d854b7350dede720a7eb5cd207ab7461482daeab3",
+      "run_ref": "battery-low/run.json",
+      "scenario_id": "synthetic-relay",
+      "scenario_sha256": "22d6f59174516ab03473eb11f0c85f880f560091b5d094d08c72f742906a6dbc",
+      "solver_status": "proven_infeasible_discretized_model",
+      "status": "infeasible_in_model"
+    },
+    {
+      "baseline_counterfactual_errors": [
+        {
+          "allocation_id": "allocation-0",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-1",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-2",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-3",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-4",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-5",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-6",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-7",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        },
+        {
+          "allocation_id": "allocation-8",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        },
+        {
+          "allocation_id": "allocation-9",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        },
+        {
+          "allocation_id": "allocation-10",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        },
+        {
+          "allocation_id": "allocation-11",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        },
+        {
+          "allocation_id": "allocation-12",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        },
+        {
+          "allocation_id": "allocation-13",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        }
+      ],
+      "baseline_counterfactual_rejected": true,
+      "case_id": "service-off",
+      "changed_control": "relay_service_available",
+      "changed_value": false,
+      "constraint_explanation": "Only the synthetic lunar relay service windows change to an empty list. The relay cannot receive or forward during any interval. The remaining direct contact can carry 307200000 bits, less than the 838860800-bit (100 MiB) file. Visibility and assumed rate do not supply missing service permission.",
+      "delivered_bytes": 0,
+      "export_verified": true,
+      "files": {
+        "service-off/analysis-inputs.json": {
+          "sha256": "59da2c258e89ec9a6af17beaa72d3f1c1e62d9ffabcf55a3b195e34476b4c7d3",
+          "size_bytes": 4043
+        },
+        "service-off/baseline-counterfactual-replay.json": {
+          "sha256": "7a6f0a0cc010fb1223f5099bce1c29325b841be5eb28d356c770aff112635fb6",
+          "size_bytes": 13941
+        },
+        "service-off/buffer-history.csv": {
+          "sha256": "59a731671982aae79cff358b04cd847ce0714ad7d20f977b36a0b4ebea4e81b7",
+          "size_bytes": 31
+        },
+        "service-off/contacts.csv": {
+          "sha256": "8a20e028acbd59d0ec06bc2a87a75a9551b1188ed24fbca7f356c6f66d077755",
+          "size_bytes": 1478
+        },
+        "service-off/display-data.json": {
+          "sha256": "5ff64443015f25309196b75548f6e98cb7b38a5155a08b15c1041c2f294966e0",
+          "size_bytes": 28187
+        },
+        "service-off/display.czml": {
+          "sha256": "f2d7a8ae15d9040635dcba072675163fe208d466f04e4cea05ae2eb99b8da5fb",
+          "size_bytes": 1009
+        },
+        "service-off/energy.csv": {
+          "sha256": "edb40563f8f3ab30e6287f4bdd52b6132ae60fdb4d10989280c55ed5e999c6aa",
+          "size_bytes": 35
+        },
+        "service-off/explanation.md": {
+          "sha256": "350a342a5cdf97b0778a96c6f18349cba81c42cd8ecf6cf7a2af99eee9ef1d2a",
+          "size_bytes": 7731
+        },
+        "service-off/renderer-conversion.json": {
+          "sha256": "5810f9c662b59136eac702be59dda25eb82edf47fad99f1e33777490dfc29714",
+          "size_bytes": 2724
+        },
+        "service-off/renderer-registration.json": {
+          "sha256": "3165c7a2a558425331d947bf54488dbcb885a8a459c4426a830376e085fcbdc9",
+          "size_bytes": 9104
+        },
+        "service-off/replay.json": {
+          "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+          "size_bytes": 5
+        },
+        "service-off/result.json": {
+          "sha256": "ddee9719a264728f0e80a3ecd6f94b277f37ec05dbfa7efea9321d230e6978ad",
+          "size_bytes": 6825
+        },
+        "service-off/run-manifest.json": {
+          "sha256": "e29beb94a1fffd03f873b689d67f0bff1977933bff898bc71125bb86ac895a50",
+          "size_bytes": 11700
+        },
+        "service-off/run.json": {
+          "sha256": "23411daf8749dfcf56f01074405c92208fe4b932231764992f6df3c2fe404307",
+          "size_bytes": 23992
+        },
+        "service-off/run.zip": {
+          "sha256": "8f93e19bb61fac53c3e52e701fd0f8c8633d25b8684de844151dc02a27971b73",
+          "size_bytes": 89474
+        },
+        "service-off/scenario.json": {
+          "sha256": "f3099c010d7bf3ee0b9b620940edf1d40a1700b32ceab36a5fd62625291e7f4b",
+          "size_bytes": 6004
+        },
+        "service-off/schedule.csv": {
+          "sha256": "21f812f345c5490e22d7d26f53cacae375d18dee7317f7ce2ad855af3ca431e1",
+          "size_bytes": 211
+        },
+        "service-off/summary.json": {
+          "sha256": "f94c121ca7699dc4527bec33ea476f31da7d1f09dbad8b47ce9f413f782621c7",
+          "size_bytes": 8767
+        },
+        "service-off/verification.json": {
+          "sha256": "c97efab37fa625a41eddebe67e109f03bd6bd5cd981ab88994a24a0a127f8fcb",
+          "size_bytes": 5058
+        }
+      },
+      "final_byte_arrival_utc": null,
+      "input_class": "synthetic",
+      "labels": [
+        "Synthetic contact geometry and service",
+        "Assumed net radio rates",
+        "Declared zero generation",
+        "Light time disabled for arithmetic",
+        "No numerical terrain or ephemeris",
+        "No spacecraft trajectory; map states remain unknown",
+        "Not a lunar mission prediction"
+      ],
+      "limiting_reason": "The bounded discretized model proved no complete-file schedule under the declared route, storage, radio, service and energy constraints.",
+      "model_fidelity": "assumed_rate_simulation",
+      "package_ref": "service-off/run.zip",
+      "package_sha256": "8f93e19bb61fac53c3e52e701fd0f8c8633d25b8684de844151dc02a27971b73",
+      "run_ref": "service-off/run.json",
+      "scenario_id": "synthetic-relay",
+      "scenario_sha256": "d7c1b741ddc6c648b21acb532671563080bf141d0afbdfff5217d81b20f3496e",
+      "solver_status": "proven_infeasible_discretized_model",
+      "status": "infeasible_in_model"
+    }
+  ],
+  "generator_ref": "scripts/build-demo-constraints.py",
+  "generator_sha256": "9ea525a7985f90ddc450dae25cea6aa7390c8f7b5b2b5f8f08ba0621bce30bec",
+  "limitations": [
+    "All geometry, rates, service and power inputs are synthetic software-test assumptions.",
+    "Counterfactual replay rejects one known baseline schedule; MILP proof establishes infeasibility in the stated discretized model.",
+    "No selected infeasible schedule exists; absent energy histories and completion remain unknown.",
+    "Exact numerical outcomes are reproducible; ZIP bytes also record current software hashes and versions."
+  ],
+  "method": "Exact archived scenarios, analysis inputs and scheduler options passed to plan_run; native outputs unedited; exported packages independently verified.",
+  "reproduce_command": ".venv/bin/python scripts/build-demo-constraints.py",
+  "source_ref": "fixtures/phase-6/sensitivity.json",
+  "source_sha256": "95eddf3434952941be5b4fff211187d086b2394d4b4b1fd4117d82636c01ec82",
+  "version": "1.0.0"
+}
