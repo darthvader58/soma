@@ -58,7 +58,9 @@ root.innerHTML = `
     <div class="page-heading"><div><h1>Plan a delivery from the Moon</h1><p>Inspect transmission windows, relay storage and the modeled energy reserve.</p></div><p class="workspace-mode" id="workspace-mode"></p></div>
     <p class="project-notice">Python supplies delivery schedules under declared geometry, service and rate assumptions. Numerical terrain diagnostics retain their coverage limits.</p>
     <section id="mission-cases" class="mission-cases panel" aria-labelledby="mission-cases-title" hidden>
-      <div class="panel-heading"><div><h2 id="mission-cases-title">Mission cases</h2><p class="muted">Follow the terrain-backed delivery story, then isolate two synthetic resource constraints.</p></div></div>
+      <div class="panel-heading"><div><h2 id="mission-cases-title">Mission cases</h2><p class="muted">Hypothetical south-pole lander study</p></div></div>
+      <p id="mission-context">A small lander at 89.03093° S, 1.38934° E must deliver a 16 MiB dataset within six hours. Compare 24 and 30 November 2026, then vary relay access and initial battery energy. These are study scenarios, not a named mission or an operational relay service.</p>
+      <p class="muted">Geometry uses published numerical <a href="https://pgda.gsfc.nasa.gov/products/81" target="_blank" rel="noreferrer">LOLA elevation products</a> and DE421 ephemerides; interpolation, coarse terrain coverage and unknown samples retain their recorded quality. Hardware, net radio rates, ideal pointing and service calendars are assumed. The lunar relay follows a labeled synthetic two-body trajectory. <a href="https://www.nasa.gov/communicating-with-missions/delay-disruption-tolerant-networking/" target="_blank" rel="noreferrer">NASA’s store-and-forward explanation</a> motivates the communications architecture, without implying access to a real network.</p>
       <nav id="case-navigation" class="case-navigation" aria-label="Mission cases"></nav>
       <div class="case-brief"><div><p id="case-kind" class="muted"></p><h3 id="case-title"></h3><p id="case-question"></p><p id="case-change"></p></div><div><h3>Engine outcome</h3><p id="case-outcome" role="status" aria-live="polite"></p><div id="controlled-explanation" hidden><h3>Controlled test explanation</h3><p id="controlled-explanation-text"></p></div></div></div>
       <nav class="case-sections" aria-label="Case evidence"><a href="#timeline-section">Contact timeline</a><a href="#science-section">Power and horizon</a><a href="#result-section">Delivery result</a><a href="#run-downloads">Run package</a><button id="relay-focus" type="button" hidden>Show relay transmission · 09:33:30 UTC</button></nav>
@@ -77,7 +79,7 @@ root.innerHTML = `
         <section class="map-panel panel" aria-labelledby="map-title">
           <div class="panel-heading"><div><h2 id="map-title">Lunar context</h2><p class="muted">Terrain display. Scientific analysis comes from the Python engine.</p></div><span class="section-index">02</span></div>
           <div id="moon-view" class="moon-view" aria-label="Moon terrain viewport"></div>
-          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p class="muted">Stored relay samples only; no motion is inferred between samples. Dashed lines show available contacts; solid lines show scheduled source transmissions. Lines require both stored endpoints. Earth-bound transfers remain in the text schedule when no registered endpoint is supplied.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
+          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p class="muted">Stored relay samples only; no motion is inferred between samples. Dashed lines show offered contact windows; solid lines show scheduled source transmissions. An offered window does not establish available service. Lines require both stored endpoints. Earth-bound transfers remain in the text schedule when no registered endpoint is supplied.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
         </section>
         <section class="panel timeline-panel" id="timeline-section" aria-labelledby="timeline-title">
           <div class="panel-heading"><h2 id="timeline-title">Contact timeline</h2><span class="section-index">03</span></div>
@@ -147,7 +149,7 @@ if (fixtureMode) {
   byId('editing-scope').hidden = false;
   byId('enable-editing').hidden = false;
   const caseGroups = new Map();
-  for (const [group, title] of [['physical', '16 MiB lunar mission'], ['synthetic', '100 MiB synthetic constraint tests']]) {
+  for (const [group, title] of [['physical', 'One 16 MiB task · direct, relay, energy and service alternatives']]) {
     const section = document.createElement('div'); section.className = 'case-group';
     const label = document.createElement('p'); label.className = 'muted'; label.textContent = title;
     const buttons = document.createElement('div'); buttons.className = 'case-buttons';
@@ -157,7 +159,7 @@ if (fixtureMode) {
     const button = document.createElement('button');
     button.type = 'button'; button.textContent = item.title; button.dataset.caseId = item.id;
     button.addEventListener('click', () => selectCase(item.id));
-    caseGroups.get(['battery-low', 'service-off'].includes(item.id) ? 'synthetic' : 'physical').append(button);
+    caseGroups.get('physical').append(button);
   }
 }
 const capturedComparisons = () => fixtures.map(item => structuredClone({ name: item.name, scenario: item.scenario, result: item.result, summary: item.summary }));
@@ -180,6 +182,7 @@ function refreshScience() {
   byId('science-context').textContent = !environment
     ? 'No matching completed-job scientific diagnostic. Saved fixture graphics are hidden.'
     : `${recorded ? 'Separate recorded case using real LOLA and DE421 data; it does not change the scenario or delivery result.' : apiUrl || scenario.analysis_mode === 'terrain_ephemeris' ? 'Exact completed-run diagnostic from Python using numerical terrain and ephemerides. Input provenance and assumed rates remain labeled below.' : 'Synthetic algorithm example: all directions, skyline and contact geometry are invented inputs, processed by Python.'} Site ${point.latitude_deg}° planetocentric, ${point.longitude_deg_east}° east; ${point.frame}. Antenna ${point.antenna_height_m} m; panel ${point.panel_height_m} m. Scenario SHA-256 ${environment.scenario_sha256}.`;
+  if (environment && !recorded && activeFixture.caseId === 'service-off') byId('science-context').textContent += ' Geometry/power diagnostics are retained from baseline; service decisions for this case are in the controlled replay and native result. Service labels in the retained diagnostic describe the baseline, not this case’s available relay service.';
 }
 
 function showErrors(messages = []) {
@@ -479,7 +482,7 @@ byId('download-package').addEventListener('click', async () => {
 updateLocation();
 refreshOutput();
 if (fixtureMode) {
-  document.querySelector('.project-notice').textContent = 'Captured Python results. The three lunar mission cases use published numerical LOLA terrain and DE421 ephemerides; the two separate constraint tests use synthetic geometry and power inputs. Radio rates, service and relay trajectories retain their declared assumptions. New scenarios require the full local Python engine.';
+  document.querySelector('.project-notice').textContent = 'Captured Python results for one hypothetical lunar south-pole study. All five mission cases use the same 16 MiB task and published terrain/ephemeris inputs. Hardware, radio rates, service and relay trajectories retain their declared assumptions. New scenarios require the full local Python engine.';
   byId('workspace-mode').textContent = 'Captured · Computed Python runs';
   restoreFixture();
 }

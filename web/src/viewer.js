@@ -116,7 +116,7 @@ export async function createMoonViewer(container, {
     }));
     for (const { contact, allocation, positions } of sample.links) sampleEntities.push(viewer.entities.add({
       id: `contact-${contact.contact_id}`,
-      description: `${allocation ? 'Scheduled transmission' : 'Available contact only'}: ${contact.sender} to ${contact.receiver}. Endpoint positions at selected source epoch; not a light-time ray path. ${contact.service_provenance}`,
+      description: `${allocation ? 'Scheduled transmission' : 'Offered contact window only'}: ${contact.sender} to ${contact.receiver}. Endpoint positions at selected source epoch; not a light-time ray path. ${contact.service_provenance}`,
       polyline: { positions: positions.map(position => new cesium.Cartesian3(...position)),
         arcType: cesium.ArcType.NONE, width: allocation ? 4 : 2,
         material: allocation ? cesium.Color.WHITE : new cesium.PolylineDashMaterialProperty({ color: cesium.Color.WHITE, dashLength: 16 }) },

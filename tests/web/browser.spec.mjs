@@ -24,16 +24,18 @@ test('mission case navigation binds deep links, native outcomes and exact relay 
   await expect(page.locator('#case-outcome')).toContainText('at most 0 payload bits');
   await expect(page.getByLabel('Data volume', { exact: true })).toBeDisabled();
   await expect(page.locator('#editing-scope')).toContainText('cannot calculate a new scenario');
-  for (const [id, label] of [['battery-low', 'Battery constraint'], ['service-off', 'Service constraint']]) {
+  await expect(page.locator('#mission-context')).toContainText('89.03093° S, 1.38934° E');
+  for (const [id, label] of [['battery-low', 'Low battery'], ['service-off', 'Relay unavailable']]) {
     await page.getByRole('button', { name: label, exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`case=${id}`));
     await expect(page.locator('#case-title')).toHaveText(label);
-    await expect(page.locator('#case-kind')).toHaveText('Synthetic constraint test');
-    await expect(page.locator('#case-outcome')).toContainText('Infeasible in model');
-    await expect(page.locator('#result')).toContainText('proven_infeasible_discretized_model');
+    await expect(page.locator('#case-kind')).toContainText('sensitivity');
+    await expect(page.locator('#case-outcome')).toContainText('Unknown');
+    await expect(page.locator('#result')).toContainText('Solver: unresolved');
     await expect(page.locator('#controlled-explanation')).toBeVisible();
     await expect(page.locator('#controlled-explanation-text')).toContainText(id === 'battery-low' ? 'energy_reserve' : 'service_unavailable');
-    await expect(page.locator('#timeline')).toContainText('Synthetic offered contact window');
+    await expect(page.locator('#timeline')).not.toContainText('Synthetic offered contact window');
+    if (id === 'service-off') await expect(page.locator('#science-context')).toContainText('Geometry/power diagnostics are retained from baseline');
     await expect(page.locator('#validation-errors')).toBeHidden();
   }
   await page.getByRole('button', { name: 'Lunar relay', exact: true }).click();

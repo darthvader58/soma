@@ -8,12 +8,12 @@ export const missionCases = [
   { id: 'relay-later', title: 'Lunar relay', label: 'Store and forward',
     question: 'Can a declared lunar relay deliver the same later task?',
     change: 'Enable the single lunar-relay route for the later case. The synthetic two-body relay has finite storage and assumed service and rates.' },
-  { id: 'battery-low', title: 'Battery constraint', label: 'Synthetic constraint test',
-    question: 'Can the synthetic relay task run with only 1 Wh above reserve?',
-    change: 'Only initial lander energy changes: 80 Wh to 11 Wh. Reserve remains 10 Wh. Synthetic contacts and the 100 MiB task stay fixed.' },
-  { id: 'service-off', title: 'Service constraint', label: 'Synthetic constraint test',
-    question: 'Does geometric contact suffice when relay service is unavailable?',
-    change: 'Only the synthetic relay service calendar changes to no available windows. The 100 MiB task, hardware and initial battery remain unchanged.' },
+  { id: 'battery-low', title: 'Low battery', label: 'Initial-energy sensitivity',
+    question: 'Can the later relay mission proceed with an initial battery close to reserve?',
+    change: 'Compared with Lunar relay, only initial lander energy changes from 80 Wh to 11 Wh. The 10 Wh reserve, 16 MiB task, terrain, date and declared network stay fixed.' },
+  { id: 'service-off', title: 'Relay unavailable', label: 'Relay-service sensitivity',
+    question: 'What happens when the relay has no allocated service during this mission window?',
+    change: 'Compared with Lunar relay, only the relay service calendar changes to no available windows. The 16 MiB task, terrain, date, hardware and 80 Wh initial battery stay fixed.' },
 ];
 
 export const relayFocusEpoch = '2026-11-30T09:33:30Z';
@@ -33,7 +33,7 @@ export function missionOutcome(result, summary) {
   const matchingSummary = summary?.scenario_sha256 === result.scenario_sha256 ? summary : undefined;
   const status = { feasible_under_assumptions: 'Feasible under assumptions', infeasible_in_model: 'Infeasible in model', unknown: 'Unknown' }[result.status];
   const bytes = result.delivered_bytes === null ? 'Unknown' : result.delivered_bytes.toLocaleString('en-US');
-  return `${status}. Delivered: ${bytes} bytes. Last byte: ${result.final_byte_arrival_utc ?? 'No complete-file arrival'}. ${matchingSummary?.limiting_reason ?? result.provenance.reason}`;
+  return `${status}. Delivered: ${bytes} bytes. Last byte: ${result.final_byte_arrival_utc ?? (result.status === 'unknown' ? 'Unknown' : 'No complete-file arrival')}. ${matchingSummary?.limiting_reason ?? result.provenance.reason}`;
 }
 
 export function controlledTestExplanation(evidence, caseId, result) {
