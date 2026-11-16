@@ -156,3 +156,82 @@ def test_macos_launch_uses_posix_spawn_from_threads(monkeypatch, tmp_path):
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         list(executor.map(launch, range(24)))
+
+
+@pytest.mark.parametrize('cancel_background', [False,True])
+def test_busy_retry_after_and_cancelled_waiter_keep_slot_until_worker_finishes(monkeypatch, cancel_background):
+    import asyncio
+    import json
+    import threading
+    from fastapi import HTTPException
+    from starlette.requests import Request
+    import soma.api.delivery as delivery
+
+    async def check():
+        started, release = threading.Event(), threading.Event()
+        calls = []
+
+        def calculate(*args, **kwargs):
+            calls.append(1)
+            started.set()
+            assert release.wait(timeout=5)
+            return b'{"complete":true}'
+
+        monkeypatch.setattr(delivery, 'run_delivery_sync', calculate)
+        router = delivery.delivery_router(data_root='/unused')
+        endpoint = next(route.endpoint for route in router.routes if route.path.endswith('/analyze'))
+
+        def request():
+            body = json.dumps({'scenario':scenario_template()}).encode()
+            async def receive():
+                return {'type':'http.request','body':body,'more_body':False}
+            return Request({'type':'http','method':'POST','path':'/research/delivery/analyze','headers':[]}, receive)
+
+        waiter = asyncio.create_task(endpoint(request()))
+        while not started.is_set():
+            await asyncio.sleep(.001)
+        if cancel_background:
+            background = next(task for task in asyncio.all_tasks()
+                if task is not waiter and task.get_coro().cr_code.co_name == 'to_thread')
+            background.cancel()
+        else:
+            waiter.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await waiter
+        with pytest.raises(HTTPException) as busy:
+            await endpoint(request())
+        assert busy.value.status_code == 429
+        assert busy.value.headers['Retry-After'] == '3'
+        assert len(calls) == 1
+        release.set()
+        for _ in range(100):
+            try:
+                response = await endpoint(request())
+                break
+            except HTTPException as error:
+                assert error.status_code == 429
+                await asyncio.sleep(.005)
+        else:
+            pytest.fail('Completed worker did not release its slot')
+        assert response.status_code == 200 and len(calls) == 2
+    asyncio.run(check())
+
+
+def test_worker_failure_releases_the_single_slot(monkeypatch):
+    from fastapi import FastAPI, HTTPException
+    from fastapi.testclient import TestClient
+    import soma.api.delivery as delivery
+    calls = []
+
+    def calculate(*args, **kwargs):
+        calls.append(1)
+        if len(calls) == 1:
+            raise HTTPException(503, 'Declared computation failure')
+        return b'{"complete":true}'
+
+    monkeypatch.setattr(delivery, 'run_delivery_sync', calculate)
+    app = FastAPI()
+    app.include_router(delivery.delivery_router(data_root='/unused'))
+    with TestClient(app) as client:
+        assert client.post('/research/delivery/analyze', json={'scenario':scenario_template()}).status_code == 503
+        assert client.post('/research/delivery/analyze', json={'scenario':scenario_template()}).status_code == 200
