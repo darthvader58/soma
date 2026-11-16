@@ -75,7 +75,7 @@
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "42e77c765b1d3351c297ce8a3c3bfbd480215f358933452c8aa9c5ac24d98b61"
+      "sha256": "60c997fa63992ca183a291c4e30a29718e629521430f6df08a559fda5caab192"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -771,7 +771,7 @@
     },
     {
       "path": "soma/docs/hackathon-demo-script.md",
-      "sha256": "7999fab66202e54c169bfc3c99e68e8f812f7f5cd0e40280839297450588ce2c"
+      "sha256": "e892a04f2da7a452374f64e6bbe57ecdbe73e2bf1109de67f163c68c797ea274"
     },
     {
       "path": "soma/docs/hosted-deployment-verification.md",

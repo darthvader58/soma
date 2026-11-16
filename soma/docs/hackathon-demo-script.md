@@ -18,7 +18,7 @@ NASA describes delay/disruption-tolerant networking as a response to intermitten
 
 ## Recording setup
 
-Record a 1920 × 1080 browser window at 100% zoom with microphone narration. Keep the public application and this documentation open in separate tabs. Load each case once before recording so its display data and terrain are ready. Keep the Cesium attribution visible whenever the map appears. Record the app, documentation and exported run files.
+Record a 1920 × 1080 browser window at 100% zoom with microphone narration. Keep the public application and this documentation open in separate tabs. Load each case once before recording so its display data and terrain are ready. Use **Relay overview** for the main recording; **Inspect site terrain** is optional and streams finer tiles that can take longer on a cold connection. Keep the Cesium attribution visible whenever the map appears. Record the app, documentation and exported run files.
 
 Aim for **7 minutes 10 seconds**, speaking at approximately 125–140 words per minute. The timestamps below include short holds while viewers read a result. Leave the key states visible for at least five seconds rather than rushing between cases. A rehearsal should remain longer than five minutes.
 
@@ -36,7 +36,7 @@ Aim for **7 minutes 10 seconds**, speaking at approximately 125–140 words per 
 
 ## 0:00–0:40: The decision
 
-**Record:** Open [Direct delivery](https://soma-atlas-two.vercel.app/?case=direct-ready). Show the title and five Mission cases, then use **Inspect site terrain** to show the detailed polar surface. Use a slow scroll to the scene if needed. Camera controls only change the view; they do not change the scenario.
+**Record:** Open [Direct delivery](https://soma-atlas-two.vercel.app/?case=direct-ready). Show the title and five Mission cases, then use **Relay overview** to show the Moon and analysis-site label. Use a slow scroll to the scene if needed. Camera controls only change the view; they do not change the scenario.
 
 **Say:**
 

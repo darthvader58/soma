@@ -88,8 +88,8 @@
     },
     {
       "path": "docs/guides/hackathon-demo.mdx",
-      "sha256": "1581c5f4993d6a1f9ae6ec28304121fdf9ba1993f2be6508768b93c1e6b99f4c",
-      "size_bytes": 14272
+      "sha256": "bc997a509b84cd514ad127c088a84a0c51a78785c78fb66f86278548878281dc",
+      "size_bytes": 14423
     },
     {
       "path": "fixtures/demo-constraints/README.md",
@@ -233,8 +233,8 @@
     },
     {
       "path": "soma/docs/hackathon-demo-script.md",
-      "sha256": "7999fab66202e54c169bfc3c99e68e8f812f7f5cd0e40280839297450588ce2c",
-      "size_bytes": 14151
+      "sha256": "e892a04f2da7a452374f64e6bbe57ecdbe73e2bf1109de67f163c68c797ea274",
+      "size_bytes": 14302
     },
     {
       "path": "soma/docs/phase-6/source-and-license-audit.md",
@@ -518,8 +518,8 @@
     },
     {
       "path": "web/src/viewer.js",
-      "sha256": "29c060fb3d6e89d836792c5c11e2c0dfcac1119e2ab78f21e31f9de5e205fd50",
-      "size_bytes": 20949
+      "sha256": "2f85849a990a25d9463fb264bd0ccc47b914bcda47aeaa3d008ec4fe55c12675",
+      "size_bytes": 20944
     }
   ],
   "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",

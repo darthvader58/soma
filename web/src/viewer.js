@@ -241,7 +241,7 @@ export async function createMoonViewer(container, {
       completedDisplay = gate.passed ? display : undefined;
       cameraTarget = gate.passed ? display.surface_points?.[0]?.position_m : undefined;
       drawSamples();
-      api.inspectSiteTerrain();
+      api.relayOverview();
       report(gate.passed ? 'registered' : 'registration_blocked', `${gate.reason}${gate.passed && !display.states?.length ? ' No stored relay trajectory.' : ''}`);
     },
     setTime(epoch) {
