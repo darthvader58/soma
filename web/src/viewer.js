@@ -111,7 +111,8 @@ export async function createMoonViewer(container, {
       description: `${state.provenance_label}. Exact stored UTC ${state.epoch}; ${state.transform_ref}.`,
       point: { pixelSize: 9, color: cesium.Color.WHITE, outlineColor: cesium.Color.BLACK, outlineWidth: 2 },
       label: { text: `${state.target} (stored sample)`, font: '14px sans-serif', fillColor: cesium.Color.WHITE,
-        pixelOffset: new cesium.Cartesian2(0, -24), showBackground: true, backgroundColor: cesium.Color.BLACK },
+        pixelOffset: new cesium.Cartesian2(0, -24), showBackground: true, backgroundColor: cesium.Color.BLACK,
+        disableDepthTestDistance: Number.POSITIVE_INFINITY },
     }));
     for (const { contact, allocation, positions } of sample.links) sampleEntities.push(viewer.entities.add({
       id: `contact-${contact.contact_id}`,
@@ -195,8 +196,9 @@ export async function createMoonViewer(container, {
           id: `analysis-${point.id}`, position: new cesium.Cartesian3(...point.position_m),
           description: point.provenance_label,
           point: { pixelSize: 10, color: cesium.Color.WHITE, outlineColor: cesium.Color.BLACK, outlineWidth: 2 },
-          label: { text: 'Declared analysis point', font: '14px sans-serif', fillColor: cesium.Color.WHITE,
-            pixelOffset: new cesium.Cartesian2(0, -24), showBackground: true, backgroundColor: cesium.Color.BLACK },
+          label: { text: 'Engine analysis site', font: '14px sans-serif', fillColor: cesium.Color.WHITE,
+            pixelOffset: new cesium.Cartesian2(0, -24), showBackground: true, backgroundColor: cesium.Color.BLACK,
+            disableDepthTestDistance: Number.POSITIVE_INFINITY },
         }));
       }
       viewer?.scene.requestRender();
