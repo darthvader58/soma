@@ -6,11 +6,12 @@
   "navigation": {
     "groups": [
       {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/live-research", "getting-started/quickstart", "getting-started/physical-runs"]},
-      {"group": "Demonstration", "pages": ["guides/workbench-demo", "guides/hackathon-demo"]},
+      {"group": "Demonstration", "pages": ["guides/workbench-demo"]},
       {"group": "Library reference", "pages": ["reference/research-api", "reference/python-api", "reference/scenarios-results", "reference/service", "reference/exports-replay"]},
       {"group": "Scientific model", "pages": ["science/research-sources", "science/frames-data", "science/assumptions-limits"]}
     ]
   },
+  "redirects": [{"source": "/guides/hackathon-demo", "destination": "/guides/workbench-demo"}],
   "navbar": {"links": [{"label": "Web application", "href": "https://soma-atlas-two.vercel.app"}, {"label": "Source", "href": "https://github.com/darthvader58/soma"}]},
   "footer": {"socials": {"github": "https://github.com/darthvader58/soma"}}
 }

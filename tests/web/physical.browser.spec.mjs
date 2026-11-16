@@ -1,7 +1,12 @@
+import { installLegacyArchiveHarness } from './legacy-archive-support.mjs';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
 const { test, expect } = require('@playwright/test');
+
+test.beforeEach(async ({ page, baseURL }) => {
+  await installLegacyArchiveHarness(page, { baseURL });
+});
 
 test('physical date presets use generated geometry and preserve exact engine artifacts without tiles', async ({ page }) => {
   const errors = [];

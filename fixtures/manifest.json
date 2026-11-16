@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c35a6788f62b9338da35e43b3058e080bde69d6b8aee6288e525bf14a914073a"
+      "sha256": "2ed26ee7532cefe425c2401bb69aa5415407bea66a58077dfadeaf2c810de72b"
     },
     {
       "path": "data/README.md",
@@ -71,11 +71,11 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "dace1657dd0ed405e49a693cda721166342f3bdb84f2dae808e986cdbe28ee03"
+      "sha256": "4ec2d2ace2f8e9d9426fd2c61828501bc2f8fbb6e5864874b7a111795d8aa770"
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "77bc3cfa70005e43a0d3affde75ae2e625af4c0a2229a76601b28dd0dd51551c"
+      "sha256": "2700c0b0f24b1a682ea5d0d0ea2c7317107535591c2820905f8232e31613b3e0"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -1242,5 +1242,21 @@
     "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope.",
     "browser_setup_refresh_recorded_at_utc": "2026-11-17T04:19:30.008061Z",
     "browser_setup_compatibility": "The archived fixture browser setup now waits for the Plan delivery button to become enabled after asynchronous fixture selection/local editing and after skip-link navigation triggers a case load. Assertions, archive runtime, archived scientific results, original verification counts and historical review scope are unchanged. This is a source-binding refresh only."
+  },
+  "dashboard_compatibility_refresh": {
+    "recorded_at_utc": "2026-11-17T06:47:44.213807Z",
+    "changed_bindings": [
+      "README.md",
+      "data/phase6-evidence.manifest.json",
+      "data/physical-first-release-evidence.manifest.json"
+    ],
+    "reason": "The user requested removal of the public delivery archive and a redesigned research dashboard. Public routing and documentation now serve the research workbench; historical delivery components remain in the repository for offline regression only.",
+    "offline_regression_harness": "tests/web/legacy-archive-support.mjs",
+    "harness_scope": "Localhost-only browser-test document interception with explicit origin-scoped local-network permission. The public entry point does not import the archive module.",
+    "historical_scope": "Original scientific inputs/results, frozen delivery schemas, review dates and recorded verification counts are unchanged. Existing completion flags and review claims describe the historical bounded release, not a current public delivery interface or certification of the new dashboard.",
+    "public_delivery_archive_retired": true,
+    "offline_fixtures_and_component_tests_retained": true,
+    "archived_scientific_artifacts_changed": false,
+    "new_dashboard_covered_by_historical_reviews": false
   }
 }

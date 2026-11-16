@@ -6,18 +6,20 @@ import bootstrapCatalog from '../fixtures/research-catalog.json' with { type: 'j
 
 const root = document.querySelector('#app');
 root.innerHTML = `
-<header class="research-header"><a class="research-brand" href="/">SOMA</a><h1>Lunar research workbench</h1><nav aria-label="Resources"><a href="/docs/getting-started/live-research">Documentation</a><a href="/docs/reference/research-api">Python reference</a><a href="/?mode=archive">Delivery archive</a></nav></header>
+<header class="research-header"><a class="research-brand" href="/">SOMA</a><div class="workspace-title"><h1>Lunar research workbench</h1><p>Moon-fixed geometry & public spacecraft histories</p></div><nav aria-label="Resources"><a href="/docs/getting-started/live-research">Documentation</a><a href="/docs/reference/research-api">Python reference</a><div class="theme-control"><label for="theme-select">Appearance</label><select id="theme-select"><option value="light">Light</option><option value="dark">Dark</option></select></div></nav></header>
 <main class="research-workspace">
   <section class="study-toolbar" id="study-inputs" aria-label="Geometry study inputs">
-    <div class="analysis-name"><strong>Sun & Earth geometry</strong><span>Moon-fixed · reference sphere</span></div>
+    <div class="analysis-name"><strong>Sun & Earth geometry</strong><span>Define a study. Inspect the calculated geometry.</span></div>
+    <div class="study-fields">
     <label>Start UTC<input id="study-start" type="datetime-local" step="1" value="2026-11-16T00:00:00"></label>
     <label>End UTC<input id="study-end" type="datetime-local" step="1" value="2026-11-16T06:00:00"></label>
     <label class="step-input">Step (s)<input id="study-step" type="number" min="10" value="120"></label>
-    <button id="run-study" class="research-primary" type="button">Run analysis</button><button id="cancel-study" type="button" hidden>Stop waiting</button>
+    </div><div class="study-run"><button id="run-study" class="research-primary" type="button">Run analysis</button><button id="cancel-study" type="button" hidden>Stop waiting</button></div>
   </section>
   <div class="research-status"><p id="research-status" role="status" aria-live="polite">Connecting to the Python geometry service.</p><span id="request-budget"></span></div>
   <aside class="object-panel" aria-labelledby="objects-heading">
     <div class="research-panel-heading"><h2 id="objects-heading">Study objects</h2><span id="site-count">0 / 8</span></div>
+    <p class="panel-description">Choose up to 8 surface locations.</p>
     <label class="site-search">Find a lunar site<input id="site-search" type="search" placeholder="Name or location type"></label>
     <div class="object-section-heading"><h3>Surface sites</h3><button id="add-custom" type="button">+ Custom site</button></div>
     <div id="site-list" class="site-list"></div>
@@ -26,7 +28,7 @@ root.innerHTML = `
     <p class="object-footnote">Catalog markers are sourced locations, not certified landing sites.</p>
   </aside>
   <section class="scene-panel" aria-label="Lunar mission scene">
-    <div class="scene-toolbar"><div class="scene-camera" aria-label="Camera"><button type="button" data-camera="global">Global</button><button type="button" data-camera="polar">South pole</button><button type="button" data-camera="site">Selected site</button><button id="follow-spacecraft" type="button" data-camera="follow" disabled>Follow spacecraft</button></div><span id="scene-frame">MOON_ME_DE421</span></div>
+    <div class="scene-toolbar"><div class="scene-camera" aria-label="Camera"><button type="button" data-camera="global" aria-pressed="true">Global</button><button type="button" data-camera="polar" aria-pressed="false">South pole</button><button type="button" data-camera="site" aria-pressed="false">Selected site</button><button id="follow-spacecraft" type="button" data-camera="follow" aria-pressed="false" disabled>Follow spacecraft</button></div><span id="scene-frame">MOON_ME_DE421</span></div>
     <div id="research-moon" class="research-moon"></div>
     <p id="research-map-status" class="scene-caption" role="status">Preparing lunar scene.</p>
   </section>
@@ -41,6 +43,14 @@ root.innerHTML = `
 </main>`;
 
 const $ = id => document.getElementById(id);
+let savedTheme;
+try { savedTheme = localStorage.getItem('soma-research-theme'); } catch { /* Appearance still works when storage is unavailable. */ }
+document.documentElement.dataset.theme = savedTheme === 'dark' ? 'dark' : 'light';
+$('theme-select').value = document.documentElement.dataset.theme;
+$('theme-select').addEventListener('change', event => {
+  document.documentElement.dataset.theme = event.target.value;
+  try { localStorage.setItem('soma-research-theme', event.target.value); } catch { /* The current page retains the selected appearance. */ }
+});
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const client = createResearchClient({ baseUrl: `${(import.meta.env.VITE_SOMA_API_URL || '/api').replace(/\/$/, '')}/research` });
 let catalog = [], selected = new Set(), inspected, inspectedCraft, capabilities, viewer, result, completed, stale = false, running = false, revision = 0;
@@ -84,7 +94,8 @@ function renderSites() {
     });
     const button = document.createElement('button'); button.type = 'button'; button.setAttribute('aria-pressed', String(site.id === inspected));
     button.innerHTML = `<span>${esc(site.name)}</span><small>${esc(site.kind?.replaceAll('_', ' ') ?? 'Custom location')}</small>`;
-    button.addEventListener('click', () => inspect(site.id)); row.append(check, button); $('site-list').append(row);
+    const inclusion = document.createElement('label'); inclusion.className = 'site-inclusion'; inclusion.append(check);
+    button.addEventListener('click', () => inspect(site.id)); row.append(inclusion, button); $('site-list').append(row);
   }
   $('site-count').textContent = `${selected.size} / 8`;
   if (!$('site-list').childElementCount) $('site-list').textContent = 'No catalog sites match. Clear the search or add a custom site.';
@@ -163,17 +174,35 @@ function animate(timestamp) {
 function renderChart() {
   const site = result?.sites.find(item => item.id === inspected);
   if (!site?.samples?.length) { $('geometry-chart').innerHTML = '<p>Include this site in a calculated study to plot its Sun and Earth center elevations.</p>'; return; }
-  const width = 680, height = 124, left = 36, right = 12, top = 12, bottom = 21;
+  const width = Math.max(280, $('geometry-chart').clientWidth || 680), height = 138, left = 49, right = 12, top = 12, bottom = 22;
+  const values = site.samples.flatMap(sample => [sample.sun.elevation_deg, sample.earth.elevation_deg]).filter(Number.isFinite);
+  const minimum = Math.min(...values), maximum = Math.max(...values);
+  const padding = Math.max((maximum - minimum) * 0.12, 0.25);
+  const lower = Math.max(-90, Math.floor((minimum - padding) * 10) / 10);
+  const upper = Math.min(90, Math.ceil((maximum + padding) * 10) / 10);
   const start = Date.parse(result.epochs_utc[0]), end = Date.parse(result.epochs_utc.at(-1));
   const x = epoch => left + (Date.parse(epoch) - start) / Math.max(1, end - start) * (width - left - right);
-  const y = value => top + (90 - value) / 180 * (height - top - bottom);
+  const y = value => top + (upper - value) / (upper - lower) * (height - top - bottom);
   const path = key => site.samples.filter(sample => Number.isFinite(sample[key]?.elevation_deg)).map((sample, index) => `${index ? 'L' : 'M'}${x(sample.epoch_utc).toFixed(2)} ${y(sample[key].elevation_deg).toFixed(2)}`).join(' ');
-  $('geometry-chart').innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Stored Sun and Earth elevation samples for ${esc(site.name)}"><line x1="${left}" x2="${width-right}" y1="${y(0)}" y2="${y(0)}" class="chart-zero"/><text x="2" y="${y(90)+4}">90°</text><text x="7" y="${y(0)+4}">0°</text><text x="0" y="${y(-90)+4}">-90°</text><path d="${path('sun')}" class="chart-sun"/><path d="${path('earth')}" class="chart-earth"/><line x1="${x(selectedEpoch())}" x2="${x(selectedEpoch())}" y1="${top}" y2="${height-bottom}" class="chart-cursor"/></svg>`;
+  const ticks = [upper, (upper + lower) / 2, lower].map(value => `<text x="0" y="${y(value)+4}">${value.toFixed(1)}°</text>`).join('');
+  const horizontal = lower <= 0 && upper >= 0 ? `<line x1="${left}" x2="${width-right}" y1="${y(0)}" y2="${y(0)}" class="chart-zero"/>` : '';
+  $('geometry-chart').innerHTML = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="Stored Sun and Earth elevation samples for ${esc(site.name)}; displayed axis ${lower.toFixed(1)} to ${upper.toFixed(1)} degrees"><title>${esc(site.name)} · stored center elevation samples</title>${horizontal}${ticks}<path d="${path('sun')}" class="chart-sun"/><path d="${path('earth')}" class="chart-earth"/><line x1="${x(selectedEpoch())}" x2="${x(selectedEpoch())}" y1="${top}" y2="${height-bottom}" class="chart-cursor"/></svg>`;
 }
 function renderComparison() {
   if (!result) return;
   $('site-comparison').innerHTML = `<table><thead><tr><th>Site</th><th>Sun min / max</th><th>Earth min / max</th></tr></thead><tbody>${result.sites.map(site => `<tr><th>${esc(site.name)}</th><td>${deg(site.summary.sun_elevation_min_deg)} / ${deg(site.summary.sun_elevation_max_deg)}</td><td>${deg(site.summary.earth_elevation_min_deg)} / ${deg(site.summary.earth_elevation_max_deg)}</td></tr>`).join('')}</tbody></table>`;
 }
+let previousChartWidth, chartResizeFrame;
+const chartResizeObserver = new ResizeObserver(entries => {
+  const width = entries[0].contentRect.width;
+  if (width !== previousChartWidth) {
+    previousChartWidth = width;
+    if (chartResizeFrame) cancelAnimationFrame(chartResizeFrame);
+    chartResizeFrame = requestAnimationFrame(() => { chartResizeFrame = undefined; renderChart(); });
+  }
+});
+chartResizeObserver.observe($('geometry-chart'));
+window.addEventListener('pagehide', () => { chartResizeObserver.disconnect(); if (chartResizeFrame) cancelAnimationFrame(chartResizeFrame); }, { once: true });
 function renderMethods() {
   $('study-methods').hidden = !result;
   if (!result) return;
@@ -253,7 +282,10 @@ $('play-study').addEventListener('click', () => { if (playing) pause(); else { i
 for (const [id, delta] of [['previous-sample', -1], ['next-sample', 1]]) $(id).addEventListener('click', () => {
   pause(); const epochs = result.epochs_utc.map(Date.parse); const index = epochs.findIndex(time => time >= cursor); setCursor(epochs[Math.max(0, Math.min(epochs.length - 1, index + delta))]);
 });
-for (const button of root.querySelectorAll('[data-camera]')) button.addEventListener('click', () => viewer?.camera(button.dataset.camera));
+for (const button of root.querySelectorAll('[data-camera]')) button.addEventListener('click', () => {
+  viewer?.camera(button.dataset.camera);
+  for (const control of root.querySelectorAll('[data-camera]')) control.setAttribute('aria-pressed', String(control === button));
+});
 for (const id of ['layer-labels', 'layer-paths', 'layer-directions']) $(id).addEventListener('change', () => viewer?.setLayers({ labels: $('layer-labels').checked, paths: $('layer-paths').checked, directions: $('layer-directions').checked }));
 $('export-study').addEventListener('click', () => { try { download(requestStudy(), 'soma-study.json'); } catch { status('Enter valid study fields before exporting.'); } });
 $('export-result').addEventListener('click', () => { if (result && !stale) download(result, `soma-result-${completed.hash.slice(0, 12)}.json`); });
@@ -261,7 +293,11 @@ $('save-alternative').addEventListener('click', () => {
   if (!result || stale) return;
   if (alternatives.some(item => item.study_sha256 === result.study_sha256)) { status('This exact study is already saved as an alternative.'); return; }
   alternatives.push(structuredClone(result));
-  $('saved-alternatives').innerHTML = `<details open><summary>Saved calculated alternatives (${alternatives.length})</summary><table><thead><tr><th>Study hash</th><th>UTC interval</th><th>Sites / epochs</th><th>Step</th></tr></thead><tbody>${alternatives.map(item => `<tr><td>${esc(item.study_sha256.slice(0,12))}</td><td>${esc(item.request.time.start_utc)} to ${esc(item.request.time.end_utc)}</td><td>${item.sites.length} / ${item.epochs_utc.length}</td><td>${item.request.time.step_s} s</td></tr>`).join('')}</tbody></table><p>Each row preserves its own site set, heights, interval and sampling. No aggregate site ranking is inferred.</p></details>`;
+  $('saved-alternatives').innerHTML = `<details open><summary>Saved calculated alternatives (${alternatives.length})</summary><table><thead><tr><th>Study hash</th><th>UTC interval</th><th>Sites / epochs</th><th>Step</th><th>Result</th></tr></thead><tbody>${alternatives.map((item, index) => `<tr><td>${esc(item.study_sha256.slice(0,12))}</td><td>${esc(item.request.time.start_utc)} to ${esc(item.request.time.end_utc)}</td><td>${item.sites.length} / ${item.epochs_utc.length}</td><td>${item.request.time.step_s} s</td><td><button type="button" data-alternative="${index}">Download saved result</button></td></tr>`).join('')}</tbody></table><p>Each row preserves its own site set, heights, interval and sampling. No aggregate site ranking is inferred.</p></details>`;
+  for (const button of $('saved-alternatives').querySelectorAll('[data-alternative]')) button.addEventListener('click', () => {
+    const saved = alternatives[Number(button.dataset.alternative)];
+    download(saved, `soma-alternative-${saved.study_sha256.slice(0,12)}.json`);
+  });
 });
 
 async function initialize() {

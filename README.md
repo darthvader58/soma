@@ -51,19 +51,17 @@ python scripts/prepare-research-data.py --output /tmp/soma-research-sources
 python examples/research_geometry.py --data-root /tmp/soma-research-sources --output /tmp/lro-three-sites.json
 ```
 
-The **[delivery archive](https://soma-atlas-two.vercel.app/?mode=archive)** accepts only exact matches
-to the supplied scenarios. An edited scenario needs a live Python service;
-the browser does not calculate a replacement result or scale a saved schedule.
-The hosted display adapter serves the corrected Cesium Moon representation.
-The mission cases retain published numerical LOLA terrain and DE421 geometry;
-hardware, rates, station service and the synthetic two-body relay remain assumptions.
-All five use the same 16 MiB task and six-hour deadline rule. The low-battery and
-unavailable-service cases reject the known baseline in independent replay and
-retain native `unknown` outcomes because contact coverage is incomplete.
+The dashboard places the site catalog, Moon scene, numerical inspector and shared
+UTC controls in one research workspace. Choose a light or dark appearance;
+the scene lighting and scientific results remain the same. Methods, source
+checksums and limitations travel with the result.
 
-Use the [seven-minute recording guide](soma/docs/hackathon-demo-script.md) for
-exact screen actions and narration. Its [published documentation page](https://soma-ce3178ca.mintlify.site/guides/hackathon-demo)
-includes the mission brief and source links.
+Use the [six-minute recording guide](docs/guides/workbench-demo.mdx) for exact
+screen actions and narration, or open its
+[published documentation page](https://soma-ce3178ca.mintlify.site/guides/workbench-demo).
+Delivery scheduling is available through the Python library and local service
+below. Earlier captured delivery cases remain in the repository for reproduction
+and regression checks; they are no longer a public application mode.
 
 Original synthetic packages preserve their original export format. The synthetic relay archive
 passes numerical replay but predates the display artifact required by the

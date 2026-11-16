@@ -1,4 +1,16 @@
-# SOMA fixture workspace
+# SOMA web application
+
+The public entry is the live lunar research dashboard. It displays sourced lunar locations and Python-calculated Sun, Earth and spacecraft geometry through the same-origin Vercel `/api/research` routes. Old `?mode=archive&case=...` links normalize to `/`; the production entry does not import the retained delivery archive.
+
+Run the current application with `npm run dev` and build it with `npm run build`. Browser geometry results require the configured Python research API; a failed request never produces a replacement fixture result. The research workflow and current scientific limitations are documented in the repository README and research API guide.
+
+## Retained delivery regression infrastructure
+
+The delivery components, scientific fixtures and reports below remain in the repository for offline reproducibility. They are not public navigation or a supported alternate production route. Legacy Playwright specs install [a local-only document harness](../tests/web/legacy-archive-support.mjs) that serves minimal test HTML loading `src/archive.js`. The harness intercepts only local HTTP document requests with `mode=archive`; production `main.js` never loads it. It grants loopback access only to that test origin for Vite's development WebSocket, without filtering console errors or changing production browser security.
+
+`npm run test:browser` checks the current dashboard, public routing and retained fixture UI; `npm run test:live` checks legacy delivery UI against the local Python service. Physical delivery UI tests also require a local Vite server and the local Python data/service setup; a hosted URL cannot provide this test harness. The old reports retain their original scientific scope and are not evidence for the current dashboard design.
+
+### Historical delivery UI behavior
 
 This implements the scenario editor, stored scientific display/comparison and
 live planning-service client. The engine supplies a reviewed corrected-mesh
