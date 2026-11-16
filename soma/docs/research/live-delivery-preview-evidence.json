@@ -1,0 +1,204 @@
+{
+  "verified_at_utc": "2026-11-18T17:29:34.669400+00:00",
+  "deployment": "AXkxtJTCwVQgH9yVRAJnnS3p2Qrt",
+  "source_commit": "63ff67f",
+  "dataset_ref": "physical-lola-de421-v2",
+  "method": "Fresh requests through deployed browser UI, browser-verified original ZIP download, then independent native verify_run_package without optimizer. Solver timing may produce a different feasible incumbent on rerun.",
+  "cases": [
+    {
+      "case": "nov24_direct",
+      "scenario_sha256": "757c878b1fb82042c90876fa6f4d1c7b5d336659e334dc919a16fdbbeaed10c8",
+      "zip_sha256": "b3da50417c117cf7bc84187211864bd14b069b4ad8f3df59d548027f57b109ba",
+      "status": "feasible_under_assumptions",
+      "solver_status": "feasible_incumbent",
+      "checks_passed": 72,
+      "delivered_bytes": 16777216,
+      "final_byte_arrival_utc": "2026-11-24T08:20:01.201519Z",
+      "route_families": [
+        "direct_to_earth"
+      ],
+      "allocations": [
+        {
+          "allocation_id": "allocation-0",
+          "byte_available_utc": "2026-11-24T08:20:01.201519Z",
+          "byte_length": 16777216,
+          "byte_offset": 0,
+          "chunk_id": "chunk-0",
+          "contact_id": "physical-polar-lander-educational-americas-0",
+          "receiver_occupancy_interval": {
+            "end_utc": "2026-11-24T08:20:01.201519Z",
+            "start_utc": "2026-11-24T08:11:01.201519Z"
+          },
+          "source_transmit_interval": {
+            "end_utc": "2026-11-24T08:20:00Z",
+            "start_utc": "2026-11-24T08:11:00Z"
+          }
+        }
+      ],
+      "storage_intervals": [
+        {
+          "byte_length": 16777216,
+          "chunk_id": "chunk-0",
+          "interval": {
+            "end_utc": "2026-11-24T08:20:00Z",
+            "start_utc": "2026-11-24T08:00:00Z"
+          },
+          "node_id": "polar-lander"
+        },
+        {
+          "byte_length": 16777216,
+          "chunk_id": "chunk-0",
+          "interval": {
+            "end_utc": "2026-11-24T14:00:00Z",
+            "start_utc": "2026-11-24T08:11:01.201519Z"
+          },
+          "node_id": "educational-americas"
+        }
+      ]
+    },
+    {
+      "case": "nov24_both_routes",
+      "scenario_sha256": "93779fee77b518f886aaec3f426743cb892be099f13b15528239a800c4ba2c52",
+      "zip_sha256": "dd86e2794fcf8204d1689694a2d39ce454c0073aa8bf4787ff4b73325a40509e",
+      "status": "feasible_under_assumptions",
+      "solver_status": "feasible_incumbent",
+      "checks_passed": 72,
+      "delivered_bytes": 16777216,
+      "final_byte_arrival_utc": "2026-11-24T09:25:01.201519Z",
+      "route_families": [
+        "direct_to_earth",
+        "single_lunar_relay"
+      ],
+      "allocations": [
+        {
+          "allocation_id": "allocation-0",
+          "byte_available_utc": "2026-11-24T09:25:01.201519Z",
+          "byte_length": 16777216,
+          "byte_offset": 0,
+          "chunk_id": "chunk-0",
+          "contact_id": "physical-polar-lander-educational-americas-0",
+          "receiver_occupancy_interval": {
+            "end_utc": "2026-11-24T09:25:01.201519Z",
+            "start_utc": "2026-11-24T09:16:01.201519Z"
+          },
+          "source_transmit_interval": {
+            "end_utc": "2026-11-24T09:25:00Z",
+            "start_utc": "2026-11-24T09:16:00Z"
+          }
+        }
+      ],
+      "storage_intervals": [
+        {
+          "byte_length": 16777216,
+          "chunk_id": "chunk-0",
+          "interval": {
+            "end_utc": "2026-11-24T09:25:00Z",
+            "start_utc": "2026-11-24T08:00:00Z"
+          },
+          "node_id": "polar-lander"
+        },
+        {
+          "byte_length": 16777216,
+          "chunk_id": "chunk-0",
+          "interval": {
+            "end_utc": "2026-11-24T14:00:00Z",
+            "start_utc": "2026-11-24T09:16:01.201519Z"
+          },
+          "node_id": "educational-americas"
+        }
+      ]
+    },
+    {
+      "case": "nov30_direct",
+      "scenario_sha256": "41dc633ad0c8f206b1ed24f7295cd5c1f263f01c2f9ba9eeaf1681acb498633b",
+      "zip_sha256": "f56f6ec2c5ab4a53019378ee8f1e630982d7a6d1513377e6df834d7714497f83",
+      "status": "infeasible_in_model",
+      "solver_status": "proven_infeasible_discretized_model",
+      "checks_passed": 64,
+      "delivered_bytes": 0,
+      "final_byte_arrival_utc": null,
+      "route_families": [
+        "direct_to_earth"
+      ],
+      "allocations": [],
+      "storage_intervals": []
+    },
+    {
+      "case": "nov30_relay_enabled",
+      "scenario_sha256": "65823040702435a18be3741ac1d3c89da4f33088fe77d1f858333149130e3f09",
+      "zip_sha256": "d7a42a3371df1ce15f68efa54895206a85afc6bebccc6f2c62fec42050a2ec0f",
+      "status": "feasible_under_assumptions",
+      "solver_status": "feasible_incumbent",
+      "checks_passed": 72,
+      "delivered_bytes": 16777216,
+      "final_byte_arrival_utc": "2026-11-30T10:39:01.245105Z",
+      "route_families": [
+        "direct_to_earth",
+        "single_lunar_relay"
+      ],
+      "allocations": [
+        {
+          "allocation_id": "allocation-0",
+          "byte_available_utc": "2026-11-30T09:35:00.005054Z",
+          "byte_length": 16777216,
+          "byte_offset": 0,
+          "chunk_id": "chunk-0",
+          "contact_id": "physical-polar-lander-synthetic-lunar-relay-1",
+          "receiver_occupancy_interval": {
+            "end_utc": "2026-11-30T09:35:00.005054Z",
+            "start_utc": "2026-11-30T09:33:30.005054Z"
+          },
+          "source_transmit_interval": {
+            "end_utc": "2026-11-30T09:35:00Z",
+            "start_utc": "2026-11-30T09:33:30Z"
+          }
+        },
+        {
+          "allocation_id": "allocation-1",
+          "byte_available_utc": "2026-11-30T10:39:01.245105Z",
+          "byte_length": 16777216,
+          "byte_offset": 0,
+          "chunk_id": "chunk-0",
+          "contact_id": "physical-synthetic-lunar-relay-educational-europe-4",
+          "receiver_occupancy_interval": {
+            "end_utc": "2026-11-30T10:39:01.245105Z",
+            "start_utc": "2026-11-30T10:38:01.245105Z"
+          },
+          "source_transmit_interval": {
+            "end_utc": "2026-11-30T10:39:00Z",
+            "start_utc": "2026-11-30T10:38:00Z"
+          }
+        }
+      ],
+      "storage_intervals": [
+        {
+          "byte_length": 16777216,
+          "chunk_id": "chunk-0",
+          "interval": {
+            "end_utc": "2026-11-30T09:35:00Z",
+            "start_utc": "2026-11-30T08:00:00Z"
+          },
+          "node_id": "polar-lander"
+        },
+        {
+          "byte_length": 16777216,
+          "chunk_id": "chunk-0",
+          "interval": {
+            "end_utc": "2026-11-30T10:39:00Z",
+            "start_utc": "2026-11-30T09:33:30.005054Z"
+          },
+          "node_id": "synthetic-lunar-relay"
+        },
+        {
+          "byte_length": 16777216,
+          "chunk_id": "chunk-0",
+          "interval": {
+            "end_utc": "2026-11-30T14:00:00Z",
+            "start_utc": "2026-11-30T10:38:01.245105Z"
+          },
+          "node_id": "educational-europe"
+        }
+      ]
+    }
+  ]
+}

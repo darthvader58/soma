@@ -15,6 +15,13 @@ Boundary timestamps are timezone-qualified UTC. The engine's time layer handles 
 
 The physical pipeline reads numerical LOLA products independently of Cesium. Manifests preserve source URLs, checksums, bounds, product and frame metadata, interpolation, and count-mask information. Published-grid interpolation and explicitly declared coarse fallback do not become measured samples merely because a surface looks smooth.
 
+New hosted delivery uses the complete-window `physical-lola-de421-v2` dataset.
+Older exports preserve their v1 inputs. The [terrain revision notes](/science/terrain-revision)
+describe the corrected acquisition footprint and exact hashes. The original
+Earth-orientation kernel is retained unmodified, with its original checksum and
+[NAIF redistribution terms](https://github.com/darthvader58/soma/blob/main/data/pinned/README.md),
+because its rolling source URL no longer serves that revision.
+
 A missing terrain sample gives an unknown horizon. It cannot create an unobstructed path. Panel and antenna heights can produce different local horizons.
 
 Directional horizon profiles support justified distant-target classification. A finite spacecraft link requires a segment-limited terrain and body-shape test; terrain beyond the target must not block that link.

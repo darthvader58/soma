@@ -1,0 +1,98 @@
+---
+title: Validation and structured exports
+description: Strict JSON, canonical request identity, exact run packages and display serialization.
+---
+
+Validation, scientific evaluation and schedule replay are separate operations. A valid document can still describe unknown geometry or an infeasible mission. A canonical hash identifies inputs; it does not certify their physical correctness.
+
+## Input validation
+
+```text
+load_json(path: str | Path)
+validate_document(document, schema_name: str) -> None
+validate_documents(documents, schema_name: str) -> None
+validate_scenario(scenario: dict) -> dict
+load_scenario(path: str | Path) -> dict
+scenario_sha256(scenario: dict) -> str
+data_volume_bytes(volume: dict) -> int
+schema_registry()
+resource_directory(name: str) -> Path
+```
+
+All are in `soma.validation`; `ScenarioValidationError` derives from `ValueError`.
+
+| Function | Contract |
+| --- | --- |
+| `load_json` | Strict UTF-8 JSON: rejects duplicate keys, nonfinite values, unsupported value types and numbers outside the interoperable safe-number domain. Does not perform scenario semantics. |
+| `validate_document` | Structural validation against a named bundled schema (`scenario`, `contact`, `allocation`, `result`, `study`, `study-result`, etc.); strict qualified timestamps. Returns `None` on success. |
+| `validate_documents` | Batch structural checks using one fresh schema snapshot. Does not schedule or replay. |
+| `validate_scenario` | Returns a detached snapshot after schema and cross-field mission checks, including units, resource profiles, references and timing. |
+| `load_scenario` | `load_json` followed by `validate_scenario`. |
+| `scenario_sha256` | SHA256 of RFC 8785 canonical JSON. Does **not** itself validate or normalize a scenario. Hash the validated snapshot you intend to use. |
+| `data_volume_bytes` | Only positive integer `{"value": ..., "unit": "byte"}` or `"MiB"`; 1 MiB is 1,048,576 bytes. No bare numbers or inferred decimal-megabyte conversion. |
+| `schema_registry` | Returns bundled schemas and a local reference registry. Unresolved schema URIs cannot cause network retrieval. |
+| `resource_directory` | Finds checkout or installed shared resources; fails if those resources are absent. |
+
+The [research study API](/reference/research-api) adds `validate_study` and `study_sha256`, which validate and normalize study UTC epochs before hashing. Do not substitute the raw scenario hasher for those study semantics.
+
+```python
+from soma.validation import load_scenario, validate_document, scenario_sha256, data_volume_bytes
+
+scenario = load_scenario("fixtures/synthetic-relay/scenario.json")
+validate_document(scenario, "scenario")
+assert data_volume_bytes(scenario["data_volume"]) == 104857600
+assert len(scenario_sha256(scenario)) == 64
+```
+
+## Delivery exports
+
+```text
+# soma.exports
+json_bytes(value) -> bytes
+summary(run) -> dict
+display_payload(run, display=None) -> list
+explanation(run, display=None) -> bytes
+create_run_package(run) -> bytes
+# soma.exports.display
+display_data(run) -> dict
+renderer_registration() -> dict
+```
+
+A `run` is the full detached dictionary from `soma.engine.plan_run`, not just its native result.
+
+| Function | What it preserves |
+| --- | --- |
+| `json_bytes` | Sorted, indented UTF-8 JSON with a final newline; nonfinite values are rejected. This serialization is not the canonical-hash encoding. |
+| `summary` | Native status, solver status, fidelity, outcome, assumptions and warnings. Route/wait/communications-energy/reserve metrics are filled only for a feasible result with a passed replay; absent quantities remain `None`. |
+| `display_data` | Exact run intervals and sampled environment/states plus versioned renderer registration and source/renderer frame identity. Missing states remain unknown. |
+| `display_payload` | CZML packets retaining exact stored epochs and registration status. Its stored trajectory packets are instantaneous; it does not synthesize intervening scientific states. |
+| `explanation` | Markdown bytes generated from structured allocations, waits, statuses, assumptions and warnings. No language model invents the outcome. |
+| `renderer_registration` | Current versioned renderer registration data. This is separate from proving a numerical communication result. |
+| `create_run_package` | ZIP bytes containing exact JSON, CSV histories, display records, explanation and checksummed manifest. It validates the result and scenario-hash relationship; it does not repair or independently replay an invalid schedule. |
+
+The package includes `scenario.json`, `result.json`, `summary.json`, contacts/schedule/energy/buffer CSVs, display CZML/data, renderer registration, explanation and run manifest. Analysis inputs, replay and renderer conversion are included when present. CSV headers identify units. Empty CSV fields represent unknown, not zero. Source transmit, receiver occupancy and byte-availability epochs remain distinct.
+
+For the same supplied run and export environment the ZIP is byte-stable. A fresh time-limited solver run need not choose identical allocations. No export turns assumed rates, synthetic trajectories or a regional map certificate into a stronger physical claim.
+
+### Executable synthetic export
+
+```python
+from soma.engine import plan_run
+from soma.exports import create_run_package, summary, json_bytes
+from soma.validation import load_scenario
+
+run = plan_run(load_scenario("fixtures/synthetic-relay/scenario.json"))
+archive = create_run_package(run)
+assert archive[:2] == b"PK"
+assert archive == create_run_package(run)
+assert summary(run)["delivered_bytes"] == 104857600
+assert json_bytes({"known_zero": 0, "unknown": None}).endswith(b"\n")
+```
+
+This computes the synthetic software fixture. Use [exports and replay](/reference/exports-replay) to verify a saved package independently and [physical reproduction](/getting-started/physical-runs) for the bounded numerical-terrain workflow.
+
+## Research exports and service exposure
+
+The geometry workbench downloads the exact study/request and returned research JSON. The optional local durable study service can export its completed job package. Vercel research jobs remain unavailable on the bounded synchronous geometry route; a browser request abort only stops waiting. Current and newly introduced delivery HTTP exposure is tracked separately in the [capability matrix](/science/capability-matrix).
+
+Implementation: [validation](https://github.com/darthvader58/soma/blob/main/soma/validation.py), [export package](https://github.com/darthvader58/soma/blob/main/soma/exports/__init__.py), [display serializer](https://github.com/darthvader58/soma/blob/main/soma/exports/display.py). Evidence: [contract/hash tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_contract.py), [export checksums](https://github.com/darthvader58/soma/blob/main/tests/engine/test_exports.py), [CLI export/replay](https://github.com/darthvader58/soma/blob/main/tests/engine/test_cli.py).

@@ -1,0 +1,61 @@
+---
+title: Trajectories
+description: Bounded state histories, the explicitly synthetic lunar conic and archived LRO study states.
+---
+
+There are three distinct implemented paths. `StateHistory` consumes a documented JSON structure. `SyntheticTwoBodyLunarPreset` evaluates an explicitly synthetic elliptical conic. The [research study provider](/reference/research-api) evaluates the configured public reconstructed LRO SPK natively. These are not a general mission-ephemeris importer or a constellation designer.
+
+## Documented state history
+
+```text
+StateHistory(metadata, samples, *, utc_to_et=None)
+history.state(epoch)
+```
+
+Metadata requires `target`, `origin`, `frame`, `time_scale`, `position_unit`, `velocity_unit`, `interpolation`, `max_gap_s`, `coverage` and `provenance_label`. Optional `kind` must be `documented_state_history`. Supported origin is `MOON`, axes are `J2000` or `MOON_ME_DE421`, and interpolation is `linear`. Units must be the pair `m`/`m/s` or `km`/`km/s`; kilometers are converted to meters internally.
+
+At least two finite position/velocity three-vectors are required with strictly increasing epochs. TDB epochs are seconds past J2000; coverage uses `start_tdb_s`/`end_tdb_s`. UTC histories require a callable kernel-backed `utc_to_et`, and coverage uses qualified `start_utc`/`end_utc`. No extrapolation or interpolation over a gap greater than `max_gap_s` is allowed.
+
+`state(epoch)` currently exports a position record with explicit units, frame, origin, epoch and interpolation provenance. Although input velocities are required and retained in the history, the returned record does **not** expose velocity and the position interpolation does not use velocity as its derivative. Do not treat this interface as an OEM/Hermite interpolator.
+
+### Executable synthetic history
+
+```python
+from soma.geometry import StateHistory
+
+metadata = {
+    "target": "example-only", "origin": "MOON", "frame": "J2000", "time_scale": "TDB",
+    "position_unit": "km", "velocity_unit": "km/s", "interpolation": "linear",
+    "max_gap_s": 20, "coverage": {"start_tdb_s": 0, "end_tdb_s": 10},
+    "provenance_label": "SYNTHETIC documentation history, not a mission ephemeris",
+}
+samples = [
+    {"epoch": 0, "position": [2000, 0, 0], "velocity": [0, 1, 0]},
+    {"epoch": 10, "position": [2000, 10, 0], "velocity": [0, 1, 0]},
+]
+history = StateHistory(metadata, samples)
+assert history.state(5)["position"] == [2000000.0, 5000.0, 0.0]
+```
+
+## Synthetic two-body lunar preset
+
+```text
+SyntheticTwoBodyLunarPreset(
+    *, target, epoch_utc, coverage, gm_m3_s2, reference_radius_m,
+    semimajor_axis_m, eccentricity, inclination_deg, ascending_node_deg,
+    argument_periapsis_deg, mean_anomaly_deg, utc_to_et,
+)
+preset.state(utc)
+```
+
+The caller supplies Moon GM in `m³/s²`, reference radius and semimajor axis in meters, dimensionless eccentricity and angular elements in degrees. The conic plane is relative to Moon-centered **J2000 axes**, not a lunar-equator definition. The ellipse must have `0 <= eccentricity < 1`, inclination between 0 and 180 degrees, and periapsis strictly outside the reference sphere. Coverage must include the initial epoch and span at most seven days. Supply an active kernel-backed UTC-to-TDB converter.
+
+Output is a J2000 position record in meters labeled `synthetic_two_body_lunar_preset`. This omits nonspherical lunar gravity, Earth/Sun third-body terms and radiation pressure. It is not an operational frozen orbit or a libration-point trajectory. It does not imply relay service. The existing circular-quarter-period test is a dynamics software check, not mission validation.
+
+## Public mission SPK
+
+`analyze_study(request)` with an explicit `request["spacecraft_refs"]` list obtains native LRO position and velocity samples from the configured hash-pinned reconstructed SPK. Use `/api/research/capabilities` or `runtime_capabilities()` for the actual source ID, availability and coverage. No unconfigured spacecraft is inserted, and LRO is not offered as a communications relay. Matching attitude/instrument kernels and an observation model would be needed before claiming a footprint.
+
+Not implemented as general public library workflows: CCSDS OEM parsing, arbitrary SPK import through the study contract, user-designed high-fidelity propagation, lunar constellation generation, attitude/FOV footprints or interpolation-error certification across general mission data.
+
+Implementation: [trajectories](https://github.com/darthvader58/soma/blob/main/soma/geometry/trajectories.py), [configured SPK provider](https://github.com/darthvader58/soma/blob/main/soma/research/spacecraft.py). Evidence: [history/conic tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_trajectories.py), [native research tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_research_geometry.py).

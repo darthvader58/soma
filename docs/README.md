@@ -2,7 +2,7 @@
 
 This directory is the Mintlify source root. It documents the repository's actual `soma-lunar` 0.1.0 library, local service, export contract, and scientific limits.
 
-The documentation is live at https://soma-ce3178ca.mintlify.site/. Mintlify currently reads `darthvader58/soma`, branch `web/hosted-planner-fix`, subdirectory `docs`. The application's Documentation button uses `/docs`, which redirects to this site.
+The documentation is live at https://soma-ce3178ca.mintlify.site/. Mintlify reads `darthvader58/soma`, branch `main`, subdirectory `docs` (confirmed in project Git settings on November 18, 2026). The application's Documentation button uses `/docs`, which redirects to this site.
 
 After merging the pull request, switch Mintlify's production branch to `main` in Git settings and verify the resulting deployment before deleting `web/hosted-planner-fix`.
 

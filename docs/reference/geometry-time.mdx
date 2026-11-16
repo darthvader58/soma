@@ -1,0 +1,101 @@
+---
+title: Lunar geometry and time
+description: Explicit surface coordinates, Moon-centered states, station transforms and strict UTC handling.
+---
+
+`SOMA` owns these lunar coordinate operations. Changing an Earth viewer's ellipsoid does not supply them. Install the `analysis` extra for NumPy and SPICE-backed operations. These functions are Python library interfaces; the [research HTTP API](/reference/research-api) exposes a bounded sampled-study workflow rather than each function as a route.
+
+## Surface coordinates
+
+```text
+SurfacePoint(latitude_deg, longitude_deg_east, frame, reference_radius_m,
+             elevation_m, antenna_height_m, panel_height_m,
+             pole_reference_meridian_deg_east,
+             elevation_datum="height_above_reference_sphere")
+surface_position(latitude_deg, longitude_deg_east, radius_m, elevation_m=0)
+local_basis(latitude_deg, longitude_deg_east, pole_reference_meridian_deg_east=0)
+vector_direction(vector_fixed_m, basis)
+segment_intersects_sphere(source_m, target_m, radius_m, *,
+                         center_m=(0, 0, 0), clearance_m=0,
+                         endpoint_tolerance_m=1e-6)
+```
+
+| Operation | Inputs and result |
+| --- | --- |
+| `surface_position` | Planetocentric latitude in `[-90, 90]`, east longitude in `[-180, 180)`, radius/elevation in meters. Returns a NumPy Cartesian three-vector. |
+| `local_basis` | Returns a 3 by 3 matrix whose rows are east, north and up. At either exact pole, the declared reference meridian replaces longitude for the basis. |
+| `vector_direction` | A nonzero fixed-frame vector in meters and the local basis. Returns `azimuth_deg`, `elevation_deg`, `range_m`, `unit_vector_fixed`. Azimuth is north through east. |
+| `segment_intersects_sphere` | Finite endpoints, center, radius and tolerances in common Cartesian meters. Returns a Boolean. Interior tangency blocks; the segment never extends beyond its target. This is a body test, not terrain visibility. |
+
+`SurfacePoint` accepts `MOON_ME_DE421` and `height_above_reference_sphere`. Equipment heights are separate nonnegative meters. `position_m(height_m=0)` returns the Cartesian position at an explicitly chosen observer height. `local_basis()` returns the site's basis. `from_lander(lander)` reads the complete corresponding scenario fields. `from_cartesian(position_m, *, reference_radius_m, frame="MOON_ME_DE421", antenna_height_m=0, panel_height_m=0, pole_reference_meridian_deg_east=0)` performs the inverse conversion; at a pole its returned longitude is the declared reference meridian. The inverse converter's zero height defaults are mathematical defaults, not complete mission hardware inputs.
+
+### Executable spherical example
+
+The surface below is a declared mathematical reference, not a terrain measurement.
+
+```python
+from soma.geometry import SurfacePoint, vector_direction
+
+site = SurfacePoint(0, 0, "MOON_ME_DE421", 1737400, 25, 2, 1, 0)
+assert site.position_m().tolist() == [1737425.0, 0.0, 0.0]
+assert site.position_m(site.antenna_height_m)[0] == 1737427.0
+assert vector_direction([0, 1000, 0], site.local_basis())["azimuth_deg"] == 90
+recovered = SurfacePoint.from_cartesian(site.position_m(), reference_radius_m=1737400)
+assert recovered.elevation_m == 25
+```
+
+Invalid/nonfinite coordinates, unsupported frames/datums and negative equipment heights raise `ValueError`. Numerical round-trip agreement does not establish absolute surface accuracy or renderer registration.
+
+## `SpiceGeometry`
+
+```text
+SpiceGeometry(manifest, data_root)
+geometry.state(target, utc, frame="MOON_ME_DE421", origin="MOON", aberration="NONE")
+geometry.direction(surface, target, utc, height_m=0)
+geometry.station_state(station, utc, frame="MOON_ME_DE421")
+geometry.transform_position(position_m, utc, from_frame="J2000", to_frame="MOON_ME_DE421")
+```
+
+Use `SpiceGeometry` as a context manager. The manifest must identify the matched DE421 planetary, lunar frame, lunar orientation and leap-second kernels, their SHA256 values and a coverage interval. Files must already exist under `data_root`; the context does not download them. Requested coverage is checked against actual binaries. Calls outside the active owning context/thread fail; SOMA serializes contexts and restores the previous SPICE kernel pool on exit. External code must not mutate SPICE while a context is active.
+
+`state` returns a **position** record, not a six-dimensional state: `position` in meters, explicit origin/frame, normalized UTC `epoch`, format/time-scale labels and provenance. Supported axes are `J2000` and `MOON_ME_DE421`, with Moon origin and same-epoch geometric `NONE` aberration. The research study API separately returns native position and rotating-frame velocity arrays.
+
+`direction` subtracts the requested surface observer position and returns local angles/range plus observer height and frame. Call it independently at panel and antenna heights. `transform_position` rotates an existing position between the supported axes; it does not translate an Earth-centered origin or transform a velocity.
+
+`station_state` requires station fields `id`, `latitude_deg`, `longitude_deg_east`, `height_m`, `frame="ITRF93"`, `reference_ellipsoid="WGS84"` and `input_class`, plus a high-precision Earth orientation PCK. Station latitude is geodetic under WGS84. It transforms the Earth-fixed station offset and adds Earth's Moon-centered position. A station position establishes neither visibility nor allocated antenna service.
+
+### Prepared-kernel example
+
+Run from the repository after preparing the [research sources](/getting-started/live-research). This example deliberately excludes Earth orientation because it asks for Earth center, not a station.
+
+```python
+from soma.geometry import SpiceGeometry
+from soma.validation import load_json
+
+manifest = load_json("data/de421-phase2.manifest.json")
+manifest["kernels"] = [k for k in manifest["kernels"] if k["role"] != "earth_orientation"]
+manifest["coverage"] = {"start_utc": "2026-04-01T00:00:00Z", "end_utc": "2026-04-01T06:00:00Z"}
+with SpiceGeometry(manifest, "api/_data") as geometry:
+    earth = geometry.state("EARTH", "2026-04-01T00:00:00Z")
+    assert earth["origin"] == "MOON" and earth["position_unit"] == "m"
+```
+
+Missing kernels, wrong hashes, unsupported aliases or a coverage gap fail explicitly. Apparent light-time corrections and arbitrary lunar frame realizations are not provided by this interface.
+
+## Civil UTC and ephemeris time
+
+```text
+parse_utc(value: str) -> datetime
+format_utc(value: datetime) -> str
+# In soma.time.spice:
+utc_to_et(value) -> float
+```
+
+`parse_utc` accepts `YYYY-MM-DDTHH:MM:SS[.ffffff]` with `Z` or a numeric offset and returns an aware UTC `datetime`. It rejects missing/unknown offsets (`-00:00`), invalid dates, second `60` and more than six fractional digits. `format_utc` preserves microseconds and rejects naive datetimes. `utc_to_et` needs an active, pinned SPICE leap-second kernel and returns TDB seconds past J2000; it is not a replacement for strict input validation. Before 1972 SPICE uses its extended UTC convention, and future leap seconds beyond the kernel publication are unknown.
+
+```python
+from soma.time import parse_utc, format_utc
+assert format_utc(parse_utc("2026-04-01T01:00:00+01:00")) == "2026-04-01T00:00:00Z"
+```
+
+Implementation: [surface](https://github.com/darthvader58/soma/blob/main/soma/geometry/surface.py), [SPICE](https://github.com/darthvader58/soma/blob/main/soma/geometry/spice.py), [time](https://github.com/darthvader58/soma/blob/main/soma/time/__init__.py). Evidence: [geometry tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_geometry.py), [kernel/frame tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_spice_geometry.py), [time tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_time.py). The kernel test includes a published NAIF reference vector; calling the same provider twice is only a regression check.

@@ -1,0 +1,150 @@
+---
+title: Plan lunar-to-Earth delivery
+description: Edit a terrain-backed task, inspect last-byte Earth arrival and independently verify the Python run package.
+---
+
+Open the [SOMA workbench](https://soma-atlas-two.vercel.app/) and choose **Data delivery**.
+This tool calculates a new schedule from numerical LOLA terrain, matched DE421
+ephemerides and explicit network/hardware assumptions. It is separate from the
+global reference-sphere Geometry tool.
+
+## Define the task
+
+The initial form declares a 16 MiB dataset near 89°S, a six-hour November 2026
+interval, finite battery and storage, educational Earth-station proxies and one
+explicitly synthetic lunar relay. These are editable inputs, not an operational
+mission or a stored expected answer.
+
+1. Inspect latitude, east longitude, separate antenna/panel heights and UTC dates.
+   Terrain coverage is regional: latitude −89.15° to −88.85°, longitude −3° to 3°.
+2. Set the payload volume, data-ready epoch and absolute last-byte deadline. The
+   deadline does not move automatically when you edit a date.
+3. Select direct-to-Earth, one lunar relay, or both route families. Inspect finite
+   service calendars, compatible terminal modes, relay storage and hardware.
+4. If you deliberately want service to follow a changed analysis interval, use
+   **Use analysis interval as assumed service**. This explicitly changes assumptions;
+   it does not obtain access from a network operator.
+5. Choose **Plan delivery**. Wait for the bounded Python calculation. A failed or
+   unsupported request does not substitute an archived result.
+
+Python resolves ground elevation from the numerical DEM and records both requested
+and resolved values. A catalog point or rendered terrain pick is not a substitute
+for numerical terrain coverage. Copying an inspected global site can therefore
+produce an explicit out-of-coverage result rather than a fabricated schedule.
+
+## Inspect what reached Earth
+
+Read the status, solver status, model fidelity and independent replay before the
+map. Check **unique delivered bytes** and **final-byte arrival UTC** against the
+requested file size and deadline. A partial transmission does not deliver the file.
+
+The timeline separates usable source-transmit contacts, selected allocations,
+receiver occupancy and relay waiting. Battery and buffer histories expose resource
+use. Terrain, illumination, power and contact diagnostics retain uncertainty and
+sampling labels. Scrubbing reads the returned records; it does not rerun the solver.
+
+Rates, ideal pointing and station service remain assumptions. The two-body relay
+is synthetic, and the archived LRO spacecraft in Geometry is not relay service.
+The [capability matrix](/science/capability-matrix) explains what the library and
+public interface expose.
+
+## Make a controlled comparison
+
+First calculate with **Direct to Earth** alone. Export its scenario and result.
+Then enable **One lunar store-and-forward relay** while holding the location,
+time, payload, hardware, initial battery and deadline fixed, and plan again.
+Compare actual status, selected hops, Earth arrival and resource history. Do not
+assume a relay must improve the result: the declared default policy prefers fewer
+relay hops before earlier completion when a feasible direct route exists.
+
+For a second experiment, change only the initial battery energy or absolute
+deadline and calculate again. Changed inputs invalidate the previous result and
+produce a different scenario hash. An infeasible or unknown answer is useful
+evidence about these declared constraints, not a failed animation.
+
+## Download and independently replay
+
+Choose **Python run package** after a completed result. The browser verifies its
+native ZIP checksum and size. The package contains the exact scenario, scientific
+result, analysis/replay inputs, source/software manifest, schedule/resource CSVs
+and display data. It is not reconstructed from a screenshot or chart.
+
+With the verification extra installed, run:
+
+```bash
+python -m soma.verification.exports /path/to/soma-delivery-HASH.zip
+```
+
+The verifier checks the exported records and independently replays the schedule.
+For an infeasible or unknown result, absence of a successful complete-file schedule
+must retain its own meaning; a package validation is not a delivery guarantee.
+
+## Recompute the exported scenario locally
+
+From a repository checkout with the analysis, planning and service extras installed,
+prepare the current delivery dataset. This command performs bounded scientific
+downloads and verifies their pinned identities:
+
+```bash
+python scripts/prepare-delivery-data.py --output /tmp/soma-delivery-data
+SOMA_DATA_ROOT=/tmp/soma-delivery-data python -m soma run soma-delivery-scenario.json \
+  --chunk-bytes 16777216 --bin-s 60 --time-limit-s 10 \
+  --output-dir /tmp/soma-delivery-rerun
+python -m soma.verification.exports /tmp/soma-delivery-rerun/run.zip
+```
+
+Use the exact options recorded by your original response when they differ from
+those shown. A solve budget can affect which feasible incumbent is selected;
+compare feasibility, constraints, solver evidence and the actual schedule rather
+than requiring an unproved optimum to be identical. The [terrain revision
+notes](/science/terrain-revision) distinguish this current dataset from historical
+v1 exports.
+
+## Use the HTTP operation from Python
+
+This standard-library example obtains the complete declared template, computes a
+fresh result, decodes both compression layers and verifies the exact ZIP bytes.
+It does not need a website session or browser state.
+
+```python
+import base64
+import gzip
+import hashlib
+import json
+from pathlib import Path
+from urllib.request import Request, urlopen
+
+base = "https://soma-atlas-two.vercel.app/api/research/delivery"
+
+def call(path, document=None):
+    request = Request(
+        base + path,
+        data=None if document is None else json.dumps(document).encode(),
+        headers={"Accept-Encoding": "gzip", "Content-Type": "application/json"},
+    )
+    with urlopen(request, timeout=290) as response:
+        wire = response.read(4_000_001)
+        assert len(wire) <= 4_000_000
+        body = gzip.decompress(wire) if response.headers.get("Content-Encoding") == "gzip" else wire
+    assert len(body) <= 16_000_000
+    return json.loads(body)
+
+capabilities = call("/capabilities")
+assert capabilities["ready"], capabilities.get("unavailable_reason")
+scenario = capabilities["scenario_template"]
+artifact = call("/analyze", {"scenario": scenario})
+print(artifact["result"]["status"], artifact["result"]["solver_status"])
+print("Earth arrival:", artifact["result"]["final_byte_arrival_utc"])
+Path("soma-delivery-response.json").write_text(json.dumps(artifact, indent=2))
+
+record = artifact["export"]
+assert record["encoding"] == "gzip+base64"
+package = gzip.decompress(base64.b64decode(record["bytes_base64"], validate=True))
+assert len(package) == record["size_bytes"]
+assert hashlib.sha256(package).hexdigest() == record["sha256"]
+Path("soma-delivery-run.zip").write_bytes(package)
+```
+
+See the [hosted delivery reference](/reference/hosted-delivery) for exact budgets,
+error responses and synchronous lifecycle. Use the [local service](/reference/service)
+for its separate job API and cancellation behavior.

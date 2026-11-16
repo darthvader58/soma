@@ -1,0 +1,99 @@
+---
+title: Illumination and electrical power
+description: Sampled solar-disk visibility, fixed-panel generation and independent battery histories.
+---
+
+These Python functions are implemented. The public geometry study's Sun-center elevation is a separate, simpler result: it does not call these functions or evaluate terrain visibility, disk fraction, generation or battery survival. No thermal-survival conclusion follows from either path.
+
+## Solar-disk visibility
+
+```text
+solar_disk_visibility(
+    sun_vector_enu_m, earth_vector_enu_m, *, horizon,
+    sun_radius_m=695700000.0, earth_radius_m=6378137.0,
+    horizon_margin_deg=0.1, samples=512, max_samples=8192, tolerance=0.005,
+)
+```
+
+Import from `soma.illumination`. Both vectors are from the **same observer** to the target center in local east/north/up meters. The numerical `horizon` dictionary must contain unique azimuth/elevation bands, extent `converged` status and, when available, the observer height. A panel calculation must use the panel's horizon, not an antenna horizon.
+
+Uniform projected-disk quadrature combines terrain and a spherical Earth eclipse mask on the same rays. Earth must be in front of the Sun along a ray to occult it. Adjacent horizon bands are interpolated periodically; an unknown endpoint makes that ray unknown, and unconverged horizon extent makes terrain classification unknown.
+
+| Output | Meaning |
+| --- | --- |
+| `visible_fraction` | 0 to 1 only when the sampled terrain is known and disk refinement converged; otherwise `None`. |
+| `lower_bound`, `upper_bound` | Bounds from unknown terrain on the sampled rays. **Not** a certified quadrature, DEM or absolute accuracy bound. |
+| `status` | `evaluated_under_sampling` or `unknown`. |
+| `sampling_history`, `samples`, `converged` | Sample-count refinement and its stopping result. |
+| `mask_counts`, directions, ranges and radii | Inspectable shared-mask evidence and model inputs. |
+
+Require at least 64 initial samples, at least twice that many maximum samples, maximum 131,072, and tolerance strictly between 0 and 1. Radii and observer ranges must be positive and the observer outside both bodies. This model omits atmospheric effects, limb darkening and omitted terrain features.
+
+### Executable disk example
+
+This is synthetic local angular geometry, not a sampled ephemeris or real site.
+
+```python
+from soma.illumination import solar_disk_visibility
+
+horizon = {"converged": True, "site": {"height_m": 1}, "bands": [
+    {"azimuth_deg": azimuth, "elevation_deg": 0} for azimuth in range(0, 360, 10)
+]}
+visibility = solar_disk_visibility([0, 149597870700.0, 0], [380000000, 0, 0],
+                                   horizon=horizon, horizon_margin_deg=0)
+assert visibility["visible_fraction"] is not None
+assert 0 < visibility["visible_fraction"] < 1
+```
+
+## Fixed-panel electrical generation
+
+```text
+fixed_panel_power(panel_profile, sun_vector_enu_m, visible_fraction)
+```
+
+Import from `soma.power`. Profile keys are `kind="fixed"`, unit `normal_local_enu`, `area_m2`, dimensionless `efficiency` and `lumped_derating`, and `irradiance_at_1au_w_m2`. Fractions are between zero and one. `visible_fraction=None` propagates unknown power.
+
+The model applies inverse-square irradiance, center-direction projected area, efficiency, derating and the supplied uniform-disk fraction. Multiplying a disk fraction by the center-ray projection is an explicit approximation near edge-on incidence. Output includes `generated_power_w`, method, projected area, irradiance, inputs and limitations. Tracker mechanics/overhead, temperature and self-shadowing are not implemented by this function.
+
+```python
+from soma.power import fixed_panel_power
+
+panel = {"kind": "fixed", "normal_local_enu": [0, 0, 1], "area_m2": 2,
+         "efficiency": 0.2, "lumped_derating": 0.8, "irradiance_at_1au_w_m2": 1000}
+power = fixed_panel_power(panel, [0, 0, 149597870700.0], 0.5)
+assert power["generated_power_w"] == 160  # Synthetic arithmetic, watts.
+```
+
+## Battery replay
+
+```text
+integrate_battery(profile, bins, *, base_load_w)
+```
+
+Required battery fields are `capacity_wh`, `initial_energy_wh`, `reserve_wh`, `max_charge_w`, `max_discharge_w`, `charge_efficiency`, `discharge_efficiency`. Energy is Wh; charge/discharge limits are **bus-side electrical watts**. Radiated RF watts are not electrical load.
+
+Supply 1 to 100,000 positive, chronological, contiguous bins containing qualified `start_utc`, `end_utc`, `generation_w` and `incremental_load_w`. Optional `power_model` must be `piecewise_constant`. Base demand must be explicitly positive. Split every power change at its actual boundary; the function does not infer changing illumination inside a bin.
+
+Generation first supplies demand. Surplus charges storage subject to efficiency, power and capacity, with excess curtailed. Deficits remove storage with discharge efficiency. Charge and discharge are mutually exclusive. Constant-bin extrema occur at endpoints, so the supplied piecewise-constant model checks interval interiors through those extrema. Unknown generation propagates unknown energy. An invalid trace remains a counterfactual demand history; it is not an executable schedule.
+
+Output includes `samples`, `intervals`, `violations`, and status `satisfied_under_piecewise_constant_assumptions`, `violated` or `unknown`. Violations distinguish reserve and instantaneous discharge-power limits.
+
+```python
+from soma.power import integrate_battery
+
+battery = {"capacity_wh": 100, "initial_energy_wh": 50, "reserve_wh": 10,
+           "max_charge_w": 20, "max_discharge_w": 30,
+           "charge_efficiency": 0.8, "discharge_efficiency": 0.5}
+bins = [
+    {"start_utc": "2026-11-14T00:00:00Z", "end_utc": "2026-11-14T01:00:00Z",
+     "generation_w": 15, "incremental_load_w": 0},
+    {"start_utc": "2026-11-14T01:00:00Z", "end_utc": "2026-11-14T02:00:00Z",
+     "generation_w": 0, "incremental_load_w": 0},
+]
+trace = integrate_battery(battery, bins, base_load_w=5)
+assert [sample["stored_energy_wh"] for sample in trace["samples"]] == [50, 58, 48]
+```
+
+This example is synthetic. For delivery, energy must constrain selected allocations inside the [scheduler](/reference/scheduling), followed by independent replay; a battery warning attached after choosing a route is insufficient.
+
+Implementation: [illumination](https://github.com/darthvader58/soma/blob/main/soma/illumination/__init__.py), [power](https://github.com/darthvader58/soma/blob/main/soma/power/__init__.py). Evidence: [independent disk/mask tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_illumination.py), [panel/battery arithmetic](https://github.com/darthvader58/soma/blob/main/tests/engine/test_power.py), [schedule energy constraints](https://github.com/darthvader58/soma/blob/main/tests/engine/test_scheduler.py).

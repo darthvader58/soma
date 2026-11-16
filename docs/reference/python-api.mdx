@@ -1,9 +1,23 @@
 ---
 title: Python API
-description: Public planning, validation, export, and independent replay interfaces in version 0.1.0.
+description: Entry points and module references for the implemented lunar analysis and delivery library.
 ---
 
 New multi-site ephemeris sampling is documented in the [research geometry API](/reference/research-api). The delivery interfaces below retain their original scenario/result contract.
+
+## Analysis modules
+
+| Module family | Reference |
+| --- | --- |
+| Surface coordinates, local bases, UTC and SPICE | [Geometry and time](/reference/geometry-time) |
+| Kernel states, bounded histories and labeled two-body orbits | [Trajectories](/reference/trajectories) |
+| Numerical rasters, horizons and finite-range terrain tests | [Terrain](/reference/terrain) |
+| Solar disk, eclipse masks, electrical generation and battery integration | [Illumination and power](/reference/illumination-power) |
+| Link geometry, RF arithmetic and usable contact gates | [Communications](/reference/communications) |
+| Finite-volume routing, energy constraints and independent replay | [Scheduling](/reference/scheduling) |
+| Native validation, canonical hashes and auditable run packages | [Validation and exports](/reference/validation-exports) |
+
+The [capability matrix](/science/capability-matrix) distinguishes Python functions, public HTTP operations, interactive controls and work that remains unimplemented. These interfaces do not imply general TATC feature parity or operational lunar communications service.
 
 ## `soma.plan_delivery`
 
