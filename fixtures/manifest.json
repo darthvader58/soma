@@ -71,7 +71,11 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "d30a66dd58c4f8ba4dab2abbf0ac8f6496867e4da5c35cdda8ca18134b92ec91"
+      "sha256": "f86d6ed2300c57977ffbd917744c039d03bf11b089e05e0376abd47e8ee8151f"
+    },
+    {
+      "path": "data/physical-first-release-evidence.manifest.json",
+      "sha256": "8a791561ca4859ca9fc6a4401b7883ccb476e737e0270acc9779d6bcd32928fe"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -695,7 +699,7 @@
     },
     {
       "path": "soma/docs/phase-6/source-and-license-audit.md",
-      "sha256": "0382110b610ca5e72f28630aafa504e829a760e4f7bc24fcfe88e312af2a40cb"
+      "sha256": "fdc0b2aeee097d93117fd208461f67effca7a1a1937b912f3bd8370b80df4808"
     },
     {
       "path": "soma/docs/phase-6/ui-delivery-gate.md",
@@ -703,7 +707,7 @@
     },
     {
       "path": "soma/docs/physical-first-release/README.md",
-      "sha256": "97707e35ac7100b03766043e53754c85173f310bdb2eb8c00e019c5280a6b342"
+      "sha256": "b8b59fdeda8067f2501a7f0d67cf34a860476f13999c9a22129e10411021e697"
     },
     {
       "path": "soma/docs/physical-first-release/build_scenarios.py",

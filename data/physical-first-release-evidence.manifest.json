@@ -1,0 +1,430 @@
+{
+  "artifact_type": "required_first_release_evidence",
+  "version": "1.0.0",
+  "scope": "required_bounded_first_release_in_plan",
+  "required_first_release_complete": true,
+  "optional_phase7_implemented": false,
+  "scope_confirmation": "User confirmed every required first-release feature and verification; optional Phase 7 is excluded.",
+  "code_revision": "5ad2bc543b3489c862e435bdd2e79556afe14e61",
+  "base_main_revision": "56070b4af859a99cbf3c72c1aee7d9092cbddb45",
+  "physical_completion": {
+    "command": ".venv/bin/python -m soma.verification.physical_completion",
+    "passed": true,
+    "checks": 33,
+    "errors": []
+  },
+  "phase6_compatibility": {
+    "command": ".venv/bin/python -m soma.verification.completion",
+    "passed": true,
+    "checks": 77,
+    "errors": []
+  },
+  "verification": {
+    "engine_tests": {
+      "command": ".venv/bin/pytest tests/engine -q",
+      "passed": 395,
+      "failed": 0,
+      "skipped": 0,
+      "duration_s": 192.59
+    },
+    "web_unit_tests": 80,
+    "fixture_browser_tests": 17,
+    "physical_live_browser_test": "passed; three computed cases and three byte-identical downloads",
+    "production_build": "passed",
+    "registered_moon": "visible terrain, exact stored relay and allocated line verified at 2026-11-30T09:33:30Z",
+    "synthetic_100_mib_relay_cli": "feasible_under_assumptions; feasible_incumbent; 104857600 bytes",
+    "independent_archive_reoptimization": "all three outcomes reproduced",
+    "native_schema_changes": false,
+    "credential_scan_hits": 0
+  },
+  "limitations": [
+    "Bounded near-89S region, November 2026 and six-hour analysis horizons; arbitrary global or seasonal coverage is not claimed.",
+    "Published interpolation and coarse terrain are explicitly labeled; missing data and strict measured-only gaps remain unknown.",
+    "Radio rates, service, hardware, ideal pointing and synthetic relay dynamics are declared assumptions; no operational service or mission prediction.",
+    "Time/spatial sampling, terrain cap and constant delay are declared approximations, not a calibrated confidence model.",
+    "The local service has finite retained-result limits; optional Phase 7 features and public corrected-ion deployment are outside this release."
+  ],
+  "report": "soma/docs/physical-first-release/README.md",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "c1493d628d87836f161ee20a5321c9f6dc2777aaa14dcab491295cb2befadb58",
+      "size_bytes": 13738
+    },
+    {
+      "path": "data/phase6-evidence.manifest.json",
+      "sha256": "f86d6ed2300c57977ffbd917744c039d03bf11b089e05e0376abd47e8ee8151f",
+      "size_bytes": 12505
+    },
+    {
+      "path": "data/physical-first-release.manifest.json",
+      "sha256": "24536b83018a870fd2c97c59c09b344212043279dfcdaca47a76cc968e02ab68",
+      "size_bytes": 2633
+    },
+    {
+      "path": "data/physical-polar-window.manifest.json",
+      "sha256": "fe4018d635d727aa668bc6c10aa64970c4ae316f8d893d92ef56f75d3d701d4d",
+      "size_bytes": 3123
+    },
+    {
+      "path": "data/renderer-alignment-evidence.manifest.json",
+      "sha256": "6d5380b0f46936fa58462bad1e067b9bd3a905605b9ec44714b6c1abeae80b5d",
+      "size_bytes": 4111
+    },
+    {
+      "path": "data/renderer-registration.manifest.json",
+      "sha256": "73d5294def057374261feebfe443cdfc624f0ee08ca66b9a356fdbef91cbba6b",
+      "size_bytes": 9033
+    },
+    {
+      "path": "fixtures/physical-south-pole/README.md",
+      "sha256": "6d228c2c883f438214bc2cb945d76d3e2b91d96f5cabd312463d33d0f3a71bd4",
+      "size_bytes": 1350
+    },
+    {
+      "path": "fixtures/physical-south-pole/completion-report.json",
+      "sha256": "ad835c4d92b037e53db0b60f44bafd82373d548051faa5c495486cea3ca792f6",
+      "size_bytes": 3009
+    },
+    {
+      "path": "fixtures/physical-south-pole/demonstration.json",
+      "sha256": "16daf524d7c16e98b589a4470fd94f823004b055c6aa46080ac5ea75b356480b",
+      "size_bytes": 1866
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/run.zip",
+      "sha256": "05a33dfec5b21cded84611658d03d229d8c792c5b9ad162ff7359458027dc58a",
+      "size_bytes": 10098704
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/scenario.json",
+      "sha256": "68babeaef0dac49c7785c1e0e258b11a935b1b8a9d483e136305474ca7397582",
+      "size_bytes": 8916
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/summary.json",
+      "sha256": "46762aaf92dd884e2da9311032084ec358a141813d9007b6354dd2fa5f35ed77",
+      "size_bytes": 4608
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/verification.json",
+      "sha256": "9e48c9d0acb091a7e5467dc9a226b7ca13f0181e637e850b45d8de4063e6c0ff",
+      "size_bytes": 5349
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/run.zip",
+      "sha256": "3a2598b5c3463f1a1568d9dacf4abdc886fe1caf59c40d44b48cb10877e02bce",
+      "size_bytes": 11715635
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/scenario.json",
+      "sha256": "c8852a0df54710ce69a4f44d92d44fddf03f91026d06f321b3becac7d9b10547",
+      "size_bytes": 8916
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/summary.json",
+      "sha256": "51a3705003e60caff2dfcd33bf5131b5f3c45c00ec2c42b87502fac28999c411",
+      "size_bytes": 4562
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/verification.json",
+      "sha256": "36202a77f60a702ed62563ba22765e58d1e9c304a5d524115c6235ba47d96b83",
+      "size_bytes": 5829
+    },
+    {
+      "path": "fixtures/physical-south-pole/independent-audit.json",
+      "sha256": "32daa21ae925682e68a386b3fa0c04cacdd475d20124a581362ada6121706217",
+      "size_bytes": 2710
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/run.zip",
+      "sha256": "27ea8e3448375df79bb05863f8ebc34cc513e7282ba3461214f767029b271d39",
+      "size_bytes": 11769582
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/scenario.json",
+      "sha256": "dfd384f8872b8ceeae634dd86416d6190393cfbad5067b15c26afccf3009acd4",
+      "size_bytes": 8942
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/summary.json",
+      "sha256": "ddcdb3fc53a772a6de8a6ae09216e8da60b4792b0f491524140ea5086a34ef9e",
+      "size_bytes": 7626
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/verification.json",
+      "sha256": "1845b6c138dc9f5fc5ddcd4f4ec571c5bcdd0df7e55d1d06cd90135e84d4a36f",
+      "size_bytes": 5833
+    },
+    {
+      "path": "fixtures/physical-south-pole/sampling-verification.json",
+      "sha256": "33b57b64e60ff9b7c4997c26ace4b8385990e9def398196c22323d3f9b843f8c",
+      "size_bytes": 779393
+    },
+    {
+      "path": "fixtures/physical-south-pole/scenario-later.json",
+      "sha256": "9c65d0c88c25f9b6ed9930c6380516f1e34018b11bac94d914a2c91f811993d2",
+      "size_bytes": 8942
+    },
+    {
+      "path": "fixtures/physical-south-pole/scenario.json",
+      "sha256": "ebf69b9959e6aad2ade38fc6d1d0e673d9140a97c12532c4b7c90cb1d4ab8c99",
+      "size_bytes": 8942
+    },
+    {
+      "path": "fixtures/physical-south-pole/terrain-verification.json",
+      "sha256": "becbe0e0a68be62b0389c9860099f2b7f748acdb160efbc787d2a81cc484bcd9",
+      "size_bytes": 404576
+    },
+    {
+      "path": "soma/__main__.py",
+      "sha256": "aa357b6c380bdd4d6829605e0af44b042de9ba57522c88966d2af4a4a4505685",
+      "size_bytes": 11232
+    },
+    {
+      "path": "soma/docs/challenge-alignment.md",
+      "sha256": "b8ed10a5dc5ca7b78a9d9f72f8d7faf9e35382ad47278788f04d4a61989a6295",
+      "size_bytes": 12914
+    },
+    {
+      "path": "soma/docs/phase-6/source-and-license-audit.md",
+      "sha256": "fdc0b2aeee097d93117fd208461f67effca7a1a1937b912f3bd8370b80df4808",
+      "size_bytes": 17199
+    },
+    {
+      "path": "soma/docs/physical-first-release/README.md",
+      "sha256": "b8b59fdeda8067f2501a7f0d67cf34a860476f13999c9a22129e10411021e697",
+      "size_bytes": 9778
+    },
+    {
+      "path": "soma/docs/physical-first-release/build_scenarios.py",
+      "sha256": "f72f90f5be23e660d23f145299f8f0be453ff0edc47fa883665b9e8aa6bc371e",
+      "size_bytes": 3730
+    },
+    {
+      "path": "soma/docs/physical-first-release/independent-audit.md",
+      "sha256": "6d51a60f83b6e4775c28250e7b2d332eb51219d002b35026782394e9ab33a37f",
+      "size_bytes": 1694
+    },
+    {
+      "path": "soma/docs/physical-first-release/reproduce.py",
+      "sha256": "9539e95d3e078efe6c0423ea95a70b73f5053c9e7a7bcc6aabb8b2b097fa33b5",
+      "size_bytes": 2931
+    },
+    {
+      "path": "soma/docs/physical-first-release/sampling_check.py",
+      "sha256": "7eff0b9f1722bd22b692503f47178a48f7552c33eb6c496c41580c9040f69311",
+      "size_bytes": 3206
+    },
+    {
+      "path": "soma/engine.py",
+      "sha256": "d2d0e62a77fb83b2135152944e6a7781d7c5a3a71af6c8499f90b5fe32fa9d00",
+      "size_bytes": 11198
+    },
+    {
+      "path": "soma/exports/__init__.py",
+      "sha256": "c8144ae3d09e016d34075febf376a94de19f23ee880edc4f598fffc0ba43e5b6",
+      "size_bytes": 13413
+    },
+    {
+      "path": "soma/exports/display.py",
+      "sha256": "fcfe00f15c1195faf85169a18ea4e4ba1911e3e9d260569370f2119ab6d73677",
+      "size_bytes": 5117
+    },
+    {
+      "path": "soma/physical.py",
+      "sha256": "8096c20aee5679a9646bce12514645f3e924040cd55d1187aefc531b4a8aeb67",
+      "size_bytes": 29758
+    },
+    {
+      "path": "soma/preparation.py",
+      "sha256": "8bb4f362e95f4da67e00d217e05570babb745c731babccbc60860c8d74fff8d4",
+      "size_bytes": 5816
+    },
+    {
+      "path": "soma/terrain/physical.py",
+      "sha256": "08854c8a6bc676c614cd86d901a75ca0282c1cbdd1b219ecba2a4437fc988c63",
+      "size_bytes": 23388
+    },
+    {
+      "path": "soma/validation.py",
+      "sha256": "b57502dd5ea398fe212daa47fd170dfc64fb75dc732c44736fc1608bdbac6c21",
+      "size_bytes": 12455
+    },
+    {
+      "path": "soma/verification/exports.py",
+      "sha256": "f1a6b1ed0a775ae93051a158f4457b5d7991de3208f4b5afc4a5b7658dabdee5",
+      "size_bytes": 11931
+    },
+    {
+      "path": "soma/verification/physical_completion.py",
+      "sha256": "4326b9c02017e35ae22af2e085c73576b2818cb4aad815540dffcc0e88548efc",
+      "size_bytes": 7717
+    },
+    {
+      "path": "tests/engine/test_physical_contract.py",
+      "sha256": "ddf5420cdf0dd8c612d984a1934dadb69556d730f40595a190716abd2be0df91",
+      "size_bytes": 4627
+    },
+    {
+      "path": "tests/engine/test_physical_planning.py",
+      "sha256": "59766f3f1bc4ccc6714f71ae53fe988a94bfb007ce3f9e1609d66735e810cdac",
+      "size_bytes": 6638
+    },
+    {
+      "path": "tests/engine/test_physical_terrain.py",
+      "sha256": "bccff1901f6479adca9722a913a451bf44239627ddfec6f7c7ae28d57c33c3d3",
+      "size_bytes": 8249
+    },
+    {
+      "path": "tests/web/browser.spec.mjs",
+      "sha256": "dfee1fbbd3658e03beeb75c131032f9a05c6a96fc6aca06e4f2145c2e8459988",
+      "size_bytes": 26216
+    },
+    {
+      "path": "tests/web/comparison.test.mjs",
+      "sha256": "5612dd130371dcc944cfad189028f3d579981c45f16aa6a4e8df7e50aaf39ac4",
+      "size_bytes": 3954
+    },
+    {
+      "path": "tests/web/live.browser.spec.mjs",
+      "sha256": "d8d58be2f1608b356519815ef8d482cb75009fa51c57baeac7b4883091842f7f",
+      "size_bytes": 15494
+    },
+    {
+      "path": "tests/web/physical-contract.test.mjs",
+      "sha256": "b3494504a24dd2d2b10bf6fcde73f7ac7d88fbdb5d0e8f3611fc131a134b887f",
+      "size_bytes": 2976
+    },
+    {
+      "path": "tests/web/physical.browser.spec.mjs",
+      "sha256": "2fe82de8443c2b68e34ca5d069b533a19eb06582ccd0444dcdbbe264bd32eb57",
+      "size_bytes": 7583
+    },
+    {
+      "path": "tests/web/renderer-samples.test.mjs",
+      "sha256": "75d4aedf3b69abf18a5b16a91dae132be17f7477b9b7fc5a68e7bbf43dd8b77d",
+      "size_bytes": 2734
+    },
+    {
+      "path": "tests/web/scenario.test.mjs",
+      "sha256": "fbe61e401bdb2c3581945092d30fde3ad1933967b1b66ee795c6fe91e078ee31",
+      "size_bytes": 2601
+    },
+    {
+      "path": "tests/web/science.test.mjs",
+      "sha256": "13114fb6742cdc44118c4151cf46e84090393da5db4d19e01df30de87111f30e",
+      "size_bytes": 4108
+    },
+    {
+      "path": "tests/web/viewer-runtime.test.mjs",
+      "sha256": "d01bb56d537aeff72e0b6676eed83c2247788f6e8c07b23d205dc1ba02f1bf13",
+      "size_bytes": 15927
+    },
+    {
+      "path": "web/.gitignore",
+      "sha256": "813a44d4d422019db6315362abe60294c2c347c09c9b6648d09ac7bb86da8c57",
+      "size_bytes": 129
+    },
+    {
+      "path": "web/docs/physical-first-release-contract-review.md",
+      "sha256": "0a38a776f14a2a62f3ee1f1e9efd1f1ae8621a37f7aa2ac62522a5c9e4e5a084",
+      "size_bytes": 3401
+    },
+    {
+      "path": "web/docs/physical-first-release-evidence/physical-registered-moon.png",
+      "sha256": "6af89249f016d85fac85d25f92ff4cb5f9fe272c8389a45515f388cfd06d6c02",
+      "size_bytes": 256350
+    },
+    {
+      "path": "web/docs/physical-first-release-evidence/physical-result-desktop.png",
+      "sha256": "46b011dc4be12911e1c2abaff41d2a264434f7e2905227b67a797ccaeaf61128",
+      "size_bytes": 196461
+    },
+    {
+      "path": "web/docs/physical-first-release-evidence/physical-result-mobile.png",
+      "sha256": "4959d5b9576058aa015467d829fdaefca3763e2c2c1d9720821fcddb0f80162e",
+      "size_bytes": 67522
+    },
+    {
+      "path": "web/docs/physical-first-release-evidence/physical-south-pole-nov-24.png",
+      "sha256": "6121c870586e0cea55e6f116920497d5d02d28997cfb1a5594fc5df06d646516",
+      "size_bytes": 188045
+    },
+    {
+      "path": "web/docs/physical-first-release-evidence/physical-south-pole-nov-30.png",
+      "sha256": "1dfe56bfbd875e3ea8df480b4c4b6155766582acdb01bac12e325f9605b52e23",
+      "size_bytes": 199312
+    },
+    {
+      "path": "web/docs/physical-first-release-verification.json",
+      "sha256": "2c95d364a3aac2c25047c58b6d3995f46b5752e0d95421a4ff24d9ace7e8388a",
+      "size_bytes": 5326
+    },
+    {
+      "path": "web/docs/physical-first-release-verification.md",
+      "sha256": "5b5523ec8d1a9570928f7506e2201deadcb144fe9d01b149ca19dc2e285ca5c8",
+      "size_bytes": 4108
+    },
+    {
+      "path": "web/fixtures/physical-south-pole/scenario-later.json",
+      "sha256": "9c65d0c88c25f9b6ed9930c6380516f1e34018b11bac94d914a2c91f811993d2",
+      "size_bytes": 8942
+    },
+    {
+      "path": "web/fixtures/physical-south-pole/scenario.json",
+      "sha256": "ebf69b9959e6aad2ade38fc6d1d0e673d9140a97c12532c4b7c90cb1d4ab8c99",
+      "size_bytes": 8942
+    },
+    {
+      "path": "web/index.html",
+      "sha256": "2cdd0e9cea5d3858eadfda098f7f46ffe1f03cc37a71888d28cebc1ea47691f0",
+      "size_bytes": 563
+    },
+    {
+      "path": "web/package.json",
+      "sha256": "8d184a1552aa07f048621f93b8f198b6597e44880c9cbf2759d8ba721902176d",
+      "size_bytes": 868
+    },
+    {
+      "path": "web/playwright.physical.config.js",
+      "sha256": "23e6356c067b9748ebb927a38de2477290c00691653a592757f1029a49ca20c5",
+      "size_bytes": 537
+    },
+    {
+      "path": "web/src/comparison.js",
+      "sha256": "7576ba20458a3f8367ec228cc15e82823253b083affa51d7fa7683baec5175dc",
+      "size_bytes": 7562
+    },
+    {
+      "path": "web/src/main.js",
+      "sha256": "fc6485191d97e417deb04b2e81a9bb195662cea3658085c72b8b9eb293090a63",
+      "size_bytes": 27126
+    },
+    {
+      "path": "web/src/renderer-samples.js",
+      "sha256": "e42a90fda683dd9143312c7b39febae727f8348430d0636e9a08e9ec3460c3c1",
+      "size_bytes": 2466
+    },
+    {
+      "path": "web/src/scenario.js",
+      "sha256": "bb1135f90aee6ca468775e780b8639793865f72ebdfb46122beee4a17c309c76",
+      "size_bytes": 9196
+    },
+    {
+      "path": "web/src/science.js",
+      "sha256": "d9190317ced46ab4d758b3726e04e39cda7d1c41fa2442a57e11f788e283bb28",
+      "size_bytes": 14883
+    },
+    {
+      "path": "web/src/timeline.js",
+      "sha256": "d4c02b7a063d22fdd39bd334aa19b598a0b428d0914bf7da57df506784e3789f",
+      "size_bytes": 6779
+    },
+    {
+      "path": "web/src/viewer.js",
+      "sha256": "ce45e9c4d0dc4798ef717f834ad412e16d9ee66def9f74f4cd7c532137c75565",
+      "size_bytes": 18929
+    }
+  ]
+}

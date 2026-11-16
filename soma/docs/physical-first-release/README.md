@@ -41,6 +41,13 @@ power, contacts, allocations, storage, battery and exact stored state samples.
 The optional registered Moon needs the existing scoped local token. Without
 tiles, the numerical result, graphics, comparison and download remain available.
 
+The registered-Moon walkthrough also displayed the terrain, exact stored relay
+sample and solid allocated link at 2026-11-30 09:33:30 UTC. The
+[recorded capture](../../../web/docs/physical-first-release-evidence/physical-registered-moon.png)
+and [interface receipt](../../../web/docs/physical-first-release-verification.json)
+bind that view to the completed result. Neutral scene lighting is labeled and
+does not supply the model's sunlight calculation.
+
 The local service has finite job and byte retention. Export runs you need to
 keep; restart the local service when its stated retention limit is reached.
 A failed job displays its error and is not replaced by a captured success.
