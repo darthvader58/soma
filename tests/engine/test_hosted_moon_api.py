@@ -99,3 +99,28 @@ def test_deployment_routes_keep_api_out_of_spa():
     assert config["outputDirectory"] == "web/dist"
     assert config["rewrites"][0] == {"source": "/api/moon/:path*", "destination": "/api/index"}
     assert config["functions"]["api/index.py"]["maxDuration"] <= 300
+    assert "api/_native/**" in config["functions"]["api/index.py"]["includeFiles"]
+    assert config["buildCommand"].startswith("python3 scripts/prepare-hosted-runtime.py")
+
+
+def test_native_preload_checks_hash_and_uses_global_symbols(tmp_path, monkeypatch):
+    library = tmp_path / "libexpat.so.1"
+    library.write_bytes(b"test shared library")
+    manifest = {"file": library.name, "sha256": hashlib.sha256(library.read_bytes()).hexdigest()}
+    (tmp_path / "manifest.json").write_text(json.dumps(manifest))
+    loaded = []
+    monkeypatch.setattr(index.ctypes, "CDLL", lambda path, mode: loaded.append((path, mode)))
+    index.preload_hosted_libraries(tmp_path)
+    assert loaded == [(str(library.resolve()), index.ctypes.RTLD_GLOBAL)]
+    library.write_bytes(b"corrupted")
+    with pytest.raises(ImportError, match="checksum mismatch"):
+        index.preload_hosted_libraries(tmp_path)
+    assert len(loaded) == 1
+
+
+def test_hosted_native_manifest_is_required_only_on_vercel(tmp_path, monkeypatch):
+    monkeypatch.delenv("VERCEL", raising=False)
+    index.preload_hosted_libraries(tmp_path)
+    monkeypatch.setenv("VERCEL", "1")
+    with pytest.raises(ImportError, match="manifest is missing"):
+        index.preload_hosted_libraries(tmp_path)

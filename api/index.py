@@ -1,10 +1,13 @@
 """Hosted display adapter; planning remains in the separately run engine."""
 
 import gzip
+import ctypes
+import hashlib
 import json
 import logging
 import os
 import re
+from pathlib import Path
 from urllib.parse import urlencode, urlsplit
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
@@ -16,6 +19,24 @@ from soma.api.moon import MAX_OBJECT, RegisteredMoon, moon_router
 
 # Leave headroom beneath Vercel's buffered 4.5 MB response limit.
 MAX_HOSTED_RESPONSE = 4_000_000
+_native_handles = []
+
+
+def preload_hosted_libraries(directory=None):
+    directory = Path(directory) if directory is not None else Path(__file__).parent / "_native"
+    manifest_path = directory / "manifest.json"
+    if not manifest_path.is_file():
+        if os.environ.get("VERCEL") == "1":
+            raise ImportError("Hosted native dependency manifest is missing")
+        return
+    manifest = json.loads(manifest_path.read_text())
+    library = directory / "libexpat.so.1"
+    if manifest.get("file") != library.name or hashlib.sha256(library.read_bytes()).hexdigest() != manifest.get("sha256"):
+        raise ImportError("Hosted Expat dependency checksum mismatch")
+    _native_handles.append(ctypes.CDLL(str(library.resolve()), mode=ctypes.RTLD_GLOBAL))
+
+
+preload_hosted_libraries()
 
 
 def hosted_token():

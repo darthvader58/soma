@@ -2,12 +2,12 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "npm --prefix web ci",
-  "buildCommand": "npm --prefix web run build",
+  "buildCommand": "python3 scripts/prepare-hosted-runtime.py && npm --prefix web run build",
   "outputDirectory": "web/dist",
   "functions": {
     "api/index.py": {
       "maxDuration": 300,
-      "includeFiles": "{soma/**,data/*.manifest.json}",
+      "includeFiles": "{soma/**,data/*.manifest.json,api/_native/**}",
       "excludeFiles": "{web/**,tests/**,fixtures/**,.venv/**,tatcenv/**,plan/**,task_outputs/**,.runtime/**,.git/**,**/__pycache__/**}"
     }
   },
