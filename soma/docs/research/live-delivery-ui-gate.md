@@ -1,10 +1,16 @@
 # Live delivery interface review
 
-Reviewed by the integrating agent on November 18, 2026. Scope: the new Data delivery workspace, shared network camera, responsive layout and documentation links. This is an agent review, not a human usability study or a formal accessibility certification. Direction: professional lunar research workspace, dark only by explicit user instruction. ENERGY 2 / RHYTHM 2 / MOTION 2; reasons are recorded in `web/DESIGN.md`.
+Reviewed by the integrating agent on November 18, 2026. Scope: the Data delivery workspace, shared network camera and navigation controls, responsive layout and documentation links. This is an agent review, not a human usability study or a formal accessibility certification. Direction: professional lunar research workspace, dark only by explicit user instruction. ENERGY 2 / RHYTHM 2 / MOTION 2; reasons are recorded in `web/DESIGN.md`.
 
 Evidence: personal Aside inspection of fresh Linux preview calculations, direct and relay transfer/wait controls, edits, failure and loading states, downloads and numerical fallback when tiles fail; personal inspection of desktop and 390 px browser screenshots; 106 web unit tests; the fresh-service browser test including automatic transfer focus, keyboard use, profile disclosure synchronization and original ZIP verification. Export replay is recorded separately in `live-delivery-verification.md`.
 
 Follow-up interaction review, November 18: the user's Apollo 11 screenshot exposed a discoverability failure missed by the earlier review. The copy action could replace a supported site and leave Plan delivery disabled with its reason in a scrolled panel. The correction checks published bounds before copying, preserves a valid task and result on rejection, exposes blocking reasons beside the primary action, and offers an explicit site-only recovery. The integrating agent reran all 106 web unit tests and the fresh-service browser case (21.3 seconds; total 23.8 seconds), personally inspected the new desktop and 390 px screenshots, and confirmed an actual 16 MiB direct calculation in the user's production tab. The browser case also verifies truthful elapsed waiting time and cleanup on completion, Stop waiting and tool change. Every gate item below was rechecked for this bounded change; no scientific calculation or coverage claim was expanded.
+
+Navigation follow-up, November 18: the integrating agent ran the 108-test web suite, the real-Cesium navigation browser case (1.8 seconds; total 2.9 seconds), and the fresh Python delivery browser case (20.3 seconds; total 21.9 seconds). Personal screenshot inspection includes the expanded 390 px control panel. Five camera tests use the installed Cesium camera to verify actual position/orientation changes, bounded zoom, tracking release, preset reset, unchanged scientific inputs/time, and network presentation after manual navigation plus a time update. Earth/station histories are absent and the active educational receiving station is identified. The expanded panel stays above the map caption and has bounded scrolling; all actions have native button labels, keyboard support and 44 px targets. The existing palette, focal point and motion policy are preserved. Camera limits have explicit feedback. Mintlify validation passes from `docs/`; running its command at repository root instead scans unrelated fixtures and dependencies. The full gate below was rechecked for this change.
+
+Final navigation refinements: all **109** web tests, including six camera tests, pass. The integrating agent reran the navigation browser case (2.1 seconds; total 4.4 seconds) and production build after adding successful-preset reset protection and explicit direct/relay downlink source labels. In personal Aside inspection of the deployed navigation preview, Zoom in, Pan left, Rotate right and Tilt down changed the actual camera; the expanded controls and status remained readable. The direct-transfer view hides unused relay markers; a relay downlink identifies the synthetic relay sender rather than implying transmission from the lander. Native endpoint coordinates, selected time and result arrays remain unchanged.
+
+Release check: **110** web tests pass, including seven real-camera cases. Close-follow navigation uses the tracked object's existing position at the selected epoch before releasing tracking; its regression verifies a bounded 12% zoom step at a 1 km range, with unchanged source position and epoch. The essential Zoom/Reset row stays pinned while expanded controls scroll, with focused-control and caption-clearance assertions at 390 px. These refinements retain the same checked palette, native controls, scientific-data boundary and delivery-package behavior.
 
 ## Hard gate
 
@@ -15,13 +21,13 @@ Follow-up interaction review, November 18: the user's Apollo 11 screenshot expos
 - R-23 PASS: existing Cesium content and source-backed scientific objects supply the visuals; navigation follows the explicitly requested library and communications work.
 - R-24 PASS: documentation pages exist and Mintlify reports no broken links or anchors.
 - R-25 PASS: checked normal text pairs are 6.44:1 or higher; the control border is 4.45:1 against its surface, above the 3:1 non-text requirement.
-- R-26 PASS: planning, route selection, task edits, service alignment, transfer/wait focus and downloads have implemented behavior; unsupported copies preserve the task, and supported-site recovery preserves non-site inputs.
+- R-26 PASS: planning, route selection, task edits, service alignment, transfer/wait focus and downloads have implemented behavior; all zoom, pan, rotate, tilt and reset actions move the real camera or report a limit; supported-site recovery preserves non-site inputs.
 - R-27 PASS: no-result, connecting, running, stale, invalid-input, failed-request and tile-failure states are distinct; the primary action now has an adjacent blocking reason and real elapsed waiting time.
 - R-28 PASS: no generic FAQ was introduced.
 - R-32 PASS: native controls and visible focus support keyboard use; browser verification includes Tab navigation and focus on the task action.
 - R-33 PASS: implementation lives in the maintained application source; no runtime source-rewriting script supplies the feature.
 - R-34 PASS: the user requested dark only; no incomplete theme toggle is present.
-- R-35 PASS: the application was built and exercised with the live service; fresh request, rejected site copy, task-preserving recovery, elapsed lifecycle, focus, keyboard and original ZIP download were tested.
+- R-35 PASS: the application was built and exercised with the live service; fresh delivery, site recovery, elapsed lifecycle, all camera actions, preset reset, keyboard, expanded narrow controls and original ZIP download were tested.
 - R-36 PASS: no flight, security, compliance, latency or customer claim was added.
 - R-37 PASS: the approved research-dashboard direction and three dials are recorded in `web/DESIGN.md`.
 - R-38 PASS: the relay orbit, station service, pointing and rates retain explicit synthetic or assumed labels; actual solver outcomes supply the result text.
@@ -34,7 +40,7 @@ Follow-up interaction review, November 18: the user's Apollo 11 screenshot expos
 - R-04 PASS: no generic icon set or decorative magic symbol was introduced.
 - R-06 PASS: the existing reading face and tabular numerals serve dense scientific values; no decorative oversized monospace heading was added.
 - R-07 PASS: no decorative background grid was introduced.
-- R-08 PASS: arrows describe sender-to-receiver direction in actual contact records, rather than decorating every action.
+- R-08 PASS: arrows identify actual contact direction or the explicitly labeled camera movement/rotation; they are functional controls rather than decorative callouts.
 - R-09 PASS: status text communicates actual model and solver state; no promotional capsule badge was added.
 - R-10 PASS: the workspace uses solid working surfaces rather than stacked glass effects.
 - R-12 PASS: panels use boundaries and spacing; no repeated floating-card shadows were added.

@@ -1,0 +1,60 @@
+import { createRequire } from 'node:module';
+import { researchCatalog, researchCapabilities } from './research-support.mjs';
+const require = createRequire(new URL('../../web/package.json', import.meta.url));
+const { test, expect } = require('@playwright/test');
+
+test('visible real-Cesium camera controls work in both tools and remain keyboard reachable at 390px', async ({ page }, info) => {
+  const errors = []; const calculations = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.route('**/api/research/catalog', route => route.fulfill({ json: researchCatalog }));
+  await page.route('**/api/research/capabilities', route => route.fulfill({ json: { ...researchCapabilities, ready: false } }));
+  await page.route('**/api/research/delivery/capabilities', route => route.fulfill({ status: 503, json: { detail: 'Test-only source unavailable' } }));
+  page.on('request', request => { if (request.url().endsWith('/analyze')) calculations.push(request.url()); });
+  await page.goto('/');
+  const navigation = page.getByRole('region', { name: 'Moon camera navigation', exact: true });
+  await expect(page.getByRole('button', { name: 'Zoom in', exact: true })).toBeEnabled();
+  const start = await page.locator('#study-start').inputValue();
+  const time = await page.locator('#selected-utc').textContent();
+  await page.getByRole('button', { name: 'Zoom in', exact: true }).click();
+  const zoomed = await navigation.getAttribute('data-camera-position');
+  expect(JSON.parse(zoomed).every(Number.isFinite)).toBe(true);
+  await navigation.getByText('Pan, rotate & tilt', { exact: true }).click();
+  for (const name of ['Pan left', 'Pan right', 'Pan up', 'Pan down', 'Rotate left', 'Rotate right', 'Tilt up', 'Tilt down', 'Zoom out']) {
+    await page.getByRole('button', { name, exact: true }).click();
+    await expect(page.locator('#camera-navigation-state')).toContainText('Manual view');
+  }
+  await expect(page.locator('[data-camera="global"]')).toHaveAttribute('aria-pressed', 'false');
+  const manualPosition = await navigation.getAttribute('data-camera-position');
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await navigation.getAttribute('data-camera-position')).toBe(manualPosition);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+  expect(await navigation.locator('details').getAttribute('open')).not.toBeNull();
+  const panelBounds = await navigation.boundingBox(), captionBounds = await page.locator('#research-map-status').boundingBox();
+  expect(panelBounds.y + panelBounds.height).toBeLessThanOrEqual(captionBounds.y);
+  const pan = page.getByRole('button', { name: 'Pan left', exact: true });
+  await page.keyboard.press('Tab'); await pan.focus(); await expect(pan).toBeFocused();
+  await page.keyboard.press('Enter');
+  expect(await navigation.getAttribute('data-camera-position')).not.toBe(manualPosition);
+  const tilt = page.getByRole('button', { name: 'Tilt down', exact: true });
+  await tilt.focus(); await page.keyboard.press('Enter');
+  const scrolledPanel = await navigation.boundingBox();
+  for (const name of ['Zoom in', 'Zoom out', 'Reset view']) {
+    const bounds = await page.getByRole('button', { name, exact: true }).boundingBox();
+    expect(bounds.y).toBeGreaterThanOrEqual(scrolledPanel.y);
+    expect(bounds.y + bounds.height).toBeLessThanOrEqual(scrolledPanel.y + scrolledPanel.height);
+    await expect(page.getByRole('button', { name, exact: true })).toBeInViewport();
+  }
+  await page.getByRole('button', { name: 'Reset view', exact: true }).click();
+  await expect(page.locator('[data-camera="global"]')).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('button', { name: 'Data delivery', exact: true }).click();
+  await page.getByRole('button', { name: 'Zoom out', exact: true }).click();
+  await expect(page.locator('#camera-navigation-state')).toContainText('Manual view');
+  await page.getByRole('button', { name: 'Reset view', exact: true }).focus();
+  await page.keyboard.press('Space');
+  await expect(page.locator('#camera-navigation-state')).toContainText('global view');
+  await page.screenshot({ path: info.outputPath('camera-controls-mobile.png'), fullPage: true });
+  await page.getByRole('button', { name: 'Geometry', exact: true }).click();
+  expect(await page.locator('#study-start').inputValue()).toBe(start);
+  expect(await page.locator('#selected-utc').textContent()).toBe(time);
+  expect(calculations).toEqual([]); expect(errors).toEqual([]);
+});

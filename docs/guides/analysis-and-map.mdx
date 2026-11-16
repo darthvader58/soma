@@ -20,6 +20,26 @@ The Moon is fixed in its own reference frame. Its texture is geographical contex
 
 For an unchecked context site, **Include this site and run** explicitly adds it to the study, subject to the eight-site limit. After a changed set of locations is calculated, the camera focuses the inspected calculated location. Evaluated-site rings use a display-only lift to remain visible over the mesh; their display placement does not change the exported site coordinates or certify terrain alignment.
 
+## Navigate the scene
+
+Use the scene's navigation controls in either Geometry or Data delivery. **Zoom in**
+and **Zoom out** change viewing distance. The pan buttons move the view left, right,
+up or down; rotate and tilt buttons change the viewing angle. Open **Pan, rotate &
+tilt** to reach those additional controls. Buttons also
+work with keyboard Tab followed by Enter or Space.
+
+**Reset view** restores the most recently selected preset, including the full
+connection when using **Earth network**. Manual navigation releases spacecraft
+following so it does not keep pulling the camera back. It preserves the selected
+UTC epoch, scenario and scientific results.
+
+The Earth-network camera shows the Moon and Earth at their supplied physical
+distances. Both bodies can be small at that scale; the point markers are enlarged
+for legibility. The emphasized line is a selected transmission at the current UTC
+epoch. Earth and ground-station position histories are not shown as orbital trails.
+Use the exact transfer controls to inspect a particular hop, and Reset view to
+recover the full connection after zooming or panning.
+
 ## A controlled date check
 
 Use the same selected sites, equipment heights and 120-second sampling. Calculate 1 April 2026, 00:00–06:00 UTC, then calculate 2 April over the same six hours. Keep LRO selected within its published coverage. Export each **Result JSON** and compare `study_sha256`, `epochs_utc`, `sites[].samples` and `spacecraft[].samples`. A different hash establishes different normalized inputs; inspect the arrays to establish changed outputs.

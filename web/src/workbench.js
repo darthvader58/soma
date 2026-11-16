@@ -51,6 +51,11 @@ const networkCamera = document.createElement('button');
 networkCamera.type = 'button'; networkCamera.dataset.camera = 'network'; networkCamera.dataset.analysisTool = 'delivery';
 networkCamera.hidden = true; networkCamera.textContent = 'Earth network'; networkCamera.setAttribute('aria-pressed', 'false');
 root.querySelector('.scene-camera').append(networkCamera);
+const navigation = document.createElement('section'); navigation.className = 'scene-navigation'; navigation.setAttribute('aria-label', 'Moon camera navigation');
+const navButton = (action, text, label) => `<button type="button" data-navigation="${action}" aria-label="${label}" title="${label}" disabled>${text}</button>`;
+navigation.innerHTML = `<div class="navigation-essential">${navButton('zoom-in', '+', 'Zoom in')}${navButton('zoom-out', '−', 'Zoom out')}${navButton('reset', 'Reset view', 'Reset view')}</div><details><summary>Pan, rotate &amp; tilt</summary><div class="navigation-grid">${[['pan-left','←','Pan left'],['pan-up','↑','Pan up'],['pan-right','→','Pan right'],['rotate-left','↶','Rotate left'],['pan-down','↓','Pan down'],['rotate-right','↷','Rotate right'],['tilt-up','Tilt up','Tilt up'],['tilt-down','Tilt down','Tilt down']].map(args => navButton(...args)).join('')}</div></details><output id="camera-navigation-state" aria-live="polite">Camera controls loading</output>`;
+root.querySelector('.scene-panel').append(navigation);
+for (const button of navigation.querySelectorAll('[data-navigation]')) button.addEventListener('click', () => viewer?.navigate(button.dataset.navigation));
 for (const selector of ['#study-inputs', '.research-status', '.object-panel', '.inspector-panel', '.time-dock']) workspace.querySelector(selector).dataset.analysisTool = 'geometry';
 let activeTool = 'geometry';
 workspace.dataset.tool = activeTool;
@@ -349,6 +354,7 @@ async function initialize() {
   selected = new Set([catalog[0], catalog[Math.floor(catalog.length / 2)], catalog.at(-1)].filter(Boolean).map(site => site.id));
   inspected = catalog[0]?.id; renderSites(); renderInspector();
   const mapPromise = createWorkbenchViewer($('research-moon'), { ionToken: import.meta.env.VITE_CESIUM_ION_TOKEN, apiBase: import.meta.env.VITE_SOMA_API_URL || '/api',
+    onCameraChange: state => { if (state.mode === 'manual') { requestedCamera = 'manual'; for (const button of root.querySelectorAll('[data-camera]')) button.setAttribute('aria-pressed', 'false'); } else { requestedCamera = state.mode; for (const button of root.querySelectorAll('[data-camera]')) button.setAttribute('aria-pressed', String(button.dataset.camera === state.mode)); } $('camera-navigation-state').textContent = state.mode === 'manual' ? state.changed === false ? 'Camera limit reached · Reset view restores preset' : 'Manual view · Reset restores preset' : `${state.mode.replaceAll('-', ' ')} view`; if (state.position) navigation.dataset.cameraPosition = JSON.stringify(state.position); },
     onStatus: message => { $('research-map-status').textContent = message; }, onSelect: id => activeTool === 'delivery' ? deliveryWorkspace.inspectNode(id) : inspect(id),
     onPick: coordinates => {
       if (selected.size >= 8) { status('Remove a site before adding a picked location. Maximum 8 sites.'); return; }
@@ -356,7 +362,7 @@ async function initialize() {
       catalog.push({ id, name: `Picked site ${customIndex}`, kind: 'display pick', ...coordinates, elevation_m: 0, antenna_height_m: 2, panel_height_m: 1, input_class: 'user_defined', coordinate_notes: 'Coordinates selected from rendered Moon. Elevation is explicitly 0 m above the reference sphere; not measured terrain.' });
       selected.add(id); inspect(id); markChanged();
     },
-  }).then(value => { viewer = value; viewer.setCatalog(activeTool === 'geometry' ? catalog : []); if (activeTool === 'geometry') { viewer.setSelection([...selected], inspected); if (result) { viewer.setResult(result); viewer.setTime(selectedEpoch()); } if (requestedCamera !== 'global') viewer.camera(requestedCamera); } else deliveryWorkspace.refreshMap(); });
+  }).then(value => { viewer = value; for (const button of navigation.querySelectorAll('button')) button.disabled = !viewer.navigationReady; $('camera-navigation-state').textContent = viewer.navigationReady ? 'Camera controls ready' : 'Camera navigation unavailable'; viewer.setCatalog(activeTool === 'geometry' ? catalog : []); if (activeTool === 'geometry') { viewer.setSelection([...selected], inspected); if (result) { viewer.setResult(result); viewer.setTime(selectedEpoch()); } if (requestedCamera !== 'global') viewer.camera(requestedCamera); } else deliveryWorkspace.refreshMap(); });
   const loaded = await Promise.allSettled([client.catalog(), client.capabilities()]);
   if (loaded[0].status === 'fulfilled' && revision === 0) {
     catalog = loaded[0].value.sites.map(site => ({ ...site, elevation_m: 0, antenna_height_m: 2, panel_height_m: 1 }));

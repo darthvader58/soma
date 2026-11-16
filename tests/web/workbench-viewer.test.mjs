@@ -2,12 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
-import { createWorkbenchViewer } from '../../web/src/workbench-viewer.js';
+import { createWorkbenchViewer, navigateCamera } from '../../web/src/workbench-viewer.js';
 
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
 const Cesium = require('cesium');
 
-async function displayHarness(t) {
+async function displayHarness(t, realCamera = false) {
   const previous = globalThis.ResizeObserver;
   globalThis.ResizeObserver = class { observe() {} disconnect() {} };
   t.after(() => { globalThis.ResizeObserver = previous; });
@@ -17,8 +17,9 @@ async function displayHarness(t) {
       scene = this;
       this.entities = new Cesium.EntityCollection();
       this.scene = { canvas: { clientWidth: 800, clientHeight: 500 }, primitives: { add: value => value },
+        drawingBufferWidth: 800, drawingBufferHeight: 500, mapProjection: new Cesium.GeographicProjection(Cesium.Ellipsoid.MOON), mode: Cesium.SceneMode.SCENE3D,
         renderError: { addEventListener() {} }, requestRender() {} };
-      this.camera = { frustum: { fovy: Math.PI / 3 }, cancelFlight() {}, setView(view) { this.lastView = view; }, flyTo() {} };
+      this.camera = realCamera ? new Cesium.Camera(this.scene) : { frustum: { fovy: Math.PI / 3 }, cancelFlight() {}, setView(view) { this.lastView = view; }, flyTo() {} };
       this.clock = {};
     }
     resize() {}
@@ -34,6 +35,93 @@ const result = () => ({ epochs_utc: ['2026-04-01T00:00:00Z'], spacecraft: [], si
   id: 'custom-a', name: 'Calculated custom site', position_m: [1737400, 0, 0],
   samples: [{ epoch_utc: '2026-04-01T00:00:00Z', sun: { direction_moon_fixed: [1, 0, 0] }, earth: { direction_moon_fixed: [0, 1, 0] } }],
 }] });
+
+test('all navigation actions move a real Cesium camera without changing source state or time; zoom stays bounded', () => {
+  for (const distance of [1800000, 4000000, 800000000]) {
+    for (const action of ['zoom-in', 'zoom-out', 'pan-left', 'pan-right', 'pan-up', 'pan-down', 'rotate-left', 'rotate-right', 'tilt-up', 'tilt-down']) {
+      const scene = { drawingBufferWidth: 800, drawingBufferHeight: 500, mapProjection: new Cesium.GeographicProjection(Cesium.Ellipsoid.MOON), mode: Cesium.SceneMode.SCENE3D, requestRender() {} };
+      const camera = new Cesium.Camera(scene);
+      camera.setView({ destination: new Cesium.Cartesian3(distance, 0, 0), orientation: { direction: new Cesium.Cartesian3(-1, 0, 0), up: Cesium.Cartesian3.UNIT_Z } });
+      const source = result(), snapshot = structuredClone(source), clock = { epoch: source.epochs_utc[0] };
+      const viewer = { camera, scene, trackedEntity: {}, clock };
+      camera.lookAtTransform(Cesium.Matrix4.fromTranslation(new Cesium.Cartesian3(100, 0, 0)));
+      assert.equal(navigateCamera(Cesium, viewer, action), true, `${distance}: ${action}`);
+      assert.equal(viewer.trackedEntity, undefined);
+      assert.ok(Cesium.Matrix4.equals(camera.transform, Cesium.Matrix4.IDENTITY));
+      assert.deepEqual(source, snapshot); assert.equal(clock.epoch, source.epochs_utc[0]);
+      for (let i = 0; i < 100; i++) navigateCamera(Cesium, viewer, 'zoom-in');
+      assert.ok(Cesium.Cartesian3.magnitude(camera.positionWC) >= 1747400);
+      for (let i = 0; i < 100; i++) navigateCamera(Cesium, viewer, 'zoom-out');
+      assert.ok(Cesium.Cartesian3.magnitude(camera.positionWC) <= 2e9);
+    }
+  }
+});
+
+test('unavailable network and site views cannot replace the last successful reset preset', async t => {
+  const previous = globalThis.matchMedia; globalThis.matchMedia = () => ({ matches: true }); t.after(() => { globalThis.matchMedia = previous; });
+  const { api, scene } = await displayHarness(t, true);
+  api.camera('global');
+  const globalPosition = Cesium.Cartesian3.clone(scene.camera.positionWC);
+  api.camera('network'); api.camera('site');
+  assert.equal(api.navigate('pan-left'), true);
+  assert.equal(api.navigate('reset'), true);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(globalPosition, scene.camera.positionWC, 1e-12, 1e-5));
+});
+
+test('close spacecraft following uses its stored current position to scale manual zoom without crossing it', () => {
+  const scene = { drawingBufferWidth: 800, drawingBufferHeight: 500, mapProjection: new Cesium.GeographicProjection(Cesium.Ellipsoid.MOON), mode: Cesium.SceneMode.SCENE3D, requestRender() {} };
+  const camera = new Cesium.Camera(scene), point = new Cesium.Cartesian3(1800000, 0, 0);
+  camera.setView({ destination: new Cesium.Cartesian3(1801000, 0, 0), orientation: { direction: new Cesium.Cartesian3(-1, 0, 0), up: Cesium.Cartesian3.UNIT_Z } });
+  const epoch = Cesium.JulianDate.fromIso8601('2026-04-01T00:00:00Z'), snapshot = Cesium.JulianDate.clone(epoch);
+  const position = new Cesium.ConstantPositionProperty(point), source = Cesium.Cartesian3.clone(position.getValue(epoch));
+  const viewer = { camera, scene, clock: { currentTime: epoch }, trackedEntity: { position } };
+  const before = Cesium.Cartesian3.distance(camera.positionWC, point);
+  assert.equal(navigateCamera(Cesium, viewer, 'zoom-in', Cesium.Cartesian3.ZERO), true);
+  const after = Cesium.Cartesian3.distance(camera.positionWC, point);
+  assert.ok(after < before && after >= before * 0.8);
+  assert.ok(camera.positionWC.x > point.x);
+  assert.equal(viewer.trackedEntity, undefined);
+  assert.ok(Cesium.JulianDate.equals(epoch, snapshot));
+  assert.ok(Cesium.Cartesian3.equals(position.getValue(epoch), source));
+});
+
+test('manual navigation releases follow and reset restores the last network fit without Earth/station history paths', async t => {
+  const previous = globalThis.matchMedia; globalThis.matchMedia = () => ({ matches: true }); t.after(() => { globalThis.matchMedia = previous; });
+  const read = name => JSON.parse(readFileSync(new URL(`../../web/fixtures/physical-south-pole/relay-later/${name}.json`, import.meta.url)));
+  const { api, scene } = await displayHarness(t, true);
+  const scenario = read('scenario'), display = read('display-data'), state = display.renderer_states[0];
+  display.renderer_states.push({ ...state, target: 'EARTH', position: [380000000, 0, 0] }, { ...state, target: scenario.station_refs[0], position: [380001000, 0, 0] });
+  const window = { start_utc: state.epoch, end_utc: new Date(Date.parse(state.epoch) + 1000).toISOString() };
+  display.contacts = [{ contact_id: 'earth-allocation', sender: scenario.lander.id, receiver: scenario.station_refs[0], source_transmit_window: window }];
+  display.allocations = [{ contact_id: 'earth-allocation', source_transmit_interval: window }];
+  api.setDelivery({ scenario, display }); api.setTime(state.epoch); api.camera('network');
+  const position = Cesium.Cartesian3.clone(scene.camera.positionWC), direction = Cesium.Cartesian3.clone(scene.camera.directionWC);
+  assert.equal(scene.entities.getById('delivery-path-EARTH'), undefined);
+  assert.equal(scene.entities.getById(`delivery-path-${scenario.station_refs[0]}`), undefined);
+  assert.equal(scene.entities.getById(`delivery-path-${scenario.relay_refs[0]}`).polyline.show.getValue(), false);
+  scene.trackedEntity = scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`);
+  assert.equal(api.navigate('pan-left'), true); assert.equal(scene.trackedEntity, undefined);
+  api.setTime(state.epoch);
+  assert.equal(scene.entities.getById(`delivery-path-${scenario.relay_refs[0]}`).polyline.show.getValue(), false);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.station_refs[0]}`).label.show.getValue(), true);
+  assert.equal(scene.entities.getById('delivery-node-EARTH').show, false);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).show, false);
+  const lander = scene.entities.getById(`delivery-surface-${scenario.lander.id}`);
+  assert.equal(lander.label.show.getValue(), true);
+  display.contacts[0].sender = scenario.relay_refs[0];
+  api.setTime(state.epoch);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).show, true);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).label.show.getValue(), true);
+  assert.equal(lander.label.show.getValue(), false);
+  api.camera('moon-network');
+  assert.equal(lander.label.show.getValue(), true);
+  api.camera('network'); api.navigate('pan-right'); api.setTime(state.epoch);
+  assert.equal(lander.label.show.getValue(), false);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).label.show.getValue(), true);
+  assert.equal(api.navigate('reset'), true);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(position, scene.camera.positionWC, 1e-12, 1e-5));
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(direction, scene.camera.directionWC, 1e-12, 1e-8));
+});
 
 test('network scale labels keep Earth readable and lunar-hop fit retains exact endpoint positions', async t => {
   const read = name => JSON.parse(readFileSync(new URL(`../../web/fixtures/physical-south-pole/relay-later/${name}.json`, import.meta.url)));
