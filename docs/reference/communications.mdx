@@ -1,0 +1,119 @@
+---
+title: Communications and usable contacts
+description: Implemented single-sample geometry, declared RF performance and interval-wide contact gates.
+---
+
+SOMA has communications calculations, not only a Moon display. The reusable Python path separates **geometry**, **usable contacts**, and **scheduled delivery**. Each stage has a different claim. A visible endpoint is not a compatible receiver, and a positive link margin is not allocated service or a complete-file schedule.
+
+## One-sample link geometry
+
+```text
+from soma.links import evaluate_geometry
+
+evaluate_geometry(dem, sender_state, receiver_state, *, step_m, clearance_m,
+                  body_radius_m, occulting_spheres, station_normal=None,
+                  minimum_elevation_deg=None, occulting_ellipsoids=())
+```
+
+Both states must share `origin`, `frame`, `epoch`, `epoch_format`, `time_scale` and `position_unit`. Origin is `MOON`, positions are meters, and the DEM's supported frame is `MOON_ME_DE421`. The function combines [finite-range terrain sampling](/reference/terrain) with declared spherical or ellipsoidal body masks. Body centers, radii, rotations and optional station normal must already be in the common frame.
+
+A station elevation test requires both a unit `station_normal` and a degree-valued `minimum_elevation_deg`. That normal is the Earth-ellipsoid surface normal transformed into the common frame, not the Moon-centered station position. No terrestrial atmospheric refraction is inserted.
+
+The returned `status` is `clear`, `blocked` or `unknown`, with reason, sampled clearance/range/count and quality flags. Its scope is explicitly `single_same_epoch_sample_not_interval`. A single clear sample cannot establish interval capacity; interval-wide evidence is required by the next stage.
+
+## RF link budget
+
+```text
+from soma.links import link_budget
+link_budget(profile, mode)
+```
+
+This is an implemented far-field, binary discrete-mode budget. It starts with Friis free-space loss and uses a caller-declared range bound, gains, noise, losses and threshold. It does not determine unobstructed geometry, pointing, service or the battery's electrical draw.
+
+| `profile` field | Unit / definition |
+| --- | --- |
+| `range_bound_m`, `far_field_min_range_m` | Positive meters; reject ranges below the declared far-field minimum. |
+| `frequency_hz`, `tx_rf_power_w` | Positive Hz and radiated RF watts. |
+| `tx_gain_dbi`, `rx_gain_dbi` | Gain in dBi. |
+| `system_noise_temperature_k` | Positive kelvin. |
+| `data_power_fraction` | Fraction of RF power allocated to the telemetry data channel, `(0,1]`. |
+| `losses_db` | Nonnegative `pointing`, `polarization`, `implementation`, `earth_atmosphere`, `other`; a lunar vacuum path does not acquire an Earth-atmosphere loss by default. |
+| `provenance_label` | Explicit hardware/model provenance. |
+
+The mode requires `mode_id`, positive `gross_channel_bps`, `code_rate`, `payload_fraction`, `required_ebn0_db`, nonnegative `engineering_margin_db` and `threshold_bit_rate_definition="pre_fec_bits_including_protocol"`. Gross channel bits are binary coded bits. Pre-FEC information rate is gross rate times code rate, and payload goodput applies the payload fraction once. An Eb/N0 threshold defined per payload bit is rejected rather than silently reinterpreted.
+
+Output includes free-space loss in dB, received RF power in dBW, data C/N0 in dB-Hz, Eb/N0 and remaining margin in dB, plus the gross/pre-FEC/payload bit rates. Status is `margin_met_under_declared_assumptions` or `insufficient_margin`. These are modeled performance statements, not permission to use an antenna.
+
+### Executable RF arithmetic
+
+Every hardware value here is synthetic, not a published or operational antenna profile.
+
+```python
+from soma.links import link_budget
+
+profile = {
+    "range_bound_m": 1e6, "far_field_min_range_m": 10000, "frequency_hz": 8e9,
+    "tx_rf_power_w": 10, "tx_gain_dbi": 30, "rx_gain_dbi": 40,
+    "system_noise_temperature_k": 100, "data_power_fraction": 0.8,
+    "losses_db": {"pointing": 1, "polarization": 0.5, "implementation": 1.5,
+                  "earth_atmosphere": 0, "other": 0},
+    "provenance_label": "SYNTHETIC RF arithmetic; no operational service",
+}
+mode = {"mode_id": "example-binary", "gross_channel_bps": 2e6, "code_rate": 0.5,
+        "payload_fraction": 0.8, "required_ebn0_db": 3, "engineering_margin_db": 2,
+        "threshold_bit_rate_definition": "pre_fec_bits_including_protocol"}
+performance = link_budget(profile, mode)
+assert performance["payload_rate_bps"] == 800000
+```
+
+## Interval-wide usable contact
+
+```text
+assess_contact(candidate, sender_profile, receiver_profile, *, guard_s, link_budget=None)
+```
+
+This function returns a detached `opportunity`, zero or more native `contacts`, endpoint occupancy, a structured `decision`, and `model_fidelity`. A rejection or missing input does not create a replacement contact.
+
+The candidate combines native contact identifiers/timing fields with `geometry_status`, `geometry_reason`, `geometry_evidence`, `pointing_assumption`, `input_class`, `service_assumption_label` and a rate method. Geometry must be `clear_under_sampling`, with evidence `scope="interval_wide"` covering the complete candidate transmit window. Terminal bands and mode IDs must match. Currently only explicitly declared `ideal_pointing` is supported; a missing or nonideal pointing model remains unknown.
+
+Profiles require complete terminals, duplex modes, acquisition/teardown seconds, TX/RX **electrical watts**, and service calendars with provenance. The declared constant one-way delay maps receiver service back into source-transmit epochs. The guard trims geometric edges once, while endpoint acquisition and teardown also require geometry and service. Overlapping calendar windows are merged to avoid duplicate capacity.
+
+| Rate path | Required evidence and result |
+| --- | --- |
+| `assumed_net_rate` | Explicit net payload bits/s; remains `assumed_rate_simulation` with `link_budget_not_computed`. |
+| `link_budget` | Supply `link_budget={"profile": ..., "mode": ...}`. The profile's `coverage` must cover the candidate; its range bound must be justified by the caller. Mode/margin are checked and radiated power cannot exceed declared TX electrical draw. Produces `modeled_link_budget`. |
+
+Supported delay models are `constant_assumed` and zero `disabled_for_synthetic_test` for synthetic inputs only. Positive delays are rounded conservatively upward to microsecond export resolution. Contact capacity is rounded down to whole bits. Native contact windows describe payload **source transmission**; receiver occupancy and byte availability are separate returned fields.
+
+A usable contact still carries `radio_conflicts_and_energy_not_yet_checked`. Those constraints belong to the [scheduler and independent replay](/reference/scheduling). `assess_contact` does not turn one RF calculation or one geometry sample into interval-wide evidence.
+
+### Executable synthetic contact gate
+
+Run from the repository checkout. This uses a hand-checkable fixture and explicitly synthetic interval geometry.
+
+```python
+from copy import deepcopy
+from soma.links import assess_contact
+from soma.validation import load_json, load_scenario
+
+scenario = load_scenario("fixtures/synthetic-direct/scenario.json")
+candidate = load_json("fixtures/synthetic-direct/contacts.json")[0]
+candidate.update(
+    geometry_status="clear_under_sampling", geometry_reason="synthetic_interval_assumption",
+    geometry_evidence={"scope": "interval_wide", "coverage": deepcopy(candidate["source_transmit_window"])},
+    pointing_assumption="ideal_pointing", input_class="synthetic",
+    service_assumption_label="SYNTHETIC declared service",
+)
+assessment = assess_contact(candidate, scenario["profiles"]["hardware"][0],
+                            scenario["profiles"]["stations"][0], guard_s=0)
+assert assessment["contacts"][0]["available_capacity_bits"] == 307200000
+assert assessment["model_fidelity"] == "assumed_rate_simulation"
+```
+
+The synthetic 20-minute, 256,000 net bit/s direct window cannot carry a complete 100 MiB file. Capacity arithmetic alone also does not prove energy feasibility.
+
+## Integration limits
+
+The reusable RF budget is broader than the current terrain/ephemeris delivery preparation path. That provider currently accepts **assumed net rates only**, explicitly ideal pointing, one configured synthetic lunar relay and at most three stations. It does not consume arbitrary RF hardware or an LRO SPK as relay service. Public geometry studies do not evaluate usable contacts. See the [capability matrix](/science/capability-matrix) for the distinction between library, HTTP and interface exposure.
+
+Implementation: [contact and geometry gates](https://github.com/darthvader58/soma/blob/main/soma/links/contacts.py), [RF budget](https://github.com/darthvader58/soma/blob/main/soma/links/budget.py). Evidence: [contact tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_links.py), [independent linear RF arithmetic](https://github.com/darthvader58/soma/blob/main/tests/engine/test_link_budget.py). Method context: [NASA DSN telecommunications design handbook](https://deepspace.jpl.nasa.gov/dsndocs/810-005/). Handbook citations do not supply service bookings or universal hardware values.

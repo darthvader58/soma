@@ -44,8 +44,8 @@ npm --prefix web run dev
 
 Open `http://127.0.0.1:5173`. The development server forwards `/api` to the local Python service. Edited inputs invalidate the previous result; a failed live request must not substitute a captured schedule.
 
-## Hosted display boundary
+## Hosted API boundary
 
-The repository-root Vercel adapter in `api/index.py` serves only `/api/moon/registration`, `/api/moon/conversion`, and `/api/moon/tiles/*`. It reuses the registered display conversion and requires authorized ion access. It does not host `/plans` or perform new numerical analysis.
+The repository-root Vercel adapter in `api/index.py` serves the registered Moon display, [fresh geometry studies](/reference/research-api) and a [bounded synchronous delivery calculation](/reference/hosted-delivery). The local `/plans` job API above is separate. Vercel does not provide its in-memory job registry or durable background jobs.
 
-The hosted application uses exact captured engine runs. A public live planner needs a separate service deployment with an appropriate persistence, worker, resource, and access model.
+Use the hosted capability endpoints to check scientific source coverage, workload limits and runtime readiness. Export completed calculations you need to retain. Closing a hosted request stops the browser from waiting; it does not claim cancellation of a durable server job.

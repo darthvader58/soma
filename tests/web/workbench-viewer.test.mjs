@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
 import { createWorkbenchViewer } from '../../web/src/workbench-viewer.js';
 
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
@@ -17,7 +18,7 @@ async function displayHarness(t) {
       this.entities = new Cesium.EntityCollection();
       this.scene = { canvas: { clientWidth: 800, clientHeight: 500 }, primitives: { add: value => value },
         renderError: { addEventListener() {} }, requestRender() {} };
-      this.camera = { frustum: { fovy: Math.PI / 3 }, cancelFlight() {}, setView() {}, flyTo() {} };
+      this.camera = { frustum: { fovy: Math.PI / 3 }, cancelFlight() {}, setView(view) { this.lastView = view; }, flyTo() {} };
       this.clock = {};
     }
     resize() {}
@@ -33,6 +34,36 @@ const result = () => ({ epochs_utc: ['2026-04-01T00:00:00Z'], spacecraft: [], si
   id: 'custom-a', name: 'Calculated custom site', position_m: [1737400, 0, 0],
   samples: [{ epoch_utc: '2026-04-01T00:00:00Z', sun: { direction_moon_fixed: [1, 0, 0] }, earth: { direction_moon_fixed: [0, 1, 0] } }],
 }] });
+
+test('network scale labels keep Earth readable and lunar-hop fit retains exact endpoint positions', async t => {
+  const read = name => JSON.parse(readFileSync(new URL(`../../web/fixtures/physical-south-pole/relay-later/${name}.json`, import.meta.url)));
+  const { api, scene } = await displayHarness(t);
+  const scenario = read('scenario'), display = read('display-data');
+  const epoch = display.renderer_states[0].epoch;
+  const relay = display.renderer_states[0];
+  display.renderer_states.push({ ...relay, target: 'EARTH', position: [380000000, 0, 0] });
+  display.renderer_states.push({ ...relay, target: scenario.station_refs[0], position: [380000000, 1000, 0] });
+  const window = { start_utc: epoch, end_utc: new Date(Date.parse(epoch) + 1000).toISOString() };
+  display.contacts = [{ contact_id: 'selected', sender: scenario.lander.id, receiver: scenario.relay_refs[0], source_transmit_window: window },
+    { contact_id: 'unused-earth', sender: scenario.lander.id, receiver: 'EARTH', source_transmit_window: window }];
+  display.allocations = [{ contact_id: 'selected', source_transmit_interval: window }];
+  api.setDelivery({ scenario, display }); api.setTime(epoch); api.camera('network');
+  const earth = scene.entities.getById('delivery-node-EARTH');
+  const station = scene.entities.getById(`delivery-node-${scenario.station_refs[0]}`);
+  const relayNode = scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`);
+  assert.equal(earth.label.show.getValue(), true);
+  assert.equal(station.label.show.getValue(), false);
+  assert.equal(relayNode.label.show.getValue(), false);
+  assert.equal(earth.label.text.getValue(), 'Earth network · educational stations');
+  api.camera('moon-network');
+  assert.equal(relayNode.label.show.getValue(), true);
+  assert.equal(station.label.show.getValue(), false);
+  assert.ok(Cesium.Cartesian3.magnitude(scene.camera.lastView.destination) > scenario.lander.reference_radius_m);
+  assert.ok([scene.camera.lastView.orientation.up.x, scene.camera.lastView.orientation.up.y, scene.camera.lastView.orientation.up.z].every(Number.isFinite));
+  assert.ok(scene.entities.getById('delivery-link-selected'));
+  assert.equal(scene.entities.getById('delivery-link-unused-earth'), undefined);
+  assert.deepEqual(display.renderer_states[0], relay);
+});
 
 test('a calculated custom point is a pickable labeled context ring without altering engine positions', async t => {
   const { api, scene } = await displayHarness(t);

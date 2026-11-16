@@ -1,0 +1,111 @@
+{
+  "manifest_version": "0.3.0",
+  "dataset_id": "pgda81-pole-2km-window-hosted-v2",
+  "status": "local_window_extracted",
+  "input_class": "published",
+  "frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "elevation_datum": "height_above_reference_sphere",
+  "elevation_unit": "m",
+  "pixel_size_m": 5,
+  "interpolation_policy": "unknown_if_zero_count",
+  "elevation_sha256": "ec4aba18cfae6f4421682b7673cb0617eaf505e090ac534d7800b9c2a79bd713",
+  "count_sha256": "29c7990ab7390d96cd612072360e29a50c8c075b943940eede40af43eef53f2f",
+  "source_urls": [
+    "https://pgda.gsfc.nasa.gov/products/81"
+  ],
+  "method_source": "https://doi.org/10.1016/j.pss.2020.105119",
+  "count_convention": "floating_point_LOLA_returns_after_field_blending",
+  "nodata_convention": "NaN; zero or masked return counts remain unknown",
+  "files": [
+    {
+      "role": "elevation",
+      "path": "lola-pole-elevation-v2-canonical.tif",
+      "sha256": "ec4aba18cfae6f4421682b7673cb0617eaf505e090ac534d7800b9c2a79bd713",
+      "size_bytes": 643037,
+      "parent": {
+        "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldem_87s_5mpp.tif",
+        "size_bytes": 3465285714,
+        "etag": "W/\"ce8c1052-17c7ede95a8\"",
+        "last_modified": "Thu, 14 Oct 2021 12:54:49 GMT",
+        "parent_sha256": null
+      },
+      "source_pixel_window": [
+        19800,
+        19800,
+        400,
+        400
+      ],
+      "storage_encoding": "canonical_uncompressed_little_endian_strips_v1",
+      "sample_sha256": "eac64100fc80ced08bb696a1e6422a8b30b4ba251327694b29c9bc2a8efd7a14",
+      "sample_dtype": "<f4",
+      "sample_shape": [
+        400,
+        400
+      ],
+      "finite_samples": 160000
+    },
+    {
+      "role": "count",
+      "path": "lola-pole-count-v2-canonical.tif",
+      "sha256": "29c7990ab7390d96cd612072360e29a50c8c075b943940eede40af43eef53f2f",
+      "size_bytes": 163025,
+      "parent": {
+        "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldec_87s_5mpp.tif",
+        "size_bytes": 145895726,
+        "etag": "W/\"8b2312e-17c7f5b5b10\"",
+        "last_modified": "Thu, 14 Oct 2021 15:11:06 GMT",
+        "parent_sha256": null
+      },
+      "source_pixel_window": [
+        19800,
+        19800,
+        400,
+        400
+      ],
+      "storage_encoding": "canonical_uncompressed_little_endian_strips_v1",
+      "sample_sha256": "cf6c66feaa28b778e5c272e530168ab4b4b1df042ce6e68e80bcf3cea189e30c",
+      "sample_dtype": "|u1",
+      "sample_shape": [
+        400,
+        400
+      ],
+      "finite_samples": 160000
+    }
+  ],
+  "redistribution": "not_bundled; local acquisition only; retain product citation",
+  "far_field_coverage": "Numerical polar coverage patch only; coarse native southcap supplies far field.",
+  "software": {
+    "rasterio": "1.5.2",
+    "gdal": "3.12.2"
+  },
+  "bounds_xy_m": [
+    -1000,
+    -1000,
+    1000,
+    1000
+  ],
+  "quality_notes": [
+    "Published finite interpolated heights are enabled only by the parent physical dataset manifest published_grid policy.",
+    "NaN, GDAL nodata, and missing counts remain unknown. Strict measurements policy rejects zero-count elevations."
+  ],
+  "acquisition": "validated_bounded_BigTIFF_directory_and_four_compressed_tile_HTTP_ranges",
+  "reproducibility": {
+    "call": "soma.terrain.physical.acquire_polar_window(data_root)",
+    "verified_independent_destination": "Pinned elevation and count hashes reproduced in a separate empty local directory.",
+    "transferred_parent_data": "396153 metadata bytes plus exactly four compressed 256x256 tiles per source; at most 8 MiB per source permitted.",
+    "temporary_storage": "Sparse parent reconstruction is removed after local decoding; no full parent is downloaded."
+  },
+  "storage_encoding": {
+    "id": "canonical_uncompressed_little_endian_strips_v1",
+    "driver": "GTiff",
+    "compress": "NONE",
+    "tiled": false,
+    "strip_rows": 1,
+    "endianness": "LITTLE",
+    "bigtiff": "NO",
+    "sample_hash_scope": "C-order decoded native samples in declared little-endian dtype, including exact NaN payload bits; independent of TIFF metadata and codecs",
+    "pixel_change": "none; canonical containers preserve the decoded source sample bits, dimensions, masks and georeferencing",
+    "interleave": "BAND"
+  }
+}

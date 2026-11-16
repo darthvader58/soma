@@ -1,0 +1,71 @@
+{
+  "manifest_version": "1.0.0",
+  "id": "physical-lola-de421-v2",
+  "status": "local_sources_required",
+  "scope": "bounded_south_polar_terrain_ephemeris_planning_under_declared_assumptions",
+  "frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "elevation_datum": "height_above_reference_sphere",
+  "latitude_bounds_deg": [
+    -89.15,
+    -88.85
+  ],
+  "longitude_bounds_deg_east": [
+    -3,
+    3
+  ],
+  "coverage": {
+    "start_utc": "2026-11-01T00:00:00Z",
+    "end_utc": "2026-12-01T00:00:00Z"
+  },
+  "maximum_analysis_duration_s": 21600,
+  "terrain_policy": "published_grid",
+  "horizon_sampling": {
+    "azimuth_step_deg": 1,
+    "near_step_m": 5,
+    "far_step_m": 120,
+    "near_extent_m": 5000,
+    "extents_m": [
+      100000,
+      200000,
+      250000
+    ],
+    "convergence_tolerance_deg": 0.01,
+    "required_max_extent_m": 250000
+  },
+  "near_manifest_ref": "lola-hosted-v2.manifest.json",
+  "far_manifest_ref": "lola-far-hosted-v2.manifest.json",
+  "polar_manifest_ref": "physical-polar-hosted-v2.manifest.json",
+  "kernel_manifest_ref": "de421-phase2.manifest.json",
+  "relay_preset_ref": "soma-polar-200km-v1",
+  "assumed_rates_bps": {
+    "direct_to_earth": 256000,
+    "lander_to_relay": 2000000,
+    "relay_to_earth": 10000000
+  },
+  "contact_sample_step_s": 60,
+  "contact_guard_s": 30,
+  "terrain_clearance_margin_m": 0.5,
+  "terrain_upper_bound_m": 12000,
+  "terrain_upper_bound_input_class": "assumed",
+  "terrain_quality_policy": "Finite values in a published interpolated elevation grid are model terrain, with count-mask quality retained. Coarser published terrain may resolve unavailable near samples and is labeled as a resolution downgrade. NaN, nodata and unresolved coverage remain unknown. Strict measured-only diagnostics remain available separately.",
+  "source_urls": [
+    "https://pgda.gsfc.nasa.gov/products/81",
+    "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/",
+    "https://naif.jpl.nasa.gov/naif/spiceconcept.html"
+  ],
+  "redistribution": "Numerical terrain binaries are acquired locally, hash verified and excluded from the repository. One unmodified pinned NAIF Earth-orientation kernel is retained under data/pinned under NAIF redistribution rules because its rolling source URL expired. Retain citations and source-specific terms.",
+  "limitations": [
+    "Available model coverage is not a landing-safety certification.",
+    "Published interpolation and spatial/time sampling introduce declared approximations; this model provides no calibrated uncertainty distribution.",
+    "Radio payload rates and service calendars are assumed, with ideal pointing; no RF link closure or reserved station access is claimed.",
+    "The relay preset is synthetic_two_body_lunar_preset, not an operational or frozen lunar orbit."
+  ],
+  "dataset_revision": {
+    "supersedes": "physical-lola-de421-v1",
+    "purpose": "Complete source-tile acquisition for hosted fresh calculation; original v1 source hashes and archived results remain distinct.",
+    "near_elevation_finite_pixels": 4000000,
+    "storage_encoding": "canonical_uncompressed_little_endian_strips_v1",
+    "storage_revision_scope": "Container bytes only; all six decoded sample bitstreams and georeferencing unchanged from the complete source grids"
+  }
+}

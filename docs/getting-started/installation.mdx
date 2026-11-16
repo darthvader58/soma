@@ -25,7 +25,14 @@ Run the examples from the repository root so their fixture paths resolve. These 
 | `verification` | Skyfield for independent ephemeris comparisons |
 | `test` | Pytest and HTTP client support for engine tests |
 
-The core distribution installs JSON schema validation and canonical JSON hashing dependencies. It does not download kernels or terrain rasters during installation. The `hosted-display` dependency group used by the Vercel adapter contains only FastAPI, NumPy, and Rasterio; it is not a substitute for the analysis and planning extras above.
+The core distribution installs JSON schema validation and canonical JSON hashing
+dependencies. Installation does not run scientific downloads. One unmodified
+Earth-orientation kernel is retained with the source distribution; other kernels
+and numerical rasters are acquired separately. See the [source notes](/science/frames-data).
+
+The historically named `hosted-display` dependency group now supplies FastAPI,
+NumPy, Rasterio, SpiceyPy, PyProj and PuLP for the bounded Vercel runtime. Use the
+workflow extras above for local development and Uvicorn service access.
 
 For verification work:
 

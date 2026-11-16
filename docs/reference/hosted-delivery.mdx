@@ -1,0 +1,127 @@
+---
+title: Hosted delivery API
+description: Fresh, bounded lunar-to-Earth planning on Vercel with independent replay and an exact native run package.
+---
+
+Base URL: `https://soma-atlas-two.vercel.app`. These synchronous operations call
+the Python terrain/ephemeris provider and resource-constrained scheduler. They do
+not expose the local service's `/plans` job registry.
+
+New hosted scenarios require `dataset_manifest_ref: "physical-lola-de421-v2"`.
+The [terrain revision notes](/science/terrain-revision) explain the complete near
+window and the distinction from historical v1 exports.
+
+## Check readiness and obtain a complete scenario
+
+```http
+GET /api/research/delivery/capabilities
+```
+
+| Field | Meaning |
+| --- | --- |
+| `delivery_api_version` | Hosted transport version, `1.0.0`; native scenarios/results retain `run_version: "0.1.0"`. |
+| `ready` | Pinned sources, kernel coverage, raster access and CBC integer smoke test are ready in this runtime. |
+| `coverage` | Frame, radius, regional coordinates and time interval supported by numerical terrain. |
+| `limits` | Exact request, workload, worker, result and export budgets. |
+| `scenario_template` | A complete editable native scenario, including explicit hardware, service and provenance. It contains no computed contacts or expected outcome. |
+| `supported` | Accepted rate methods, pointing assumptions, route families and relay trajectory references. |
+| `sources`, `solver` | Verified source identities and solver identity; unavailable dependencies keep `ready` false. |
+| `library_capabilities` | Implemented module families, actual Python functions, HTTP exposure, documentation links and limitations. |
+
+Readiness is not a guarantee of delivery. Request validation and scientific coverage
+checks still apply to every calculation. Source files are acquired and verified at
+build time; requests do not download terrain or kernels.
+
+## Calculate a new delivery
+
+```http
+POST /api/research/delivery/analyze
+Content-Type: application/json
+Accept-Encoding: gzip
+```
+
+```json
+{
+  "scenario": { "...": "complete native scenario from capabilities" },
+  "options": { "chunk_bytes": 16777216, "bin_s": 60, "time_limit_s": 10 }
+}
+```
+
+The abbreviated scenario above illustrates the envelope only. Submit the complete
+native document, not the placeholder. See [scenarios and results](/reference/scenarios-results)
+and the [live tutorial](/getting-started/live-delivery).
+
+| Bound | Current hosted value |
+| --- | --- |
+| Numerical terrain | Latitude −89.15° to −88.85°; east longitude −3° to 3° |
+| Time coverage | November 2026; positive horizons up to six hours |
+| Payload | At most 64 MiB, at most four chunks |
+| Network | One lander hardware profile, at most one configured lunar relay and three stations |
+| Scheduling | 60–300 s bins; at most 10 s solver budget |
+| Physics/profile scope | `terrain_ephemeris`, `assumed_net_rate`, `ideal_pointing`; configured two-body relay remains synthetic |
+| Worker | Isolated process with a 240 s hard wall-clock budget and bounded memory |
+| Transport | Request ≤128,000 bytes; decoded response ≤16 MB; wire response ≤4 MB; native ZIP ≤16 MB |
+
+The returned capability limits are authoritative if a deployment changes. A smaller
+bin, finer terrain product or different profile is not silently substituted when
+a request exceeds a budget.
+
+## Read the result and retain the package
+
+The response includes `scenario_sha256`, `scenario`, native `result`, `summary`,
+`display`, `environment`, independent `replay`, and `export`. Its `options` record
+contains the resolved scheduler settings. Match the scenario hash before associating
+an output with edited inputs.
+
+`result.status` is `feasible_under_assumptions`, `infeasible_in_model`, or `unknown`.
+Solver status distinguishes an incumbent from proven optimality or proven
+discretized infeasibility. A feasible result requires successful independent replay.
+Unknown contacts can limit claims about infeasibility or optimality even when a
+known selected route is feasible. Assumed rates do not become an RF-closed link.
+
+`display` and `environment` are Python-authored view data. Contact transmit windows,
+receiver occupancy and byte-availability times retain their own meanings. The map
+does not compute routing or establish service availability.
+
+The hosted display adapter adds Python endpoint states at minute and exact
+allocation epochs, labeled by `additional_states_provenance`. The native ZIP
+keeps the original exporter's display and full replay inputs. Preserve the full
+HTTP JSON response when auditing those supplementary map samples.
+
+### Two independent compression layers
+
+The HTTP response may use `Content-Encoding: gzip`. Normal browser `fetch` and
+Python `requests` decode that HTTP layer automatically. The JSON's `export` object
+uses a separate encoding:
+
+```text
+encoding = "gzip+base64"
+media_type = "application/zip"
+bytes_base64 = base64(gzip(original canonical ZIP bytes))
+sha256 = SHA-256(original canonical ZIP bytes)
+size_bytes = length(original canonical ZIP bytes)
+```
+
+Decode base64, decompress the inner gzip, verify size and checksum, then save the
+original ZIP. Do not gzip-decode the outer HTTP layer twice, or rebuild the ZIP
+from a reduced display payload. The [live tutorial](/getting-started/live-delivery)
+includes executable download code and an independent verification command.
+
+## Errors and lifecycle
+
+| HTTP status | Meaning |
+| --- | --- |
+| `413` | Request, decoded result, wire result or export exceeds its declared budget. Reduce the workload; large responses require accepted HTTP gzip. |
+| `422` | Invalid native contract, unsupported option or input outside the bounded physical model. |
+| `429` | Another delivery calculation is active in this runtime instance. |
+| `503` | Dependencies, sources, solver or worker are unavailable. No recorded result replaces the failed calculation. |
+| `504` | Worker exceeded the hard time budget. |
+
+There is no durable job identifier or retained run store. Closing or stopping a
+browser request stops waiting; it does not promise server cancellation. The bounded
+worker is stopped at its hard deadline. Export a result you need to retain before
+leaving the page.
+
+For broader local workloads and explicit job cancellation, use the [local HTTP
+service](/reference/service). For reusable RF calculations beyond this provider's
+assumed rates, see [communications](/reference/communications).

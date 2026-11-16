@@ -27,14 +27,17 @@ maps the required `plan/` scope to computed evidence and exact run commands.
 ## Try the web demo
 
 Open **[soma-atlas-two.vercel.app](https://soma-atlas-two.vercel.app)** to calculate
-a new geometry study without installing anything. The app and public Python API
-run on Vercel.
+a new geometry study or a bounded lunar-to-Earth delivery plan without installing
+anything. The app and public Python API run on Vercel.
 
 - Select from 15 sourced lunar locations or add a custom coordinate.
 - Change UTC dates, sampling and separate antenna/panel heights, then run Python analysis.
 - Use the reconstructed LRO coverage interval and play its supplied position history.
 - Inspect per-site Sun/Earth elevation histories, sources and exact sampled readouts.
 - Export the returned scientific JSON and reproduce it with the documented library.
+- Choose **Data delivery** to edit a regional terrain-backed task, plan direct or
+  one-relay delivery, inspect last-byte Earth arrival and audit resource histories.
+- Download the exact Python run package and independently replay its schedule.
 
 The geometry endpoint uses a declared reference sphere. It does not evaluate terrain
 shadowing, solar-disk fractions, power, usable radio contacts or delivery. Catalog
@@ -56,19 +59,35 @@ UTC controls in one dark research workspace. Scene lighting is neutral and
 does not represent calculated terrain illumination. Methods, source
 checksums and limitations travel with the result.
 
-Use the [six-minute recording guide](docs/guides/workbench-demo.mdx) for exact
+Use the [nine-minute recording guide](docs/guides/workbench-demo.mdx) for exact
 screen actions and narration, or open its
 [published documentation page](https://soma-ce3178ca.mintlify.site/guides/workbench-demo).
-Delivery scheduling is available through the Python library and local service
-below. Earlier captured delivery cases remain in the repository for reproduction
-and regression checks; they are no longer a public application mode.
+The Data delivery tool calls the existing Python terrain, contact, energy and MILP
+pipeline and requires independent replay for a feasible result. It supports the
+declared November 2026 region near 89°S, at most six hours, 64 MiB/four chunks,
+one synthetic lunar relay and three educational station proxies. Rates, pointing,
+hardware and service remain assumptions. The Geometry tool's global reference
+sphere does not expand that terrain-backed coverage. See the
+[live delivery tutorial](docs/getting-started/live-delivery.mdx) and
+[hosted API](docs/reference/hosted-delivery.mdx).
+
+New hosted tasks use the complete-window `physical-lola-de421-v2` dataset.
+The [terrain revision notes](docs/science/terrain-revision.mdx) identify the
+corrected acquisition footprint and distinguish it from historical v1 exports.
+
+Earlier captured delivery cases remain in the repository for reproduction
+and regression checks; they are not a public application mode or a fallback when
+fresh calculations fail.
 
 Original synthetic packages preserve their original export format. The synthetic relay archive
 passes numerical replay but predates the display artifact required by the
 current complete-export verifier. Generate a fresh run with the CLI below to
 produce and verify the current package format.
 
-For live delivery calculations and editable delivery scenarios, run the application locally below.
+For the separate local planning job service and broader library access, run the
+application below. The [capability matrix](docs/science/capability-matrix.mdx)
+distinguishes implemented functions from unbuilt TATC-like instrument, coverage,
+constellation and trade-space workflows.
 
 ## Use the Python library
 
@@ -224,9 +243,9 @@ curl --request POST http://127.0.0.1:8000/plans \
 ```
 
 Jobs run in isolated Python processes. The current service keeps a bounded,
-in-memory job registry and is intended for local use. A public live planner
-requires a separately designed service deployment; the Vercel display adapter
-does not host the planning job API.
+in-memory job registry and is intended for local use. Vercel uses separate bounded
+synchronous geometry and delivery endpoints; it does not host this planning job
+registry or advertise durable background jobs.
 
 ### Vercel deployment
 
@@ -236,17 +255,20 @@ site. Documentation source lives in [`docs/`](docs/README.md).
 
 Deploy from the **repository root**, with the framework preset **Other**.
 The root `vercel.json` installs and builds `web/`, serves `web/dist`, and routes
-`/api/moon/*` to the Python function in `api/index.py`. The public deployment
-at [soma-atlas-two.vercel.app](https://soma-atlas-two.vercel.app/) has been
-checked with rendered terrain, exact stored relay states, computed schedules,
-and a byte-identical run download. See the
-[hosted verification record](soma/docs/hosted-deployment-verification.md).
+`/api/moon/*` and `/api/research/*` to the Python function in `api/index.py`.
+The build prepares hash-pinned scientific sources and verifies the CBC executable
+before serving fresh delivery requests. Historical deployment checks remain in
+the [hosted verification record](soma/docs/hosted-deployment-verification.md);
+they retain their original build and scope.
 
-The Python function exposes registration, conversion metadata, and the bounded
-registered Moon tile stream. It reuses the engine's pinned display conversion
-and registration evidence, retains source attribution, and returns private,
-nonpersistent responses. It does not run planning jobs or replace numerical
-terrain analysis. Unsupported or oversized tile objects fail explicitly.
+The Python function exposes registration, conversion metadata, the bounded
+registered Moon tile stream, fresh geometry and bounded delivery calculation.
+It reuses the engine's pinned display conversion and registration evidence,
+retains source attribution, and returns private, nonpersistent responses.
+Delivery uses numerical terrain independently of the display mesh. Unsupported
+or oversized requests and outputs fail explicitly; no scientific arrays are
+silently removed to fit the hosted response budget. Delivery's HTTP JSON and
+inner exact ZIP transport have separately documented gzip layers.
 The Linux build bundles its system Expat library and license texts for
 Rasterio, records the package and checksum, and verifies the library before
 loading it. Generated native binaries stay out of Git.

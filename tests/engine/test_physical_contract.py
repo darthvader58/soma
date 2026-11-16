@@ -91,3 +91,26 @@ def test_state_batch_retains_strict_time_and_unit_validation():
     bad['epoch']='2026-11-24T08:00:00'
     with pytest.raises(ScenarioValidationError):
         validate_documents([state,bad],'state')
+
+
+@pytest.mark.parametrize('body', ['SUN', 'EARTH'])
+@pytest.mark.parametrize('node', ['lander', 'relay', 'station'])
+def test_body_names_cannot_replace_physical_illumination_states(body, node, monkeypatch):
+    from soma.engine import plan_run
+    import soma.preparation
+
+    scenario = load_scenario('fixtures/physical-south-pole/scenario.json')
+    if node == 'lander':
+        scenario['lander']['id'] = body
+    else:
+        group, references = ('relays', 'relay_refs') if node == 'relay' else ('stations', 'station_refs')
+        original = scenario['profiles'][group][0]['id']
+        scenario['profiles'][group][0]['id'] = body
+        scenario[references] = [body if value == original else value for value in scenario[references]]
+
+    def must_not_prepare(*args, **kwargs):
+        pytest.fail('A reserved body identifier reached scientific preparation')
+
+    monkeypatch.setattr(soma.preparation, 'prepare_analysis', must_not_prepare)
+    with pytest.raises(ScenarioValidationError, match='reserved for celestial-body states'):
+        plan_run(scenario)

@@ -22,6 +22,9 @@ import zipfile
 
 from fastapi import HTTPException
 
+from soma.api.native import preload_hosted_libraries
+from soma.api.processes import start_private_interpreter, stop_private_interpreter
+
 MAX_RESULT_BYTES = 16_000_000
 MAX_EXPORT_BYTES = 32_000_000
 MAX_RETAINED_BYTES = 128_000_000
@@ -58,6 +61,7 @@ def _worker(study, directory, data_root, progress_queue, canceled, planner, resu
     if hasattr(os, 'setsid') and os.getpgrp() != os.getpid():
         os.setsid()
     try:
+        preload_hosted_libraries()
         if sys.platform.startswith('linux'):
             import resource
             resource.setrlimit(resource.RLIMIT_AS, (MAX_WORKER_MEMORY_BYTES, MAX_WORKER_MEMORY_BYTES))
@@ -155,27 +159,7 @@ def _verify_result(study, content):
 
 
 def _stop_subprocess(process):
-    if process.poll() is not None:
-        return
-    try:
-        if os.name == 'posix':
-            os.killpg(process.pid, signal.SIGTERM)
-        else:
-            process.terminate()
-    except ProcessLookupError:
-        pass
-    try:
-        process.wait(timeout=0.5)
-    except subprocess.TimeoutExpired:
-        try:
-            if os.name == 'posix':
-                os.killpg(process.pid, signal.SIGKILL)
-            else:
-                process.kill()
-        except ProcessLookupError:
-            pass
-        process.wait(timeout=1)
-
+    stop_private_interpreter(process)
 
 def _sync_worker_main(control_path):
     """Read parent-created control metadata; this is never an HTTP input format."""
@@ -205,9 +189,7 @@ def run_sync(study, *, data_root=None, planner=None, timeout_s=60, result_limit=
         environment = os.environ.copy()
         # Retain the function's installed/bundled module paths without inheriting its bootstrap.
         environment['PYTHONPATH'] = os.pathsep.join(str(path or os.getcwd()) for path in sys.path)
-        process = subprocess.Popen([sys.executable, '-m', 'soma.api.research_jobs', str(control_path)],
-            env=environment, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL, start_new_session=os.name == 'posix')
+        process = start_private_interpreter([sys.executable, '-m', 'soma.api.research_jobs', str(control_path)], env=environment)
         try:
             try:
                 process.wait(timeout=timeout_s)

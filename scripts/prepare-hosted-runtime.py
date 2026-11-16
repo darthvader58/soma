@@ -45,6 +45,19 @@ def prepare():
                 "license_files": license_records}
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     print("Prepared hosted Expat runtime dependency:", package)
+    import sys
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from soma.api.delivery import solver_identity
+    import pulp
+    solver = solver_identity(smoke=True)
+    executable = Path(pulp.PULP_CBC_CMD(msg=False).path).resolve()
+    license_target = output/"cbc-license.txt"
+    shutil.copyfile(executable.parent/"coin-license.txt", license_target)
+    (output/"cbc-manifest.json").write_text(json.dumps({
+        **solver, "platform": platform.system(), "architecture": platform.machine(),
+        "license_file": license_target.name, "upstream": "https://github.com/coin-or/Cbc",
+        "purpose": "Pinned PuLP 3.3.2 bundled CBC; actual integer smoke solve passed at build time"}, indent=2)+"\n")
+    print("Verified hosted CBC executable:", solver["executable_sha256"])
 
 
 if __name__ == "__main__":

@@ -10,6 +10,31 @@ from soma.time import parse_utc
 from soma.verification.exports import verify_export
 
 
+def _sampling_source_compatible(root, sampling):
+    current = hashlib.sha256((root/'soma/physical.py').read_bytes()).hexdigest()
+    if current == sampling['physical_source_sha256']:
+        return True
+    compatibility = json.loads((root/'data/physical-source-compatibility.manifest.json').read_text())
+    if (compatibility.get('artifact_type') != 'soma_legacy_physical_source_compatibility'
+            or compatibility.get('version') != '1.0.0'
+            or compatibility.get('dataset_manifest_ref') != 'physical-lola-de421-v1'
+            or compatibility.get('current_physical_source_sha256') != current
+            or compatibility.get('archived_physical_source_sha256') != sampling['physical_source_sha256']
+            or compatibility.get('archived_sampling_sha256') != hashlib.sha256(
+                (root/'fixtures/physical-south-pole/sampling-verification.json').read_bytes()).hexdigest()
+            or compatibility.get('historical_claims_extended') is not False):
+        return False
+    from soma.exports import json_bytes
+    keys = ('contacts', 'generation_bins', 'contacts_complete', 'generation_complete')
+    expected = {case['time_step_s']: hashlib.sha256(json_bytes(
+        {key: case['analysis_inputs'][key] for key in keys})).hexdigest() for case in sampling['cases']}
+    comparisons = compatibility.get('comparisons', [])
+    return len(comparisons) == len(expected) and {row['time_step_s'] for row in comparisons} == set(expected) and all(
+        row['exact_inputs_match'] is True and row['compared_fields'] == list(keys)
+        and row['archived_inputs_sha256'] == row['current_inputs_sha256'] == expected[row['time_step_s']]
+        for row in comparisons)
+
+
 def verify_physical_release(root=None):
     root = Path(root or Path(__file__).resolve().parents[2]).resolve()
     report = {'artifact_type':'soma_physical_first_release_verification',
@@ -80,7 +105,7 @@ def verify_physical_release(root=None):
         check('independent_scalar_horizon',all(max(c['absolute_difference_deg'] for c in role['scalar_reference_checks'])<1e-6
             for role in terrain['roles'].values()))
         sampling=read('fixtures/physical-south-pole/sampling-verification.json')
-        check('current_sampling_source',sampling['physical_source_sha256']==hashlib.sha256((root/'soma/physical.py').read_bytes()).hexdigest())
+        check('current_sampling_source', _sampling_source_compatible(root, sampling))
         check('time_resolution_comparison',sampling['same_contact_ids'] and sampling['same_feasibility_status']
               and bool(sampling['unresolved_differences']))
         for case in sampling['cases']:

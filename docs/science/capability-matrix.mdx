@@ -1,0 +1,55 @@
+---
+title: Implemented capabilities and scope
+description: What the Python library, public API and workbench actually expose, with explicit gaps relative to the wider toolkit target.
+---
+
+SOMA contains more analysis code than the current geometry workbench exposes. It also has substantially less breadth than TATC. The useful distinction is implemented lunar operations and their evidence, rather than a count of wrappers, labels or menu items.
+
+## Library, service and interface are different surfaces
+
+| Capability | Python implementation | Public HTTP / workbench exposure |
+| --- | --- | --- |
+| Surface coordinates and local bases | Explicit lunar sphere, DE421 mean-Earth axes, separate panel/antenna heights, pole meridian and finite body segments. | Sourced/custom global sites in the reference-sphere geometry study; no measured global elevation implied. |
+| Time and Sun/Earth geometry | Strict UTC boundary, pinned-kernel transforms, native ephemeris sampling and actual coverage checks. | `GET /api/research/capabilities`, `POST /api/research/analyze`; sampled angles, ranges, positions and velocities. |
+| Public locations and archived LRO | Versioned source catalog; hash-pinned native reconstructed spacecraft SPK. | Catalog selection, multiple study sites, native stored LRO readout and bounded playback. LRO is not relay service. |
+| Generic bounded state history | Explicit Moon-origin JSON position/velocity inputs; linear position output; gap/coverage checks. | Not an arbitrary trajectory-import UI or OEM HTTP importer. |
+| Synthetic lunar orbit | Explicit short-arc two-body conic, labeled synthetic, at most seven days. | Existing bounded delivery model only; not a validated frozen/libration-point orbit or operational network. |
+| Numerical terrain and horizons | Polar/geographic DEM access, count-aware interpolation, near/far sampled horizons, finite-range terrain tests and caches. | Existing physical delivery provider is region/date bounded. Global geometry studies do not call it. |
+| Illumination and electrical power | Sampled finite solar disk with shared terrain/Earth masks, fixed-panel generation, piecewise-constant battery integration. | Not evaluated by the global geometry endpoint or its angle plot. No thermal model. |
+| Communications geometry and RF | Same-epoch finite segment/body/station tests; declared far-field RF budget; interval-wide contact gates. | Reusable library functions. Existing physical preparation uses assumed rates and ideal pointing, not arbitrary RF profiles. |
+| Delivery scheduling and validation | Direct/one-relay finite-volume MILP, buffers, endpoint conflicts, delay/processing causality, lander energy and independent replay. | `GET /api/research/delivery/capabilities`, `POST /api/research/delivery/analyze`, the Data delivery tool, and the separate local planning job service/CLI. |
+| Reproducible exports | Canonical inputs, full run JSON/CSV/ZIP, structured explanation, renderer metadata and replay checks. | Exact geometry JSON plus checksum-verified native delivery ZIPs from the same fresh calculation. No retained serverless job store. |
+
+The existing numerical terrain delivery provider is restricted to latitude -89.15° to -88.85°, longitude -3° to 3°, November 2026 and positive studies of at most six hours. It requires the declared source set, assumed net rates, ideal pointing, at most one configured synthetic lunar relay and three Earth stations. The generic geometry study is broader in site/date coverage but evaluates fewer physical quantities. Changing to a global reference sphere does not expand terrain-backed visibility or power coverage.
+
+The bounded delivery endpoint has passed Linux deployment, source/solver readiness
+and a fresh calculation with an independently verified native ZIP. Its Data
+delivery view uses `physical-lola-de421-v2`; see the [terrain revision notes](/science/terrain-revision).
+Check returned capabilities for current runtime readiness. A capability label is
+not an operational service booking.
+
+## Comparison with TATC's documented families
+
+TATC's official [API overview](https://tatc.readthedocs.io/en/latest/api_reference/index.html) groups object schemas, instrument catalog, generation, analysis, tradespace, preprocessing and utilities. Its [analysis reference](https://tatc.readthedocs.io/en/latest/api_reference/analysis/index.html) lists observation/coverage, statistical sufficiency, ground/orbit tracks, coincidence, feature observations, latency, DOP, radio occultation, limb sounding and space-based coverage. Those references describe TATC; they do not establish lunar support or SOMA implementation.
+
+| Documented family | SOMA's implemented overlap | Important missing breadth |
+| --- | --- | --- |
+| Object schemas / instrument catalog | Versioned study, scenario, state, contacts, hardware and resource contracts; sourced site catalog. | General validated instrument catalog, attitude/FOV objects and broad interchangeable mission models. |
+| Generation / trajectories | Surface conversion, state sampling, configured LRO SPK, documented bounded history and synthetic conic. | Constellation generation, general OEM/import workflow, high-fidelity designed lunar dynamics and broad user spacecraft configuration. |
+| Observation / feature / space coverage | Reusable local/finite-segment geometry components. | End-to-end instrument footprints, feature/region observation access and aggregated coverage analysis. |
+| Statistical sufficiency / revisit / coincidence | Explicit sampling budgets and limited refinement checks for implemented quantities. | General coverage sufficiency, revisit distributions and coincident observation products. |
+| Ground / orbit tracks | Stored native Moon-fixed spacecraft histories and display path. | General ground-track/subsatellite-track products and multi-spacecraft track analyses. |
+| Latency / communication | Finite contact payload, delay, storage, causal forwarding and complete-file delivery under bounded resources, exposed through the delivery workbench. | Broad arbitrary networks, operational service/radio integration and mission-wide communications design. |
+| Tradespace | Individual controlled runs and exported results. | General batch sweeps, objective/Pareto tools, optimization of constellations and defensible stochastic reliability studies. |
+| Preprocessing | Numerical raster readers, source manifests, terrain windows and horizon cache. | General target grids/polygons, broad dataset pipelines and globally validated terrain-backed analysis at arbitrary resolution. |
+| DOP / radio occultation / limb sounding | No completed public analysis API. | These require distinct lunar definitions, instrument models and validation. |
+
+TATC's original audited revision is an Earth-observing toolkit. Earth SGP4/TLE propagation, terrestrial refraction and Earth-calibrated orbit/cost defaults cannot become lunar science by substituting a radius. SOMA remains a companion implementation and does not claim TATC feature parity.
+
+## What the statuses establish
+
+A geometry study's `completed` status means its requested samples were calculated. Delivery statuses remain `feasible_under_assumptions`, `infeasible_in_model` and `unknown`, with separate solver status and fidelity. A usable contact is not a schedule. A replayed schedule can establish feasibility on known contacts under declared assumptions, while unknown alternatives can prevent full-network infeasibility or optimality claims.
+
+No result establishes landing safety, public antenna access, flight DTN operation, LunaNet/SABR compliance, thermal survival or a probability of success. Measured/published source data, synthetic models and user assumptions remain distinct.
+
+Implementation/evidence: [geometry and time](/reference/geometry-time), [trajectories](/reference/trajectories), [terrain](/reference/terrain), [illumination/power](/reference/illumination-power), [communications](/reference/communications), [scheduling](/reference/scheduling), [validation/exports](/reference/validation-exports), [research API](/reference/research-api). The [expansion plan](https://github.com/darthvader58/soma/blob/main/plan/Research-Workbench-Expansion-2026-11-16.md) describes future targets, not an implemented function list.

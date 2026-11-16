@@ -48,8 +48,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "ed4723d08ce2f85a9107e5939771168a64c755b956d2ce3a8e090c63b29fecf6",
-      "size_bytes": 18097
+      "sha256": "d6d5d3e3ea58900c4b482c9187cc474b12e849fb748de3849c88e715ea1b455d",
+      "size_bytes": 19587
     },
     {
       "path": "api/.gitignore",
@@ -58,8 +58,8 @@
     },
     {
       "path": "api/index.py",
-      "sha256": "ad88dffe41532314c4c78ba6e2f75ac3ab63a5927ca412a0e96388da0df7b922",
-      "size_bytes": 5482
+      "sha256": "968af4149b8dac0b6803e353a030f3f0631e25d6876fc6e8ea100f65a08d7f1a",
+      "size_bytes": 5151
     },
     {
       "path": "data/phase6-evidence.manifest.json",
@@ -203,13 +203,13 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "ee1fa5c8074fab1e07be3499212d6b97fa556b77e8df600a74956a9a1b8f57e5",
-      "size_bytes": 1021
+      "sha256": "d00e99a0c5e6b458f66312557a57be0b0fa5184cb51ee907ecd2cc5220d2b822",
+      "size_bytes": 1127
     },
     {
       "path": "requirements.txt",
-      "sha256": "1958410902b37e673f12b82310f4ecef4d1d3f156720eb944027b24b370a4753",
-      "size_bytes": 191
+      "sha256": "169c7ecf50fefc9ca4a40ab4bec2d838d62c0aab89525442838a21dc206983f3",
+      "size_bytes": 220
     },
     {
       "path": "scripts/build-demo-constraints.py",
@@ -218,8 +218,8 @@
     },
     {
       "path": "scripts/prepare-hosted-runtime.py",
-      "sha256": "a2b92a75f5b054240058a39f09ee7af21ccb78752165e4bfc3664364178b9174",
-      "size_bytes": 2398
+      "sha256": "93d0e63b3ce248a3cf7b7d0305b267f56e88cd7cd437cca5256f179ae3334c9c",
+      "size_bytes": 3197
     },
     {
       "path": "soma/__main__.py",
@@ -283,8 +283,8 @@
     },
     {
       "path": "soma/physical.py",
-      "sha256": "8096c20aee5679a9646bce12514645f3e924040cd55d1187aefc531b4a8aeb67",
-      "size_bytes": 29758
+      "sha256": "9efd3dbe6acb3d4a99a5e46a2af87f3022d9db72a00b8ac2a80a1e22683d806f",
+      "size_bytes": 29714
     },
     {
       "path": "soma/preparation.py",
@@ -293,13 +293,13 @@
     },
     {
       "path": "soma/terrain/physical.py",
-      "sha256": "08854c8a6bc676c614cd86d901a75ca0282c1cbdd1b219ecba2a4437fc988c63",
-      "size_bytes": 23388
+      "sha256": "bd41dde4313934df30298c224cf40917dbffbfc79c2e71dc2cc094b462aeeb61",
+      "size_bytes": 23262
     },
     {
       "path": "soma/validation.py",
-      "sha256": "b57502dd5ea398fe212daa47fd170dfc64fb75dc732c44736fc1608bdbac6c21",
-      "size_bytes": 12455
+      "sha256": "e8a0053114b60e4d0799df00b5955d45e53fc776ba21f6593ad09f1495649e9e",
+      "size_bytes": 13146
     },
     {
       "path": "soma/verification/exports.py",
@@ -308,8 +308,8 @@
     },
     {
       "path": "soma/verification/physical_completion.py",
-      "sha256": "4326b9c02017e35ae22af2e085c73576b2818cb4aad815540dffcc0e88548efc",
-      "size_bytes": 7717
+      "sha256": "d589f103342010ce6c94009ce5e391b886462c7379aa0ee6f370a097414767a7",
+      "size_bytes": 9358
     },
     {
       "path": "tests/engine/test_demo_constraints.py",
@@ -318,13 +318,13 @@
     },
     {
       "path": "tests/engine/test_hosted_moon_api.py",
-      "sha256": "2dbfcf36bdc1812e5bbe97b8dfcdc79275a5a6ad7d297313a4089b32c1a31a49",
-      "size_bytes": 5399
+      "sha256": "24fac2822ff1ddf6de7424869729243e7f2da220d8e9aaccdf85cd30721cbe6d",
+      "size_bytes": 5380
     },
     {
       "path": "tests/engine/test_physical_contract.py",
-      "sha256": "ddf5420cdf0dd8c612d984a1934dadb69556d730f40595a190716abd2be0df91",
-      "size_bytes": 4627
+      "sha256": "5926cc14b62082803e651738f6adcc538535c1c8cbb687d98c2ae3b6204a9aac",
+      "size_bytes": 5695
     },
     {
       "path": "tests/engine/test_physical_planning.py",
@@ -368,8 +368,8 @@
     },
     {
       "path": "tests/web/renderer-samples.test.mjs",
-      "sha256": "75d4aedf3b69abf18a5b16a91dae132be17f7477b9b7fc5a68e7bbf43dd8b77d",
-      "size_bytes": 2734
+      "sha256": "f2a9e170dd0eb84c6efff71a8ed71af83fac0a2cb78bdc9efc7b59915e78095f",
+      "size_bytes": 3239
     },
     {
       "path": "tests/web/scenario.test.mjs",
@@ -388,8 +388,8 @@
     },
     {
       "path": "vercel.json",
-      "sha256": "75ac5900b52a6a5c67dae37eb00361c2bd6e5fe922b4d82e812361941870a958",
-      "size_bytes": 1176
+      "sha256": "aa8d484285b111bb1fdddd978340eb957ed634714fb57f391d18d9d87c95bd54",
+      "size_bytes": 1092
     },
     {
       "path": "web/.gitignore",
@@ -493,8 +493,8 @@
     },
     {
       "path": "web/src/renderer-samples.js",
-      "sha256": "e42a90fda683dd9143312c7b39febae727f8348430d0636e9a08e9ec3460c3c1",
-      "size_bytes": 2466
+      "sha256": "8dce8cc814e8cf72da154a163488b7b34faf20c9e1b72d817cd32e46b8ddd8de",
+      "size_bytes": 2654
     },
     {
       "path": "web/src/result.js",
@@ -530,6 +530,11 @@
       "path": "tests/web/legacy-archive-support.mjs",
       "sha256": "1642f7558dd249d99cefc657e0f32a283fbebd79a3bac7459a1b5f785c18c172",
       "size_bytes": 1498
+    },
+    {
+      "path": "data/physical-source-compatibility.manifest.json",
+      "sha256": "02e5665160ae2b5a3fd5ba8cd8dc9da735fe5c1eb2af41fd59f3d2527592641c",
+      "size_bytes": 1687
     }
   ],
   "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
@@ -592,5 +597,33 @@
     "historical_scope": "Original scientific inputs/results, frozen schemas, review dates and verification counts are preserved. The current appearance and geometry-result presentation do not extend historical physical-release or interface-review claims.",
     "archived_scientific_artifacts_changed": false,
     "new_dashboard_covered_by_historical_reviews": false
+  },
+  "live_delivery_compatibility_refresh": {
+    "recorded_at_utc": "2026-11-18T10:25:59.169945Z",
+    "changed_bindings": [
+      "README.md",
+      "api/index.py",
+      "data/physical-source-compatibility.manifest.json",
+      "pyproject.toml",
+      "requirements.txt",
+      "scripts/prepare-hosted-runtime.py",
+      "soma/physical.py",
+      "soma/terrain/physical.py",
+      "soma/validation.py",
+      "soma/verification/physical_completion.py",
+      "tests/engine/test_hosted_moon_api.py",
+      "tests/engine/test_physical_contract.py",
+      "tests/web/renderer-samples.test.mjs",
+      "vercel.json",
+      "web/src/renderer-samples.js"
+    ],
+    "reason": "Current source bindings for fresh hosted delivery, explicit v1/v2 data selection, verified native worker startup and reserved celestial-body identifiers.",
+    "historical_scope": "Original scientific inputs/results, frozen delivery schemas, review dates and recorded verification counts remain unchanged. Refreshed source bindings do not extend historical reviews to the new hosted API, corrected v2 dataset or interface.",
+    "archived_scientific_artifacts_changed": false,
+    "new_hosted_delivery_covered_by_historical_reviews": false,
+    "legacy_source_compatibility_ref": "data/physical-source-compatibility.manifest.json",
+    "current_hosted_dataset_ref": "physical-lola-de421-v2",
+    "retained_unmodified_naif_kernel_ref": "data/pinned/README.md",
+    "historical_binary_inventory_extended": false
   }
 }

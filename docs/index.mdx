@@ -3,7 +3,7 @@ title: SOMA Python library
 description: Calculate lunar geometry from published sources and audit data-delivery schedules under explicit assumptions.
 ---
 
-SOMA stands for **Selenographic Observation and Mission Atlas**. It provides a Python lunar geometry library, an interactive Moon workbench and a bounded data-delivery planner. The live workbench calculates new multi-site Sun/Earth geometry and reconstructed LRO states. The delivery engine constrains schedules with contact capacity, radio conflicts, propagation delay, finite storage and lander energy.
+SOMA stands for **Selenographic Observation and Mission Atlas**. It provides a Python lunar analysis library and an interactive Moon workbench with two analysis tools. **Geometry** calculates new multi-site Sun/Earth geometry and reconstructed LRO states. **Data delivery** calculates terrain-backed, energy-constrained schedules in a bounded south-polar region. Contact capacity, radio conflicts, propagation delay, finite storage and lander energy constrain delivery.
 
 The distribution is `soma-lunar`; import it as `soma`. The current repository version is **0.1.0**. Install from source using the [installation guide](/getting-started/installation), then reproduce a [live geometry study](/getting-started/live-research) with pinned NASA ephemerides. The [synthetic delivery tutorial](/getting-started/quickstart) remains available for hand-checkable scheduling tests without data downloads.
 
@@ -12,7 +12,10 @@ The distribution is `soma-lunar`; import it as `soma`. The current repository ve
 | Task | Start here |
 | --- | --- |
 | Calculate new site/date geometry and replay LRO | [Live lunar geometry](/getting-started/live-research) |
+| Plan lunar-to-Earth file delivery in the workbench | [Live delivery](/getting-started/live-delivery) |
 | Use the geometry study library and Vercel API | [Research API](/reference/research-api) |
+| Call the bounded public delivery endpoint | [Hosted delivery API](/reference/hosted-delivery) |
+| Find implemented functions and their limits | [Python modules](/reference/python-api) and [capability matrix](/science/capability-matrix) |
 | Calculate a standalone scenario | [Python quickstart](/getting-started/quickstart) |
 | Reproduce the terrain-backed date comparison | [Physical runs](/getting-started/physical-runs) |
 | Integrate with a local application | [HTTP service](/reference/service) |
@@ -21,10 +24,10 @@ The distribution is `soma-lunar`; import it as `soma`. The current repository ve
 
 ## Read the outcome correctly
 
-The public workbench reports completed **geometry studies**. Its plots show Sun/Earth center elevation and its scene replays stored spacecraft positions. It uses a reference sphere and does not evaluate terrain visibility. See [analysis and map behavior](/guides/analysis-and-map) for an input-change check and [physical runs](/getting-started/physical-runs) for the separate regional terrain-backed planner.
+The Geometry tool reports completed **geometry studies**. Its plots show Sun/Earth center elevation and its scene replays stored spacecraft positions. That endpoint uses a reference sphere and does not evaluate terrain visibility. The Data delivery tool calls the numerical terrain provider and scheduler separately. See [analysis and map behavior](/guides/analysis-and-map) and the [delivery tutorial](/getting-started/live-delivery) for the distinction.
 
 A delivery-planning result reports `feasible_under_assumptions`, `infeasible_in_model`, or `unknown`. Solver status and model fidelity are separate fields. A feasible schedule using assumed radio rates remains an assumed-rate simulation.
 
-The browser displays engine-authored results. The public Vercel application calculates new bounded geometry studies; delivery scheduling is available through the Python library and local service. Geometry completion does not imply delivery feasibility. A rendered shadow or visible line is not a scientific result.
+The browser displays engine-authored results. Public geometry and delivery calculations are bounded synchronous requests on Vercel; the local service additionally exposes planning jobs. Geometry completion does not imply delivery feasibility. A rendered shadow or visible line is not a scientific result.
 
 SOMA is a planning model under declared assumptions. It does not reserve communications service, certify navigation or landing safety, or predict mission success. Read the [scientific limitations](/science/assumptions-limits) before interpreting a schedule.

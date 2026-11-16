@@ -1,11 +1,11 @@
 ---
 title: Record the live workbench
-description: A six-minute screen recording of new calculations, reconstructed LRO motion and reproducible scientific results.
+description: A nine-minute screen recording of fresh lunar geometry, Earth delivery, controlled changes and reproducible results.
 ---
 
-Use the [live workbench](https://soma-atlas-two.vercel.app/) for this recording. This tour demonstrates implemented geometry; it does not present terrain shadows, power or communications feasibility as outputs of the geometry endpoint.
+Use the [live workbench](https://soma-atlas-two.vercel.app/) for this recording. Geometry and Data delivery calculate different quantities. The global geometry endpoint uses a reference sphere; the regional delivery endpoint separately evaluates numerical terrain, illumination, energy, contacts and scheduling under explicit assumptions.
 
-Record the dark dashboard at 1920 × 1080, 100% zoom, with microphone narration and Cesium attribution visible. Rehearse once and wait for the initial calculation and Moon tiles to finish before recording. Keep this guide, the app and the [Python tutorial](/getting-started/live-research) in separate tabs. Use normal speaking speed and hold each important numerical state for several seconds. The actions and narration below target **six minutes**, including approximately one minute of deliberate interaction and reading time.
+Record the dark dashboard at 1920 × 1080, 100% zoom, with microphone narration and Cesium attribution visible. Rehearse once and wait for the initial calculation and Moon tiles to finish before recording. Keep this guide, the app and the [Python tutorial](/getting-started/live-research) in separate tabs. Use normal speaking speed and hold each important numerical state for several seconds. The actions and narration below target **nine minutes**, including fresh calculation time and deliberate inspection. Do not substitute captured results if a live calculation fails.
 
 ## 0:00–0:45 — State the research question
 
@@ -65,24 +65,48 @@ This is another calculation, with another request hash. The new values come from
 
 Coverage and numerical budgets are also explicit. Unsupported trajectory dates are rejected. A request that exceeds the sampled-epoch or response budget must be made smaller; scientific arrays are not silently cut down.”
 
-## 4:35–5:30 — Export and reproduce
+## 4:35–7:35 — Plan actual file delivery in the model
 
-**Record:** Click **Result JSON**. Open the downloaded file and show `request`, `study_sha256`, `provenance`, `kernels`, `spacecraft_sources` and `limitations`. Click **Documentation** and show the executed tutorial plus API signatures.
+**Record:** Choose **Data delivery**. Show its declared terrain coverage, 16 MiB task, November 24 08:00–14:00 UTC interval, initial battery and network assumptions. Disable **One lunar store-and-forward relay**, leaving **Direct to Earth**. Choose **Plan delivery** and hold the actual outcome and last-byte Earth arrival. Focus its selected transfer and choose **Earth network**.
+
+Next change all four task epochs to November 30, retaining 08:00 readiness/start and 14:00 deadline/end. Choose **Use analysis interval as assumed service**, then calculate with direct alone. Read its actual limiting explanation. Enable the lunar relay and calculate again. Focus the lander-to-relay transfer, the relay wait and the later Earth transfer. Hold the battery and buffer history.
 
 **Say:**
 
-“The export contains the exact scientific response, including the normalized request, sampled arrays, software versions and source checksums. Someone else can verify the hash and rerun that request with the same pinned sources.
+“Geometry alone does not answer whether a complete file reaches Earth. Here I declare the file size, readiness, deadline, finite storage, battery and a small network. This separate provider uses published numerical LOLA terrain and matched ephemerides within the region and dates shown here.
 
-The documentation gives the actual Python functions, fields and units, the supported source intervals, and a complete three-site reproduction example. It also records calculated elevations and the example request hash. That makes this more than a visual demonstration: the calculation can leave the website and become an inspectable research artifact.
+The radio rates, ideal pointing and station service are assumptions. These station locations are educational geographic proxies, not reserved DSN antennas. The optional relay uses a labeled synthetic lunar orbit. The LRO reconstruction I showed earlier does not supply relay service.
+
+I will first ask for direct delivery on November twenty-fourth. Python prepares the contacts and power, solves the constrained schedule, and independently replays it. The number to inspect is the last byte arriving at Earth, together with the solver and replay status. A usable contact by itself does not deliver the dataset.
+
+Now I move the task and its explicitly assumed service to November thirtieth, preserving the six-hour deadline rule, file size, location, hardware and initial battery. Direct delivery has to stand on the contacts calculated for that date. Its limiting explanation comes from the engine.
+
+Enabling the lunar relay changes one declared route family. If the calculated schedule succeeds, the timeline shows the first hop, when the bytes become available, where they wait, and the later ground hop. The buffer and battery histories expose the resource consequences. If this run is unresolved or infeasible, that is the result to report.
+
+The network camera uses the actual supplied positions. Earth is far from the Moon, so the Moon becomes small at this scale. The line represents a selected transmission interval; it is not a claim of an operational communications service or flight validation.”
+
+The verified comparison used fresh Linux Vercel calculations with 16 MiB, the default explicit profiles and a six-hour interval. Independently replayed downloads confirmed direct delivery on November 24, no direct contact capacity on November 30, and relay delivery on November 30. Solver incumbents and precise arrival epochs may depend on declared discretization and solve budget; read the current output instead of narrating an unverified fixed timestamp. See [live delivery](/getting-started/live-delivery).
+
+## 7:35–8:30 — Export and reproduce
+
+**Record:** In Data delivery choose **Python run package**. Show its scenario, result, manifest and schedule CSV, then the independent replay command in the documentation. Return to Geometry and show **Result JSON**, including `request`, `study_sha256`, `provenance`, `kernels`, `spacecraft_sources` and `limitations`. Open **Python reference** and show the module references and capability matrix.
+
+**Say:**
+
+“The delivery download preserves the Python run package, with its scenario, contacts, schedule, resources, replay inputs and source manifest. The browser verifies the ZIP checksum rather than rebuilding it from the chart. The independent verifier can replay the package outside this website.
+
+The geometry export also contains the exact scientific response, including the normalized request, sampled arrays, software versions and source checksums. Someone else can verify the hash and rerun that request with the same pinned sources.
+
+The documentation covers the implemented geometry, trajectory, terrain, illumination, power, communications, scheduling and export modules. It gives their arguments, units, examples and limitations. The capability matrix also identifies unbuilt instrument, coverage and trade-space workflows; SOMA does not claim full TATC feature parity.
 
 The public application and its synchronous Python API both run on Vercel. Durable background jobs are not advertised on this deployment.”
 
-## 5:30–6:00 — Finish with the supported contribution
+## 8:30–9:00 — Finish with the supported contribution
 
 **Record:** Return to the app. Select **Global**, briefly play the reconstructed history, then pause with the inspector and comparison visible.
 
 **Say:**
 
-“SOMA connects a lunar location, a time interval and identifiable scientific sources in one interactive workflow. I can move from published references to a new user-defined calculation, inspect native spacecraft states, and export a reproducible result.
+“SOMA connects lunar geometry with an auditable data-delivery question. I can calculate new site and time studies, inspect spacecraft states, declare a bounded network and ask when a complete dataset reaches Earth within its resource constraints.
 
-This view supports geometry research. The separate delivery engine addresses a different, bounded network-and-energy problem under declared assumptions. Keeping those meanings clear is part of making the tool useful: the user can see what was calculated, what the sources support, and what remains unresolved.”
+The user can inspect what was calculated, which inputs are published or assumed, and what remains unresolved. Those limits travel with the exported result, so another researcher can review the model and reproduce the calculation.”

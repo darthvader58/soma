@@ -11,6 +11,10 @@ A scenario declares its run version, analysis mode, lander coordinates and Moon-
 
 It also declares hardware, relay and station references, route families, rate method, pointing, service assumptions, dataset references, and input provenance. Resource profiles must provide finite storage and explicit service and energy parameters. Omitted fields do not become unlimited storage, continuous service, zero load, or perfect pointing.
 
+Lander, relay and station node identifiers must be distinct. Physical scenarios
+reserve `SUN` and `EARTH` for celestial-body states; those names cannot identify
+network nodes.
+
 ## Result states
 
 | `status` | Interpretation |

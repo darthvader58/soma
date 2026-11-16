@@ -6,10 +6,11 @@
   "colors": {"primary": "#526D3D", "light": "#8BAA69", "dark": "#40582E"},
   "navigation": {
     "groups": [
-      {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/live-research", "guides/analysis-and-map", "getting-started/quickstart", "getting-started/physical-runs"]},
+      {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/live-research", "getting-started/live-delivery", "guides/analysis-and-map", "getting-started/quickstart", "getting-started/physical-runs"]},
       {"group": "Demonstration", "pages": ["guides/workbench-demo"]},
-      {"group": "Library reference", "pages": ["reference/research-api", "reference/python-api", "reference/scenarios-results", "reference/service", "reference/exports-replay"]},
-      {"group": "Scientific model", "pages": ["science/research-sources", "science/frames-data", "science/assumptions-limits"]}
+      {"group": "Library reference", "pages": ["reference/python-api", "reference/geometry-time", "reference/trajectories", "reference/terrain", "reference/illumination-power", "reference/communications", "reference/scheduling", "reference/validation-exports"]},
+      {"group": "HTTP and data contracts", "pages": ["reference/research-api", "reference/hosted-delivery", "reference/service", "reference/scenarios-results", "reference/exports-replay"]},
+      {"group": "Scientific model", "pages": ["science/capability-matrix", "science/research-sources", "science/frames-data", "science/terrain-revision", "science/assumptions-limits"]}
     ]
   },
   "redirects": [{"source": "/guides/hackathon-demo", "destination": "/guides/workbench-demo"}],

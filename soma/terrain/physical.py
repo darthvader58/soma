@@ -18,7 +18,7 @@ from threading import Lock
 import numpy as np
 
 from soma.geometry import SurfacePoint, local_basis, surface_position
-from soma.validation import load_json, resource_directory
+from soma.validation import load_json, resource_directory, physical_dataset_manifest
 from .dem import DATUM, FRAME, RADIUS_M, RasterDEM, GeographicRasterDEM, TerrainSample
 from .horizons import HorizonBand, HorizonProfile, HorizonSampling, HorizonSite, _distances
 
@@ -256,10 +256,7 @@ def resolve_terrain_site(scenario, *, data_root=None, progress=None, cancel_even
     """
     _check_cancel(cancel_event)
     root = Path(data_root or os.environ.get('SOMA_DATA_ROOT', '/private/tmp/soma-phase2-data')).resolve()
-    manifest_path = resource_directory('data')/'physical-first-release.manifest.json'
-    manifest = load_json(manifest_path)
-    if scenario['dataset_manifest_ref'] != manifest['id']:
-        raise ValueError('Scenario must explicitly select the physical terrain dataset manifest')
+    manifest, manifest_path = physical_dataset_manifest(scenario['dataset_manifest_ref'])
     point = scenario['lander']
     lat_bounds = manifest['latitude_bounds_deg']
     lon_bounds = manifest['longitude_bounds_deg_east']
@@ -321,7 +318,7 @@ def acquire_polar_window(data_root, *, manifest=None, cancel_event=None):
     from urllib.request import Request, urlopen
     import rasterio
     from rasterio.windows import Window
-    from soma.datasets import _remote_identity, sha256
+    from soma.datasets import _remote_identity, sha256, canonical_raster_profile, verify_raster_artifact
 
     manifest = manifest or load_json(resource_directory('data')/'physical-polar-window.manifest.json')
     root = Path(data_root).resolve()
@@ -395,10 +392,10 @@ def acquire_polar_window(data_root, *, manifest=None, cancel_event=None):
                 profile.update(driver='GTiff',width=400,height=400,count=1,
                                transform=source.window_transform(window),compress='deflate',
                                tiled=True,blockxsize=256,blockysize=256)
+                profile = canonical_raster_profile(profile, entry)
                 with rasterio.open(partial,'w',**profile) as target:
                     target.write(values,1)
-            if sha256(partial) != entry['sha256']:
-                raise ValueError('Reproduced polar terrain window differs from pinned bytes')
+            verify_raster_artifact(partial, values, profile, entry)
             if _remote_identity(url) != parent:
                 raise ValueError('Official terrain parent changed during polar extraction')
             partial.replace(output)

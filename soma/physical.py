@@ -20,7 +20,7 @@ from soma.links import assess_contact
 from soma.power import fixed_panel_power
 from soma.time import format_utc, parse_utc
 from soma.time.spice import utc_to_et
-from soma.validation import load_json, resource_directory, scenario_sha256, validate_document
+from soma.validation import load_json, resource_directory, scenario_sha256, validate_document, physical_dataset_manifest
 
 MODEL_ID = 'physical-lola-de421-v1'
 RELAY_REFERENCE = 'soma-polar-200km-v1'
@@ -205,8 +205,8 @@ def prepare_physical_analysis(scenario, *, progress=None, cancel_event=None):
     assumptions. The scheduler and independent replay remain the authorities
     for byte causality, endpoint occupancy, storage and electrical energy.
     """
-    if scenario['analysis_mode'] != 'terrain_ephemeris' or scenario['dataset_manifest_ref'] != MODEL_ID:
-        raise ValueError('Physical preparation requires terrain_ephemeris and physical-lola-de421-v1')
+    if scenario['analysis_mode'] != 'terrain_ephemeris':
+        raise ValueError('Physical preparation requires terrain_ephemeris and an explicit supported dataset')
     start, end = [parse_utc(scenario['analysis_horizon'][k]) for k in ('start_utc', 'end_utc')]
     if not 0 < (end-start).total_seconds() <= 6*3600:
         raise ValueError('Physical first release supports positive horizons of at most six hours')
@@ -217,8 +217,7 @@ def prepare_physical_analysis(scenario, *, progress=None, cancel_event=None):
     if len(scenario['relay_refs']) > 1 or len(scenario['station_refs']) > 3:
         raise ValueError('Physical first release supports at most one lunar relay and three Earth stations')
     _cancel(cancel_event)
-    model_path = resource_directory('data')/'physical-first-release.manifest.json'
-    model = load_json(model_path)
+    model, model_path = physical_dataset_manifest(scenario['dataset_manifest_ref'])
     root = Path(os.environ.get('SOMA_DATA_ROOT', '/private/tmp/soma-phase2-data'))
     from soma.terrain.physical import resolve_terrain_site
     if progress:
@@ -424,7 +423,7 @@ def prepare_physical_analysis(scenario, *, progress=None, cancel_event=None):
             raise ValueError('Physical contact count exceeds the bounded 64-contact scheduler input')
         for contact in contacts:
             validate_document(contact,'contact')
-        provenance = {'model_id':MODEL_ID,'model_sha256':hashlib.sha256(model_path.read_bytes()).hexdigest(),
+        provenance = {'model_id':model['id'],'model_sha256':hashlib.sha256(model_path.read_bytes()).hexdigest(),
             'geometry':geometry_provenance,'terrain':terrain['provenance'],
             'numerics':{'time_step_s':TIME_STEP_S,'event_guard_s':TIME_STEP_S/2,'rates_bps':RATES_BPS,
                 'terrain_envelope_m':TERRAIN_ENVELOPE_M,'inner_body_radius_m':INNER_BODY_RADIUS_M,

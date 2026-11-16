@@ -100,7 +100,7 @@ def test_deployment_routes_keep_api_out_of_spa():
     assert config["rewrites"][0] == {"source": "/api/moon/:path*", "destination": "/api/index"}
     assert config["functions"]["api/index.py"]["maxDuration"] <= 300
     assert "api/_native/**" in config["functions"]["api/index.py"]["includeFiles"]
-    assert config["buildCommand"].startswith("python3 scripts/prepare-hosted-runtime.py")
+    assert config["buildCommand"] == "python3 scripts/build-hosted.py"
 
 
 def test_native_preload_checks_hash_and_uses_global_symbols(tmp_path, monkeypatch):

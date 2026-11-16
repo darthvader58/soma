@@ -1,0 +1,81 @@
+---
+title: Numerical terrain
+description: DEM access, separate-height horizons and finite spacecraft segment tests.
+---
+
+The Python terrain layer reads numerical elevation and count data independently of Cesium. A rendered mesh or picked display elevation is not a substitute for this layer. The reusable accessors and the bounded physical provider have different quality policies; neither implies worldwide high-resolution coverage.
+
+## DEM accessors
+
+```text
+RasterDEM(elevation_path, count_path, metadata)
+GeographicRasterDEM(elevation_path, count_path, metadata)
+SyntheticDEM(elevation_function, *, identifier)
+CompositeDEM(*sources)
+dem.sample(latitude_deg, longitude_deg_east) -> TerrainSample
+```
+
+`TerrainSample(elevation_m, quality_flags, count=None, source_id="")` retains unknown elevation as `None`. Latitude is planetocentric degrees and longitude is east-positive degrees in `[-180, 180)`.
+
+| Accessor | Supported model |
+| --- | --- |
+| `RasterDEM` | Aligned single-band south-polar elevation/count rasters; 1,737,400 m spherical polar stereographic CRS; explicit DE421 mean-Earth realization, units and hashes. |
+| `GeographicRasterDEM` | Native north-up cylindrical grid covering 0 to 360° longitude; declared pixels/degree, bounds, hashes and lunar spherical geographic CRS. Longitude wraps; no extrapolation to an absent pole row. |
+| `CompositeDEM` | Ordered sources with identical frame, radius and datum. Falls through only for `outside_coverage`; an unknown hole in a detailed source remains unknown. |
+| `SyntheticDEM` | Caller-provided scalar elevation function returning meters or `None`, with an explicit synthetic identifier. A software-test surface, not a measured Moon DEM. |
+
+The raster classes support context managers and `close()`. Their metadata requires `frame="MOON_ME_DE421"`, `reference_radius_m=1737400`, `elevation_datum="height_above_reference_sphere"`, `elevation_unit="m"`, `interpolation_policy="unknown_if_zero_count"`, and elevation/count SHA256 values. Polar rasters additionally require `pixel_size_m`; geographic rasters require `projection="simple_cylindrical"`, `pixels_per_degree` and `bounds_lonlat_deg`.
+
+Grids must already be aligned and decoded into meters. No reprojection, resampling or scale-factor guess is implicit. Bilinear contributors with missing data or nonpositive counts make the strict accessor result unknown. The physical delivery provider separately supports a declared published-grid policy that retains interpolation/downgrade flags; that is not the strict accessor silently treating missing measurements as clear terrain.
+
+## Sampled horizon
+
+```text
+HorizonSite(latitude_deg, longitude_deg_east, elevation_m, height_m,
+            pole_reference_meridian_deg_east, frame, reference_radius_m, elevation_datum)
+HorizonSampling(azimuth_step_deg, near_step_m, far_step_m, near_extent_m,
+                extents_m, convergence_tolerance_deg, required_max_extent_m)
+build_horizon(dem, site, sampling, *, cache=None) -> HorizonProfile
+horizon_cache_key(dem, site, sampling)
+HorizonCache()
+```
+
+`HorizonSite.height_m` is one observer's height: build distinct profiles for antenna and panel. The current implementation requires `MOON_ME_DE421`, the 1,737,400 m reference sphere and its height datum. It uses body-consistent Cartesian vectors and no atmospheric refraction.
+
+Sampling requires positive finite distances, an azimuth step dividing 360° and no larger than 180°, at least two increasing extents, and an extent sequence covering the declared near/far requirement. Maximum extent must be less than half a lunar circumference. Work is bounded to two million azimuth/radial sample points.
+
+`HorizonProfile` contains `site`, `sampling`, `bands`, `converged`, `maximum_change_deg`, the cache key, algorithm version and classification scope. `to_dict()` serializes it. Each `HorizonBand` contains azimuth/elevation degrees, `sampled_lower_bound_deg`, an unknown-sample count and quality flags. One unknown sample makes that azimuth's horizon unknown; absence of extent convergence cannot establish clear visibility. Extent convergence alone does not prove angular/radial sampling sufficiency or absolute terrain accuracy.
+
+`HorizonCache.get(key)` and `put(profile)` cache immutable profiles keyed by source hashes, coordinates, observer height, frame, sampling and algorithm version. A conflicting profile under the same key is rejected.
+
+### Executable synthetic terrain example
+
+```python
+from soma.terrain import SyntheticDEM, HorizonSite, HorizonSampling, HorizonCache, build_horizon
+
+surface = SyntheticDEM(lambda latitude, longitude: 0, identifier="documentation-flat-synthetic")
+site = HorizonSite(0, 0, 0, 2, 0, "MOON_ME_DE421", 1737400, "height_above_reference_sphere")
+sampling = HorizonSampling(90, 5, 20, 100, (4000, 8000), 0.01, 8000)
+profile = build_horizon(surface, site, sampling, cache=HorizonCache())
+assert profile.converged and len(profile.bands) == 4
+assert all(band.elevation_deg < 0 for band in profile.bands)
+```
+
+This synthetic flat sphere's small horizon dip is a curvature test, not a lunar site forecast.
+
+## Finite spacecraft segment
+
+```text
+finite_segment_visibility(dem, observer_m, target_m, *, frame, step_m,
+                          clearance_m, body_radius_m, max_samples=100000)
+```
+
+Endpoints, step, clearance and solid-body radius are meters in the common Moon-centered frame. The solid-body radius is a caller-declared conservative bound no larger than the reference radius; negative terrain elevations mean the reference sphere must not automatically be treated as solid rock.
+
+The result is `SegmentVisibility(status, reason, minimum_sampled_clearance_m, tested_range_m, sample_count, quality_flags)`. Status is `clear`, `blocked` or `unknown`. Degenerate segments, sampling-budget overflow, missing terrain and unresolved grazing clearance remain unknown. Only the finite segment is tested: terrain beyond the spacecraft cannot block it. `clear` means clear under recorded sampling, not a closed RF link or interval-wide access.
+
+## Bounded physical provider
+
+The delivery provider currently restricts numerical terrain studies to the region and interval in `data/physical-first-release.manifest.json`: latitude -89.15° to -88.85°, longitude -3° to 3°, November 2026, and at most six hours per run. It combines regional/coarse products under an explicit policy and records both equipment heights. These restrictions do not apply to global reference-sphere geometry studies, which do not evaluate terrain.
+
+Implementation: [DEM access](https://github.com/darthvader58/soma/blob/main/soma/terrain/dem.py), [horizons/segments](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py), [physical terrain preparation](https://github.com/darthvader58/soma/blob/main/soma/terrain/physical.py). Evidence: [DEM tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_terrain.py), [horizon/finite-range tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_horizons.py), [physical quality-policy tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_physical_terrain.py).

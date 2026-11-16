@@ -1,0 +1,85 @@
+---
+title: Scheduling and replay
+description: Complete-file delivery under finite contacts, radio conflicts, storage and lander energy constraints.
+---
+
+Delivery scheduling is implemented in Python. The authoritative high-level entry point runs preparation, optimization and independent replay. It does not return a favorable route merely because a path exists. Use the full unchanged scenario contract, including task volume/deadline, both equipment heights, hardware, finite buffers, service and network assumptions.
+
+## High-level planning
+
+```text
+from soma import plan_delivery
+from soma.engine import plan_run
+
+plan_delivery(scenario, **kwargs) -> dict
+plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, cancel_event=None) -> dict
+```
+
+`plan_delivery` returns the native result. `plan_run` additionally returns detached `scenario`, `analysis_inputs`, `validation` and `details` records. Its keyword arguments are also accepted by `plan_delivery`.
+
+Preparation either uses the declared provider or accepts complete externally supplied analysis inputs. External inputs must be version `0.4.0`, bound to the exact scenario hash, contain explicit contact/generation completeness, assumptions, warnings and provenance, and respect the 64-contact / 10,000-generation-bin input bounds. Passing schema checks does not independently establish the physical validity of user-supplied contacts.
+
+The built-in synthetic provider has a declared fixed geometry/horizon; unsupported changed geometry returns incomplete coverage rather than stretching an old schedule. The terrain/ephemeris provider is a separate bounded path requiring prepared local numerical sources: at most six hours, the documented south-polar region/date coverage, assumed net rates and ideal pointing. See [terrain](/reference/terrain) and [communications](/reference/communications).
+
+| Option | Default / meaning |
+| --- | --- |
+| `chunk_bytes` | 16,777,216; positive integer whole-chunk size. |
+| `bin_s` | 5 s for synthetic preparation, 60 s for terrain/ephemeris; positive finite grid step. |
+| `time_limit_s` | 15 s; nonnegative finite solver limit. A limit without a valid incumbent is unresolved. |
+
+Unknown option names fail. `progress` receives stage names. Cancellation checks the supplied event's `is_set()`; high-level cancellation can raise `InterruptedError`.
+
+## Bounded optimizer
+
+```text
+from soma.schedule import solve_schedule
+solve_schedule(scenario, contacts, generation_bins, *, chunk_bytes=16777216,
+               bin_s=5, time_limit_s=15, cancel_event=None)
+```
+
+This lower-level solver consumes already prepared usable contacts and explicit contiguous, piecewise-constant generation in watts. It uses PuLP/CBC with event-aligned bins; it is not a shortest-path substitute. Bounded work includes at most 5,000 nominal scheduling bins, 32 chunks and 64 contacts, with an additional candidate-size guard. Budget exits return unresolved status with a reason, not mathematical infeasibility.
+
+Supported route families are direct-to-Earth or one selected store-and-forward lunar relay. Earth-orbit relays are disabled. A relay must explicitly permit storage and have finite capacity. The model constrains contact capacity, source/receiver terminal occupancy including setup/teardown, light-time and processing-delay causality, finite buffers, complete unique-byte delivery by the receiver deadline, and lander base/radio demand with battery capacity, reserve, charge/discharge efficiency and instantaneous power limits. Relay and station power follow their explicit profile assumptions; this is not a full multi-asset thermal/power simulation.
+
+Payload durations round upward to event boundaries and padded occupancy consumes modeled electrical power. A received chunk may be withheld conservatively until its bin boundary and arrival/processing time. These assumptions are returned in the result.
+
+The policy first satisfies the deadline and constraints, then prefers fewer relay hops, earlier final-byte arrival and lower lander radio energy. It is a SOMA policy, not a statement that direct-to-Earth always has lower energy or latency.
+
+| Solver status | Interpretation |
+| --- | --- |
+| `proven_optimum` | Optimum for this bounded discretized model and declared objective. |
+| `feasible_incumbent` | Candidate found; optimality unproved or incomplete opportunities prevent a full-network optimum claim. |
+| `proven_infeasible_discretized_model` | No complete schedule in the specified complete discretized model. |
+| `unresolved` | No released conclusion, including budgets, cancellation, missing generation or timeout without incumbent. |
+
+The high-level delivery status is independently `feasible_under_assumptions`, `infeasible_in_model` or `unknown`. Unknown alternative contacts prevent a full-network infeasibility conclusion; a replayed plan on known contacts can still establish feasibility under its assumptions.
+
+## Independent replay
+
+```text
+from soma.schedule import replay_schedule
+replay_schedule(scenario, contacts, allocations, generation_bins, *, require_complete=True)
+```
+
+Replay recomputes constraints from allocations rather than trusting optimizer buffer/energy histories. It checks contact membership, both endpoint occupancy, integrated capacity, nonduplicated bytes, arrival/forwarding causality, finite storage, service, electrical demand through waiting periods and final-byte deadline. Incoming chunks reserve complete buffer capacity at first payload arrival and are released after outgoing transmission ends. `require_complete=False` allows an explicitly partial trace check; it does not establish full-file delivery.
+
+The returned dictionary includes `passed`, structured `errors`, independently derived energy/buffer/storage histories, delivered bytes and final arrival. Schema validation alone is not replay. High-level feasibility is released only after a candidate passes replay and delivers the complete requested volume.
+
+### Executable complete-run example
+
+This is the synthetic 100 MiB software-test network, not a lunar prediction.
+
+```python
+from soma.engine import plan_run
+from soma.schedule import replay_schedule
+from soma.validation import load_scenario
+
+run = plan_run(load_scenario("fixtures/synthetic-relay/scenario.json"))
+assert run["result"]["status"] == "feasible_under_assumptions"
+assert run["result"]["delivered_bytes"] == 104857600
+replayed = replay_schedule(run["scenario"], run["result"]["contacts"],
+                           run["result"]["allocations"], run["analysis_inputs"]["generation_bins"])
+assert replayed["passed"]
+```
+
+Implementation: [engine](https://github.com/darthvader58/soma/blob/main/soma/engine.py), [optimizer](https://github.com/darthvader58/soma/blob/main/soma/schedule/optimizer.py), [independent replay](https://github.com/darthvader58/soma/blob/main/soma/schedule/replay.py). Evidence: [resource/energy/deadline tests](https://github.com/darthvader58/soma/blob/main/tests/engine/test_scheduler.py), [corruption rejection](https://github.com/darthvader58/soma/blob/main/tests/engine/test_replay.py), [incomplete-opportunity interpretation](https://github.com/darthvader58/soma/blob/main/tests/engine/test_physical_contract.py).

@@ -3,9 +3,12 @@
 import hashlib
 import json
 from pathlib import Path
+import shutil
+import time
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from soma.validation import load_json
+from soma.validation import load_json, resource_directory
 
 
 def sha256(path):
@@ -29,13 +32,19 @@ def fetch_kernels(manifest_path, data_root):
         destination.parent.mkdir(parents=True, exist_ok=True)
         partial = destination.with_suffix(destination.suffix + ".partial")
         try:
-            with urlopen(entry["source_url"], timeout=60) as source, partial.open("wb") as output:
-                total = 0
-                while chunk := source.read(1024 * 1024):
-                    total += len(chunk)
-                    if total > 64 * 1024 * 1024:
-                        raise ValueError("Kernel exceeds the declared acquisition budget")
-                    output.write(chunk)
+            retained = resource_directory('data')/'pinned'/entry['path']
+            if retained.is_file():
+                if sha256(retained) != entry['sha256']:
+                    raise ValueError('Retained kernel SHA256 mismatch: ' + entry['path'])
+                shutil.copyfile(retained, partial)
+            else:
+                with urlopen(entry["source_url"], timeout=60) as source, partial.open("wb") as output:
+                    total = 0
+                    while chunk := source.read(1024 * 1024):
+                        total += len(chunk)
+                        if total > 64 * 1024 * 1024:
+                            raise ValueError("Kernel exceeds the declared acquisition budget")
+                        output.write(chunk)
             if sha256(partial) != entry["sha256"]:
                 raise ValueError(f"Downloaded kernel SHA256 mismatch: {entry['path']}")
             partial.replace(destination)
@@ -52,10 +61,208 @@ def _remote_identity(url):
                 "parent_sha256": None}
 
 
+
+_LOLA_RANGE_BUDGET = 32*1024*1024
+_LOLA_TRANSPORT_SECONDS = 120
+_LOLA_REQUEST_SPACING_S = 0.35
+_transport_now = time.monotonic
+_transport_sleep = time.sleep
+_ACQUISITION_USER_AGENT = "SOMA-scientific-acquisition/0.1 (+https://github.com/darthvader58/soma)"
+
+
+def _retry_after_seconds(value):
+    if not value:
+        return 0
+    try:
+        seconds = float(value)
+    except ValueError:
+        from datetime import datetime, timezone
+        from email.utils import parsedate_to_datetime
+        try:
+            seconds = (parsedate_to_datetime(value)-datetime.now(timezone.utc)).total_seconds()
+        except (TypeError, ValueError, OverflowError):
+            return 0
+    import math
+    if not math.isfinite(seconds):
+        return 0
+    return max(0, seconds)
+
+def _acquire_lola_elevation_tiles(root, parent):
+    """Stage exact parent metadata and selected compressed tiles in a sparse file.
+
+    This follows acquire_polar_window's byte-preserving transport, avoiding
+    libtiff's remote deferred tile-array reads. GDAL still decodes the original
+    TIFF tiles; the extraction and pinned output checksum are unchanged.
+    """
+    import struct
+    from tempfile import NamedTemporaryFile
+
+    url = parent["url"]
+    if url != "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldem_87s_5mpp.tif":
+        raise ValueError("Unrecognized LOLA elevation source")
+    transferred = 0
+    deadline = _transport_now()+_LOLA_TRANSPORT_SECONDS
+    next_request = _transport_now()
+
+    def wait_bounded(delay):
+        if _transport_now()+delay >= deadline:
+            raise TimeoutError("LOLA acquisition exceeded its 120-second transport budget")
+        if delay > 0:
+            _transport_sleep(delay)
+
+    def read_range(start, length):
+        nonlocal transferred, next_request
+        if start < 0 or length <= 0 or start+length > parent["size_bytes"]:
+            raise ValueError("Invalid bounded LOLA byte range")
+        for attempt in range(3):
+            if transferred+length+1 > _LOLA_RANGE_BUDGET:
+                raise ValueError("LOLA elevation exceeds its 32 MiB transport budget")
+            wait_bounded(max(0, next_request-_transport_now()))
+            next_request = _transport_now()+_LOLA_REQUEST_SPACING_S
+            retry_after = 0
+            try:
+                request = Request(url, headers={"Range": f"bytes={start}-{start+length-1}",
+                    "Accept-Encoding": "identity", "User-Agent": _ACQUISITION_USER_AGENT})
+                with urlopen(request, timeout=min(45, deadline-_transport_now())) as response:
+                    expected = f"bytes {start}-{start+length-1}/{parent['size_bytes']}"
+                    if response.status != 206 or response.headers.get("Content-Range") != expected:
+                        raise ValueError("LOLA server did not honor the exact bounded byte range")
+                    content = bytearray()
+                    read = getattr(response, "read1", response.read)
+                    while len(content) <= length:
+                        if _transport_now() >= deadline:
+                            raise TimeoutError("LOLA acquisition exceeded its 120-second transport budget")
+                        chunk = read(min(65536, length+1-len(content)))
+                        transferred += len(chunk)
+                        content.extend(chunk)
+                        if not chunk:
+                            break
+                    if _transport_now() >= deadline:
+                        raise TimeoutError("LOLA acquisition exceeded its 120-second transport budget")
+                if len(content) != length:
+                    raise ValueError("Incomplete LOLA byte range")
+                return bytes(content)
+            except HTTPError as error:
+                retry_after = _retry_after_seconds(error.headers.get("Retry-After") if error.headers else None)
+                error.close()
+                if error.code not in (403, 429) and not 500 <= error.code <= 599:
+                    raise
+                if attempt == 2:
+                    raise
+            except OSError:
+                if attempt == 2 or _transport_now() >= deadline:
+                    raise
+            # A server-directed wait longer than our bound ends acquisition;
+            # retrying sooner would disregard its request to reduce load.
+            if retry_after > 30:
+                raise TimeoutError("LOLA Retry-After exceeds the bounded 30-second retry wait")
+            wait_bounded(max(2**(attempt+1), retry_after))
+
+    metadata = read_range(0, 396153)
+    if metadata[:8] != b"II+\x00\x08\x00\x00\x00":
+        raise ValueError("Unexpected LOLA BigTIFF header")
+    offset = struct.unpack_from("<Q", metadata, 8)[0]
+    if offset != 16 or struct.unpack_from("<Q", metadata, offset)[0] != 20:
+        raise ValueError("LOLA BigTIFF directory revision changed")
+    tags = {record[0]: record[1:] for record in (
+        struct.unpack_from("<HHQQ", metadata, offset+8+i*20) for i in range(20))}
+    expected_tags = {256: (3,1,40000), 257: (3,1,40000), 322: (3,1,256),
+                     323: (3,1,256), 324: (16,24649,197624), 325: (16,24649,432)}
+    if any(tags.get(tag) != expected for tag, expected in expected_tags.items()):
+        raise ValueError("Unexpected LOLA BigTIFF tiling")
+    offsets = struct.unpack_from("<24649Q", metadata, tags[324][2])
+    sizes = struct.unpack_from("<24649Q", metadata, tags[325][2])
+    # Exactly the tiles intersecting the frozen 19000,12935,2000,2000 window.
+    indexes = [row*157+column for row in range(12935//256, (14935-1)//256+1)
+               for column in range(19000//256, (21000-1)//256+1)]
+    ranges = []
+    for index in indexes:
+        start, length = offsets[index], sizes[index]
+        if start < len(metadata) or not 0 < length <= 512*1024 or start+length > parent["size_bytes"]:
+            raise ValueError("LOLA tile lies outside the declared bounded parent")
+        if ranges and ranges[-1][0]+ranges[-1][1] == start and ranges[-1][1]+length <= 2*1024*1024:
+            ranges[-1] = (ranges[-1][0], ranges[-1][1]+length)
+        else:
+            ranges.append((start, length))
+    temporary = None
+    try:
+        with NamedTemporaryFile(prefix="soma-near-", suffix=".sparse.tif", dir=root, delete=False) as sparse:
+            temporary = Path(sparse.name)
+            sparse.truncate(parent["size_bytes"])
+            sparse.write(metadata)
+            for start, length in ranges:
+                sparse.seek(start)
+                sparse.write(read_range(start, length))
+        return temporary
+    except BaseException:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+        raise
+
+
+
+def _preserve_legacy_near_snapshot(values, expected):
+    """Reproduce the original missing-coverage footprint, never parent nodata.
+
+    This historical acquisition snapshot is used only for its exact original
+    hash. The complete v2 product never applies this legacy unknown-data mask.
+    """
+    if expected and expected["sha256"] == "79309dc0369aab9728e236de97ef5fd1eda1662c30042810bcf445e05f63fbf7":
+        if (expected["path"] != "lola-near-elevation.tif" or
+                expected["source_pixel_window"] != [19000,12935,2000,2000] or values.shape != (2000,2000)):
+            raise ValueError("Legacy snapshot recipe does not match its exact registered window")
+        import numpy as np
+        values[:1145, :] = np.nan
+    return values
+
+
+def raster_sample_identity(values):
+    """Hash C-order little-endian decoded sample bits, independent of TIFF codecs."""
+    import numpy as np
+    array = np.ascontiguousarray(values, dtype=values.dtype.newbyteorder("<"))
+    return {"sample_sha256": hashlib.sha256(array.tobytes(order="C")).hexdigest(),
+            "sample_dtype": array.dtype.str, "sample_shape": list(array.shape),
+            "finite_samples": int(np.isfinite(array).sum())}
+
+
+def _raster_mismatch(path, values, profile):
+    import rasterio
+    return ("Raster encoding differs from pinned bytes: "+json.dumps({
+        "path": path.name, "size_bytes": path.stat().st_size, "sha256": sha256(path),
+        **raster_sample_identity(values), "rasterio": rasterio.__version__,
+        "gdal": rasterio.__gdal_version__, "profile": {key: str(profile.get(key)) for key in
+            ("driver", "dtype", "width", "height", "compress", "tiled", "blockxsize", "blockysize", "transform", "nodata")}},
+        sort_keys=True))
+
+
+CANONICAL_RASTER_ENCODING = "canonical_uncompressed_little_endian_strips_v1"
+
+
+def canonical_raster_profile(profile, entry):
+    """Keep legacy writers intact; pin hosted strip layout without a codec."""
+    result = profile.copy()
+    if entry and entry.get("storage_encoding") == CANONICAL_RASTER_ENCODING:
+        result.pop("blockxsize", None)
+        result.update(compress="none", tiled=False, blockysize=1, interleave="band",
+                      ENDIANNESS="LITTLE", BIGTIFF="NO", SPARSE_OK="FALSE", NUM_THREADS=1)
+    return result
+
+
+def verify_raster_artifact(path, values, profile, expected):
+    if not expected:
+        return
+    if "sample_sha256" in expected:
+        actual = raster_sample_identity(values)
+        if any(actual[key] != expected[key] for key in actual):
+            raise ValueError("Decoded terrain samples differ from the declared source: "+json.dumps(actual, sort_keys=True))
+    if sha256(path) != expected["sha256"] or path.stat().st_size != expected["size_bytes"]:
+        raise ValueError(_raster_mismatch(path, values, profile))
+
 def extract_lola_window(data_root, *, expected_manifest=None):
     """Preserve an aligned 10 km square of elevation and float return counts.
 
-    No resampling or full elevation-mosaic download occurs. The compact count
+    Exact compressed elevation tiles are staged in a temporary sparse parent;
+    no resampling or full elevation-mosaic download occurs. The compact count
     mosaic is cached locally because its server's tiled range reads fail GDAL.
     The parent object's
     HTTP identity is checked across the read, while extracted bytes are hashed.
@@ -64,14 +271,17 @@ def extract_lola_window(data_root, *, expected_manifest=None):
     import rasterio
     from rasterio.windows import Window
 
+    expected_manifest = expected_manifest or load_json(resource_directory("data")/"lola-hosted-v2.manifest.json")
     root = Path(data_root).resolve()
     root.mkdir(parents=True, exist_ok=True)
     entries = []
     # Integer source pixels preserve PGDA's original five-meter registration.
     window = Window(19000, 12935, 2000, 2000)
     for kind, filename in (("elevation", "ldem_87s_5mpp.tif"), ("count", "ldec_87s_5mpp.tif")):
-        output = root / f"lola-near-{kind}.tif"
-        expected = None if expected_manifest is None else next(x for x in expected_manifest["files"] if x["role"] == kind)
+        expected = next(x for x in expected_manifest["files"] if x["role"] == kind)
+        output = (root/expected["path"]).resolve()
+        if not output.is_relative_to(root) or Path(expected["path"]).is_absolute():
+            raise ValueError("LOLA extract path escapes the data root")
         if expected and output.is_file() and sha256(output) == expected["sha256"]:
             entries.append(expected)
             continue
@@ -99,35 +309,45 @@ def extract_lola_window(data_root, *, expected_manifest=None):
             if expected and parent_file_sha256 != expected.get("parent_file_sha256"):
                 raise ValueError("Count parent checksum changed")
             source_path = str(local_parent)
-        with rasterio.Env(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
-                          CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif", GDAL_HTTP_TIMEOUT="45",
-                          GDAL_HTTP_CONNECTTIMEOUT="15", GDAL_HTTP_MULTIRANGE="SERIAL",
-                          GDAL_HTTP_MERGE_CONSECUTIVE_RANGES="NO"):
-            with rasterio.open(source_path) as source:
-                if source.shape != (40000, 40000) or source.res != (5.0, 5.0):
-                    raise ValueError("Unexpected LOLA product dimensions or pixel scale")
-                values = source.read(1, window=window)
-                profile = source.profile.copy()
-                profile.update(driver="GTiff", width=2000, height=2000, count=1,
-                               transform=source.window_transform(window), compress="deflate",
-                               tiled=True, blockxsize=256, blockysize=256)
-                partial = output.with_suffix(".partial.tif")
-                with rasterio.open(partial, "w", **profile) as target:
-                    target.write(values, 1)
-                    target.update_tags(**source.tags())
-                if expected and sha256(partial) != expected["sha256"]:
-                    raise ValueError("Recreated extract differs from pinned bytes; review the data revision")
-                partial.replace(output)
-                with rasterio.open(output) as target:
-                    bounds = list(target.bounds)
-                    transform = list(target.transform)
-                    crs = target.crs.to_wkt()
+        partial = output.with_suffix(".partial.tif")
+        temporary_parent = _acquire_lola_elevation_tiles(root, before) if kind == "elevation" else None
+        if temporary_parent is not None:
+            source_path = str(temporary_parent)
+        try:
+            with rasterio.Env(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR",
+                              CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif", GDAL_HTTP_TIMEOUT="45",
+                              GDAL_HTTP_CONNECTTIMEOUT="15", GDAL_HTTP_MULTIRANGE="SERIAL",
+                              GDAL_HTTP_MERGE_CONSECUTIVE_RANGES="NO"):
+                with rasterio.open(source_path) as source:
+                    if source.shape != (40000, 40000) or source.res != (5.0, 5.0):
+                        raise ValueError("Unexpected LOLA product dimensions or pixel scale")
+                    values = source.read(1, window=window)
+                    if kind == "elevation":
+                        values = _preserve_legacy_near_snapshot(values, expected)
+                    profile = source.profile.copy()
+                    profile.update(driver="GTiff", width=2000, height=2000, count=1,
+                                   transform=source.window_transform(window), compress="deflate",
+                                   tiled=True, blockxsize=256, blockysize=256)
+                    profile = canonical_raster_profile(profile, expected)
+                    with rasterio.open(partial, "w", **profile) as target:
+                        target.write(values, 1)
+                        target.update_tags(**source.tags())
+                    verify_raster_artifact(partial, values, profile, expected)
+                    partial.replace(output)
+                    with rasterio.open(output) as target:
+                        bounds = list(target.bounds)
+                        transform = list(target.transform)
+                        crs = target.crs.to_wkt()
+        finally:
+            if temporary_parent is not None:
+                temporary_parent.unlink(missing_ok=True)
+            partial.unlink(missing_ok=True)
         if _remote_identity(url) != before:
             raise ValueError("Parent LOLA object changed during extraction")
         record = {"role": kind, "path": output.name, "sha256": sha256(output),
                   "size_bytes": output.stat().st_size, "parent": before,
                   "parent_file_sha256": parent_file_sha256,
-                  "acquisition": "bounded_HTTP_window" if kind == "elevation" else "window_of_cached_compact_count_mosaic",
+                  "acquisition": expected["acquisition"],
                   "source_pixel_window": [19000, 12935, 2000, 2000],
                   "bounds_xy_m": bounds, "transform": transform, "crs_wkt": crs,
                   "dtype": str(values.dtype)}
@@ -135,7 +355,7 @@ def extract_lola_window(data_root, *, expected_manifest=None):
             raise ValueError("Recreated extract differs from pinned bytes; review the data revision")
         entries.append(record)
     manifest = {
-        "manifest_version": "0.2.0", "dataset_id": "pgda81-near-89s-0e-window-v1",
+        "manifest_version": expected_manifest["manifest_version"], "dataset_id": expected_manifest["dataset_id"],
         "status": "local_window_extracted", "input_class": "published",
         "frame": "MOON_ME_DE421", "reference_radius_m": 1737400,
         "elevation_datum": "height_above_reference_sphere", "elevation_unit": "m",
@@ -151,6 +371,9 @@ def extract_lola_window(data_root, *, expected_manifest=None):
         "far_field_coverage": "not_provided_by_this_extract",
         "software": {"rasterio": rasterio.__version__, "gdal": rasterio.__gdal_version__},
     }
+    manifest["acquisition_provenance"] = expected_manifest.get("acquisition_provenance", {
+        "recipe": "Legacy original snapshot: preserve unknown first 1145 extract rows only for exact original elevation hash; this missing coverage is not NASA parent nodata",
+        "legacy_elevation_sha256": "79309dc0369aab9728e236de97ef5fd1eda1662c30042810bcf445e05f63fbf7"})
     return manifest
 
 
@@ -174,8 +397,10 @@ def extract_lola_far_cap(data_root, *, expected_manifest=None):
         ("elevation", "ldem_64", "V3.1", "4e7a94c76c716a147b21ccf07669d004246b0d1b017b7d63d50befaa1a34142d"),
         ("count", "ldec_64", "V3.0", "c39096be522606065f7b9cce245e60d124ab397f4d33d3bd3248ff7bc7208e36"),
     ):
-        output = root / ("lola-far-" + role + ".tif")
         expected = None if expected_manifest is None else next(x for x in expected_manifest["files"] if x["role"] == role)
+        output = (root/(expected["path"] if expected else "lola-far-"+role+".tif")).resolve()
+        if not output.is_relative_to(root):
+            raise ValueError("Far terrain path escapes data_root")
         if expected and output.is_file() and sha256(output) == expected["sha256"]:
             entries.append(expected)
             continue
@@ -208,11 +433,11 @@ def extract_lola_far_cap(data_root, *, expected_manifest=None):
                    "dtype": str(values.dtype), "crs": "+proj=longlat +a=1737400 +b=1737400 +no_defs",
                    "transform": from_origin(0, -80, 1/64, 1/64), "compress": "deflate",
                    "tiled": True, "blockxsize": 256, "blockysize": 256}
+        profile = canonical_raster_profile(profile, expected)
         partial = output.with_suffix(".partial.tif")
         with rasterio.open(partial, "w", **profile) as dataset:
             dataset.write(values, 1)
-        if expected and sha256(partial) != expected["sha256"]:
-            raise ValueError("Converted far-field extract differs from pinned bytes")
+        verify_raster_artifact(partial, values, profile, expected)
         partial.replace(output)
         record = {"role": role, "path": output.name, "sha256": sha256(output),
                   "raw_extract_sha256": sha256(raw_path), "size_bytes": output.stat().st_size,

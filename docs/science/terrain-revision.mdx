@@ -1,0 +1,61 @@
+---
+title: Terrain dataset revisions
+description: Why the live delivery provider uses the complete published window and older exports retain their original inputs.
+---
+
+The hosted delivery provider uses `physical-lola-de421-v2`. It keeps the same
+DE421 mean-Earth frame, five-meter near-terrain pixel scale, geographic domain,
+November 2026 coverage, count product, far terrain and declared hardware/network
+assumptions as the earlier bounded model. Its near elevation extract is a new,
+explicitly identified data revision.
+
+## What changed
+
+A clean Linux build exposed a remote TIFF tile-read problem. A bounded download
+of the original parent metadata and 81 intersecting compressed tiles reproduced
+the complete 2,000 × 2,000 published elevation window. The earlier pinned extract
+had NaNs throughout its first 1,145 rows. Every finite value in that older extract
+matches the complete source window exactly.
+
+| Near elevation artifact | Finite elevations | Missing values |
+| --- | --- | --- |
+| Original v1 snapshot | 1,710,000 | 2,290,000 |
+| Complete v2 window | 4,000,000 | 0 |
+
+The missing rows in the v1 snapshot are an acquisition artifact, not a claim that
+NASA's parent terrain product lacks elevations there. Old calculations used
+their declared missing-data and coarse-fallback policies. Existing exported
+scenarios, manifests, results and ZIPs retain those exact original inputs.
+Reproduction of that historical snapshot explicitly preserves its original
+missing-data footprint; it is not the default for new hosted delivery studies.
+
+## What the correction establishes
+
+The v2 extract contains all 4,000,000 finite values in this published window.
+Finite elevation does not imply a direct laser measurement. The unchanged count
+product still distinguishes measured and interpolated terrain, and the model
+retains those quality flags. Missing or unsupported samples elsewhere remain
+unknown. Numerical terrain is independent of the Cesium mesh.
+
+The complete near-elevation sample array has SHA-256
+`3e0dadb4811d00e3b42a21555b1072dc686065d5ed29524c07d692d0e0589889`
+when serialized as little-endian float32 in row-major order. Linux and macOS
+reconstruction produced that same array identity. The v2 rasters use a declared
+uncompressed, little-endian strip layout, with separate strict file checksums.
+This avoids treating platform-dependent compressed TIFF bytes as different
+scientific samples. Far/polar values, count masks and georeferencing are preserved.
+
+The build verifies exact source identities, bounded byte-range responses and the
+final extract checksum. Requests use the prepared local files. The returned
+scenario, environment, manifests and run package identify the selected revision;
+v1 and v2 results must not be presented as a controlled comparison with unchanged
+terrain inputs.
+
+Fresh v2 runs reproduced direct delivery on November 24, no direct capacity on
+November 30 and a replayed relay schedule on November 30 for the declared 16 MiB
+comparison. These are model results under assumed rates and service, not mission
+predictions. Read the actual exported solver status and arrival epochs.
+
+Sources: [NASA PGDA LOLA south-pole product 81](https://pgda.gsfc.nasa.gov/products/81),
+[complete window manifest](https://github.com/darthvader58/soma/blob/main/data/lola-hosted-v2.manifest.json),
+[bounded model manifest](https://github.com/darthvader58/soma/blob/main/data/physical-hosted-v2.manifest.json).
