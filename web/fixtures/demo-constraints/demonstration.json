@@ -1,0 +1,1649 @@
+{
+  "artifact_type": "physical_mission_constraint_demonstration",
+  "baseline_replay_passed": true,
+  "cases": [
+    {
+      "baseline_counterfactual_errors": [
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:11:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:12:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:13:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:14:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:15:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:16:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:17:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:18:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:19:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:20:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:21:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:22:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:23:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:24:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:25:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:26:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:27:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:28:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:29:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:30:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:31:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:32:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:33:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:34:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:35:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:36:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:37:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:38:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:39:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:40:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:41:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:42:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:43:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:44:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:45:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:46:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:47:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:48:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:49:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:50:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:51:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:52:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:53:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:54:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:55:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:56:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:57:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:58:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T08:59:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:00:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:01:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:02:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:03:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:04:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:05:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:06:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:07:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:08:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:09:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:10:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:11:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:12:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:13:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:14:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:15:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:16:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:17:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:18:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:19:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:20:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:21:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:22:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:23:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:24:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:25:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:26:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:27:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:28:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:29:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:30:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:31:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:32:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:33:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:33:30Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:34:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:35:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:36:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:37:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:38:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:39:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:40:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:41:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:42:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:43:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:44:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:45:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:46:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:47:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:48:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:49:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:50:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:51:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:52:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:53:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:54:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:55:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:56:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:57:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:58:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T09:59:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:00:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:01:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:02:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:03:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:04:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:05:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:06:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:07:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:08:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:09:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:10:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:11:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:12:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:13:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:14:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:15:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:16:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:17:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:18:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:19:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:20:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:21:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:22:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:23:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:24:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:25:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:26:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:27:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:28:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:29:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:30:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:31:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:32:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:33:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:34:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:35:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:36:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:37:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:38:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:39:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:40:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:41:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:42:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:43:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:44:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:45:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:46:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:47:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:48:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:49:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:50:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:51:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:52:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:53:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:54:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:55:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:56:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:57:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:58:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T10:59:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:00:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:01:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:02:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:03:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:04:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:05:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:06:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:07:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:08:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:09:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:10:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:11:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:12:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:13:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:14:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:15:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:16:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:17:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:18:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:19:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:20:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:21:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:22:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:23:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:24:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:25:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:26:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:27:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:28:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:29:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:30:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:31:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:32:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:33:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:34:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:35:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:36:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:37:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:38:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:39:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:40:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:41:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:42:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:43:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:44:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:45:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:46:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:47:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:48:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:49:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:50:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:51:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:52:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:53:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:54:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:55:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:56:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:57:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:58:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T11:59:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:00:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:01:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:02:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:03:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:04:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:05:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:06:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:07:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:08:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:09:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:10:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:11:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:12:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:13:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:14:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:15:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:16:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:17:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:18:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:19:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:20:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:21:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:22:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:23:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:24:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:25:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:26:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:27:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:28:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:29:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:30:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:31:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:32:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:33:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:34:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:35:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:36:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:37:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:38:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:39:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:40:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:41:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:42:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:43:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:44:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:45:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:46:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:47:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:48:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:49:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:50:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:51:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:52:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:53:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:54:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:55:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:56:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:57:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:58:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T12:59:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:00:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:01:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:02:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:03:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:04:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:05:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:06:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:07:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:08:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:09:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:10:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:11:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:12:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:13:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:14:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:15:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:16:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:17:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:18:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:19:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:20:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:21:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:22:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:23:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:24:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:25:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:26:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:27:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:28:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:29:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:30:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:31:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:32:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:33:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:34:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:35:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:36:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:37:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:38:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:39:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:40:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:41:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:42:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:43:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:44:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:45:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:46:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:47:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:48:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:49:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:50:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:51:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:52:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:53:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:54:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:55:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:56:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:57:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:58:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T13:59:00Z"
+        },
+        {
+          "code": "energy_reserve",
+          "reason": "energy below reserve at 2026-11-30T14:00:00Z"
+        }
+      ],
+      "baseline_counterfactual_rejected": true,
+      "case_id": "battery-low",
+      "changed_control": "initial_energy_wh",
+      "changed_value": 11,
+      "constraint_explanation": "Baseline rejected: battery reserve; full delivery remains unresolved under incomplete contact coverage. Only initial battery energy changes from 80 Wh to 11 Wh, with a 10 Wh reserve. The archived November 30 DE421/LOLA physical analysis has zero modeled generation. The 5 W base load over six hours needs 30 Wh of delivered electricity, or 33.333333333333336 Wh removed at 0.9 discharge efficiency, above the 1 Wh initial reserve margin. The engine nevertheless conservatively retains unknown/unresolved because contact coverage is incomplete.",
+      "delivered_bytes": null,
+      "export_verified": true,
+      "files": {
+        "battery-low/analysis-inputs.json": {
+          "sha256": "6641ced212643b7d885c91036507a72ac7ac035c4d55b0fa3603e1d79e58681b",
+          "size_bytes": 4590416
+        },
+        "battery-low/baseline-counterfactual-replay.json": {
+          "sha256": "9a2eb8476abdcbc448ffe04406bb07fed76140e6775b43e6c193ef005829d6ee",
+          "size_bytes": 85183
+        },
+        "battery-low/buffer-history.csv": {
+          "sha256": "59a731671982aae79cff358b04cd847ce0714ad7d20f977b36a0b4ebea4e81b7",
+          "size_bytes": 31
+        },
+        "battery-low/contacts.csv": {
+          "sha256": "c095daf506697bb3fdd2ee73e45aa7447b1a5195bba0662170880956a52f569b",
+          "size_bytes": 7339
+        },
+        "battery-low/display-data.json": {
+          "sha256": "fdf52ce8479caec8eefe6ed13fba3e5ef3dc4893910892fca2e06e80484224ba",
+          "size_bytes": 5063761
+        },
+        "battery-low/display.czml": {
+          "sha256": "753d8b7719e4c2e91a3e38ba419e49a87800253dad3a36ab152debfd2c8678be",
+          "size_bytes": 453213
+        },
+        "battery-low/energy.csv": {
+          "sha256": "edb40563f8f3ab30e6287f4bdd52b6132ae60fdb4d10989280c55ed5e999c6aa",
+          "size_bytes": 35
+        },
+        "battery-low/explanation.md": {
+          "sha256": "bb644cc579b6c0f8fb8d08cda3c840473ebe908e04a6b9a2b886da31b1c0eb9b",
+          "size_bytes": 79631
+        },
+        "battery-low/renderer-conversion.json": {
+          "sha256": "5810f9c662b59136eac702be59dda25eb82edf47fad99f1e33777490dfc29714",
+          "size_bytes": 2724
+        },
+        "battery-low/renderer-registration.json": {
+          "sha256": "3165c7a2a558425331d947bf54488dbcb885a8a459c4426a830376e085fcbdc9",
+          "size_bytes": 9104
+        },
+        "battery-low/replay.json": {
+          "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+          "size_bytes": 5
+        },
+        "battery-low/result.json": {
+          "sha256": "a35f1b5cc0dfd9c1115f11726da7a74331d19484db00c962dbc42d13180b451b",
+          "size_bytes": 23421
+        },
+        "battery-low/run-manifest.json": {
+          "sha256": "d7c9a4de435d5497553b9790c558f35270a031745ce6691049f601f508ed47b4",
+          "size_bytes": 113777
+        },
+        "battery-low/run.json": {
+          "sha256": "c7293fdf76da91f2ede9918c33dfd4823cf6a22a9d653c647ca4763670afc95f",
+          "size_bytes": 4984191
+        },
+        "battery-low/run.zip": {
+          "sha256": "2b486774ee8fc58137fc82f72495dfb09236c99c95fffd0b55e226a908896fa1",
+          "size_bytes": 10463614
+        },
+        "battery-low/scenario.json": {
+          "sha256": "394ec404ea425e59d4469d48b54a7b8c48db62ec377eadc1d944d521d682c5ec",
+          "size_bytes": 8942
+        },
+        "battery-low/schedule.csv": {
+          "sha256": "21f812f345c5490e22d7d26f53cacae375d18dee7317f7ce2ad855af3ca431e1",
+          "size_bytes": 211
+        },
+        "battery-low/summary.json": {
+          "sha256": "4309139b7e5cb2524ea3739c02b244ba167aa3b009571a9a1f06e38ed953e069",
+          "size_bytes": 109384
+        },
+        "battery-low/verification.json": {
+          "sha256": "16dff91dc89f721512d151a8f10b687b49015b8758dac77151b7198ef9f046da",
+          "size_bytes": 5330
+        }
+      },
+      "final_byte_arrival_utc": null,
+      "input_class": "published_geometry_with_assumed_mission",
+      "labels": [
+        "Hypothetical planned mission, not a flown operation",
+        "Published LOLA terrain and DE421 ephemerides",
+        "Assumed net radio rates, hardware, pointing and station service",
+        "Synthetic two-body lunar relay trajectory; not an operational relay",
+        "Archived modeled zero generation on November 30",
+        "Incomplete contact coverage; unknown is not proven infeasible"
+      ],
+      "limiting_reason": "No complete schedule exists on the known contacts, but unknown opportunities prevent an infeasibility conclusion for the declared network.",
+      "model_fidelity": "assumed_rate_simulation",
+      "package_ref": "battery-low/run.zip",
+      "package_sha256": "2b486774ee8fc58137fc82f72495dfb09236c99c95fffd0b55e226a908896fa1",
+      "run_ref": "battery-low/run.json",
+      "scenario_id": "physical-south-pole-nov-30",
+      "scenario_sha256": "21154d6b3ffafd4fc0f51df6ba88de617bb26e5e01e19213f4f171c69d19abbc",
+      "solver_status": "unresolved",
+      "status": "unknown"
+    },
+    {
+      "baseline_counterfactual_errors": [
+        {
+          "allocation_id": "allocation-0",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+        },
+        {
+          "allocation_id": "allocation-1",
+          "code": "service_unavailable",
+          "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+        }
+      ],
+      "baseline_counterfactual_rejected": true,
+      "case_id": "service-off",
+      "changed_control": "relay_service_available",
+      "changed_value": false,
+      "constraint_explanation": "The baseline schedule cannot use unavailable relay service; full routing remains unresolved. Only the hypothetical lunar relay service windows change to an empty list. The same November 30 DE421/LOLA analysis contains no known usable direct contacts. Unknown opportunities remain unknown, so failure on known contacts is not proof of full-network infeasibility.",
+      "delivered_bytes": null,
+      "export_verified": true,
+      "files": {
+        "service-off/analysis-inputs.json": {
+          "sha256": "5de10900a75120430dff43c9aed5d302a14bb1d81af6b3137b0b60e8064a6ba7",
+          "size_bytes": 4590416
+        },
+        "service-off/baseline-counterfactual-replay.json": {
+          "sha256": "168142beac4beb8d1e0751398f11ba6aa897833f549f6974f225f39f0e1acd04",
+          "size_bytes": 51565
+        },
+        "service-off/buffer-history.csv": {
+          "sha256": "59a731671982aae79cff358b04cd847ce0714ad7d20f977b36a0b4ebea4e81b7",
+          "size_bytes": 31
+        },
+        "service-off/contacts.csv": {
+          "sha256": "c095daf506697bb3fdd2ee73e45aa7447b1a5195bba0662170880956a52f569b",
+          "size_bytes": 7339
+        },
+        "service-off/display-data.json": {
+          "sha256": "27d37878bd1e7abc377ff71efe45063a6b740ec155c8d9a0c4575f982fd2e3ec",
+          "size_bytes": 5063759
+        },
+        "service-off/display.czml": {
+          "sha256": "5b6ff424e5cc83bf8c6d5be93c5d7dfc27ae2f9d76cc61590dec415e000cd3b6",
+          "size_bytes": 453213
+        },
+        "service-off/energy.csv": {
+          "sha256": "edb40563f8f3ab30e6287f4bdd52b6132ae60fdb4d10989280c55ed5e999c6aa",
+          "size_bytes": 35
+        },
+        "service-off/explanation.md": {
+          "sha256": "ee2a35197b8c2e7272a96d997164ef422b59cc59a296322c0dea9248dd4613ec",
+          "size_bytes": 79629
+        },
+        "service-off/renderer-conversion.json": {
+          "sha256": "5810f9c662b59136eac702be59dda25eb82edf47fad99f1e33777490dfc29714",
+          "size_bytes": 2724
+        },
+        "service-off/renderer-registration.json": {
+          "sha256": "3165c7a2a558425331d947bf54488dbcb885a8a459c4426a830376e085fcbdc9",
+          "size_bytes": 9104
+        },
+        "service-off/replay.json": {
+          "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+          "size_bytes": 5
+        },
+        "service-off/result.json": {
+          "sha256": "7b0ea88877d907e137e554592ebc9335734139904322c074670cc4ae6dbfc1a5",
+          "size_bytes": 23421
+        },
+        "service-off/run-manifest.json": {
+          "sha256": "64afdd1312cf6e0c2705b9113e25d7481c8ae59df20e311b9d75951f58db1068",
+          "size_bytes": 113775
+        },
+        "service-off/run.json": {
+          "sha256": "e11d04429c2ff93aa6769e876f530cc9a9f6fe4b992ff1108da645e013df429c",
+          "size_bytes": 4984041
+        },
+        "service-off/run.zip": {
+          "sha256": "0a9b10604c3fbbc0311d06d9fd542be55a50d83a357e98aad9bf1754847be548",
+          "size_bytes": 10463468
+        },
+        "service-off/scenario.json": {
+          "sha256": "582fe2aaa92901ef7285cdafc8d41386ff5c432b9bc89aa8bea71ab1c4a1889c",
+          "size_bytes": 8804
+        },
+        "service-off/schedule.csv": {
+          "sha256": "21f812f345c5490e22d7d26f53cacae375d18dee7317f7ce2ad855af3ca431e1",
+          "size_bytes": 211
+        },
+        "service-off/summary.json": {
+          "sha256": "b03977e31c7488504110272d219ce66bfd98b5b4c1a06de5c17499d24344945c",
+          "size_bytes": 109382
+        },
+        "service-off/verification.json": {
+          "sha256": "0494ea4079157bb1fd28268cb15ed124b518ccabbdd7b3a2f4a95e2f9aabae24",
+          "size_bytes": 5330
+        }
+      },
+      "final_byte_arrival_utc": null,
+      "input_class": "published_geometry_with_assumed_mission",
+      "labels": [
+        "Hypothetical planned mission, not a flown operation",
+        "Published LOLA terrain and DE421 ephemerides",
+        "Assumed net radio rates, hardware, pointing and station service",
+        "Synthetic two-body lunar relay trajectory; not an operational relay",
+        "Archived modeled zero generation on November 30",
+        "Incomplete contact coverage; unknown is not proven infeasible"
+      ],
+      "limiting_reason": "No complete schedule exists on the known contacts, but unknown opportunities prevent an infeasibility conclusion for the declared network.",
+      "model_fidelity": "assumed_rate_simulation",
+      "package_ref": "service-off/run.zip",
+      "package_sha256": "0a9b10604c3fbbc0311d06d9fd542be55a50d83a357e98aad9bf1754847be548",
+      "run_ref": "service-off/run.json",
+      "scenario_id": "physical-south-pole-nov-30",
+      "scenario_sha256": "a4be6ae73ca4037e4c8e14296735f9f9733bcf61f61c56bccdba8e74493da509",
+      "solver_status": "unresolved",
+      "status": "unknown"
+    }
+  ],
+  "generator_ref": "scripts/build-demo-constraints.py",
+  "generator_sha256": "3f0a8cba2e592f0ea2cea9ef931debcf27307bd0e25bcc7ae440c860717a5d10",
+  "limitations": [
+    "Published DE421/LOLA physical inputs support a hypothetical mission with assumed rates, hardware and service and a synthetic two-body relay.",
+    "Counterfactual replay rejects the known baseline schedule; incomplete contact coverage prevents a full-network infeasibility conclusion.",
+    "No selected schedule exists for unresolved cases; absent energy histories and completion remain unknown.",
+    "Exact numerical outcomes are reproducible; ZIP bytes also record current software hashes and versions."
+  ],
+  "method": "One mission control changed from the archived physical relay case; numerical analysis and scheduler options preserved, scenario hash bindings refreshed; native outputs unedited; packages independently verified.",
+  "reproduce_command": ".venv/bin/python scripts/build-demo-constraints.py",
+  "source_ref": "fixtures/physical-south-pole/relay-later/run.zip",
+  "source_sha256": "27ea8e3448375df79bb05863f8ebc34cc513e7282ba3461214f767029b271d39",
+  "version": "1.0.0"
+}

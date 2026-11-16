@@ -48,13 +48,23 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "edae19c1bfd665168bc084cd2dee9743730fb4d4b185d0c441f708dc6c092d94",
-      "size_bytes": 16687
+      "sha256": "7f62f4e3021a14b712c388754fd7dfe4962972effe1bc971dedf396b8c0632fc",
+      "size_bytes": 17331
+    },
+    {
+      "path": "api/.gitignore",
+      "sha256": "7aca673ae7d915b7bd42fd723c11c8bbf118effdf9c99593b4b418c2ff723f57",
+      "size_bytes": 9
+    },
+    {
+      "path": "api/index.py",
+      "sha256": "62c2efb522038d0ceb1250a8a9a9028faac6531c87b6ece0fcd245a2720bcd29",
+      "size_bytes": 4720
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "caccb42c236f65fc3e8099cedb85bf678dd1b3343e340147ec9883d4941434e1",
-      "size_bytes": 13496
+      "sha256": "5734571a75b948d4b46c8dd63617b4ae05e87611f1402a69251afb082f598c25",
+      "size_bytes": 13964
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -75,6 +85,21 @@
       "path": "data/renderer-registration.manifest.json",
       "sha256": "73d5294def057374261feebfe443cdfc624f0ee08ca66b9a356fdbef91cbba6b",
       "size_bytes": 9033
+    },
+    {
+      "path": "docs/guides/hackathon-demo.mdx",
+      "sha256": "bc997a509b84cd514ad127c088a84a0c51a78785c78fb66f86278548878281dc",
+      "size_bytes": 14423
+    },
+    {
+      "path": "fixtures/demo-constraints/README.md",
+      "sha256": "e86312c3302b50c341e97f1d59b44acf41707e7d90b8f6c0a07b5ae7625c6410",
+      "size_bytes": 4934
+    },
+    {
+      "path": "fixtures/demo-constraints/demonstration.json",
+      "sha256": "dd8903db0b6f5f4d83ebeacbcac5bd3d76fce5ff4e05c285ed99a5f1db384297",
+      "size_bytes": 55518
     },
     {
       "path": "fixtures/physical-south-pole/README.md",
@@ -177,6 +202,26 @@
       "size_bytes": 404576
     },
     {
+      "path": "pyproject.toml",
+      "sha256": "d4678fddb67c9e09ce9773a23db253047ba370035556095dcede23dbb97ece79",
+      "size_bytes": 974
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "7d5207aad1003fe18f58d3a43e79e260eb352995b35a2a5c032b487239f4ab3e",
+      "size_bytes": 121
+    },
+    {
+      "path": "scripts/build-demo-constraints.py",
+      "sha256": "3f0a8cba2e592f0ea2cea9ef931debcf27307bd0e25bcc7ae440c860717a5d10",
+      "size_bytes": 8162
+    },
+    {
+      "path": "scripts/prepare-hosted-runtime.py",
+      "sha256": "a2b92a75f5b054240058a39f09ee7af21ccb78752165e4bfc3664364178b9174",
+      "size_bytes": 2398
+    },
+    {
       "path": "soma/__main__.py",
       "sha256": "aa357b6c380bdd4d6829605e0af44b042de9ba57522c88966d2af4a4a4505685",
       "size_bytes": 11232
@@ -185,6 +230,11 @@
       "path": "soma/docs/challenge-alignment.md",
       "sha256": "b8ed10a5dc5ca7b78a9d9f72f8d7faf9e35382ad47278788f04d4a61989a6295",
       "size_bytes": 12914
+    },
+    {
+      "path": "soma/docs/hackathon-demo-script.md",
+      "sha256": "e892a04f2da7a452374f64e6bbe57ecdbe73e2bf1109de67f163c68c797ea274",
+      "size_bytes": 14302
     },
     {
       "path": "soma/docs/phase-6/source-and-license-audit.md",
@@ -262,6 +312,16 @@
       "size_bytes": 7717
     },
     {
+      "path": "tests/engine/test_demo_constraints.py",
+      "sha256": "fe6f3e7c71d7518baec424a253b7c831da3a6716cca000d50f4dd4f8b2ee5ada",
+      "size_bytes": 4151
+    },
+    {
+      "path": "tests/engine/test_hosted_moon_api.py",
+      "sha256": "2dbfcf36bdc1812e5bbe97b8dfcdc79275a5a6ad7d297313a4089b32c1a31a49",
+      "size_bytes": 5399
+    },
+    {
       "path": "tests/engine/test_physical_contract.py",
       "sha256": "ddf5420cdf0dd8c612d984a1934dadb69556d730f40595a190716abd2be0df91",
       "size_bytes": 4627
@@ -278,8 +338,8 @@
     },
     {
       "path": "tests/web/browser.spec.mjs",
-      "sha256": "e19a4201e7c6d59624b8e98f662154fe53081070b25e6e0eff92cf038745c46c",
-      "size_bytes": 28302
+      "sha256": "97b69961468cf8596c00525efefb55c8f72ebf216bb2494ca83f319326ba60ca",
+      "size_bytes": 32721
     },
     {
       "path": "tests/web/comparison.test.mjs",
@@ -290,6 +350,11 @@
       "path": "tests/web/live.browser.spec.mjs",
       "sha256": "d8d58be2f1608b356519815ef8d482cb75009fa51c57baeac7b4883091842f7f",
       "size_bytes": 15494
+    },
+    {
+      "path": "tests/web/mission-cases.test.mjs",
+      "sha256": "f184242c0272cf8267245eaf4a76d9723fab138c101d0dab6a1c9a7da74990de",
+      "size_bytes": 4252
     },
     {
       "path": "tests/web/physical-contract.test.mjs",
@@ -320,6 +385,11 @@
       "path": "tests/web/viewer-runtime.test.mjs",
       "sha256": "7a02a2e40a12b49d60f5ef3c963e35dd1d11ddd400ac58f61db4e5df1bc05176",
       "size_bytes": 17470
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "ddd2075db737fbd4a0faf6f4a47e2e4b16e50accbac966f282ec675cd43fd7b0",
+      "size_bytes": 912
     },
     {
       "path": "web/.gitignore",
@@ -392,19 +462,44 @@
       "size_bytes": 537
     },
     {
+      "path": "web/scripts/sync-physical.mjs",
+      "sha256": "0f7171ffe6059358f1be92f711ac292b722ae8aeceaf6c762416aeee65044d88",
+      "size_bytes": 1270
+    },
+    {
       "path": "web/src/comparison.js",
       "sha256": "7576ba20458a3f8367ec228cc15e82823253b083affa51d7fa7683baec5175dc",
       "size_bytes": 7562
     },
     {
+      "path": "web/src/constraint-fixtures.js",
+      "sha256": "321fef185894326dc066081e04b23d1d18e69b04d931db993d02b995120584cd",
+      "size_bytes": 1401
+    },
+    {
       "path": "web/src/main.js",
-      "sha256": "e1c379f00e1a9a9e7421e018bbebd52a4b4c7fbc9c936261f891be696c1e671e",
-      "size_bytes": 28531
+      "sha256": "128403b7bc86b6441e137b1667413574f4d97edb45e112f946dec8ac63aee388",
+      "size_bytes": 36296
+    },
+    {
+      "path": "web/src/mission-cases.js",
+      "sha256": "1127b68e83ee60a3583f59a1e1e70330dfab9af5f747b1f0458c62e2213fc4ee",
+      "size_bytes": 3571
+    },
+    {
+      "path": "web/src/physical-fixtures.js",
+      "sha256": "c06f59a11a51ece640a0931c3a53c100503bcb202e5ebdd850c23b7c51e952a7",
+      "size_bytes": 1436
     },
     {
       "path": "web/src/renderer-samples.js",
       "sha256": "e42a90fda683dd9143312c7b39febae727f8348430d0636e9a08e9ec3460c3c1",
       "size_bytes": 2466
+    },
+    {
+      "path": "web/src/result.js",
+      "sha256": "81d02076af5f42eed8e742eedb542fca5ce89b30f6c8832f7a3deb6c10a1d321",
+      "size_bytes": 9781
     },
     {
       "path": "web/src/scenario.js",
@@ -418,60 +513,16 @@
     },
     {
       "path": "web/src/timeline.js",
-      "sha256": "00eaea602aff4d5951e97864b71e496e35c3afbf16ba04bf07f30e93d9dd0145",
-      "size_bytes": 6948
+      "sha256": "3919e0b7c2bb1f7f6b66c4b934dc3fe988b735113d0a92c9e838593146627754",
+      "size_bytes": 7076
     },
     {
       "path": "web/src/viewer.js",
-      "sha256": "ad968839434b43113956c93644398af0978198d032ddef8c4ba1accfbfd97436",
-      "size_bytes": 19050
-    },
-    {
-      "path": "api/index.py",
-      "sha256": "62c2efb522038d0ceb1250a8a9a9028faac6531c87b6ece0fcd245a2720bcd29",
-      "size_bytes": 4720
-    },
-    {
-      "path": "requirements.txt",
-      "sha256": "7d5207aad1003fe18f58d3a43e79e260eb352995b35a2a5c032b487239f4ab3e",
-      "size_bytes": 121
-    },
-    {
-      "path": "vercel.json",
-      "sha256": "ddd2075db737fbd4a0faf6f4a47e2e4b16e50accbac966f282ec675cd43fd7b0",
-      "size_bytes": 912
-    },
-    {
-      "path": "tests/engine/test_hosted_moon_api.py",
-      "sha256": "2dbfcf36bdc1812e5bbe97b8dfcdc79275a5a6ad7d297313a4089b32c1a31a49",
-      "size_bytes": 5399
-    },
-    {
-      "path": "web/src/physical-fixtures.js",
-      "sha256": "6257a1eb380abcf65a9dcb8538f3dba7feb7cfa3e7af001ca88f6e2d585f1aac",
-      "size_bytes": 1422
-    },
-    {
-      "path": "web/scripts/sync-physical.mjs",
-      "sha256": "2f5733f20fa035699a81666db70ff9ce2b7e39b6a77b1a99b940236718ec161a",
-      "size_bytes": 945
-    },
-    {
-      "path": "scripts/prepare-hosted-runtime.py",
-      "sha256": "a2b92a75f5b054240058a39f09ee7af21ccb78752165e4bfc3664364178b9174",
-      "size_bytes": 2398
-    },
-    {
-      "path": "pyproject.toml",
-      "sha256": "d4678fddb67c9e09ce9773a23db253047ba370035556095dcede23dbb97ece79",
-      "size_bytes": 974
-    },
-    {
-      "path": "api/.gitignore",
-      "sha256": "7aca673ae7d915b7bd42fd723c11c8bbf118effdf9c99593b4b418c2ff723f57",
-      "size_bytes": 9
+      "sha256": "8b2f43988642063d343c9f738d43aefef858c792c87ce2e76dfdfabe8ef4670e",
+      "size_bytes": 21018
     }
   ],
   "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
-  "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately."
+  "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately.",
+  "presentation_compatibility_update": "Five-case presentation compatibility update: guided mission selection, README and recording script now present three archived physical cases plus two supplemental controls of the same 16 MiB November 30 mission. The controls preserve published DE421/LOLA inputs and native unknown outcomes under incomplete contact coverage. No scientific core, native schema, original numerical archive or historical review scope is changed."
 }

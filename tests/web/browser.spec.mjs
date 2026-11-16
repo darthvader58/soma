@@ -11,10 +11,71 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Lunar terrain unavailable' })).toBeVisible();
   await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
   await page.getByLabel('Declared network example').selectOption('0');
+  await page.getByRole('button', { name: 'Enable local scenario editing', exact: true }).click();
   page.__somaErrors = errors;
 });
 
 test.afterEach(async ({ page }) => { expect(page.__somaErrors).toEqual([]); });
+
+test('mission case navigation binds deep links, native outcomes and exact relay focus', async ({ page }) => {
+  await page.goto('/?case=direct-later');
+  await expect(page.locator('#case-title')).toHaveText('Later direct');
+  await expect(page.locator('#case-outcome')).toContainText('Infeasible in model');
+  await expect(page.locator('#case-outcome')).toContainText('at most 0 payload bits');
+  await expect(page.getByLabel('Data volume', { exact: true })).toBeDisabled();
+  await expect(page.locator('#editing-scope')).toContainText('cannot calculate a new scenario');
+  await expect(page.locator('#mission-context')).toContainText('89.03093° S, 1.38934° E');
+  for (const [id, label] of [['battery-low', 'Low battery'], ['service-off', 'Relay unavailable']]) {
+    await page.getByRole('button', { name: label, exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`case=${id}`));
+    await expect(page.locator('#case-title')).toHaveText(label);
+    await expect(page.locator('#case-kind')).toContainText('sensitivity');
+    await expect(page.locator('#case-outcome')).toContainText('Unknown');
+    await expect(page.locator('#result')).toContainText('Solver: unresolved');
+    await expect(page.locator('#controlled-explanation')).toBeVisible();
+    await expect(page.locator('#controlled-explanation-text')).toContainText(id === 'battery-low' ? 'energy_reserve' : 'service_unavailable');
+    await expect(page.locator('#timeline')).not.toContainText('Synthetic offered contact window');
+    if (id === 'service-off') await expect(page.locator('#science-context')).toContainText('Geometry/power diagnostics are retained from baseline');
+    await expect(page.locator('#validation-errors')).toBeHidden();
+  }
+  await page.getByRole('button', { name: 'Lunar relay', exact: true }).click();
+  await expect(page.locator('#case-outcome')).toContainText('16,777,216 bytes');
+  const focus = page.getByRole('button', { name: 'Show relay transmission · 09:33:30 UTC', exact: true });
+  await expect(focus).toBeVisible();
+  await focus.click();
+  await expect(page.locator('.timeline-time')).toHaveText('2026-11-30T09:33:30Z');
+  await page.getByRole('button', { name: 'Direct delivery', exact: true }).click();
+  await page.getByRole('button', { name: 'Later direct', exact: true }).click();
+  await expect(page.locator('#case-outcome')).toContainText('Infeasible in model');
+  await expect(page.getByRole('button', { name: 'Later direct', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(focus).toBeHidden();
+});
+
+test('camera controls follow completed displays and relay focus selects the overview', async ({ page }) => {
+  await page.route('**/src/viewer.js', route => route.fulfill({ contentType: 'text/javascript', body: `
+    export function registrationGate() { return { passed: true, reason: 'Test registration' }; }
+    export async function createMoonViewer(container, { onStatus }) {
+      return {
+        setScenario() { onStatus({ message: 'Waiting', cameraAvailable: false }); },
+        setDisplay(display) { onStatus({ message: 'Test display', cameraAvailable: Boolean(display) }); },
+        setTime(epoch) { container.dataset.selectedTime = epoch; }, clearDisplayPick() {}, destroy() {},
+        inspectSiteTerrain() { container.dataset.camera = 'site'; },
+        relayOverview() { container.dataset.camera = 'overview'; },
+      };
+    }
+  ` }));
+  await page.goto('/?case=relay-later');
+  await expect(page.getByRole('button', { name: 'Inspect site terrain' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Inspect site terrain' }).click();
+  await expect(page.locator('#moon-view')).toHaveAttribute('data-camera', 'site');
+  await page.getByRole('button', { name: 'Show relay transmission · 09:33:30 UTC' }).click();
+  await expect(page.locator('#moon-view')).toHaveAttribute('data-camera', 'overview');
+  await expect(page.locator('#moon-view')).toHaveAttribute('data-selected-time', '2026-11-30T09:33:30Z');
+  await page.getByRole('button', { name: 'Enable local scenario editing' }).click();
+  await page.getByLabel('Panel height (m)', { exact: true }).fill('3');
+  await expect(page.getByRole('button', { name: 'Inspect site terrain' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Relay overview' })).toBeDisabled();
+});
 
 test('captured physical cases show computed transmissions, exact failure reason and unchanged run package', async ({ page }) => {
   await page.reload();

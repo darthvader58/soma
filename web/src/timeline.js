@@ -66,7 +66,7 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
   const engineContacts = result?.contacts ?? [];
   for (const contact of engineContacts) {
     const selected = (result.allocations ?? []).some(value => value.contact_id === contact.contact_id);
-    lane(`Engine available contact: ${contact.sender} to ${contact.receiver} / ${contact.contact_id}. ${selected ? 'Allocated below.' : 'Unused; reason Unknown.'}`, contact.source_transmit_window, 'timeline-window');
+    lane(`${scenario.analysis_mode === 'synthetic_fixture' ? 'Synthetic offered contact window' : 'Engine offered contact window'}: ${contact.sender} to ${contact.receiver} / ${contact.contact_id}. ${selected ? 'Allocated below.' : 'Not allocated; read the result and service assumptions.'}`, contact.source_transmit_window, 'timeline-window');
   }
   for (const contact of contacts.filter(value => !engineContacts.some(engine => engine.contact_id === value.contact_id))) lane(`Synthetic source-window reference: ${contact.sender} to ${contact.receiver} / ${contact.contact_id}`, contact.source_transmit_window, 'timeline-window');
   if (!result?.allocations?.length) container.append(el('p', result?.status === 'infeasible_in_model'

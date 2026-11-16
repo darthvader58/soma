@@ -27,7 +27,8 @@ maps the required `plan/` scope to computed evidence and exact run commands.
 Open **[soma-atlas-two.vercel.app](https://soma-atlas-two.vercel.app)** to inspect
 captured Python-engine results without installing anything.
 
-- Compare the supplied direct-to-Earth and single-relay examples.
+- Follow five cases in one hypothetical south-pole lander study: direct delivery,
+  a later date, lunar relay forwarding, low initial battery, and unavailable relay service.
 - Inspect contact windows, transmission timing, storage waits, and energy history.
 - Explore the supplied horizon, Sun/Earth, and power diagnostics.
 - Download scenario JSON, results, and the complete engine-authored run package.
@@ -35,11 +36,18 @@ captured Python-engine results without installing anything.
 The hosted demo runs in **captured-result mode**. It accepts only exact matches
 to the supplied scenarios. An edited scenario needs a live Python service;
 the browser does not calculate a replacement result or scale a saved schedule.
-The repository now includes a hosted display adapter for the corrected Cesium
-Moon mesh and captured physical runs. This deployment update still needs public
-verification; its configuration is described below.
+The hosted display adapter serves the corrected Cesium Moon representation.
+The mission cases retain published numerical LOLA terrain and DE421 geometry;
+hardware, rates, station service and the synthetic two-body relay remain assumptions.
+All five use the same 16 MiB task and six-hour deadline rule. The low-battery and
+unavailable-service cases reject the known baseline in independent replay and
+retain native `unknown` outcomes because contact coverage is incomplete.
 
-Saved demo packages preserve their original export format. The relay archive
+Use the [seven-minute recording guide](soma/docs/hackathon-demo-script.md) for
+exact screen actions and narration. Its [published documentation page](https://soma-ce3178ca.mintlify.site/guides/hackathon-demo)
+includes the mission brief and source links.
+
+Original synthetic packages preserve their original export format. The synthetic relay archive
 passes numerical replay but predates the display artifact required by the
 current complete-export verifier. Generate a fresh run with the CLI below to
 produce and verify the current package format.

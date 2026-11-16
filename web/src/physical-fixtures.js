@@ -8,7 +8,7 @@ const names = { 'direct-ready': 'LOLA · Direct delivery', 'direct-later': 'LOLA
 
 export const physicalFixtures = ['direct-ready', 'direct-later', 'relay-later'].map(name => {
   const prefix = `../fixtures/physical-south-pole/${name}/`;
-  return { name: names[name], scenario: scenarios[`${prefix}scenario.json`], result: results[`${prefix}result.json`],
+  return { caseId: name, name: names[name], scenario: scenarios[`${prefix}scenario.json`], result: results[`${prefix}result.json`],
     resultText: resultTexts[`${prefix}result.json`], summary: summaries[`${prefix}summary.json`],
     displayUrl: displays[`${prefix}display-data.json`], packageUrl: packages[`${prefix}run.zip`], contacts: [] };
 });

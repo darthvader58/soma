@@ -1,0 +1,62 @@
+{
+  "algorithm_version": "moon-v6-display-correction-1",
+  "asset_id": 2684829,
+  "asset_revision_path": "Moon/v6",
+  "authority": "soma_engine",
+  "bound_displacement_lipschitz": 0.05,
+  "certified_region": {
+    "latitude_deg": [
+      -90,
+      -87.5
+    ],
+    "longitude_deg_east": [
+      -180,
+      180
+    ]
+  },
+  "eccentricity_squared": 0.002412566753187137,
+  "geoid": {
+    "redistribution": "Local acquisition only; grid and tile binaries are excluded from source commits and run packages",
+    "sha256": "db493027562c9b004d7220fa881f5603adada4e1c5029b933fa7de4547b0e78d",
+    "size_bytes": 2710815,
+    "source_url": "https://cdn.proj.org/us_nga_egm96_15.tif",
+    "usage": "Reverse the observed terrestrial height term in the streamed representation, not an Earth correction to lunar analysis"
+  },
+  "global_root_scale": 1.0010935881201797,
+  "maximum_bound_displacement_m": 8192,
+  "parameter_derivation": "261943 vertices in 240 tiles; height-independent geodetic constraints from quantized texture coordinates; no terrain-height offset fitted",
+  "purpose": "Display-only reversal of the observed tile ingestion conversion; never a lunar physics datum",
+  "reference_radius_m": 1737400,
+  "rendering_tolerance_m": 10,
+  "semimajor_m": 1738042.3511433182,
+  "source_control_tiles": [
+    {
+      "corrected_sha256": "453e35540dde225cfe882b82bb6f75a249764bcf77d0ab7b208dbd145e1d7971",
+      "landmark_id": "polar-peak-0",
+      "path": "Moon_85s_90s/14/16501/8275.b3dm",
+      "source_sha256": "26db71f95dc4ca053a0fa0c51d93d52882a67d2bf407833b4fad9b70c763440b"
+    },
+    {
+      "corrected_sha256": "44030c76900f081c96ad073f6e061352adf571fa5d147205f1126d387a5f5d58",
+      "landmark_id": "polar-peak-1",
+      "path": "Moon_85s_90s/14/16477/8089.b3dm",
+      "source_sha256": "ad7b0e182dc1d4d5b59a63d7e27125e3d5ec4ce4fbc10fd5ddc2003c0648334d"
+    },
+    {
+      "corrected_sha256": "400bc06b277f751977ae5b9596542a4b25802b4aea306805539a641812be61f9",
+      "landmark_id": "polar-peak-2",
+      "path": "Moon_85s_90s/14/16267/8094.b3dm",
+      "source_sha256": "aa6a98d31996b021e5786b4c4c0078e2b383836773f7374e2567dc65d80cc539"
+    },
+    {
+      "corrected_sha256": "7722ca32bfb5307a2f9dd462a3e36faf4b92227af1c1bc8b1c08b614dfe20998",
+      "landmark_id": "polar-peak-3",
+      "path": "Moon_85s_90s/14/16284/8265.b3dm",
+      "source_sha256": "bbfb780d38ce468c64b43d1f1b6b4cabf548749f3a3ea9a34c76d76cb68fad3c"
+    }
+  ],
+  "source_root_sha256": "e231f9cc3b23493aaa75061310269fbc1aa69afe240953f7b17696a7d87d7e4d",
+  "status": "validated_for_region",
+  "tolerance_scope": "Relative display registration against the pinned numerical reference; not absolute lunar navigation accuracy",
+  "version": "0.1.0"
+}

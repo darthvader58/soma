@@ -11,6 +11,8 @@ import { displayTimeText } from './display.js';
 import { renderScience } from './science.js';
 import { renderComparison } from './comparison.js';
 import { physicalFixtures } from './physical-fixtures.js';
+import { constraintFixtures } from './constraint-fixtures.js';
+import { missionCases, missionCaseFromUrl, missionOutcome, controlledTestExplanation, hasRelayFocus, relayFocusEpoch } from './mission-cases.js';
 import capturedRegistration from '../fixtures/physical-south-pole/direct-ready/renderer-registration.json' with { type: 'json' };
 import directScenario from '../fixtures/synthetic-direct/scenario.json' with { type: 'json' };
 import directContacts from '../fixtures/synthetic-direct/contacts.json' with { type: 'json' };
@@ -37,6 +39,7 @@ const fixtures = [
   { name: 'Direct to Earth', scenario: directScenario, contacts: directContacts, expected: directExpected, result: directResult, resultText: directResultText, environment: directEnvironment, environmentText: directEnvironmentText, packageUrl: directPackageUrl, summary: directSummary },
   { name: 'One lunar relay', scenario: relayScenario, contacts: relayContacts, expected: relayExpected, result: relayResult, resultText: relayResultText, environment: relayEnvironment, environmentText: relayEnvironmentText, packageUrl: relayPackageUrl, summary: relaySummary },
   ...physicalFixtures,
+  ...constraintFixtures,
 ];
 const fixtureMode = import.meta.env.VITE_SOMA_MODE === 'fixture';
 const apiUrl = fixtureMode ? undefined : import.meta.env.VITE_SOMA_API_URL || '/api';
@@ -54,6 +57,14 @@ root.innerHTML = `
   <main>
     <div class="page-heading"><div><h1>Plan a delivery from the Moon</h1><p>Inspect transmission windows, relay storage and the modeled energy reserve.</p></div><p class="workspace-mode" id="workspace-mode"></p></div>
     <p class="project-notice">Python supplies delivery schedules under declared geometry, service and rate assumptions. Numerical terrain diagnostics retain their coverage limits.</p>
+    <section id="mission-cases" class="mission-cases panel" aria-labelledby="mission-cases-title" hidden>
+      <div class="panel-heading"><div><h2 id="mission-cases-title">Mission cases</h2><p class="muted">Hypothetical south-pole lander study</p></div></div>
+      <p id="mission-context">A small lander at 89.03093° S, 1.38934° E must deliver a 16 MiB dataset within six hours. Compare 24 and 30 November 2026, then vary relay access and initial battery energy. These are study scenarios, not a named mission or an operational relay service.</p>
+      <p class="muted">Geometry uses published numerical <a href="https://pgda.gsfc.nasa.gov/products/81" target="_blank" rel="noreferrer">LOLA elevation products</a> and DE421 ephemerides; interpolation, coarse terrain coverage and unknown samples retain their recorded quality. Hardware, net radio rates, ideal pointing and service calendars are assumed. The lunar relay follows a labeled synthetic two-body trajectory. <a href="https://www.nasa.gov/communicating-with-missions/delay-disruption-tolerant-networking/" target="_blank" rel="noreferrer">NASA’s store-and-forward explanation</a> motivates the communications architecture, without implying access to a real network.</p>
+      <nav id="case-navigation" class="case-navigation" aria-label="Mission cases"></nav>
+      <div class="case-brief"><div><p id="case-kind" class="muted"></p><h3 id="case-title"></h3><p id="case-question"></p><p id="case-change"></p></div><div><h3>Engine outcome</h3><p id="case-outcome" role="status" aria-live="polite"></p><div id="controlled-explanation" hidden><h3>Controlled test explanation</h3><p id="controlled-explanation-text"></p></div></div></div>
+      <nav class="case-sections" aria-label="Case evidence"><a href="#timeline-section">Contact timeline</a><a href="#science-section">Power and horizon</a><a href="#result-section">Delivery result</a><a href="#run-downloads">Run package</a><button id="relay-focus" type="button" hidden>Show relay transmission · 09:33:30 UTC</button></nav>
+    </section>
     <div class="workspace">
       <aside class="scenario-panel panel" id="scenario" aria-labelledby="scenario-title">
         <div class="panel-heading"><h2 id="scenario-title">Scenario</h2><span class="section-index">01</span></div>
@@ -61,15 +72,16 @@ root.innerHTML = `
         <div class="scenario-actions"><button class="primary" id="plan-button" type="button">Plan delivery</button><button id="cancel-button" type="button" hidden>Cancel job</button><button id="restore-button" type="button">Restore scenario</button><button id="retry-button" type="button" hidden>Retry same scenario</button></div>
         <p id="job-status" role="status" aria-live="polite">Ready to inspect the captured engine result.</p>
         <div id="validation-errors" class="error-message" role="alert" hidden></div>
+        <p id="editing-scope" class="muted" hidden>Captured runs are read-only. New inputs require the full local Python engine. You may enable editing to prepare a scenario JSON; the hosted demo cannot calculate a new scenario.</p><button id="enable-editing" type="button" hidden>Enable local scenario editing</button>
         <div id="scenario-form"></div>
       </aside>
       <div class="analysis-column">
         <section class="map-panel panel" aria-labelledby="map-title">
           <div class="panel-heading"><div><h2 id="map-title">Lunar context</h2><p class="muted">Terrain display. Scientific analysis comes from the Python engine.</p></div><span class="section-index">02</span></div>
           <div id="moon-view" class="moon-view" aria-label="Moon terrain viewport"></div>
-          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p class="muted">Stored relay samples only; no motion is inferred between samples. Dashed lines show available contacts; solid lines show scheduled source transmissions. Lines require both stored endpoints. Earth-bound transfers remain in the text schedule when no registered endpoint is supplied.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
+          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><div class="camera-controls" aria-label="Map camera views"><button id="inspect-site" type="button" disabled>Inspect site terrain</button><button id="relay-overview" type="button" disabled>Relay overview</button></div><p class="muted">Camera views change the display only; they do not change the analysis.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p class="muted">Stored relay samples only; no motion is inferred between samples. Dashed lines show offered contact windows; solid lines show scheduled source transmissions. An offered window does not establish available service. Lines require both stored endpoints. Earth-bound transfers remain in the text schedule when no registered endpoint is supplied.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
         </section>
-        <section class="panel timeline-panel" aria-labelledby="timeline-title">
+        <section class="panel timeline-panel" id="timeline-section" aria-labelledby="timeline-title">
           <div class="panel-heading"><h2 id="timeline-title">Contact timeline</h2><span class="section-index">03</span></div>
           <label class="check-field"><input id="hand-reference" type="checkbox" /> Show hand-calculated reference</label>
           <p class="muted">Reference arithmetic is separate from the engine result. It does not establish energy feasibility.</p>
@@ -79,10 +91,10 @@ root.innerHTML = `
           <div class="panel-heading"><h2 id="result-title">Delivery result</h2><span class="section-index">04</span></div>
           <p id="result-context" class="muted">Choose Plan delivery to inspect the computed run for this exact scenario.</p>
           <div id="result"></div>
-          <div class="download-actions"><button id="download-scenario" type="button">Download scenario JSON</button><button id="download-result" type="button" disabled>Download result JSON</button><button id="download-package" type="button" disabled>Download run package (ZIP)</button></div>
+          <div class="download-actions" id="run-downloads"><button id="download-scenario" type="button">Download scenario JSON</button><button id="download-result" type="button" disabled>Download result JSON</button><button id="download-package" type="button" disabled>Download run package (ZIP)</button></div>
           <p class="muted">The package preserves the engine scenario, result, manifest, contacts, schedule, energy, buffers, replay, display metadata and structured explanation. No files are reconstructed in this browser.</p>
         </section>
-        <section class="panel science-panel" aria-labelledby="science-title">
+        <section class="panel science-panel" id="science-section" aria-labelledby="science-title">
           <div class="panel-heading"><h2 id="science-title">Sun, horizon and electrical power</h2><span class="section-index">05</span></div>
           <div class="science-source"><label for="science-source">Scientific diagnostic example</label><select id="science-source"><option value="synthetic">Scenario-matched synthetic inputs</option><option value="recorded">Recorded real LOLA example (separate site)</option></select><p id="science-context" class="notice"></p><button id="download-environment" type="button">Download diagnostic JSON</button></div>
           <div id="science"></div>
@@ -111,11 +123,12 @@ for (const [index, example] of examples.entries()) {
   const option = document.createElement('option');
   option.value = String(index);
   option.textContent = example.scenario.analysis_mode === 'terrain_ephemeris'
-    ? (fixtureMode ? { 2: 'LOLA terrain · Direct delivery', 3: 'LOLA terrain · Later direct (infeasible)', 4: 'LOLA terrain · Later lunar relay' }[index] : example.name.replace('Physical ·', 'LOLA terrain ·'))
+    ? (fixtureMode ? `LOLA terrain · ${missionCases.find(item => item.id === example.caseId)?.title ?? example.name}` : example.name.replace('Physical ·', 'LOLA terrain ·'))
     : example.name;
   byId('fixture-select').append(option);
 }
-const initialIndex = fixtureMode ? 2 : 0;
+const requestedCase = missionCaseFromUrl(location.search, fixtures.map(item => item.caseId).filter(Boolean));
+const initialIndex = fixtureMode ? examples.findIndex(item => item.caseId === requestedCase) : 0;
 byId('fixture-select').value = String(initialIndex);
 let activeFixture = examples[initialIndex];
 let scenario = structuredClone(activeFixture.scenario);
@@ -129,13 +142,33 @@ let selectedTime = scenario.data_ready_utc;
 let timeline;
 let viewer;
 let science;
+let editingEnabled = !fixtureMode;
+const availableCases = missionCases.filter(item => examples.some(example => example.caseId === item.id));
+if (fixtureMode) {
+  byId('mission-cases').hidden = false;
+  byId('editing-scope').hidden = false;
+  byId('enable-editing').hidden = false;
+  const caseGroups = new Map();
+  for (const [group, title] of [['physical', 'One 16 MiB task · direct, relay, energy and service alternatives']]) {
+    const section = document.createElement('div'); section.className = 'case-group';
+    const label = document.createElement('p'); label.className = 'muted'; label.textContent = title;
+    const buttons = document.createElement('div'); buttons.className = 'case-buttons';
+    section.append(label, buttons); byId('case-navigation').append(section); caseGroups.set(group, buttons);
+  }
+  for (const item of availableCases) {
+    const button = document.createElement('button');
+    button.type = 'button'; button.textContent = item.title; button.dataset.caseId = item.id;
+    button.addEventListener('click', () => selectCase(item.id));
+    caseGroups.get('physical').append(button);
+  }
+}
 const capturedComparisons = () => fixtures.map(item => structuredClone({ name: item.name, scenario: item.scenario, result: item.result, summary: item.summary }));
 let comparisonEntries = capturedComparisons();
 const comparison = renderComparison(byId('comparison'), { entries: comparisonEntries });
 
 function selectedEnvironment() {
   if (byId('science-source').value === 'recorded') return { environment: realEnvironment, raw: realEnvironmentText };
-  if (apiUrl || scenario.analysis_mode === 'terrain_ephemeris') return currentDisplay?.environment ? { environment: currentDisplay.environment, raw: `${JSON.stringify(currentDisplay.environment, null, 2)}\n` } : {};
+  if (apiUrl || activeFixture.caseId) return currentDisplay?.environment ? { environment: currentDisplay.environment, raw: `${JSON.stringify(currentDisplay.environment, null, 2)}\n` } : {};
   return modified ? {} : { environment: activeFixture.environment, raw: activeFixture.environmentText };
 }
 
@@ -149,6 +182,7 @@ function refreshScience() {
   byId('science-context').textContent = !environment
     ? 'No matching completed-job scientific diagnostic. Saved fixture graphics are hidden.'
     : `${recorded ? 'Separate recorded case using real LOLA and DE421 data; it does not change the scenario or delivery result.' : apiUrl || scenario.analysis_mode === 'terrain_ephemeris' ? 'Exact completed-run diagnostic from Python using numerical terrain and ephemerides. Input provenance and assumed rates remain labeled below.' : 'Synthetic algorithm example: all directions, skyline and contact geometry are invented inputs, processed by Python.'} Site ${point.latitude_deg}° planetocentric, ${point.longitude_deg_east}° east; ${point.frame}. Antenna ${point.antenna_height_m} m; panel ${point.panel_height_m} m. Scenario SHA-256 ${environment.scenario_sha256}.`;
+  if (environment && !recorded && activeFixture.caseId === 'service-off') byId('science-context').textContent += ' Geometry/power diagnostics are retained from baseline; service decisions for this case are in the controlled replay and native result. Service labels in the retained diagnostic describe the baseline, not this case’s available relay service.';
 }
 
 function showErrors(messages = []) {
@@ -200,7 +234,50 @@ function refreshOutput() {
   byId('hand-reference').disabled = modified || !activeFixture.expected;
   byId('save-a').disabled = !result;
   byId('save-b').disabled = !result;
+  refreshCaseBrief();
 }
+
+function refreshCaseBrief() {
+  if (!fixtureMode) return;
+  const item = missionCases.find(item => item.id === activeFixture.caseId);
+  byId('case-kind').textContent = item?.label ?? 'Synthetic arithmetic reference';
+  byId('case-title').textContent = item?.title ?? activeFixture.name;
+  byId('case-question').textContent = item?.question ?? 'Inspect the software-test task and its declared contact inputs.';
+  byId('case-change').textContent = item ? `What changed: ${item.change}` : 'Synthetic reference inputs are separate from the terrain-backed mission cases.';
+  byId('case-outcome').textContent = modified ? 'Scenario edited. No matching result is displayed.' : missionOutcome(result, currentSummary);
+  const controlled = !modified && controlledTestExplanation(activeFixture.controlledEvidence, activeFixture.caseId, result);
+  byId('controlled-explanation').hidden = !controlled;
+  byId('controlled-explanation-text').textContent = controlled || '';
+  for (const button of byId('case-navigation').querySelectorAll('button')) button.setAttribute('aria-pressed', String(button.dataset.caseId === activeFixture.caseId));
+  byId('relay-focus').hidden = activeFixture.caseId !== 'relay-later' || !hasRelayFocus(currentDisplay);
+}
+
+function applyEditingMode() {
+  for (const fieldset of byId('scenario-form').querySelectorAll('fieldset')) fieldset.disabled = !editingEnabled;
+}
+
+function selectCase(caseId, updateUrl = true) {
+  const index = examples.findIndex(item => item.caseId === caseId);
+  if (index < 0) return;
+  activeFixture = examples[index];
+  byId('fixture-select').value = String(index);
+  if (updateUrl) { const url = new URL(location.href); url.searchParams.set('case', caseId); history.pushState({}, '', url); }
+  restoreFixture();
+}
+
+byId('enable-editing').addEventListener('click', () => {
+  editingEnabled = true; applyEditingMode(); byId('enable-editing').hidden = true;
+  byId('editing-scope').textContent = 'Local scenario editing enabled. Download your scenario JSON for the full Python engine. The hosted demo loads only exact captured runs.';
+});
+byId('relay-focus').addEventListener('click', () => {
+  if (!hasRelayFocus(currentDisplay)) return;
+  selectedTime = relayFocusEpoch; timeline.setTime(selectedTime); viewer?.setTime(selectedTime); science?.setTime(selectedTime); refreshSelectedState();
+  viewer?.relayOverview?.();
+  byId('moon-view').scrollIntoView({ block: 'center' });
+});
+byId('inspect-site').addEventListener('click', () => viewer?.inspectSiteTerrain?.());
+byId('relay-overview').addEventListener('click', () => viewer?.relayOverview?.());
+window.addEventListener('popstate', () => { if (fixtureMode) selectCase(missionCaseFromUrl(location.search, availableCases.map(item => item.id)), false); });
 
 function refreshSelectedState() {
   byId('selected-state').textContent = displayTimeText(currentDisplay, selectedTime);
@@ -270,15 +347,17 @@ function restoreFixture() {
   clearDisplayPick();
   byId('result-context').textContent = apiUrl ? 'Choose Plan delivery to request a live result for this scenario.' : 'Choose Plan delivery to inspect the computed run for this exact scenario.';
   form.setScenario(scenario);
+  applyEditingMode();
   showErrors();
   updateLocation();
   viewer?.setScenario(scenario);
   refreshOutput();
-  if (!apiUrl && physical) void requestPlan();
+  if (!apiUrl && activeFixture.caseId) void requestPlan();
 }
 
 byId('fixture-select').addEventListener('change', event => {
   activeFixture = examples[Number(event.target.value)];
+  if (fixtureMode) { const url = new URL(location.href); activeFixture.caseId ? url.searchParams.set('case', activeFixture.caseId) : url.searchParams.delete('case'); history.pushState({}, '', url); }
   restoreFixture();
 });
 byId('restore-button').addEventListener('click', restoreFixture);
@@ -406,7 +485,7 @@ byId('download-package').addEventListener('click', async () => {
 updateLocation();
 refreshOutput();
 if (fixtureMode) {
-  document.querySelector('.project-notice').textContent = 'Captured Python runs using published numerical LOLA terrain and DE421 ephemerides. Inspect the direct, later direct and lunar-relay cases. Radio rates, service and the synthetic relay trajectory remain declared assumptions. Editing a scenario requires the live Python planning service.';
+  document.querySelector('.project-notice').textContent = 'Captured Python results for one hypothetical lunar south-pole study. All five mission cases use the same 16 MiB task and published terrain/ephemeris inputs. Hardware, radio rates, service and relay trajectories retain their declared assumptions. New scenarios require the full local Python engine.';
   byId('workspace-mode').textContent = 'Captured · Computed Python runs';
   restoreFixture();
 }
@@ -416,6 +495,8 @@ viewer = await createMoonViewer(byId('moon-view'), {
   scenario, ionToken: import.meta.env.VITE_CESIUM_ION_TOKEN,
   onStatus(status) {
     byId('map-status').textContent = status.message;
+    byId('inspect-site').disabled = !status.cameraAvailable;
+    byId('relay-overview').disabled = !status.cameraAvailable;
     if (['fallback', 'tile_failure', 'render_failure'].includes(status.state)) byId('display-pick').hidden = true;
   },
   onPick(pick) {

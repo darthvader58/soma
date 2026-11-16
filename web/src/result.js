@@ -73,7 +73,8 @@ export function renderResult(container, { result, scenario, contacts = [], expec
   container.append(facts);
   const explanation = records(container, 'Structured schedule explanation');
   for (const line of explainResult(result)) explanation.append(el('p', line));
-  table(section(container, 'Engine contacts'), ['Endpoints / contact', 'Source transmit window (UTC)', 'Net payload rate (bps)', 'Capacity (bits)', 'Service / quality flags', 'Allocation use / unused reason'], (result.contacts ?? []).map(contact => [
+  container.append(el('p', 'Offered windows are engine contact inputs. The scheduler also enforces service calendars, energy and radio constraints before allocating any transmission. A window alone is not a selected delivery route.', 'notice'));
+  table(section(container, scenario.analysis_mode === 'synthetic_fixture' ? 'Synthetic offered contact windows' : 'Engine offered contact windows'), ['Endpoints / contact', 'Source transmit window (UTC)', 'Net payload rate (bps)', 'Capacity (bits)', 'Service / quality flags', 'Allocation use / unused reason'], (result.contacts ?? []).map(contact => [
     `${contact.sender} to ${contact.receiver} / ${contact.contact_id}`, interval(contact.source_transmit_window), contact.payload_rate_bps, contact.available_capacity_bits,
     `${contact.service_provenance}; ${contact.quality_flags.join('; ')}`,
     (result.allocations ?? []).some(value => value.contact_id === contact.contact_id) ? 'Allocated; see source and receiver intervals below.' : 'Unused. Reason: Unknown; no reason field supplied by the frozen contact contract.'

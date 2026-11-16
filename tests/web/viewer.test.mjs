@@ -1,6 +1,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { registrationGate, isMoonSurfacePick, createMoonViewer } from '../../web/src/viewer.js';
+import { registrationGate, isMoonSurfacePick, createMoonViewer, siteCameraVectors } from '../../web/src/viewer.js';
+
+test('terrain camera remains defined at the pole and leaves the engine position unchanged', () => {
+  for (const position of [[0, 0, -1737400], [1737400, 0, 0], [30000, 5000, -1737000]]) {
+    const original = [...position];
+    const view = siteCameraVectors(position);
+    assert.deepEqual(position, original);
+    assert.ok(Math.abs(Math.hypot(...view.up) - 1) < 1e-12);
+    assert.ok(Math.abs(view.up.reduce((sum, value, index) => sum + value * view.direction[index], 0)) < 1e-12);
+    assert.ok(Math.abs(Math.hypot(...view.destination.map((value, index) => value - position[index])) - 80000) < 1e-6);
+  }
+  assert.equal(siteCameraVectors([0, 0, 0]), undefined);
+  assert.equal(siteCameraVectors([NaN, 0, 1]), undefined);
+});
 
 test('missing engine registration blocks aligned overlays', () => {
   assert.equal(registrationGate().passed, false);
@@ -57,6 +70,8 @@ test('missing token produces a readable fallback without importing Cesium', asyn
   assert.equal(statuses.at(-1).overlaysBlocked, true);
   assert.match(container.children[0].children[1].textContent, /coordinate fields/);
   viewer.setTime('2026-11-14T00:00:00Z');
+  assert.equal(viewer.inspectSiteTerrain(), false);
+  assert.equal(viewer.relayOverview(), false);
   viewer.setScenario({});
   viewer.destroy();
   assert.equal(container.children.length, 0);

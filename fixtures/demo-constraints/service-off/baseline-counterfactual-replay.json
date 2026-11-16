@@ -1,0 +1,1937 @@
+{
+  "buffer_history": [
+    {
+      "epoch_utc": "2026-11-30T08:00:00Z",
+      "node_id": "polar-lander",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-30T09:35:00Z",
+      "node_id": "polar-lander",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T14:00:00Z",
+      "node_id": "polar-lander",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T08:00:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T09:33:30.005192Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-30T09:37:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T14:00:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T08:00:00Z",
+      "node_id": "educational-americas",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T09:36:01.238933Z",
+      "node_id": "educational-americas",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-30T14:00:00Z",
+      "node_id": "educational-americas",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-30T08:00:00Z",
+      "node_id": "educational-europe",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T14:00:00Z",
+      "node_id": "educational-europe",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T08:00:00Z",
+      "node_id": "educational-australia",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-30T14:00:00Z",
+      "node_id": "educational-australia",
+      "stored_bytes": 0
+    }
+  ],
+  "delivered_bytes": 16777216,
+  "details": {
+    "algorithm": "independent_whole_chunk_replay_v1",
+    "availability_policy": "declared availability may conservatively delay physical availability",
+    "buffer_conservatism": "reserve incoming whole chunk at first arrival; release at transmit end",
+    "external_power": "relay and station power follows explicit profile assumptions",
+    "setup_power_assumption": "acquisition and teardown draw the respective TX/RX electrical watts"
+  },
+  "energy_history": [
+    {
+      "epoch_utc": "2026-11-30T08:00:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 80
+    },
+    {
+      "epoch_utc": "2026-11-30T08:01:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.9074074074074
+    },
+    {
+      "epoch_utc": "2026-11-30T08:02:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.81481481481481
+    },
+    {
+      "epoch_utc": "2026-11-30T08:03:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.72222222222221
+    },
+    {
+      "epoch_utc": "2026-11-30T08:04:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.62962962962962
+    },
+    {
+      "epoch_utc": "2026-11-30T08:05:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.53703703703702
+    },
+    {
+      "epoch_utc": "2026-11-30T08:06:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.44444444444443
+    },
+    {
+      "epoch_utc": "2026-11-30T08:07:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.35185185185183
+    },
+    {
+      "epoch_utc": "2026-11-30T08:08:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.25925925925924
+    },
+    {
+      "epoch_utc": "2026-11-30T08:09:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.16666666666664
+    },
+    {
+      "epoch_utc": "2026-11-30T08:10:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 79.07407407407405
+    },
+    {
+      "epoch_utc": "2026-11-30T08:11:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.98148148148145
+    },
+    {
+      "epoch_utc": "2026-11-30T08:12:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.88888888888886
+    },
+    {
+      "epoch_utc": "2026-11-30T08:13:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.79629629629626
+    },
+    {
+      "epoch_utc": "2026-11-30T08:14:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.70370370370367
+    },
+    {
+      "epoch_utc": "2026-11-30T08:15:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.61111111111107
+    },
+    {
+      "epoch_utc": "2026-11-30T08:16:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.51851851851848
+    },
+    {
+      "epoch_utc": "2026-11-30T08:17:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.42592592592588
+    },
+    {
+      "epoch_utc": "2026-11-30T08:18:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.33333333333329
+    },
+    {
+      "epoch_utc": "2026-11-30T08:19:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.24074074074069
+    },
+    {
+      "epoch_utc": "2026-11-30T08:20:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.1481481481481
+    },
+    {
+      "epoch_utc": "2026-11-30T08:21:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 78.0555555555555
+    },
+    {
+      "epoch_utc": "2026-11-30T08:22:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.9629629629629
+    },
+    {
+      "epoch_utc": "2026-11-30T08:23:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.87037037037031
+    },
+    {
+      "epoch_utc": "2026-11-30T08:24:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.77777777777771
+    },
+    {
+      "epoch_utc": "2026-11-30T08:25:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.68518518518512
+    },
+    {
+      "epoch_utc": "2026-11-30T08:26:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.59259259259252
+    },
+    {
+      "epoch_utc": "2026-11-30T08:27:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.49999999999993
+    },
+    {
+      "epoch_utc": "2026-11-30T08:28:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.40740740740733
+    },
+    {
+      "epoch_utc": "2026-11-30T08:29:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.31481481481474
+    },
+    {
+      "epoch_utc": "2026-11-30T08:30:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.22222222222214
+    },
+    {
+      "epoch_utc": "2026-11-30T08:31:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.12962962962955
+    },
+    {
+      "epoch_utc": "2026-11-30T08:32:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 77.03703703703695
+    },
+    {
+      "epoch_utc": "2026-11-30T08:33:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.94444444444436
+    },
+    {
+      "epoch_utc": "2026-11-30T08:34:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.85185185185176
+    },
+    {
+      "epoch_utc": "2026-11-30T08:35:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.75925925925917
+    },
+    {
+      "epoch_utc": "2026-11-30T08:36:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.66666666666657
+    },
+    {
+      "epoch_utc": "2026-11-30T08:37:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.57407407407398
+    },
+    {
+      "epoch_utc": "2026-11-30T08:38:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.48148148148138
+    },
+    {
+      "epoch_utc": "2026-11-30T08:39:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.38888888888879
+    },
+    {
+      "epoch_utc": "2026-11-30T08:40:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.29629629629619
+    },
+    {
+      "epoch_utc": "2026-11-30T08:41:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.2037037037036
+    },
+    {
+      "epoch_utc": "2026-11-30T08:42:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.111111111111
+    },
+    {
+      "epoch_utc": "2026-11-30T08:43:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 76.0185185185184
+    },
+    {
+      "epoch_utc": "2026-11-30T08:44:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.92592592592581
+    },
+    {
+      "epoch_utc": "2026-11-30T08:45:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.83333333333321
+    },
+    {
+      "epoch_utc": "2026-11-30T08:46:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.74074074074062
+    },
+    {
+      "epoch_utc": "2026-11-30T08:47:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.64814814814802
+    },
+    {
+      "epoch_utc": "2026-11-30T08:48:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.55555555555543
+    },
+    {
+      "epoch_utc": "2026-11-30T08:49:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.46296296296283
+    },
+    {
+      "epoch_utc": "2026-11-30T08:50:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.37037037037024
+    },
+    {
+      "epoch_utc": "2026-11-30T08:51:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.27777777777764
+    },
+    {
+      "epoch_utc": "2026-11-30T08:52:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.18518518518505
+    },
+    {
+      "epoch_utc": "2026-11-30T08:53:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 75.09259259259245
+    },
+    {
+      "epoch_utc": "2026-11-30T08:54:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.99999999999986
+    },
+    {
+      "epoch_utc": "2026-11-30T08:55:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.90740740740726
+    },
+    {
+      "epoch_utc": "2026-11-30T08:56:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.81481481481467
+    },
+    {
+      "epoch_utc": "2026-11-30T08:57:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.72222222222207
+    },
+    {
+      "epoch_utc": "2026-11-30T08:58:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.62962962962948
+    },
+    {
+      "epoch_utc": "2026-11-30T08:59:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.53703703703688
+    },
+    {
+      "epoch_utc": "2026-11-30T09:00:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.44444444444429
+    },
+    {
+      "epoch_utc": "2026-11-30T09:01:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.35185185185169
+    },
+    {
+      "epoch_utc": "2026-11-30T09:02:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.2592592592591
+    },
+    {
+      "epoch_utc": "2026-11-30T09:03:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.1666666666665
+    },
+    {
+      "epoch_utc": "2026-11-30T09:04:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 74.0740740740739
+    },
+    {
+      "epoch_utc": "2026-11-30T09:05:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.98148148148131
+    },
+    {
+      "epoch_utc": "2026-11-30T09:06:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.88888888888872
+    },
+    {
+      "epoch_utc": "2026-11-30T09:07:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.79629629629612
+    },
+    {
+      "epoch_utc": "2026-11-30T09:08:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.70370370370352
+    },
+    {
+      "epoch_utc": "2026-11-30T09:09:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.61111111111093
+    },
+    {
+      "epoch_utc": "2026-11-30T09:10:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.51851851851833
+    },
+    {
+      "epoch_utc": "2026-11-30T09:11:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.42592592592574
+    },
+    {
+      "epoch_utc": "2026-11-30T09:12:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.33333333333314
+    },
+    {
+      "epoch_utc": "2026-11-30T09:13:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.24074074074055
+    },
+    {
+      "epoch_utc": "2026-11-30T09:14:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.14814814814795
+    },
+    {
+      "epoch_utc": "2026-11-30T09:15:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 73.05555555555536
+    },
+    {
+      "epoch_utc": "2026-11-30T09:16:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.96296296296276
+    },
+    {
+      "epoch_utc": "2026-11-30T09:17:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.87037037037017
+    },
+    {
+      "epoch_utc": "2026-11-30T09:18:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.77777777777757
+    },
+    {
+      "epoch_utc": "2026-11-30T09:19:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.68518518518498
+    },
+    {
+      "epoch_utc": "2026-11-30T09:20:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.59259259259238
+    },
+    {
+      "epoch_utc": "2026-11-30T09:21:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.49999999999979
+    },
+    {
+      "epoch_utc": "2026-11-30T09:22:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.40740740740719
+    },
+    {
+      "epoch_utc": "2026-11-30T09:23:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.3148148148146
+    },
+    {
+      "epoch_utc": "2026-11-30T09:24:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.222222222222
+    },
+    {
+      "epoch_utc": "2026-11-30T09:25:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.1296296296294
+    },
+    {
+      "epoch_utc": "2026-11-30T09:26:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 72.03703703703681
+    },
+    {
+      "epoch_utc": "2026-11-30T09:27:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.94444444444422
+    },
+    {
+      "epoch_utc": "2026-11-30T09:28:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.85185185185162
+    },
+    {
+      "epoch_utc": "2026-11-30T09:29:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.75925925925903
+    },
+    {
+      "epoch_utc": "2026-11-30T09:30:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.66666666666643
+    },
+    {
+      "epoch_utc": "2026-11-30T09:31:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.57407407407383
+    },
+    {
+      "epoch_utc": "2026-11-30T09:32:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.48148148148124
+    },
+    {
+      "epoch_utc": "2026-11-30T09:33:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.38888888888864
+    },
+    {
+      "epoch_utc": "2026-11-30T09:33:30Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.34259259259235
+    },
+    {
+      "epoch_utc": "2026-11-30T09:34:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 71.11111111111087
+    },
+    {
+      "epoch_utc": "2026-11-30T09:35:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 70.64814814814791
+    },
+    {
+      "epoch_utc": "2026-11-30T09:36:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 70.55555555555532
+    },
+    {
+      "epoch_utc": "2026-11-30T09:37:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 70.46296296296272
+    },
+    {
+      "epoch_utc": "2026-11-30T09:38:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 70.37037037037013
+    },
+    {
+      "epoch_utc": "2026-11-30T09:39:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 70.27777777777753
+    },
+    {
+      "epoch_utc": "2026-11-30T09:40:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 70.18518518518493
+    },
+    {
+      "epoch_utc": "2026-11-30T09:41:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 70.09259259259234
+    },
+    {
+      "epoch_utc": "2026-11-30T09:42:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.99999999999974
+    },
+    {
+      "epoch_utc": "2026-11-30T09:43:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.90740740740715
+    },
+    {
+      "epoch_utc": "2026-11-30T09:44:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.81481481481455
+    },
+    {
+      "epoch_utc": "2026-11-30T09:45:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.72222222222196
+    },
+    {
+      "epoch_utc": "2026-11-30T09:46:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.62962962962936
+    },
+    {
+      "epoch_utc": "2026-11-30T09:47:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.53703703703677
+    },
+    {
+      "epoch_utc": "2026-11-30T09:48:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.44444444444417
+    },
+    {
+      "epoch_utc": "2026-11-30T09:49:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.35185185185158
+    },
+    {
+      "epoch_utc": "2026-11-30T09:50:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.25925925925898
+    },
+    {
+      "epoch_utc": "2026-11-30T09:51:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.16666666666639
+    },
+    {
+      "epoch_utc": "2026-11-30T09:52:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 69.07407407407379
+    },
+    {
+      "epoch_utc": "2026-11-30T09:53:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.9814814814812
+    },
+    {
+      "epoch_utc": "2026-11-30T09:54:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.8888888888886
+    },
+    {
+      "epoch_utc": "2026-11-30T09:55:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.796296296296
+    },
+    {
+      "epoch_utc": "2026-11-30T09:56:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.70370370370341
+    },
+    {
+      "epoch_utc": "2026-11-30T09:57:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.61111111111082
+    },
+    {
+      "epoch_utc": "2026-11-30T09:58:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.51851851851822
+    },
+    {
+      "epoch_utc": "2026-11-30T09:59:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.42592592592563
+    },
+    {
+      "epoch_utc": "2026-11-30T10:00:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.33333333333303
+    },
+    {
+      "epoch_utc": "2026-11-30T10:01:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.24074074074043
+    },
+    {
+      "epoch_utc": "2026-11-30T10:02:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.14814814814784
+    },
+    {
+      "epoch_utc": "2026-11-30T10:03:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 68.05555555555524
+    },
+    {
+      "epoch_utc": "2026-11-30T10:04:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.96296296296265
+    },
+    {
+      "epoch_utc": "2026-11-30T10:05:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.87037037037005
+    },
+    {
+      "epoch_utc": "2026-11-30T10:06:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.77777777777746
+    },
+    {
+      "epoch_utc": "2026-11-30T10:07:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.68518518518486
+    },
+    {
+      "epoch_utc": "2026-11-30T10:08:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.59259259259227
+    },
+    {
+      "epoch_utc": "2026-11-30T10:09:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.49999999999967
+    },
+    {
+      "epoch_utc": "2026-11-30T10:10:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.40740740740708
+    },
+    {
+      "epoch_utc": "2026-11-30T10:11:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.31481481481448
+    },
+    {
+      "epoch_utc": "2026-11-30T10:12:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.22222222222189
+    },
+    {
+      "epoch_utc": "2026-11-30T10:13:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.12962962962929
+    },
+    {
+      "epoch_utc": "2026-11-30T10:14:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 67.0370370370367
+    },
+    {
+      "epoch_utc": "2026-11-30T10:15:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.9444444444441
+    },
+    {
+      "epoch_utc": "2026-11-30T10:16:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.8518518518515
+    },
+    {
+      "epoch_utc": "2026-11-30T10:17:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.75925925925891
+    },
+    {
+      "epoch_utc": "2026-11-30T10:18:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.66666666666632
+    },
+    {
+      "epoch_utc": "2026-11-30T10:19:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.57407407407372
+    },
+    {
+      "epoch_utc": "2026-11-30T10:20:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.48148148148113
+    },
+    {
+      "epoch_utc": "2026-11-30T10:21:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.38888888888853
+    },
+    {
+      "epoch_utc": "2026-11-30T10:22:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.29629629629594
+    },
+    {
+      "epoch_utc": "2026-11-30T10:23:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.20370370370334
+    },
+    {
+      "epoch_utc": "2026-11-30T10:24:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.11111111111074
+    },
+    {
+      "epoch_utc": "2026-11-30T10:25:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 66.01851851851815
+    },
+    {
+      "epoch_utc": "2026-11-30T10:26:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.92592592592555
+    },
+    {
+      "epoch_utc": "2026-11-30T10:27:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.83333333333296
+    },
+    {
+      "epoch_utc": "2026-11-30T10:28:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.74074074074036
+    },
+    {
+      "epoch_utc": "2026-11-30T10:29:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.64814814814777
+    },
+    {
+      "epoch_utc": "2026-11-30T10:30:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.55555555555517
+    },
+    {
+      "epoch_utc": "2026-11-30T10:31:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.46296296296258
+    },
+    {
+      "epoch_utc": "2026-11-30T10:32:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.37037037036998
+    },
+    {
+      "epoch_utc": "2026-11-30T10:33:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.27777777777739
+    },
+    {
+      "epoch_utc": "2026-11-30T10:34:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.18518518518479
+    },
+    {
+      "epoch_utc": "2026-11-30T10:35:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 65.0925925925922
+    },
+    {
+      "epoch_utc": "2026-11-30T10:36:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.9999999999996
+    },
+    {
+      "epoch_utc": "2026-11-30T10:37:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.907407407407
+    },
+    {
+      "epoch_utc": "2026-11-30T10:38:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.81481481481441
+    },
+    {
+      "epoch_utc": "2026-11-30T10:39:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.72222222222182
+    },
+    {
+      "epoch_utc": "2026-11-30T10:40:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.62962962962922
+    },
+    {
+      "epoch_utc": "2026-11-30T10:41:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.53703703703663
+    },
+    {
+      "epoch_utc": "2026-11-30T10:42:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.44444444444403
+    },
+    {
+      "epoch_utc": "2026-11-30T10:43:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.35185185185144
+    },
+    {
+      "epoch_utc": "2026-11-30T10:44:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.25925925925884
+    },
+    {
+      "epoch_utc": "2026-11-30T10:45:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.16666666666625
+    },
+    {
+      "epoch_utc": "2026-11-30T10:46:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 64.07407407407365
+    },
+    {
+      "epoch_utc": "2026-11-30T10:47:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.981481481481055
+    },
+    {
+      "epoch_utc": "2026-11-30T10:48:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.88888888888846
+    },
+    {
+      "epoch_utc": "2026-11-30T10:49:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.796296296295864
+    },
+    {
+      "epoch_utc": "2026-11-30T10:50:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.70370370370327
+    },
+    {
+      "epoch_utc": "2026-11-30T10:51:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.611111111110674
+    },
+    {
+      "epoch_utc": "2026-11-30T10:52:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.51851851851808
+    },
+    {
+      "epoch_utc": "2026-11-30T10:53:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.42592592592548
+    },
+    {
+      "epoch_utc": "2026-11-30T10:54:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.33333333333289
+    },
+    {
+      "epoch_utc": "2026-11-30T10:55:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.24074074074029
+    },
+    {
+      "epoch_utc": "2026-11-30T10:56:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.1481481481477
+    },
+    {
+      "epoch_utc": "2026-11-30T10:57:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 63.0555555555551
+    },
+    {
+      "epoch_utc": "2026-11-30T10:58:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.96296296296251
+    },
+    {
+      "epoch_utc": "2026-11-30T10:59:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.87037037036991
+    },
+    {
+      "epoch_utc": "2026-11-30T11:00:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.77777777777732
+    },
+    {
+      "epoch_utc": "2026-11-30T11:01:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.68518518518472
+    },
+    {
+      "epoch_utc": "2026-11-30T11:02:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.592592592592126
+    },
+    {
+      "epoch_utc": "2026-11-30T11:03:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.49999999999953
+    },
+    {
+      "epoch_utc": "2026-11-30T11:04:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.407407407406936
+    },
+    {
+      "epoch_utc": "2026-11-30T11:05:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.31481481481434
+    },
+    {
+      "epoch_utc": "2026-11-30T11:06:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.222222222221745
+    },
+    {
+      "epoch_utc": "2026-11-30T11:07:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.12962962962915
+    },
+    {
+      "epoch_utc": "2026-11-30T11:08:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 62.037037037036555
+    },
+    {
+      "epoch_utc": "2026-11-30T11:09:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.94444444444396
+    },
+    {
+      "epoch_utc": "2026-11-30T11:10:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.851851851851364
+    },
+    {
+      "epoch_utc": "2026-11-30T11:11:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.75925925925877
+    },
+    {
+      "epoch_utc": "2026-11-30T11:12:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.666666666666174
+    },
+    {
+      "epoch_utc": "2026-11-30T11:13:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.57407407407358
+    },
+    {
+      "epoch_utc": "2026-11-30T11:14:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.481481481480984
+    },
+    {
+      "epoch_utc": "2026-11-30T11:15:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.38888888888839
+    },
+    {
+      "epoch_utc": "2026-11-30T11:16:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.29629629629579
+    },
+    {
+      "epoch_utc": "2026-11-30T11:17:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.2037037037032
+    },
+    {
+      "epoch_utc": "2026-11-30T11:18:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.1111111111106
+    },
+    {
+      "epoch_utc": "2026-11-30T11:19:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 61.01851851851801
+    },
+    {
+      "epoch_utc": "2026-11-30T11:20:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.92592592592541
+    },
+    {
+      "epoch_utc": "2026-11-30T11:21:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.83333333333282
+    },
+    {
+      "epoch_utc": "2026-11-30T11:22:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.74074074074022
+    },
+    {
+      "epoch_utc": "2026-11-30T11:23:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.64814814814763
+    },
+    {
+      "epoch_utc": "2026-11-30T11:24:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.55555555555503
+    },
+    {
+      "epoch_utc": "2026-11-30T11:25:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.462962962962436
+    },
+    {
+      "epoch_utc": "2026-11-30T11:26:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.37037037036984
+    },
+    {
+      "epoch_utc": "2026-11-30T11:27:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.277777777777246
+    },
+    {
+      "epoch_utc": "2026-11-30T11:28:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.18518518518465
+    },
+    {
+      "epoch_utc": "2026-11-30T11:29:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 60.092592592592055
+    },
+    {
+      "epoch_utc": "2026-11-30T11:30:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.99999999999946
+    },
+    {
+      "epoch_utc": "2026-11-30T11:31:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.907407407406865
+    },
+    {
+      "epoch_utc": "2026-11-30T11:32:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.81481481481427
+    },
+    {
+      "epoch_utc": "2026-11-30T11:33:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.722222222221674
+    },
+    {
+      "epoch_utc": "2026-11-30T11:34:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.62962962962908
+    },
+    {
+      "epoch_utc": "2026-11-30T11:35:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.537037037036484
+    },
+    {
+      "epoch_utc": "2026-11-30T11:36:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.44444444444389
+    },
+    {
+      "epoch_utc": "2026-11-30T11:37:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.35185185185129
+    },
+    {
+      "epoch_utc": "2026-11-30T11:38:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.2592592592587
+    },
+    {
+      "epoch_utc": "2026-11-30T11:39:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.1666666666661
+    },
+    {
+      "epoch_utc": "2026-11-30T11:40:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 59.07407407407351
+    },
+    {
+      "epoch_utc": "2026-11-30T11:41:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.98148148148091
+    },
+    {
+      "epoch_utc": "2026-11-30T11:42:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.88888888888832
+    },
+    {
+      "epoch_utc": "2026-11-30T11:43:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.79629629629572
+    },
+    {
+      "epoch_utc": "2026-11-30T11:44:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.70370370370313
+    },
+    {
+      "epoch_utc": "2026-11-30T11:45:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.61111111111053
+    },
+    {
+      "epoch_utc": "2026-11-30T11:46:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.518518518517936
+    },
+    {
+      "epoch_utc": "2026-11-30T11:47:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.42592592592534
+    },
+    {
+      "epoch_utc": "2026-11-30T11:48:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.333333333332746
+    },
+    {
+      "epoch_utc": "2026-11-30T11:49:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.24074074074015
+    },
+    {
+      "epoch_utc": "2026-11-30T11:50:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.148148148147556
+    },
+    {
+      "epoch_utc": "2026-11-30T11:51:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 58.05555555555496
+    },
+    {
+      "epoch_utc": "2026-11-30T11:52:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.962962962962365
+    },
+    {
+      "epoch_utc": "2026-11-30T11:53:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.87037037036977
+    },
+    {
+      "epoch_utc": "2026-11-30T11:54:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.777777777777175
+    },
+    {
+      "epoch_utc": "2026-11-30T11:55:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.68518518518458
+    },
+    {
+      "epoch_utc": "2026-11-30T11:56:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.592592592591984
+    },
+    {
+      "epoch_utc": "2026-11-30T11:57:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.49999999999939
+    },
+    {
+      "epoch_utc": "2026-11-30T11:58:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.407407407406794
+    },
+    {
+      "epoch_utc": "2026-11-30T11:59:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.3148148148142
+    },
+    {
+      "epoch_utc": "2026-11-30T12:00:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.2222222222216
+    },
+    {
+      "epoch_utc": "2026-11-30T12:01:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.12962962962901
+    },
+    {
+      "epoch_utc": "2026-11-30T12:02:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 57.03703703703641
+    },
+    {
+      "epoch_utc": "2026-11-30T12:03:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.94444444444382
+    },
+    {
+      "epoch_utc": "2026-11-30T12:04:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.85185185185122
+    },
+    {
+      "epoch_utc": "2026-11-30T12:05:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.75925925925863
+    },
+    {
+      "epoch_utc": "2026-11-30T12:06:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.66666666666603
+    },
+    {
+      "epoch_utc": "2026-11-30T12:07:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.57407407407344
+    },
+    {
+      "epoch_utc": "2026-11-30T12:08:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.48148148148084
+    },
+    {
+      "epoch_utc": "2026-11-30T12:09:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.388888888888246
+    },
+    {
+      "epoch_utc": "2026-11-30T12:10:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.29629629629565
+    },
+    {
+      "epoch_utc": "2026-11-30T12:11:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.203703703703056
+    },
+    {
+      "epoch_utc": "2026-11-30T12:12:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.11111111111046
+    },
+    {
+      "epoch_utc": "2026-11-30T12:13:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 56.018518518517865
+    },
+    {
+      "epoch_utc": "2026-11-30T12:14:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.92592592592527
+    },
+    {
+      "epoch_utc": "2026-11-30T12:15:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.833333333332675
+    },
+    {
+      "epoch_utc": "2026-11-30T12:16:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.74074074074008
+    },
+    {
+      "epoch_utc": "2026-11-30T12:17:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.648148148147484
+    },
+    {
+      "epoch_utc": "2026-11-30T12:18:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.55555555555489
+    },
+    {
+      "epoch_utc": "2026-11-30T12:19:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.462962962962294
+    },
+    {
+      "epoch_utc": "2026-11-30T12:20:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.3703703703697
+    },
+    {
+      "epoch_utc": "2026-11-30T12:21:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.2777777777771
+    },
+    {
+      "epoch_utc": "2026-11-30T12:22:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.18518518518451
+    },
+    {
+      "epoch_utc": "2026-11-30T12:23:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 55.09259259259191
+    },
+    {
+      "epoch_utc": "2026-11-30T12:24:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.99999999999932
+    },
+    {
+      "epoch_utc": "2026-11-30T12:25:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.90740740740672
+    },
+    {
+      "epoch_utc": "2026-11-30T12:26:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.81481481481413
+    },
+    {
+      "epoch_utc": "2026-11-30T12:27:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.72222222222153
+    },
+    {
+      "epoch_utc": "2026-11-30T12:28:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.62962962962894
+    },
+    {
+      "epoch_utc": "2026-11-30T12:29:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.53703703703634
+    },
+    {
+      "epoch_utc": "2026-11-30T12:30:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.44444444444375
+    },
+    {
+      "epoch_utc": "2026-11-30T12:31:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.35185185185115
+    },
+    {
+      "epoch_utc": "2026-11-30T12:32:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.259259259258556
+    },
+    {
+      "epoch_utc": "2026-11-30T12:33:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.16666666666596
+    },
+    {
+      "epoch_utc": "2026-11-30T12:34:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 54.074074074073366
+    },
+    {
+      "epoch_utc": "2026-11-30T12:35:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.98148148148077
+    },
+    {
+      "epoch_utc": "2026-11-30T12:36:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.888888888888175
+    },
+    {
+      "epoch_utc": "2026-11-30T12:37:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.79629629629558
+    },
+    {
+      "epoch_utc": "2026-11-30T12:38:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.703703703702985
+    },
+    {
+      "epoch_utc": "2026-11-30T12:39:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.61111111111039
+    },
+    {
+      "epoch_utc": "2026-11-30T12:40:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.518518518517794
+    },
+    {
+      "epoch_utc": "2026-11-30T12:41:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.4259259259252
+    },
+    {
+      "epoch_utc": "2026-11-30T12:42:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.333333333332604
+    },
+    {
+      "epoch_utc": "2026-11-30T12:43:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.24074074074001
+    },
+    {
+      "epoch_utc": "2026-11-30T12:44:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.14814814814741
+    },
+    {
+      "epoch_utc": "2026-11-30T12:45:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 53.05555555555482
+    },
+    {
+      "epoch_utc": "2026-11-30T12:46:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.96296296296222
+    },
+    {
+      "epoch_utc": "2026-11-30T12:47:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.87037037036963
+    },
+    {
+      "epoch_utc": "2026-11-30T12:48:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.77777777777703
+    },
+    {
+      "epoch_utc": "2026-11-30T12:49:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.68518518518444
+    },
+    {
+      "epoch_utc": "2026-11-30T12:50:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.59259259259184
+    },
+    {
+      "epoch_utc": "2026-11-30T12:51:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.49999999999925
+    },
+    {
+      "epoch_utc": "2026-11-30T12:52:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.40740740740665
+    },
+    {
+      "epoch_utc": "2026-11-30T12:53:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.314814814814056
+    },
+    {
+      "epoch_utc": "2026-11-30T12:54:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.22222222222146
+    },
+    {
+      "epoch_utc": "2026-11-30T12:55:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.129629629628866
+    },
+    {
+      "epoch_utc": "2026-11-30T12:56:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 52.03703703703627
+    },
+    {
+      "epoch_utc": "2026-11-30T12:57:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.944444444443675
+    },
+    {
+      "epoch_utc": "2026-11-30T12:58:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.85185185185108
+    },
+    {
+      "epoch_utc": "2026-11-30T12:59:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.759259259258485
+    },
+    {
+      "epoch_utc": "2026-11-30T13:00:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.66666666666589
+    },
+    {
+      "epoch_utc": "2026-11-30T13:01:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.574074074073295
+    },
+    {
+      "epoch_utc": "2026-11-30T13:02:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.4814814814807
+    },
+    {
+      "epoch_utc": "2026-11-30T13:03:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.388888888888104
+    },
+    {
+      "epoch_utc": "2026-11-30T13:04:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.29629629629551
+    },
+    {
+      "epoch_utc": "2026-11-30T13:05:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.203703703702914
+    },
+    {
+      "epoch_utc": "2026-11-30T13:06:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.11111111111032
+    },
+    {
+      "epoch_utc": "2026-11-30T13:07:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 51.01851851851772
+    },
+    {
+      "epoch_utc": "2026-11-30T13:08:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.92592592592513
+    },
+    {
+      "epoch_utc": "2026-11-30T13:09:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.83333333333253
+    },
+    {
+      "epoch_utc": "2026-11-30T13:10:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.74074074073994
+    },
+    {
+      "epoch_utc": "2026-11-30T13:11:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.64814814814734
+    },
+    {
+      "epoch_utc": "2026-11-30T13:12:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.55555555555475
+    },
+    {
+      "epoch_utc": "2026-11-30T13:13:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.46296296296215
+    },
+    {
+      "epoch_utc": "2026-11-30T13:14:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.37037037036956
+    },
+    {
+      "epoch_utc": "2026-11-30T13:15:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.27777777777696
+    },
+    {
+      "epoch_utc": "2026-11-30T13:16:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.185185185184366
+    },
+    {
+      "epoch_utc": "2026-11-30T13:17:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 50.09259259259177
+    },
+    {
+      "epoch_utc": "2026-11-30T13:18:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.999999999999176
+    },
+    {
+      "epoch_utc": "2026-11-30T13:19:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.90740740740658
+    },
+    {
+      "epoch_utc": "2026-11-30T13:20:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.814814814813985
+    },
+    {
+      "epoch_utc": "2026-11-30T13:21:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.72222222222139
+    },
+    {
+      "epoch_utc": "2026-11-30T13:22:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.629629629628795
+    },
+    {
+      "epoch_utc": "2026-11-30T13:23:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.5370370370362
+    },
+    {
+      "epoch_utc": "2026-11-30T13:24:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.444444444443604
+    },
+    {
+      "epoch_utc": "2026-11-30T13:25:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.35185185185101
+    },
+    {
+      "epoch_utc": "2026-11-30T13:26:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.259259259258414
+    },
+    {
+      "epoch_utc": "2026-11-30T13:27:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.16666666666582
+    },
+    {
+      "epoch_utc": "2026-11-30T13:28:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 49.07407407407322
+    },
+    {
+      "epoch_utc": "2026-11-30T13:29:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.98148148148063
+    },
+    {
+      "epoch_utc": "2026-11-30T13:30:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.88888888888803
+    },
+    {
+      "epoch_utc": "2026-11-30T13:31:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.79629629629544
+    },
+    {
+      "epoch_utc": "2026-11-30T13:32:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.70370370370284
+    },
+    {
+      "epoch_utc": "2026-11-30T13:33:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.61111111111025
+    },
+    {
+      "epoch_utc": "2026-11-30T13:34:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.51851851851765
+    },
+    {
+      "epoch_utc": "2026-11-30T13:35:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.42592592592506
+    },
+    {
+      "epoch_utc": "2026-11-30T13:36:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.33333333333246
+    },
+    {
+      "epoch_utc": "2026-11-30T13:37:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.24074074073987
+    },
+    {
+      "epoch_utc": "2026-11-30T13:38:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.14814814814727
+    },
+    {
+      "epoch_utc": "2026-11-30T13:39:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 48.055555555554676
+    },
+    {
+      "epoch_utc": "2026-11-30T13:40:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.96296296296208
+    },
+    {
+      "epoch_utc": "2026-11-30T13:41:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.870370370369486
+    },
+    {
+      "epoch_utc": "2026-11-30T13:42:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.77777777777689
+    },
+    {
+      "epoch_utc": "2026-11-30T13:43:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.685185185184295
+    },
+    {
+      "epoch_utc": "2026-11-30T13:44:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.5925925925917
+    },
+    {
+      "epoch_utc": "2026-11-30T13:45:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.499999999999105
+    },
+    {
+      "epoch_utc": "2026-11-30T13:46:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.40740740740651
+    },
+    {
+      "epoch_utc": "2026-11-30T13:47:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.314814814813914
+    },
+    {
+      "epoch_utc": "2026-11-30T13:48:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.22222222222132
+    },
+    {
+      "epoch_utc": "2026-11-30T13:49:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.129629629628724
+    },
+    {
+      "epoch_utc": "2026-11-30T13:50:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 47.03703703703613
+    },
+    {
+      "epoch_utc": "2026-11-30T13:51:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.94444444444353
+    },
+    {
+      "epoch_utc": "2026-11-30T13:52:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.85185185185094
+    },
+    {
+      "epoch_utc": "2026-11-30T13:53:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.75925925925834
+    },
+    {
+      "epoch_utc": "2026-11-30T13:54:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.66666666666575
+    },
+    {
+      "epoch_utc": "2026-11-30T13:55:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.57407407407315
+    },
+    {
+      "epoch_utc": "2026-11-30T13:56:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.48148148148056
+    },
+    {
+      "epoch_utc": "2026-11-30T13:57:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.38888888888796
+    },
+    {
+      "epoch_utc": "2026-11-30T13:58:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.29629629629537
+    },
+    {
+      "epoch_utc": "2026-11-30T13:59:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.20370370370277
+    },
+    {
+      "epoch_utc": "2026-11-30T14:00:00Z",
+      "node_id": "polar-lander",
+      "stored_energy_wh": 46.111111111110176
+    }
+  ],
+  "errors": [
+    {
+      "allocation_id": "allocation-0",
+      "code": "service_unavailable",
+      "reason": "synthetic-lunar-relay lacks service over expanded rx occupancy"
+    },
+    {
+      "allocation_id": "allocation-1",
+      "code": "service_unavailable",
+      "reason": "synthetic-lunar-relay lacks service over expanded tx occupancy"
+    }
+  ],
+  "final_byte_arrival_utc": "2026-11-30T09:37:01.238933Z",
+  "passed": false,
+  "storage_intervals": [
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-30T09:35:00Z",
+        "start_utc": "2026-11-30T08:00:00Z"
+      },
+      "node_id": "polar-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-30T09:37:00Z",
+        "start_utc": "2026-11-30T09:33:30.005192Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-30T14:00:00Z",
+        "start_utc": "2026-11-30T09:36:01.238933Z"
+      },
+      "node_id": "educational-americas"
+    }
+  ]
+}

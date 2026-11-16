@@ -1,0 +1,432 @@
+{
+  "allocations": [],
+  "assumptions": [
+    "Rate method: assumed_net_rate",
+    "Pointing: ideal_pointing",
+    "Service: Assumed finite six-hour educational service; no operator allocation",
+    "Real matched DE421 SPICE states and published LOLA terrain grids; assumed hardware, service, pointing and net radio rates.",
+    "Generation is the minimum of endpoint and midpoint samples per 60-second bin, held constant by assumption; no continuous power guarantee.",
+    "Contacts require clear endpoint and midpoint finite-segment samples per 60-second bin with 30-second outer guards; unsampled short events may be missed.",
+    "Same-epoch geometric rays omit retarded endpoint geometry; a positive constant upper-model delay is separately applied to receiver service and byte arrival.",
+    "Constant contact delay uses maximum sampled geometric range plus 60 seconds at an assumed 12 km/s range-rate bound.",
+    "Terrain above the reference sphere is bounded by an assumed 12 km global envelope; low-altitude finite ray samples use real numerical DEM values.",
+    "Fixed-panel center-ray projection, sampled uniform Sun disk and same-ray spherical Earth eclipse mask; no temperature or self-shadowing model.",
+    "Synthetic relay conics omit nonspherical gravity, third bodies and radiation pressure; they are not operational frozen or libration-point orbits.",
+    "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+    "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+    "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+    "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+    "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+    "Ground sink retains all received chunks with finite configured station storage.",
+    "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+    "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+    "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
+  ],
+  "buffer_history": [],
+  "contacts": [
+    {
+      "available_capacity_bits": 840000000,
+      "contact_id": "physical-polar-lander-synthetic-lunar-relay-1",
+      "mode_id": "synthetic-uplink-2m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 0.005192
+      },
+      "payload_rate_bps": 2000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-lunar-relay",
+      "receiver_terminal_id": "relay-radio",
+      "sender": "polar-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T09:40:30Z",
+        "start_utc": "2026-11-30T09:33:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 720000000,
+      "contact_id": "physical-polar-lander-synthetic-lunar-relay-3",
+      "mode_id": "synthetic-uplink-2m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 0.005116
+      },
+      "payload_rate_bps": 2000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-lunar-relay",
+      "receiver_terminal_id": "relay-radio",
+      "sender": "polar-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T11:47:30Z",
+        "start_utc": "2026-11-30T11:41:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 840000000,
+      "contact_id": "physical-polar-lander-synthetic-lunar-relay-5",
+      "mode_id": "synthetic-uplink-2m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 0.005183
+      },
+      "payload_rate_bps": 2000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-lunar-relay",
+      "receiver_terminal_id": "relay-radio",
+      "sender": "polar-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T13:55:30Z",
+        "start_utc": "2026-11-30T13:48:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 21600000000,
+      "contact_id": "physical-synthetic-lunar-relay-educational-americas-0",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 1.241265
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "educational-americas",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T08:36:30Z",
+        "start_utc": "2026-11-30T08:00:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 49200000000,
+      "contact_id": "physical-synthetic-lunar-relay-educational-americas-3",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 1.238933
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "educational-americas",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T10:43:30Z",
+        "start_utc": "2026-11-30T09:21:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 49200000000,
+      "contact_id": "physical-synthetic-lunar-relay-educational-americas-7",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 1.234371
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "educational-americas",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T12:51:30Z",
+        "start_utc": "2026-11-30T11:29:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 13200000000,
+      "contact_id": "physical-synthetic-lunar-relay-educational-americas-11",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 1.234227
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "educational-americas",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T13:59:30Z",
+        "start_utc": "2026-11-30T13:37:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 21600000000,
+      "contact_id": "physical-synthetic-lunar-relay-educational-europe-0",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 1.236265
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "educational-europe",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T08:36:30Z",
+        "start_utc": "2026-11-30T08:00:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 49200000000,
+      "contact_id": "physical-synthetic-lunar-relay-educational-europe-4",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "constant_assumed",
+        "seconds": 1.245105
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "assumed_net_rate",
+        "constant_conservative_light_time_assumption",
+        "ideal_pointing",
+        "input_class_assumed",
+        "link_budget_not_computed",
+        "radio_conflicts_and_energy_not_yet_checked",
+        "real_DE421_ephemeris",
+        "real_LOLA_numerical_terrain",
+        "same_epoch_geometry",
+        "sampled_interval_geometry_assumption",
+        "synthetic_two_body_lunar_preset"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "educational-europe",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "Assumed finite six-hour educational service; no operator allocation; sender: Assumed finite six-hour educational service; no operator allocation; receiver: Assumed finite six-hour educational service; no operator allocation",
+      "source_transmit_window": {
+        "end_utc": "2026-11-30T10:43:30Z",
+        "start_utc": "2026-11-30T09:21:30Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    }
+  ],
+  "delivered_bytes": null,
+  "energy_history": [],
+  "final_byte_arrival_utc": null,
+  "model_fidelity": "assumed_rate_simulation",
+  "provenance": {
+    "dataset_manifest_ref": "physical-lola-de421-v1",
+    "engine_version": "0.1.0",
+    "implementation_status": "implemented",
+    "input_provenance": [
+      {
+        "description": "Numerical LOLA near/far products and matched DE421 SPICE; ground elevation resolved by the engine. Published interpolation quality is retained, not relabeled as measured terrain.",
+        "input_class": "published",
+        "scope": "terrain and celestial geometry",
+        "source_urls": [
+          "https://pgda.gsfc.nasa.gov/products/81",
+          "https://naif.jpl.nasa.gov/naif/spiceconcept.html"
+        ]
+      },
+      {
+        "description": "Educational lander profile, ideal pointing, assumed net payload rates and finite six-hour service calendars. Three rounded geographic station proxies illustrate diversity; they are not actual DSN antenna coordinates or booked service.",
+        "input_class": "assumed",
+        "scope": "hardware, rates, pointing and service",
+        "source_urls": []
+      },
+      {
+        "description": "synthetic_two_body_lunar_preset soma-polar-200km-v1. Explicit conic model, not an operational frozen orbit, libration orbit or real relay ephemeris.",
+        "input_class": "synthetic",
+        "scope": "lunar relay trajectory",
+        "source_urls": []
+      },
+      {
+        "description": "Same site, data volume, hardware, initial battery, network and six-hour mission-age deadline. Ready time, horizon, finite service calendars and synthetic trajectory coverage move together with the selected operating day.",
+        "input_class": "assumed",
+        "scope": "controlled date comparison",
+        "source_urls": []
+      }
+    ],
+    "kernel_manifest_ref": "de421-phase2-matched-kernel-set",
+    "reason": "No complete schedule exists on the known contacts, but unknown opportunities prevent an infeasibility conclusion for the declared network.",
+    "source_urls": [
+      "https://naif.jpl.nasa.gov/naif/spiceconcept.html",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_000101_270208_261113.bpc",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de421.bsp",
+      "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/",
+      "https://pgda.gsfc.nasa.gov/products/81"
+    ]
+  },
+  "run_version": "0.1.0",
+  "scenario_id": "physical-south-pole-nov-30",
+  "scenario_sha256": "21154d6b3ffafd4fc0f51df6ba88de617bb26e5e01e19213f4f171c69d19abbc",
+  "solver_status": "unresolved",
+  "status": "unknown",
+  "storage_intervals": [],
+  "warnings": [
+    "Published grid interpolation is modeled terrain, not a measured surface at every pixel.",
+    "Fine-grid gaps use the explicitly declared coarse LOLA grid; both-source gaps remain unknown.",
+    "Extent convergence does not prove radial or angular sampling completeness.",
+    "This is an assumed-rate planning simulation, with no RF link closure or operational station/relay access claim.",
+    "Geometry and power are discrete sampled approximations; feasible results apply only under these declared assumptions.",
+    "Unknown opportunities were excluded. A replayed schedule on known contacts can establish feasibility under assumptions; infeasibility and optimality over the full network remain unproved.",
+    "physical-polar-lander-educational-americas-0: rejected: finite_sampled_terrain_intersection",
+    "physical-polar-lander-educational-europe-0: rejected: finite_sampled_terrain_intersection; station_below_minimum_elevation_plus_margin",
+    "physical-polar-lander-educational-australia-0: rejected: station_below_minimum_elevation_plus_margin",
+    "physical-polar-lander-synthetic-lunar-relay-0: rejected: declared_inner_lunar_body_intersection; finite_sampled_terrain_intersection; finite_segment_clear_under_sampling; missing_terrain_or_unresolved_clearance",
+    "physical-polar-lander-synthetic-lunar-relay-2: rejected: declared_inner_lunar_body_intersection; finite_sampled_terrain_intersection; finite_segment_clear_under_sampling",
+    "physical-polar-lander-synthetic-lunar-relay-4: rejected: declared_inner_lunar_body_intersection; finite_sampled_terrain_intersection; finite_segment_clear_under_sampling",
+    "physical-polar-lander-synthetic-lunar-relay-6: rejected: finite_sampled_terrain_intersection; finite_segment_clear_under_sampling",
+    "physical-synthetic-lunar-relay-educational-americas-1: rejected: above_declared_global_terrain_envelope; declared_inner_lunar_body_intersection; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-americas-2: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-americas-4: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-americas-5: rejected: declared_inner_lunar_body_intersection; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-americas-6: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-americas-8: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-americas-9: rejected: declared_inner_lunar_body_intersection; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-americas-10: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-europe-1: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-europe-2: rejected: declared_inner_lunar_body_intersection; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-europe-3: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-europe-5: unknown: above_declared_global_terrain_envelope; missing_terrain_or_unresolved_clearance",
+    "physical-synthetic-lunar-relay-educational-europe-6: rejected: declared_inner_lunar_body_intersection; missing_terrain_or_unresolved_clearance; station_below_minimum_elevation_plus_margin",
+    "physical-synthetic-lunar-relay-educational-australia-0: rejected: station_below_minimum_elevation_plus_margin",
+    "No complete dataset schedule satisfies the declared discrete route, capacity, storage, service, radio and energy constraints.",
+    "Published terrain and ephemerides feed this model; radio rates, service and synthetic relay trajectories remain declared assumptions, not mission predictions.",
+    "This result does not book service or certify navigation, relay operation or thermal survival.",
+    "Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage."
+  ]
+}
