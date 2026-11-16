@@ -72,7 +72,10 @@ def test_hosted_fetch_uses_configured_origin_and_server_token(monkeypatch):
     monkeypatch.setattr(index, "urlopen", open_request)
     assert index.hosted_fetch("https://api.cesium.com/v1/assets/2684829/endpoint", index.hosted_token()) == b"{}"
     assert requests[0].get_header("Referer") == "https://soma-atlas-two.vercel.app/"
-    assert requests[0].get_header("Authorization") == "Bearer server-only"
+    assert requests[0].full_url == "https://api.cesium.com/v1/assets/2684829/endpoint?access_token=server-only"
+    assert requests[0].get_header("Authorization") is None
+    assert index.hosted_fetch("https://assets.cesium.com/2684829/Moon/v6/tileset.json", "endpoint-only") == b"{}"
+    assert requests[1].get_header("Authorization") == "Bearer endpoint-only"
     monkeypatch.delenv("SOMA_CESIUM_ION_TOKEN")
     with pytest.raises(ValueError):
         index.hosted_token()

@@ -3,7 +3,7 @@
 import gzip
 import logging
 import os
-from urllib.parse import urlsplit
+from urllib.parse import urlencode, urlsplit
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
@@ -34,6 +34,9 @@ def hosted_origin():
 
 def hosted_fetch(url, bearer=None):
     headers = {"Referer": hosted_origin() + "/", "Accept-Encoding": "identity"}
+    if url == "https://api.cesium.com/v1/assets/2684829/endpoint" and bearer:
+        url += "?" + urlencode({"access_token": bearer})
+        bearer = None
     if bearer:
         headers["Authorization"] = "Bearer " + bearer
     try:
