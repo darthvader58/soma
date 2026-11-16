@@ -48,8 +48,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c35a6788f62b9338da35e43b3058e080bde69d6b8aee6288e525bf14a914073a",
-      "size_bytes": 18366
+      "sha256": "2ed26ee7532cefe425c2401bb69aa5415407bea66a58077dfadeaf2c810de72b",
+      "size_bytes": 18104
     },
     {
       "path": "api/.gitignore",
@@ -63,8 +63,8 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "dace1657dd0ed405e49a693cda721166342f3bdb84f2dae808e986cdbe28ee03",
-      "size_bytes": 14823
+      "sha256": "4ec2d2ace2f8e9d9426fd2c61828501bc2f8fbb6e5864874b7a111795d8aa770",
+      "size_bytes": 16267
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -88,8 +88,8 @@
     },
     {
       "path": "docs/guides/hackathon-demo.mdx",
-      "sha256": "24e239f60682213b62beb95562e3e09acf128bc021156dbcc43e1992f5079e9f",
-      "size_bytes": 14655
+      "sha256": "934c38c81652957dc40e7819917c5f32a46c32b09843b93f3d57f7737aa1123f",
+      "size_bytes": 763
     },
     {
       "path": "fixtures/demo-constraints/README.md",
@@ -338,8 +338,8 @@
     },
     {
       "path": "tests/web/browser.spec.mjs",
-      "sha256": "df9d1e14667e9f7246dcb2b0dbbf946bdc9db9a0a9f97a5b0b978d44e9c852e1",
-      "size_bytes": 32952
+      "sha256": "996e9d0b3e1f9d5379e593b9f8b4a7469b6743024a5189bba0f38c8ae318c9f4",
+      "size_bytes": 33093
     },
     {
       "path": "tests/web/comparison.test.mjs",
@@ -348,8 +348,8 @@
     },
     {
       "path": "tests/web/live.browser.spec.mjs",
-      "sha256": "d6ab863af75457d88284cf0bffbbf071bdfa12a3bda8ae25eba5c0a497532252",
-      "size_bytes": 15507
+      "sha256": "331fa0ec0996dd7e01c01ead170dc19fc8cf52bf249ca331ab3af791118bc28e",
+      "size_bytes": 15648
     },
     {
       "path": "tests/web/mission-cases.test.mjs",
@@ -363,8 +363,8 @@
     },
     {
       "path": "tests/web/physical.browser.spec.mjs",
-      "sha256": "cf1840e65da634dfbcc86c690b801f9a06547d896105077bd653aa9387babd34",
-      "size_bytes": 7596
+      "sha256": "95f213faab0b81a6a880577bd9f64f2c26e8cbb4a1de779313f5f5fa52b5c2e6",
+      "size_bytes": 7780
     },
     {
       "path": "tests/web/renderer-samples.test.mjs",
@@ -478,8 +478,8 @@
     },
     {
       "path": "web/src/main.js",
-      "sha256": "0cf8d1ca880ae1af11bf8da5249e2c5fe06af410b161b03e49e0767b63fa16ca",
-      "size_bytes": 147
+      "sha256": "6c86d6bdb6503ff6610d9032f13d8d321bfb50e9fa60117ea3ddac81bf9ac759",
+      "size_bytes": 170
     },
     {
       "path": "web/src/mission-cases.js",
@@ -525,6 +525,11 @@
       "path": "web/src/archive.js",
       "sha256": "5f67d16d41a81cb669544721d56cc1534f83830f134121fb5e3473a14abb6b1a",
       "size_bytes": 36483
+    },
+    {
+      "path": "tests/web/legacy-archive-support.mjs",
+      "sha256": "1642f7558dd249d99cefc657e0f32a283fbebd79a3bac7459a1b5f785c18c172",
+      "size_bytes": 1498
     }
   ],
   "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
@@ -556,5 +561,26 @@
     "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope.",
     "browser_setup_refresh_recorded_at_utc": "2026-11-17T04:19:30.007070Z",
     "browser_setup_compatibility": "The archived fixture browser setup now waits for the Plan delivery button to become enabled after asynchronous fixture selection/local editing and after skip-link navigation triggers a case load. Assertions, archive runtime, archived scientific results, original verification counts and historical review scope are unchanged. This is a source-binding refresh only."
+  },
+  "dashboard_compatibility_refresh": {
+    "recorded_at_utc": "2026-11-17T06:47:44.213807Z",
+    "changed_bindings": [
+      "README.md",
+      "data/phase6-evidence.manifest.json",
+      "docs/guides/hackathon-demo.mdx",
+      "tests/web/browser.spec.mjs",
+      "tests/web/live.browser.spec.mjs",
+      "tests/web/physical.browser.spec.mjs",
+      "web/src/main.js",
+      "tests/web/legacy-archive-support.mjs"
+    ],
+    "reason": "The user requested removal of the public delivery archive and a redesigned research dashboard. Public routing and documentation now serve the research workbench; historical delivery components remain in the repository for offline regression only.",
+    "offline_regression_harness": "tests/web/legacy-archive-support.mjs",
+    "harness_scope": "Localhost-only browser-test document interception with explicit origin-scoped local-network permission. The public entry point does not import the archive module.",
+    "historical_scope": "Original scientific inputs/results, frozen delivery schemas, review dates and recorded verification counts are unchanged. Existing completion flags and review claims describe the historical bounded release, not a current public delivery interface or certification of the new dashboard.",
+    "public_delivery_archive_retired": true,
+    "offline_fixtures_and_component_tests_retained": true,
+    "archived_scientific_artifacts_changed": false,
+    "new_dashboard_covered_by_historical_reviews": false
   }
 }

@@ -17,8 +17,11 @@ It does not certify the full research beta or general TATC feature parity.
   isolated SPICE workers and explicit unavailable durable-job capabilities.
 - Optional local SQLite-backed research jobs and reproducible Python examples.
 
-The captured delivery interface remains at `/?mode=archive`. It is not a fallback
-for unsupported research inputs. Global markers use assumed zero elevation on the
+At this increment's verification, captured delivery examples had a separate
+`/?mode=archive` interface. The subsequent dashboard redesign removes that public
+mode; the legacy module and local test harness remain available for regression
+checks. This historical report retains its original test scope and counts.
+Global markers use assumed zero elevation on the
 reference sphere; the old regional terrain-registration certificate is not applied globally.
 
 ## Verification

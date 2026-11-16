@@ -246,8 +246,8 @@
     },
     {
       "path": "tests/web/live.browser.spec.mjs",
-      "sha256": "d6ab863af75457d88284cf0bffbbf071bdfa12a3bda8ae25eba5c0a497532252",
-      "size_bytes": 15507
+      "sha256": "331fa0ec0996dd7e01c01ead170dc19fc8cf52bf249ca331ab3af791118bc28e",
+      "size_bytes": 15648
     },
     {
       "path": "web/docs/phase-6-independent-review.json",
@@ -278,6 +278,11 @@
       "path": "web/src/comparison.js",
       "sha256": "7576ba20458a3f8367ec228cc15e82823253b083affa51d7fa7683baec5175dc",
       "size_bytes": 7562
+    },
+    {
+      "path": "tests/web/legacy-archive-support.mjs",
+      "sha256": "1642f7558dd249d99cefc657e0f32a283fbebd79a3bac7459a1b5f785c18c172",
+      "size_bytes": 1498
     }
   ],
   "phase6_complete": true,
@@ -319,5 +324,20 @@
     "new_research_scope": "New geometry-study schemas, live analysis, catalog and workbench are separate additions. Historical Phase 1/6 and physical-first-release reviews do not certify them.",
     "new_research_covered_by_archived_reviews": false,
     "archived_scientific_artifacts_changed": false
+  },
+  "dashboard_compatibility_refresh": {
+    "recorded_at_utc": "2026-11-17T06:47:44.213807Z",
+    "changed_bindings": [
+      "tests/web/live.browser.spec.mjs",
+      "tests/web/legacy-archive-support.mjs"
+    ],
+    "reason": "The user requested removal of the public delivery archive and a redesigned research dashboard. Public routing and documentation now serve the research workbench; historical delivery components remain in the repository for offline regression only.",
+    "offline_regression_harness": "tests/web/legacy-archive-support.mjs",
+    "harness_scope": "Localhost-only browser-test document interception with explicit origin-scoped local-network permission. The public entry point does not import the archive module.",
+    "historical_scope": "Original scientific inputs/results, frozen delivery schemas, review dates and recorded verification counts are unchanged. Existing completion flags and review claims describe the historical bounded release, not a current public delivery interface or certification of the new dashboard.",
+    "public_delivery_archive_retired": true,
+    "offline_fixtures_and_component_tests_retained": true,
+    "archived_scientific_artifacts_changed": false,
+    "new_dashboard_covered_by_historical_reviews": false
   }
 }
