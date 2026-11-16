@@ -3,7 +3,7 @@ title: SOMA Python library
 description: Calculate lunar geometry from published sources and audit data-delivery schedules under explicit assumptions.
 ---
 
-SOMA provides a Python lunar geometry library, an interactive Moon workbench and a bounded data-delivery planner. The live workbench calculates new multi-site Sun/Earth geometry and reconstructed LRO states. The delivery engine constrains schedules with contact capacity, radio conflicts, propagation delay, finite storage and lander energy.
+SOMA stands for **Selenographic Observation and Mission Atlas**. It provides a Python lunar geometry library, an interactive Moon workbench and a bounded data-delivery planner. The live workbench calculates new multi-site Sun/Earth geometry and reconstructed LRO states. The delivery engine constrains schedules with contact capacity, radio conflicts, propagation delay, finite storage and lander energy.
 
 The distribution is `soma-lunar`; import it as `soma`. The current repository version is **0.1.0**. Install from source using the [installation guide](/getting-started/installation), then reproduce a [live geometry study](/getting-started/live-research) with pinned NASA ephemerides. The [synthetic delivery tutorial](/getting-started/quickstart) remains available for hand-checkable scheduling tests without data downloads.
 
@@ -21,7 +21,9 @@ The distribution is `soma-lunar`; import it as `soma`. The current repository ve
 
 ## Read the outcome correctly
 
-A result reports `feasible_under_assumptions`, `infeasible_in_model`, or `unknown`. Solver status and model fidelity are separate fields. A feasible schedule using assumed radio rates remains an assumed-rate simulation.
+The public workbench reports completed **geometry studies**. Its plots show Sun/Earth center elevation and its scene replays stored spacecraft positions. It uses a reference sphere and does not evaluate terrain visibility. See [analysis and map behavior](/guides/analysis-and-map) for an input-change check and [physical runs](/getting-started/physical-runs) for the separate regional terrain-backed planner.
+
+A delivery-planning result reports `feasible_under_assumptions`, `infeasible_in_model`, or `unknown`. Solver status and model fidelity are separate fields. A feasible schedule using assumed radio rates remains an assumed-rate simulation.
 
 The browser displays engine-authored results. The public Vercel application calculates new bounded geometry studies; delivery scheduling is available through the Python library and local service. Geometry completion does not imply delivery feasibility. A rendered shadow or visible line is not a scientific result.
 

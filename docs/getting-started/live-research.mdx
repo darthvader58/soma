@@ -3,7 +3,7 @@ title: Live lunar geometry
 description: Calculate a new multi-site study with matched DE421 kernels and a reconstructed LRO trajectory.
 ---
 
-The [Vercel workbench](https://soma-atlas-two.vercel.app/) accepts new site coordinates, UTC intervals and equipment heights. Python evaluates the requested epochs; the browser displays the returned arrays. The catalog, Moon scene, inspector and UTC controls share the same study. The appearance control changes the working panels without changing scene lighting or scientific values.
+The [Vercel workbench](https://soma-atlas-two.vercel.app/) accepts new site coordinates, UTC intervals and equipment heights. Python evaluates the requested epochs; the browser displays the returned arrays. The dark workspace groups the catalog, Moon scene, inspector and UTC controls around the same study. SOMA means **Selenographic Observation and Mission Atlas**.
 
 ## Run the browser study
 
@@ -14,6 +14,8 @@ The [Vercel workbench](https://soma-atlas-two.vercel.app/) accepts new site coor
 5. Edit a date or height. The previous calculation becomes stale until you run again. Export the new result as JSON.
 
 The named crater centers are context references, not proposed landing locations. Catalog elevation defaults to an explicitly assumed zero above the 1,737,400 m reference sphere. Read the [source and frame notes](/science/research-sources).
+
+Running analysis calculates a study and pauses at its first epoch. Use **Play**, the UTC slider or **Next stored sample** to move through the supplied states. Repeating the same request should produce the same geometry. The Moon's surface texture uses neutral display lighting and does not change into a calculated terrain-shadow map. See [what analysis changes in the map](/guides/analysis-and-map).
 
 ## Reproduce the study in Python
 

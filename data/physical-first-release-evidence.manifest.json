@@ -48,8 +48,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "2ed26ee7532cefe425c2401bb69aa5415407bea66a58077dfadeaf2c810de72b",
-      "size_bytes": 18104
+      "sha256": "ed4723d08ce2f85a9107e5939771168a64c755b956d2ce3a8e090c63b29fecf6",
+      "size_bytes": 18097
     },
     {
       "path": "api/.gitignore",
@@ -580,6 +580,16 @@
     "historical_scope": "Original scientific inputs/results, frozen delivery schemas, review dates and recorded verification counts are unchanged. Existing completion flags and review claims describe the historical bounded release, not a current public delivery interface or certification of the new dashboard.",
     "public_delivery_archive_retired": true,
     "offline_fixtures_and_component_tests_retained": true,
+    "archived_scientific_artifacts_changed": false,
+    "new_dashboard_covered_by_historical_reviews": false
+  },
+  "dark_dashboard_compatibility_refresh": {
+    "recorded_at_utc": "2026-11-17T10:42:30.124720Z",
+    "changed_bindings": [
+      "README.md"
+    ],
+    "reason": "README now describes a dark research workspace and neutral scene lighting. This is a documentation/source-binding compatibility refresh.",
+    "historical_scope": "Original scientific inputs/results, frozen schemas, review dates and verification counts are preserved. The current appearance and geometry-result presentation do not extend historical physical-release or interface-review claims.",
     "archived_scientific_artifacts_changed": false,
     "new_dashboard_covered_by_historical_reviews": false
   }

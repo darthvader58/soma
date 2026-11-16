@@ -1,0 +1,37 @@
+---
+title: What analysis changes in the map
+description: Distinguish computed geometry, playback and terrain visibility when checking a SOMA study.
+---
+
+SOMA, the **Selenographic Observation and Mission Atlas**, calculates new geometry in Python. Cesium displays the returned positions and directions. It does not calculate terrain visibility or choose a delivery schedule.
+
+## Check the calculation
+
+| Action | Expected change |
+| --- | --- |
+| Run unchanged inputs | Same request hash and scientific values; playback returns to the first epoch |
+| Change the UTC date and run | New request hash, epoch-dependent Sun/Earth directions and reconstructed LRO states |
+| Include another site and run | Another comparison row and calculated site geometry |
+| Inspect a catalog site without including it | Coordinate/source context; no calculated readout for that site |
+| Play or step stored samples | UTC, spacecraft position and numerical readouts advance through the returned history |
+| Move the camera | View changes; scientific inputs and arrays stay unchanged |
+
+The Moon is fixed in its own reference frame. Its texture is geographical context with neutral lighting. A successful run does not rotate the surface, create terrain shadows or start playback automatically. At global scale, small direction changes may be hard to see; use the numerical inspector and plot to compare them.
+
+For an unchecked context site, **Include this site and run** explicitly adds it to the study, subject to the eight-site limit. After a changed set of locations is calculated, the camera focuses the inspected calculated location. Evaluated-site rings use a display-only lift to remain visible over the mesh; their display placement does not change the exported site coordinates or certify terrain alignment.
+
+## A controlled date check
+
+Use the same selected sites, equipment heights and 120-second sampling. Calculate 1 April 2026, 00:00–06:00 UTC, then calculate 2 April over the same six hours. Keep LRO selected within its published coverage. Export each **Result JSON** and compare `study_sha256`, `epochs_utc`, `sites[].samples` and `spacecraft[].samples`. A different hash establishes different normalized inputs; inspect the arrays to establish changed outputs.
+
+For a declared custom coordinate at 21.1827° N, 68.2714° E, elevation 0 m, antenna height 2 m and panel height 1.7 m, the first Sun-center elevation changes from about 36.407° on 1 April to 25.346° on 2 April. These are reference-sphere geometric directions, not terrain-clear visibility measurements.
+
+## Why terrain visibility is not evaluated
+
+The public geometry request declares `surface_model: "reference_sphere"`. Python uses matched DE421 sources and declared site elevation, with separate panel and antenna observers. It does not sample a numerical elevation model for that request. A positive center elevation can still be obstructed by a crater wall or ridge. Display tiles cannot establish numerical line of sight, solar-disk fraction or usable communications.
+
+The Python library's separate terrain-backed provider supports a bounded south-polar region and operating period. It requires pinned numerical LOLA data, convergence and unknown-sample handling. Follow [the physical reproduction guide](/getting-started/physical-runs) to use that provider. Its regional evidence does not establish global terrain coverage for arbitrary catalog sites.
+
+## When something looks unchanged
+
+Check that the site is included, the last run is complete, and the result is not marked as belonging to previous inputs. Then advance **Next stored sample** or **Play** and inspect the native spacecraft position. If a calculation fails, the interface reports the service error and does not substitute a saved result. If tiles fail, the inspector, plots and exact JSON remain available independently of the scene.
