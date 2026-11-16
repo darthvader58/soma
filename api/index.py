@@ -1,8 +1,10 @@
 """Hosted display adapter; planning remains in the separately run engine."""
 
 import gzip
+import json
 import logging
 import os
+import re
 from urllib.parse import urlencode, urlsplit
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
@@ -43,7 +45,13 @@ def hosted_fetch(url, bearer=None):
         with urlopen(Request(url, headers=headers), timeout=30) as response:
             content = response.read(MAX_OBJECT + 1)
     except HTTPError as error:
-        logging.getLogger(__name__).error("Moon upstream returned HTTP %s from %s", error.code, urlsplit(url).hostname)
+        try:
+            code = json.loads(error.read(4096)).get("code", "unknown")
+        except (ValueError, AttributeError):
+            code = "unknown"
+        if not isinstance(code, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", code):
+            code = "unknown"
+        logging.getLogger(__name__).error("Moon upstream returned HTTP %s from %s (%s)", error.code, urlsplit(url).hostname, code)
         raise
     if len(content) > MAX_OBJECT:
         raise ValueError("Display object exceeds the source limit")
