@@ -21,7 +21,7 @@ from soma.api.processes import start_private_interpreter, stop_private_interpret
 from soma.time import parse_utc
 from soma.validation import (ScenarioValidationError, _check_json_values, _reject_constant,
                              _unique_keys, data_volume_bytes, load_json, resource_directory,
-                             scenario_sha256, validate_document, validate_scenario)
+                             scenario_sha256, validate_document, validate_scenario, physical_dataset_manifest)
 from soma.api.research_jobs import _atomic_write, configure_numerical_threads, encode
 
 API_VERSION = "1.0.0"
@@ -34,8 +34,9 @@ LIMITS = {
     "worker_address_space_bytes": 1536 * 1024 * 1024,
     "worker_tree_rss_bytes": 1024 * 1024 * 1024,
 }
+HOSTED_MODEL_ID = "physical-lola-de421-v2"
 DEFAULT_OPTIONS = {"chunk_bytes": 16777216, "bin_s": 60, "time_limit_s": 10}
-SOURCE_MANIFESTS = ("de421-phase2.manifest.json", "lola-phase2.manifest.json",
+SOURCE_MANIFESTS = ("de421-phase2.manifest.json", "lola-hosted-v2.manifest.json",
                     "lola-far-phase2.manifest.json", "physical-polar-window.manifest.json")
 
 
@@ -86,7 +87,7 @@ def scenario_template():
             "terminals": [terminal("station-radio", ["synthetic-direct-256k", "synthetic-downlink-10m"])],
             "service": service()})
     return validate_scenario({"run_version": "0.1.0", "scenario_id": "user-lunar-delivery",
-        "analysis_mode": "terrain_ephemeris", "dataset_manifest_ref": "physical-lola-de421-v1",
+        "analysis_mode": "terrain_ephemeris", "dataset_manifest_ref": HOSTED_MODEL_ID,
         "lander": {"id": "polar-lander", "latitude_deg": -89.03093035536243,
             "longitude_deg_east": 1.389336784014743, "frame": "MOON_ME_DE421", "reference_radius_m": 1737400,
             "elevation_datum": "height_above_reference_sphere", "elevation_m": 0,
@@ -142,10 +143,10 @@ def validate_delivery_request(document):
         if len(profile["service"]["windows"]) > 8:
             raise ValueError("Hosted service calendar permits at most eight windows per node")
     # Reject unsupported provider inputs before terrain horizons consume the worker budget.
-    from soma.physical import MODEL_ID, RELAY_REFERENCE, _terminal_pairs
-    model = load_json(resource_directory("data")/"physical-first-release.manifest.json")
+    from soma.physical import RELAY_REFERENCE, _terminal_pairs
+    model, _ = physical_dataset_manifest(HOSTED_MODEL_ID)
     start, end = [parse_utc(scenario["analysis_horizon"][key]) for key in ("start_utc", "end_utc")]
-    if (scenario["dataset_manifest_ref"] != MODEL_ID or not 0 < (end-start).total_seconds() <= LIMITS["max_duration_s"]
+    if (scenario["dataset_manifest_ref"] != HOSTED_MODEL_ID or not 0 < (end-start).total_seconds() <= LIMITS["max_duration_s"]
             or start < parse_utc(model["coverage"]["start_utc"]) or end > parse_utc(model["coverage"]["end_utc"])):
         raise ValueError("Unsupported physical model or analysis coverage")
     site = scenario["lander"]
@@ -258,7 +259,7 @@ def _library_capabilities():
 
 def delivery_capabilities(*, data_root):
     data_root = _data_root(data_root)
-    model = load_json(resource_directory("data")/"physical-first-release.manifest.json")
+    model, _ = physical_dataset_manifest(HOSTED_MODEL_ID)
     result = {"delivery_api_version": API_VERSION, "ready": False, "service_mode": "serverless",
         "async_available": False, "persistence": "none", "limits": deepcopy(LIMITS),
         "coverage": {"frame": model["frame"], "reference_radius_m": model["reference_radius_m"],

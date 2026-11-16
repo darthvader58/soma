@@ -170,6 +170,24 @@ def data_volume_bytes(volume: dict) -> int:
     raise ScenarioValidationError(f"Unsupported data volume unit: {volume['unit']}")
 
 
+
+PHYSICAL_DATASETS = {
+    "physical-lola-de421-v1": "physical-first-release.manifest.json",
+    "physical-lola-de421-v2": "physical-hosted-v2.manifest.json",
+}
+
+
+def physical_dataset_manifest(reference):
+    """Resolve only explicit scientific revisions, never an arbitrary path."""
+    filename = PHYSICAL_DATASETS.get(reference)
+    if filename is None:
+        raise ScenarioValidationError("terrain_ephemeris requires a supported physical dataset_manifest_ref")
+    path = resource_directory("data")/filename
+    manifest = load_json(path)
+    if manifest["id"] != reference:
+        raise ScenarioValidationError("Physical dataset registry/manifest identity mismatch")
+    return manifest, path
+
 def _validate_scenario_semantics(scenario):
     from soma.time import parse_utc
 
@@ -181,9 +199,7 @@ def _validate_scenario_semantics(scenario):
         raise ScenarioValidationError("Require horizon start <= data ready < deadline <= horizon end")
     physical = scenario["analysis_mode"] == "terrain_ephemeris"
     if physical:
-        dataset = load_json(resource_directory("data") / "physical-first-release.manifest.json")
-        if scenario["dataset_manifest_ref"] != dataset["id"]:
-            raise ScenarioValidationError("terrain_ephemeris requires a supported physical dataset_manifest_ref")
+        dataset, _ = physical_dataset_manifest(scenario["dataset_manifest_ref"])
         if (end-start).total_seconds() > dataset["maximum_analysis_duration_s"]:
             raise ScenarioValidationError("Physical analysis horizon exceeds the declared workload limit")
     else:

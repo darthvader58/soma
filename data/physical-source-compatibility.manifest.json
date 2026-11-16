@@ -1,0 +1,38 @@
+{
+  "archived_physical_source_sha256": "8096c20aee5679a9646bce12514645f3e924040cd55d1187aefc531b4a8aeb67",
+  "archived_sampling_sha256": "33b57b64e60ff9b7c4997c26ace4b8385990e9def398196c22323d3f9b843f8c",
+  "artifact_type": "soma_legacy_physical_source_compatibility",
+  "comparisons": [
+    {
+      "archived_inputs_sha256": "8a9de97ce8f84815daf053c15b8058467c76029f6a6a32f5b3de3a0f5539cd93",
+      "compared_fields": [
+        "contacts",
+        "generation_bins",
+        "contacts_complete",
+        "generation_complete"
+      ],
+      "current_inputs_sha256": "8a9de97ce8f84815daf053c15b8058467c76029f6a6a32f5b3de3a0f5539cd93",
+      "exact_inputs_match": true,
+      "time_step_s": 60
+    },
+    {
+      "archived_inputs_sha256": "d6dd0d92070d00d52dfdff2d3392886ff9fea1e4e2e4231a8a1ce70d0f3c47be",
+      "compared_fields": [
+        "contacts",
+        "generation_bins",
+        "contacts_complete",
+        "generation_complete"
+      ],
+      "current_inputs_sha256": "d6dd0d92070d00d52dfdff2d3392886ff9fea1e4e2e4231a8a1ce70d0f3c47be",
+      "exact_inputs_match": true,
+      "time_step_s": 30
+    }
+  ],
+  "current_physical_source_sha256": "9efd3dbe6acb3d4a99a5e46a2af87f3022d9db72a00b8ac2a80a1e22683d806f",
+  "dataset_manifest_ref": "physical-lola-de421-v1",
+  "historical_claims_extended": false,
+  "reason": "Dataset selection is explicit; independently recomputed legacy contacts, generation and completeness flags exactly match both archived sampling cases. This does not certify v2 or change the archived cases.",
+  "recorded_at_utc": "2026-11-18T09:15:11.106640Z",
+  "scope": "Legacy v1 scientific inputs after explicit v1/v2 dataset dispatch",
+  "version": "1.0.0"
+}

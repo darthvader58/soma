@@ -18,7 +18,7 @@ from threading import Lock
 import numpy as np
 
 from soma.geometry import SurfacePoint, local_basis, surface_position
-from soma.validation import load_json, resource_directory
+from soma.validation import load_json, resource_directory, physical_dataset_manifest
 from .dem import DATUM, FRAME, RADIUS_M, RasterDEM, GeographicRasterDEM, TerrainSample
 from .horizons import HorizonBand, HorizonProfile, HorizonSampling, HorizonSite, _distances
 
@@ -256,10 +256,7 @@ def resolve_terrain_site(scenario, *, data_root=None, progress=None, cancel_even
     """
     _check_cancel(cancel_event)
     root = Path(data_root or os.environ.get('SOMA_DATA_ROOT', '/private/tmp/soma-phase2-data')).resolve()
-    manifest_path = resource_directory('data')/'physical-first-release.manifest.json'
-    manifest = load_json(manifest_path)
-    if scenario['dataset_manifest_ref'] != manifest['id']:
-        raise ValueError('Scenario must explicitly select the physical terrain dataset manifest')
+    manifest, manifest_path = physical_dataset_manifest(scenario['dataset_manifest_ref'])
     point = scenario['lander']
     lat_bounds = manifest['latitude_bounds_deg']
     lon_bounds = manifest['longitude_bounds_deg_east']
