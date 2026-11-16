@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
-import { createWorkbenchViewer, navigateCamera } from '../../web/src/workbench-viewer.js';
+import { createWorkbenchViewer, navigateCamera, earthBodyAtEpoch } from '../../web/src/workbench-viewer.js';
 
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
 const Cesium = require('cesium');
@@ -16,7 +16,8 @@ async function displayHarness(t, realCamera = false) {
     constructor() {
       scene = this;
       this.entities = new Cesium.EntityCollection();
-      this.scene = { canvas: { clientWidth: 800, clientHeight: 500 }, primitives: { add: value => value },
+      const primitives = [];
+      this.scene = { canvas: { clientWidth: 800, clientHeight: 500 }, primitives: { values: primitives, add(value) { primitives.push(value); return value; }, remove(value) { const index = primitives.indexOf(value); if (index >= 0) primitives.splice(index, 1); } },
         drawingBufferWidth: 800, drawingBufferHeight: 500, mapProjection: new Cesium.GeographicProjection(Cesium.Ellipsoid.MOON), mode: Cesium.SceneMode.SCENE3D,
         renderError: { addEventListener() {} }, requestRender() {} };
       this.camera = realCamera ? new Cesium.Camera(this.scene) : { frustum: { fovy: Math.PI / 3 }, cancelFlight() {}, setView(view) { this.lastView = view; }, flyTo() {} };
@@ -35,6 +36,48 @@ const result = () => ({ epochs_utc: ['2026-04-01T00:00:00Z'], spacecraft: [], si
   id: 'custom-a', name: 'Calculated custom site', position_m: [1737400, 0, 0],
   samples: [{ epoch_utc: '2026-04-01T00:00:00Z', sun: { direction_moon_fixed: [1, 0, 0] }, earth: { direction_moon_fixed: [0, 1, 0] } }],
 }] });
+
+function earthDisplayFixture() {
+  const read = name => JSON.parse(readFileSync(new URL(`../../web/fixtures/physical-south-pole/relay-later/${name}.json`, import.meta.url)));
+  const scenario = read('scenario'), display = read('display-data'), epoch = display.renderer_states[0].epoch;
+  const rotation = [0, -1, 0, 1, 0, 0, 0, 0, 1];
+  display.renderer_states.push({ ...display.renderer_states[0], target: 'EARTH', position: [380000000, 1000000, 2000000] });
+  display.earth_body = { status: 'available', body_id: 'EARTH', reference_ellipsoid: 'WGS84', radii_m: [6378137, 6378137, 6356752.314245179], body_fixed_frame: 'ITRF93', renderer_frame: display.registration.renderer_frame,
+    position_unit: 'm', time_scale: 'UTC', rotation_layout: 'row_major', rotation_unit: 'dimensionless', orientation_samples: [{ epoch_utc: epoch, rotation_body_fixed_to_renderer_row_major: rotation }], provenance: { scope: 'Synthetic orientation/center contract test only' } };
+  return { scenario, display, epoch, rotation };
+}
+
+test('Earth body uses exact supplied pose and WGS84 radii, hides between epochs, remains separate from endpoint markers and fits Earth view', async t => {
+  for (const name of ['HTMLCanvasElement', 'HTMLVideoElement', 'HTMLImageElement', 'ImageBitmap', 'OffscreenCanvas']) { const previous = globalThis[name]; globalThis[name] = class {}; t.after(() => { if (previous === undefined) delete globalThis[name]; else globalThis[name] = previous; }); }
+  const { api, scene } = await displayHarness(t, true), fixture = earthDisplayFixture();
+  const before = structuredClone(fixture.display);
+  api.setDelivery(fixture); api.setTime(fixture.epoch);
+  const primitive = scene.scene.primitives.values.find(value => value.geometryInstances?.id === 'delivery-earth-body');
+  assert.ok(primitive); assert.equal(primitive.appearance.flat, true);
+  const body = earthBodyAtEpoch(fixture.display, fixture.epoch);
+  assert.deepEqual(Cesium.Matrix4.getTranslation(primitive.modelMatrix, new Cesium.Cartesian3()), new Cesium.Cartesian3(...body.center));
+  assert.deepEqual(Cesium.Matrix4.getMatrix3(primitive.modelMatrix, new Cesium.Matrix3()), Cesium.Matrix3.fromRowMajorArray(fixture.rotation));
+  assert.deepEqual(primitive.geometryInstances.geometry._radii, new Cesium.Cartesian3(...body.radii));
+  api.camera('earth');
+  assert.ok(Cesium.Cartesian3.distance(scene.camera.positionWC, new Cesium.Cartesian3(...body.center)) > 6378137);
+  for (let index = 0; index < 100; index++) api.navigate('zoom-in');
+  assert.ok(Cesium.Cartesian3.distance(scene.camera.positionWC, new Cesium.Cartesian3(...body.center)) >= 6388137);
+  api.camera('network'); assert.equal(primitive.show, true);
+  const unsupportedEpoch = new Date(Date.parse(fixture.epoch) + 1).toISOString();
+  api.setTime(unsupportedEpoch); assert.equal(primitive.show, false);
+  assert.equal(earthBodyAtEpoch(fixture.display, unsupportedEpoch), undefined);
+  api.setTime(fixture.epoch); assert.equal(primitive.show, true);
+  assert.deepEqual(fixture.display, before);
+  api.setResult(undefined); assert.equal(scene.scene.primitives.values.includes(primitive), false);
+});
+
+test('unsupported Earth orientation metadata, frame, missing center or nonrotation never draws a body', () => {
+  for (const change of [body => { body.status = 'unknown'; }, body => { body.renderer_frame = 'wrong'; }, body => { body.radii_m[0] = 1737400; }, body => { body.orientation_samples[0].rotation_body_fixed_to_renderer_row_major[0] = 3; }]) {
+    const { display, epoch } = earthDisplayFixture(); change(display.earth_body); assert.equal(earthBodyAtEpoch(display, epoch), undefined);
+  }
+  const { display, epoch } = earthDisplayFixture(); display.renderer_states = display.renderer_states.filter(state => state.target !== 'EARTH');
+  assert.equal(earthBodyAtEpoch(display, epoch), undefined);
+});
 
 test('all navigation actions move a real Cesium camera without changing source state or time; zoom stays bounded', () => {
   for (const distance of [1800000, 4000000, 800000000]) {

@@ -1,0 +1,23 @@
+{
+  "manifest_version": "1.0.0",
+  "purpose": "Earth appearance in the Cesium display only; not an ephemeris, scientific terrain model or weather observation for the selected scenario.",
+  "asset_id": "nasa-blue-marble-november-2004",
+  "path": "web/public/assets/earth/nasa-blue-marble-november-2004.jpg",
+  "sha256": "388422e3bfc62517af2a9d538989a2f859fc193e6f6cde72c3d230ef29c2e69f",
+  "size_bytes": 2540426,
+  "dimensions_px": [5400, 2700],
+  "projection": "equirectangular global surface image",
+  "data_period": "November 2004 composite",
+  "product": "Blue Marble: Next Generation, base map with topography and bathymetry",
+  "credit": "NASA Earth Observatory; produced by Reto Stöckli, NASA Goddard Space Flight Center",
+  "source_url": "https://assets.science.nasa.gov/content/dam/science/esd/eo/images/bmng/bmng-topography-bathymetry/november/world.topo.bathy.200411.3x5400x2700.jpg",
+  "product_page": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/",
+  "description_and_credit_page": "https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/",
+  "reuse_notice": "NASA's product description explicitly permits use or republication with credit to NASA Earth Observatory. Preserve the original image and attribution; no NASA endorsement is implied.",
+  "verified_at_utc": "2026-11-18",
+  "limitations": [
+    "Reference appearance only; not live cloud cover, weather, lighting or a selected-date surface observation.",
+    "Actual body position, orientation and WGS84 radii are supplied separately by Python; the texture does not determine station geometry or link feasibility.",
+    "The original product includes processed composites and shaded topography/bathymetry; neutral display lighting is not an illumination model."
+  ]
+}

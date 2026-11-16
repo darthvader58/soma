@@ -2,9 +2,24 @@ import { loadRegisteredMoon } from './registered-moon.js';
 import { isMoonSurfacePick, siteCameraVectors, registrationGate } from './viewer.js';
 import { storedSampleAt } from './research-client.js';
 import { rendererSamplesAtTime } from './renderer-samples.js';
+import { sameDisplayEpoch } from './display-time.js';
+
+export function earthBodyAtEpoch(display, epoch) {
+  const body = display?.earth_body;
+  if (body?.status !== 'available' || body.position_unit !== 'm' || body.time_scale !== 'UTC' || body.rotation_layout !== 'row_major' || body.rotation_unit !== 'dimensionless') return undefined;
+  if (body?.body_id !== 'EARTH' || body.reference_ellipsoid !== 'WGS84' || body.body_fixed_frame !== 'ITRF93' || body.renderer_frame !== display.registration?.renderer_frame || !Array.isArray(body.radii_m) || body.radii_m.length !== 3 || !body.radii_m.every((value, index) => Number.isFinite(value) && Math.abs(value - [6378137, 6378137, 6356752.314245179][index]) < 0.001)) return undefined;
+  const pose = body.orientation_samples?.find(sample => sameDisplayEpoch(sample.epoch_utc, epoch));
+  const rotation = pose?.rotation_body_fixed_to_renderer_row_major;
+  if (!Array.isArray(rotation) || rotation.length !== 9 || !rotation.every(Number.isFinite)) return undefined;
+  for (let row = 0; row < 3; row++) for (let other = 0; other < 3; other++) if (Math.abs(rotation.slice(row * 3, row * 3 + 3).reduce((sum, value, column) => sum + value * rotation[other * 3 + column], 0) - (row === other ? 1 : 0)) > 1e-7) return undefined;
+  const determinant = rotation[0] * (rotation[4] * rotation[8] - rotation[5] * rotation[7]) - rotation[1] * (rotation[3] * rotation[8] - rotation[5] * rotation[6]) + rotation[2] * (rotation[3] * rotation[7] - rotation[4] * rotation[6]);
+  if (Math.abs(determinant - 1) > 1e-7) return undefined;
+  const state = rendererSamplesAtTime(display, epoch, ['EARTH']).states[0];
+  return state ? { center: state.position, radii: body.radii_m, rotation, epoch: pose.epoch_utc } : undefined;
+}
 
 // Camera-only navigation. Positions and intervals supplied by Python are never modified.
-export function navigateCamera(C, viewer, action, pivot = C.Cartesian3.ZERO) {
+export function navigateCamera(C, viewer, action, pivot = C.Cartesian3.ZERO, earthBody) {
   const camera = viewer.camera;
   const trackedPosition = viewer.trackedEntity?.position?.getValue(viewer.clock?.currentTime);
   if (trackedPosition && [trackedPosition.x, trackedPosition.y, trackedPosition.z].every(Number.isFinite)) pivot = C.Cartesian3.clone(trackedPosition);
@@ -15,8 +30,9 @@ export function navigateCamera(C, viewer, action, pivot = C.Cartesian3.ZERO) {
   const radius = C.Cartesian3.magnitude(before.destination);
   const scale = Math.max(100, C.Cartesian3.distance(before.destination, pivot));
   const step = scale * 0.12, angle = Math.PI / 36;
+  const earthClearance = earthBody ? C.Cartesian3.distance(before.destination, new C.Cartesian3(...earthBody.center)) - Math.max(...earthBody.radii) - 10000 : Infinity;
   const moves = { 'pan-left': 'moveLeft', 'pan-right': 'moveRight', 'pan-up': 'moveUp', 'pan-down': 'moveDown' };
-  if (action === 'zoom-in') camera.zoomIn(Math.max(0, Math.min(step, (radius - 1747400) * 0.45)));
+  if (action === 'zoom-in') camera.zoomIn(Math.max(0, Math.min(step, (radius - 1747400) * 0.45, earthClearance * 0.45)));
   else if (action === 'zoom-out') camera.zoomOut(Math.max(0, Math.min(step, (2e9 - radius) * 0.45)));
   else if (moves[action]) camera[moves[action]](step);
   else if (action === 'tilt-up') camera.lookUp(angle);
@@ -27,7 +43,7 @@ export function navigateCamera(C, viewer, action, pivot = C.Cartesian3.ZERO) {
     camera.lookAtTransform(C.Matrix4.IDENTITY);
   } else return false;
   const nextRadius = C.Cartesian3.magnitude(camera.positionWC);
-  if (!Number.isFinite(nextRadius) || nextRadius < 1747400 || nextRadius > 2e9) camera.setView(before);
+  if (!Number.isFinite(nextRadius) || nextRadius < 1747400 || nextRadius > 2e9 || earthBody && C.Cartesian3.distance(camera.positionWC, new C.Cartesian3(...earthBody.center)) < Math.max(...earthBody.radii) + 10000) camera.setView(before);
   viewer.scene.requestRender();
   return !C.Cartesian3.equalsEpsilon(before.destination, camera.positionWC, 1e-12, 1e-6) || !C.Cartesian3.equalsEpsilon(before.orientation.direction, camera.directionWC, 1e-12, 1e-9);
 }
@@ -43,7 +59,7 @@ export function observeMoonContent(tileset, onReady) {
 
 export async function createWorkbenchViewer(container, {
   ionToken, apiBase = '/api', onStatus = () => {}, onSelect = () => {}, onPick = () => {},
-  loadCesium = () => import('cesium'), fetchImpl = globalThis.fetch, onCameraChange = () => {},
+  loadCesium = () => import('cesium'), fetchImpl = globalThis.fetch, onCameraChange = () => {}, onEarthBodyChange = () => {}, earthTextureUrl,
 } = {}) {
   let C, viewer, moon, handler, shader, result, selectedId, epoch, destroyed = false;
   let resizeObserver, resizeFrame, removeMoonReadiness, cameraMode = 'global';
@@ -52,12 +68,27 @@ export async function createWorkbenchViewer(container, {
   let delivery, deliveryGate, deliverySamples = [];
   let ready = false, lastPreset = 'global', cameraPivot;
   let activeReceiver, activeSender;
+  let earthPrimitive, earthBody, earthImage, earthTextureStatus = earthTextureUrl ? 'loading' : 'unavailable';
   const report = message => onStatus(message);
   const validPosition = value => Array.isArray(value) && value.length === 3 && value.every(Number.isFinite);
   const cartesian = value => new C.Cartesian3(...value);
   // The marker lift only prevents display z-fighting; it never changes study coordinates or equipment heights.
   const contextMarker = value => cartesian(value.map(component => component * (1 + 10000 / Math.hypot(...value))));
   const clear = entities => { entities.forEach(entity => viewer?.entities.remove(entity)); entities.length = 0; };
+  // Cesium's ellipsoid seam is +X; the NASA map's central meridian is +X (Greenwich).
+  const earthMaterial = () => earthImage ? new C.Material({ fabric: { type: 'SomaEarthReference', uniforms: { image: earthImage }, components: { diffuse: 'texture(image, vec2(fract(materialInput.st.s + 0.5), materialInput.st.t)).rgb', alpha: '1.0' } } }) : C.Material.fromType('Color', { color: C.Color.fromCssColorString('#718c9d') });
+  function drawEarthBody() {
+    earthBody = deliveryGate?.passed ? earthBodyAtEpoch(delivery?.display, epoch) : undefined;
+    if (earthPrimitive) earthPrimitive.show = Boolean(earthBody);
+    onEarthBodyChange({ available: Boolean(earthBody), textureStatus: earthTextureStatus, ...earthBody });
+    if (!earthBody) return;
+    const matrix = C.Matrix4.fromRotationTranslation(C.Matrix3.fromRowMajorArray(earthBody.rotation), cartesian(earthBody.center));
+    if (!earthPrimitive) earthPrimitive = viewer.scene.primitives.add(new C.Primitive({ id: 'delivery-earth-body', asynchronous: false,
+      geometryInstances: new C.GeometryInstance({ id: 'delivery-earth-body', geometry: new C.EllipsoidGeometry({ radii: cartesian(earthBody.radii), vertexFormat: C.MaterialAppearance.MaterialSupport.TEXTURED.vertexFormat }) }),
+      appearance: new C.MaterialAppearance({ flat: true, closed: true, translucent: false, material: earthMaterial() }),
+      modelMatrix: matrix }));
+    else earthPrimitive.modelMatrix = matrix;
+  }
   function deliveryLabels() {
     if (!delivery) return;
     const network = cameraMode === 'network' || cameraMode === 'manual' && lastPreset === 'network';
@@ -86,6 +117,7 @@ export async function createWorkbenchViewer(container, {
       if (node) { node.entity.position = cartesian(state.position); node.entity.show = true; }
     }
     for (const [id, node] of spacecraftEntities) node.entity.show = sample.states.some(state => state.target === id);
+    drawEarthBody();
     const allocated = sample.links.filter(link => link.allocation);
     const downlink = allocated.find(link => delivery.scenario.station_refs.includes(link.contact.receiver));
     activeReceiver = downlink?.contact.receiver;
@@ -181,7 +213,7 @@ export async function createWorkbenchViewer(container, {
       if (action === 'reset') { api.camera(lastPreset); return true; }
       const trackedPosition = viewer.trackedEntity?.position?.getValue(viewer.clock.currentTime);
       if (trackedPosition && [trackedPosition.x, trackedPosition.y, trackedPosition.z].every(Number.isFinite)) cameraPivot = C.Cartesian3.clone(trackedPosition);
-      const changed = navigateCamera(C, viewer, action, cameraPivot ?? C.Cartesian3.ZERO);
+      const changed = navigateCamera(C, viewer, action, cameraPivot ?? C.Cartesian3.ZERO, earthBody);
       cameraMode = 'manual';
       onCameraChange({ mode: 'manual', changed, position: [viewer.camera.positionWC.x, viewer.camera.positionWC.y, viewer.camera.positionWC.z] });
       return changed;
@@ -190,6 +222,7 @@ export async function createWorkbenchViewer(container, {
     setSelection(ids, id) { selected = new Set(ids); selectedId = id; drawSites(); drawDirections(); },
     setLayers(next) { labels = next.labels; paths = next.paths; bodyDirections = next.directions; drawSites(); for (const item of spacecraftEntities.values()) if (item.path) item.path.show = paths; if (delivery) drawDeliveryTime(); drawDirections(); },
     setResult(next) {
+      if (earthPrimitive) { viewer?.scene.primitives.remove?.(earthPrimitive); earthPrimitive = undefined; } earthBody = undefined; onEarthBodyChange({ available: false });
       delivery = undefined; deliveryGate = undefined; clear(deliverySamples);
       result = next;
       if (!viewer || destroyed) return;
@@ -248,6 +281,21 @@ export async function createWorkbenchViewer(container, {
       viewer.camera.lookAtTransform?.(C.Matrix4.IDENTITY);
       if (delivery) drawDeliveryTime();
       if (mode === 'follow') { const item = delivery ? spacecraftEntities.get(delivery.scenario.relay_refs[0]) : spacecraftEntities.values().next().value; if (item) { viewer.trackedEntity = item.entity; lastPreset = mode; } return; }
+      if (mode === 'earth') {
+        if (!earthBody) { report('Earth view unavailable: select an exact stored Earth center and body-orientation epoch.'); return; }
+        const center = cartesian(earthBody.center);
+        const direction = C.Cartesian3.normalize(center, new C.Cartesian3());
+        const aspect = viewer.scene.canvas.clientWidth / viewer.scene.canvas.clientHeight;
+        const halfAngle = Math.min(viewer.camera.frustum.fovy / 2, Math.atan(Math.tan(viewer.camera.frustum.fovy / 2) * aspect));
+        const range = Math.max(...earthBody.radii) / Math.sin(halfAngle) * 1.2;
+        const destination = new C.Cartesian3(center.x - direction.x * range, center.y - direction.y * range, center.z - direction.z * range);
+        const reference = Math.abs(direction.z) > 0.9 ? C.Cartesian3.UNIT_X : C.Cartesian3.UNIT_Z;
+        const dot = C.Cartesian3.dot(reference, direction);
+        const up = C.Cartesian3.normalize(new C.Cartesian3(reference.x - dot * direction.x, reference.y - dot * direction.y, reference.z - dot * direction.z), new C.Cartesian3());
+        viewer.camera.setView({ destination, orientation: { direction, up } }); cameraPivot = center; lastPreset = mode;
+        report(`Earth at ${epoch}: real WGS84 radii and Python ITRF93 orientation. ${earthTextureStatus === 'loaded' ? 'NASA November 2004 reference composite' : `Blue reference surface; NASA texture ${earthTextureStatus}`} with neutral schematic lighting, not current weather. Select Earth network to recover the full connection.`);
+        viewer.scene.requestRender(); return;
+      }
       if (mode === 'network' || mode === 'moon-network') {
         if (!delivery || !deliveryGate?.passed) { report('Network view requires a registered Python delivery result.'); return; }
         const sample = rendererSamplesAtTime(delivery.display, epoch, [delivery.scenario.lander.id, ...delivery.scenario.relay_refs, ...(mode === 'network' ? [...delivery.scenario.station_refs, 'EARTH'] : [])]);
@@ -307,6 +355,19 @@ export async function createWorkbenchViewer(container, {
     }));
     fitContextCamera('global');
     ready = true;
+    if (earthTextureUrl && typeof Image !== 'undefined') {
+      const image = new Image(); image.decoding = 'async';
+      image.onload = () => {
+        if (destroyed) return;
+        const texture = document.createElement('canvas'); texture.width = Math.min(2048, image.naturalWidth); texture.height = Math.round(image.naturalHeight * texture.width / image.naturalWidth);
+        const context = texture.getContext('2d');
+        if (context) { context.drawImage(image, 0, 0, texture.width, texture.height); earthImage = texture; earthTextureStatus = 'loaded'; }
+        else earthTextureStatus = 'unavailable';
+        if (earthPrimitive) earthPrimitive.appearance.material = earthMaterial(); if (delivery) drawEarthBody(); viewer.scene.requestRender();
+      };
+      image.onerror = () => { if (destroyed) return; earthTextureStatus = 'unavailable'; if (delivery) drawEarthBody(); viewer.scene.requestRender(); };
+      image.src = earthTextureUrl;
+    }
     resizeObserver = new ResizeObserver(() => {
       if (resizeFrame) cancelAnimationFrame(resizeFrame);
       resizeFrame = requestAnimationFrame(() => {

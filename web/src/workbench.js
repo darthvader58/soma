@@ -51,10 +51,22 @@ const networkCamera = document.createElement('button');
 networkCamera.type = 'button'; networkCamera.dataset.camera = 'network'; networkCamera.dataset.analysisTool = 'delivery';
 networkCamera.hidden = true; networkCamera.textContent = 'Earth network'; networkCamera.setAttribute('aria-pressed', 'false');
 root.querySelector('.scene-camera').append(networkCamera);
+const earthCamera = document.createElement('button'); earthCamera.type = 'button'; earthCamera.dataset.camera = 'earth'; earthCamera.dataset.analysisTool = 'delivery'; earthCamera.hidden = true; earthCamera.disabled = true; earthCamera.textContent = 'Earth'; earthCamera.setAttribute('aria-pressed', 'false'); root.querySelector('.scene-camera').append(earthCamera);
 const navigation = document.createElement('section'); navigation.className = 'scene-navigation'; navigation.setAttribute('aria-label', 'Moon camera navigation');
-const navButton = (action, text, label) => `<button type="button" data-navigation="${action}" aria-label="${label}" title="${label}" disabled>${text}</button>`;
-navigation.innerHTML = `<div class="navigation-essential">${navButton('zoom-in', '+', 'Zoom in')}${navButton('zoom-out', '−', 'Zoom out')}${navButton('reset', 'Reset view', 'Reset view')}</div><details><summary>Pan, rotate &amp; tilt</summary><div class="navigation-grid">${[['pan-left','←','Pan left'],['pan-up','↑','Pan up'],['pan-right','→','Pan right'],['rotate-left','↶','Rotate left'],['pan-down','↓','Pan down'],['rotate-right','↷','Rotate right'],['tilt-up','Tilt up','Tilt up'],['tilt-down','Tilt down','Tilt down']].map(args => navButton(...args)).join('')}</div></details><output id="camera-navigation-state" aria-live="polite">Camera controls loading</output>`;
+const icon = path => `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
+const icons = {
+  'zoom-in': '<circle cx="10" cy="10" r="6"/><path d="m15 15 5 5M7 10h6M10 7v6"/>', 'zoom-out': '<circle cx="10" cy="10" r="6"/><path d="m15 15 5 5M7 10h6"/>',
+  reset: '<path d="M5 7a8 8 0 1 1-1 8M5 3v5h5"/>', 'pan-left': '<path d="m10 5-7 7 7 7M3 12h18"/>', 'pan-right': '<path d="m14 5 7 7-7 7M3 12h18"/>',
+  'pan-up': '<path d="m5 10 7-7 7 7M12 3v18"/>', 'pan-down': '<path d="m5 14 7 7 7-7M12 3v18"/>',
+  'rotate-left': '<path d="M5 7a8 8 0 1 1-1 8M5 3v5h5"/><path d="M12 10v5"/>', 'rotate-right': '<path d="M19 7a8 8 0 1 0 1 8M19 3v5h-5"/><path d="M12 10v5"/>',
+  'tilt-up': '<path d="m7 8 5-5 5 5M12 3v13M4 20h16"/>', 'tilt-down': '<path d="m7 11 5 5 5-5M12 3v13M4 20h16"/>',
+};
+const navButton = (action, label) => `<button type="button" data-navigation="${action}" aria-label="${label}" title="${label}" disabled>${icon(icons[action])}</button>`;
+navigation.innerHTML = `<div class="navigation-essential">${navButton('zoom-in', 'Zoom in')}${navButton('zoom-out', 'Zoom out')}${navButton('reset', 'Reset view')}</div><details><summary aria-label="Pan, rotate &amp; tilt" title="Pan, rotate &amp; tilt">${icon('<path d="M12 3v18M3 12h18m-4-4 4 4-4 4M7 8l-4 4 4 4m1-9 4-4 4 4m-8 10 4 4 4-4"/>')}</summary><div class="navigation-grid">${[['pan-left','Pan left'],['pan-up','Pan up'],['pan-right','Pan right'],['rotate-left','Rotate left'],['pan-down','Pan down'],['rotate-right','Rotate right'],['tilt-up','Tilt up'],['tilt-down','Tilt down']].map(args => navButton(...args)).join('')}</div></details><output id="camera-navigation-state" aria-live="polite">Camera controls loading</output>`;
 root.querySelector('.scene-panel').append(navigation);
+const earthCredit = document.createElement('p'); earthCredit.className = 'earth-display-credit'; earthCredit.hidden = true;
+earthCredit.innerHTML = '<a href="https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/base-topography-bathymetry/" target="_blank" rel="noreferrer">NASA Earth Observatory</a><span></span>';
+root.querySelector('.scene-panel').append(earthCredit);
 for (const button of navigation.querySelectorAll('[data-navigation]')) button.addEventListener('click', () => viewer?.navigate(button.dataset.navigation));
 for (const selector of ['#study-inputs', '.research-status', '.object-panel', '.inspector-panel', '.time-dock']) workspace.querySelector(selector).dataset.analysisTool = 'geometry';
 let activeTool = 'geometry';
@@ -70,6 +82,7 @@ function activateTool(tool) {
   activeTool = tool; workspace.dataset.tool = tool;
   for (const panel of workspace.querySelectorAll('[data-analysis-tool]')) panel.hidden = panel.dataset.analysisTool !== tool;
   networkCamera.hidden = tool !== 'delivery';
+  earthCamera.hidden = tool !== 'delivery';
   for (const button of root.querySelectorAll('[data-analysis-mode]')) button.setAttribute('aria-pressed', String(button.dataset.analysisMode === tool));
   pause();
   if (tool === 'geometry') { deliveryWorkspace.deactivate(); viewer?.setCatalog(catalog); viewer?.setSelection([...selected], inspected); viewer?.setResult(result); if (result) viewer?.setTime(selectedEpoch()); $('follow-spacecraft').disabled = !result?.spacecraft?.length; }
@@ -354,6 +367,8 @@ async function initialize() {
   selected = new Set([catalog[0], catalog[Math.floor(catalog.length / 2)], catalog.at(-1)].filter(Boolean).map(site => site.id));
   inspected = catalog[0]?.id; renderSites(); renderInspector();
   const mapPromise = createWorkbenchViewer($('research-moon'), { ionToken: import.meta.env.VITE_CESIUM_ION_TOKEN, apiBase: import.meta.env.VITE_SOMA_API_URL || '/api',
+    earthTextureUrl: '/assets/earth/nasa-blue-marble-november-2004.jpg',
+    onEarthBodyChange: state => { earthCamera.disabled = !state.available; earthCamera.dataset.bodyAvailable = String(state.available); earthCredit.hidden = !state.available; earthCredit.querySelector('span').textContent = state.textureStatus === 'loaded' ? ' · November 2004 reference composite · neutral lighting, not current weather' : ` · blue reference surface; texture ${state.textureStatus ?? 'unavailable'}`; if (state.available) { earthCamera.dataset.epoch = state.epoch; earthCamera.dataset.radii = JSON.stringify(state.radii); } },
     onCameraChange: state => { if (state.mode === 'manual') { requestedCamera = 'manual'; for (const button of root.querySelectorAll('[data-camera]')) button.setAttribute('aria-pressed', 'false'); } else { requestedCamera = state.mode; for (const button of root.querySelectorAll('[data-camera]')) button.setAttribute('aria-pressed', String(button.dataset.camera === state.mode)); } $('camera-navigation-state').textContent = state.mode === 'manual' ? state.changed === false ? 'Camera limit reached · Reset view restores preset' : 'Manual view · Reset restores preset' : `${state.mode.replaceAll('-', ' ')} view`; if (state.position) navigation.dataset.cameraPosition = JSON.stringify(state.position); },
     onStatus: message => { $('research-map-status').textContent = message; }, onSelect: id => activeTool === 'delivery' ? deliveryWorkspace.inspectNode(id) : inspect(id),
     onPick: coordinates => {
