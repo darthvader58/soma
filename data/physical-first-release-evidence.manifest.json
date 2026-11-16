@@ -48,13 +48,13 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c1493d628d87836f161ee20a5321c9f6dc2777aaa14dcab491295cb2befadb58",
-      "size_bytes": 13738
+      "sha256": "d7fd291fac1431a0406ea9023465128a6a6f1106b873de6e1f99e094aec67f2d",
+      "size_bytes": 16293
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "f86d6ed2300c57977ffbd917744c039d03bf11b089e05e0376abd47e8ee8151f",
-      "size_bytes": 12505
+      "sha256": "caccb42c236f65fc3e8099cedb85bf678dd1b3343e340147ec9883d4941434e1",
+      "size_bytes": 13496
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -278,8 +278,8 @@
     },
     {
       "path": "tests/web/browser.spec.mjs",
-      "sha256": "dfee1fbbd3658e03beeb75c131032f9a05c6a96fc6aca06e4f2145c2e8459988",
-      "size_bytes": 26216
+      "sha256": "e19a4201e7c6d59624b8e98f662154fe53081070b25e6e0eff92cf038745c46c",
+      "size_bytes": 28302
     },
     {
       "path": "tests/web/comparison.test.mjs",
@@ -293,8 +293,8 @@
     },
     {
       "path": "tests/web/physical-contract.test.mjs",
-      "sha256": "b3494504a24dd2d2b10bf6fcde73f7ac7d88fbdb5d0e8f3611fc131a134b887f",
-      "size_bytes": 2976
+      "sha256": "9ce9486600edd792fb80e64e5ca4c2c3cafda44b9edef8f305096104e2f97e99",
+      "size_bytes": 4750
     },
     {
       "path": "tests/web/physical.browser.spec.mjs",
@@ -383,8 +383,8 @@
     },
     {
       "path": "web/package.json",
-      "sha256": "8d184a1552aa07f048621f93b8f198b6597e44880c9cbf2759d8ba721902176d",
-      "size_bytes": 868
+      "sha256": "2a937cc1476b545f66ff3b1373220c3f1d4b90a5a1e4a89d86c1f385dbf12474",
+      "size_bytes": 923
     },
     {
       "path": "web/playwright.physical.config.js",
@@ -398,8 +398,8 @@
     },
     {
       "path": "web/src/main.js",
-      "sha256": "fc6485191d97e417deb04b2e81a9bb195662cea3658085c72b8b9eb293090a63",
-      "size_bytes": 27126
+      "sha256": "e1c379f00e1a9a9e7421e018bbebd52a4b4c7fbc9c936261f891be696c1e671e",
+      "size_bytes": 28531
     },
     {
       "path": "web/src/renderer-samples.js",
@@ -408,8 +408,8 @@
     },
     {
       "path": "web/src/scenario.js",
-      "sha256": "bb1135f90aee6ca468775e780b8639793865f72ebdfb46122beee4a17c309c76",
-      "size_bytes": 9196
+      "sha256": "d85b4ec5255c23ec0237c194a44284e8caced2797c7331659c0e73c69255100f",
+      "size_bytes": 8881
     },
     {
       "path": "web/src/science.js",
@@ -418,13 +418,60 @@
     },
     {
       "path": "web/src/timeline.js",
-      "sha256": "d4c02b7a063d22fdd39bd334aa19b598a0b428d0914bf7da57df506784e3789f",
-      "size_bytes": 6779
+      "sha256": "00eaea602aff4d5951e97864b71e496e35c3afbf16ba04bf07f30e93d9dd0145",
+      "size_bytes": 6948
     },
     {
       "path": "web/src/viewer.js",
       "sha256": "ce45e9c4d0dc4798ef717f834ad412e16d9ee66def9f74f4cd7c532137c75565",
       "size_bytes": 18929
+    },
+    {
+      "path": "api/index.py",
+      "sha256": "62c2efb522038d0ceb1250a8a9a9028faac6531c87b6ece0fcd245a2720bcd29",
+      "size_bytes": 4720
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "7d5207aad1003fe18f58d3a43e79e260eb352995b35a2a5c032b487239f4ab3e",
+      "size_bytes": 121
+    },
+    {
+      "path": "vercel.json",
+      "sha256": "ddd2075db737fbd4a0faf6f4a47e2e4b16e50accbac966f282ec675cd43fd7b0",
+      "size_bytes": 912
+    },
+    {
+      "path": "tests/engine/test_hosted_moon_api.py",
+      "sha256": "2dbfcf36bdc1812e5bbe97b8dfcdc79275a5a6ad7d297313a4089b32c1a31a49",
+      "size_bytes": 5399
+    },
+    {
+      "path": "web/src/physical-fixtures.js",
+      "sha256": "6257a1eb380abcf65a9dcb8538f3dba7feb7cfa3e7af001ca88f6e2d585f1aac",
+      "size_bytes": 1422
+    },
+    {
+      "path": "web/scripts/sync-physical.mjs",
+      "sha256": "2f5733f20fa035699a81666db70ff9ce2b7e39b6a77b1a99b940236718ec161a",
+      "size_bytes": 945
+    },
+    {
+      "path": "scripts/prepare-hosted-runtime.py",
+      "sha256": "a2b92a75f5b054240058a39f09ee7af21ccb78752165e4bfc3664364178b9174",
+      "size_bytes": 2398
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "d4678fddb67c9e09ce9773a23db253047ba370035556095dcede23dbb97ece79",
+      "size_bytes": 974
+    },
+    {
+      "path": "api/.gitignore",
+      "sha256": "7aca673ae7d915b7bd42fd723c11c8bbf118effdf9c99593b4b418c2ff723f57",
+      "size_bytes": 9
     }
-  ]
+  ],
+  "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
+  "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately."
 }

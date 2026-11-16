@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c1493d628d87836f161ee20a5321c9f6dc2777aaa14dcab491295cb2befadb58"
+      "sha256": "d7fd291fac1431a0406ea9023465128a6a6f1106b873de6e1f99e094aec67f2d"
     },
     {
       "path": "data/README.md",
@@ -71,11 +71,11 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "f86d6ed2300c57977ffbd917744c039d03bf11b089e05e0376abd47e8ee8151f"
+      "sha256": "caccb42c236f65fc3e8099cedb85bf678dd1b3343e340147ec9883d4941434e1"
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "8a791561ca4859ca9fc6a4401b7883ccb476e737e0270acc9779d6bcd32928fe"
+      "sha256": "144552cfa639190cb72c933cd7d78978c1792b649dced56563e8c8eaa02683e9"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -551,7 +551,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "288cad7028784bf4bba3b6a7c7b86934795c06d1dcc964d02c08088fbb6d6df8"
+      "sha256": "d4678fddb67c9e09ce9773a23db253047ba370035556095dcede23dbb97ece79"
     },
     {
       "path": "schemas/allocation.schema.json",
@@ -1022,5 +1022,7 @@
   "phase2_geometry_evidence_ref": "data/phase2-evidence.manifest.json",
   "phase2_interface_evidence_ref": "web/docs/phase-2-verification.md",
   "phase3_evidence_ref": "data/phase3-evidence.manifest.json",
-  "analysis_scope": "synthetic_assumed_rate_delivery_runs_through_phase_5"
+  "analysis_scope": "synthetic_assumed_rate_delivery_runs_through_phase_5",
+  "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
+  "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately."
 }
