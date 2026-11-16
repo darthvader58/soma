@@ -39,7 +39,7 @@
     },
     {
       "path": "soma/exports/display.py",
-      "sha256": "6822040a51d43827569fe61e5fbda9a3f9fe64aa3f5b0fd398859b46ef46cb09"
+      "sha256": "fcfe00f15c1195faf85169a18ea4e4ba1911e3e9d260569370f2119ab6d73677"
     },
     {
       "path": "data/renderer-transect-reference.manifest.json",
@@ -93,5 +93,10 @@
   "localization_scope": "Discrete five-meter grid-feature comparison; resolution allowance is not a continuous-peak error bound",
   "tested_mesh_geometric_error_m": 5.21,
   "source_snapshot_scope": "Root and four held-out control tiles checked at runtime; not a checksum of every streamed object",
-  "evidence_ref": "soma/docs/phase-5/map-alignment.md"
+  "evidence_ref": "soma/docs/phase-5/map-alignment.md",
+  "display_export_review": {
+    "scope": "Resolved DEM surface point and exact timestamped trajectory export; registration/conversion algorithms and measured controls unchanged",
+    "scientific_transform_changed": false,
+    "new_trajectory_states_propagated_by_browser": false
+  }
 }

@@ -52,6 +52,7 @@ def main(argv=None) -> int:
     fetch = commands.add_parser("fetch-geometry-data", help="Explicitly acquire pinned kernels and bounded LOLA data extracts")
     fetch.add_argument("--data-root", required=True)
     fetch.add_argument("--kernels-only", action="store_true")
+    fetch.add_argument("--physical", action="store_true", help="Also acquire the pinned polar coverage patch for terrain_ephemeris planning")
     verify = commands.add_parser("verify-geometry", help="Compare independent Skyfield and SPICE readers")
     verify.add_argument("--data-root", required=True)
     args = parser.parse_args(argv)
@@ -65,6 +66,9 @@ def main(argv=None) -> int:
                 if not args.kernels_only:
                     extract_lola_window(args.data_root, expected_manifest=load_json(directory / "lola-phase2.manifest.json"))
                     extract_lola_far_cap(args.data_root, expected_manifest=load_json(directory / "lola-far-phase2.manifest.json"))
+                    if args.physical:
+                        from soma.terrain.physical import acquire_polar_window
+                        acquire_polar_window(args.data_root)
                 output = {"acquired": True, "kernel_manifest_id": manifest["id"], "kernels_only": args.kernels_only}
             elif args.command == "verify-geometry":
                 from soma.geometry_verification import verify_geometry

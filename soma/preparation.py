@@ -10,6 +10,9 @@ from soma.validation import load_json, resource_directory, scenario_sha256, vali
 
 
 def prepare_analysis(scenario, *, progress=None, cancel_event=None):
+    if scenario['analysis_mode'] == 'terrain_ephemeris':
+        from soma.physical import prepare_physical_analysis
+        return prepare_physical_analysis(scenario, progress=progress, cancel_event=cancel_event)
     path = resource_directory('data') / 'phase4-synthetic.manifest.json'
     model = load_json(path)
     baseline = model['baseline_scenario']

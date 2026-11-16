@@ -196,8 +196,8 @@
     },
     {
       "path": "soma/engine.py",
-      "sha256": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b",
-      "size_bytes": 9832
+      "sha256": "d2d0e62a77fb83b2135152944e6a7781d7c5a3a71af6c8499f90b5fe32fa9d00",
+      "size_bytes": 11198
     },
     {
       "path": "soma/verification/completion.py",
@@ -206,8 +206,8 @@
     },
     {
       "path": "soma/verification/exports.py",
-      "sha256": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1",
-      "size_bytes": 10619
+      "sha256": "f1a6b1ed0a775ae93051a158f4457b5d7991de3208f4b5afc4a5b7658dabdee5",
+      "size_bytes": 11931
     },
     {
       "path": "soma/verification/sensitivity.py",
@@ -305,5 +305,6 @@
     "errors": [],
     "report_ref": "fixtures/phase-6/completion-report.json",
     "report_sha256": "b78158dc76a8214feee57d88e6a4098f977fed73d578b5c01afaa878fcd3ba3f"
-  }
+  },
+  "compatibility_update": "Physical first-release integration preserves the archived synthetic baseline; source bindings refreshed after exact stored-state and physical-preparation changes."
 }

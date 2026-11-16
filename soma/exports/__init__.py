@@ -97,7 +97,7 @@ def display_payload(run, display=None):
     """Preserve exact epochs and the registration status of this run."""
     result = run["result"]
     registration = (display or display_data(run))['registration']
-    return [{"id": "document", "version": "1.0", "name": "SOMA planning result"}, {
+    payload = [{"id": "document", "version": "1.0", "name": "SOMA planning result"}, {
         "id": "soma-run", "properties": {
             "scenario_sha256": result["scenario_sha256"],
             "registration_status": registration['status'],
@@ -107,6 +107,17 @@ def display_payload(run, display=None):
             "warnings_json": json.dumps(result["warnings"], ensure_ascii=False),
         },
     }]
+    display = display or display_data(run)
+    for index, state in enumerate(display.get('renderer_states', [])):
+        # An instant packet cannot extend a sampled trajectory between epochs.
+        payload.append({'id':f"{state['target']}-sample-{index}",
+            'availability':state['epoch']+'/'+state['epoch'],
+            'position':{'referenceFrame':'FIXED','cartesian':state['position']},
+            'properties':{'source_frame':state['source_frame'],'renderer_frame':state['frame'],
+                'origin':state['origin'],'position_unit':state['position_unit'],
+                'epoch_utc':state['epoch'],'provenance_label':state['provenance_label'],
+                'transform_ref':state['transform_ref']}})
+    return payload
 
 
 def _csv(headers, rows):

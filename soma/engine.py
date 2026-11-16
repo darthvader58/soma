@@ -82,7 +82,8 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
     options = deepcopy(options or {})
     if set(options)-{'chunk_bytes','bin_s','time_limit_s'}:
         raise ValueError('Unsupported scheduler option')
-    options = {'chunk_bytes':16777216,'bin_s':5,'time_limit_s':15,**options}
+    physical = scenario['analysis_mode'] == 'terrain_ephemeris'
+    options = {'chunk_bytes':16777216,'bin_s':60 if physical else 5,'time_limit_s':15,**options}
     if type(options['chunk_bytes']) is not int or options['chunk_bytes'] <= 0:
         raise ValueError('chunk_bytes must be a positive integer')
     for name in ('bin_s','time_limit_s'):
@@ -91,10 +92,18 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
             raise ValueError(f'{name} must be finite and within its supported range')
     analysis = checked_analysis_inputs(scenario, analysis_inputs) if analysis_inputs is not None else prepare_analysis(scenario, progress=progress, cancel_event=cancel_event)
     complete = analysis['contacts_complete'] and analysis['generation_complete']
+    known_subset = physical and analysis['generation_complete'] and bool(analysis['contacts'])
+    can_schedule = complete or known_subset
     result = _base_result(scenario, reason='Analysis coverage is incomplete; no delivery conclusion is supported.',
-                          implemented=complete, contacts=analysis['contacts'])
+                          implemented=can_schedule, contacts=analysis['contacts'])
     result['assumptions'].extend(analysis['assumptions'])
     result['warnings'].extend(analysis['warnings'])
+    if physical:
+        result['provenance']['kernel_manifest_ref'] = 'de421-phase2-matched-kernel-set'
+        result['provenance']['source_urls'] = sorted(set(result['provenance']['source_urls']) |
+            set(analysis['provenance'].get('source_urls', [])))
+    if known_subset and not analysis['contacts_complete']:
+        result['warnings'].append('Unknown opportunities were excluded. A replayed schedule on known contacts can establish feasibility under assumptions; infeasibility and optimality over the full network remain unproved.')
     for decision in analysis.get('contact_decisions', []):
         if decision['status'] != 'usable_under_assumptions':
             result['warnings'].append(f"{decision['candidate_id']}: {decision['status']}: {'; '.join(decision['reasons'])}")
@@ -103,7 +112,7 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
     validation = None
     if cancel_event is not None and cancel_event.is_set():
         raise InterruptedError('Planning canceled before scheduling')
-    if complete:
+    if can_schedule:
         if progress:
             progress('scheduling')
         solved = solve_schedule(scenario, analysis['contacts'], analysis['generation_bins'], cancel_event=cancel_event, **options)
@@ -116,7 +125,8 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
                 progress('replay')
             validation = replay_schedule(scenario, analysis['contacts'], solved['allocations'], analysis['generation_bins'])
             if validation['passed'] and validation['delivered_bytes'] == data_volume_bytes(scenario['data_volume']):
-                result.update(status='feasible_under_assumptions', solver_status=status,
+                result.update(status='feasible_under_assumptions',
+                              solver_status=status if analysis['contacts_complete'] else 'feasible_incumbent',
                               allocations=solved['allocations'], storage_intervals=validation['storage_intervals'],
                               energy_history=validation['energy_history'], buffer_history=validation['buffer_history'],
                               delivered_bytes=validation['delivered_bytes'], final_byte_arrival_utc=validation['final_byte_arrival_utc'])
@@ -124,6 +134,8 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
             else:
                 result['warnings'].append('Optimizer candidate failed independent replay; no feasible schedule is released.')
                 result['provenance']['reason'] = 'Independent replay rejected the optimizer candidate.'
+        elif status == 'proven_infeasible_discretized_model' and not analysis['contacts_complete']:
+            result['provenance']['reason'] = 'No complete schedule exists on the known contacts, but unknown opportunities prevent an infeasibility conclusion for the declared network.'
         elif status == 'proven_infeasible_discretized_model':
             result.update(status='infeasible_in_model',solver_status=status,delivered_bytes=0)
             result['provenance']['reason'] = 'The bounded discretized model proved no complete-file schedule under the declared route, storage, radio, service and energy constraints.'
@@ -137,7 +149,8 @@ def plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, can
             result['provenance']['reason'] = 'The bounded solver did not establish a complete replayable schedule; infeasibility is unproven.'
     else:
         result['warnings'].append('Missing coverage or unsupported input assumptions remain unknown, not zero or clear.')
-    result['warnings'].extend(['Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.',
+    result['warnings'].extend([('Published terrain and ephemerides feed this model; radio rates, service and synthetic relay trajectories remain declared assumptions, not mission predictions.' if physical else
+                               'Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.'),
                                'This result does not book service or certify navigation, relay operation or thermal survival.',
                                'Scientific map placement depends on the run\'s versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage.'])
     validate_document(result,'result')

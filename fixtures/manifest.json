@@ -71,7 +71,7 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "58e23772af21075c4a62db5f17addbdc33c79c04aeb334156afc1267a6a58d15"
+      "sha256": "ba718373f5f8704e03abf3ab0f1b76794e19c8275288fc6b1340fe376bb2d8f5"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -83,7 +83,7 @@
     },
     {
       "path": "data/renderer-alignment-evidence.manifest.json",
-      "sha256": "32b0fe938a8519fae376d6596848172f300f7dfdd2d3c0469b237d58339f0088"
+      "sha256": "6d5380b0f46936fa58462bad1e067b9bd3a905605b9ec44714b6c1abeae80b5d"
     },
     {
       "path": "data/renderer-conversion.manifest.json",
@@ -107,7 +107,7 @@
     },
     {
       "path": "data/renderer-registration.manifest.json",
-      "sha256": "31f4dc045b5d0f0ca8fa7cea150a0a09d412505518f54bfd5b23009cdf4e39cc"
+      "sha256": "73d5294def057374261feebfe443cdfc624f0ee08ca66b9a356fdbef91cbba6b"
     },
     {
       "path": "data/renderer-transect-capture.manifest.json",
@@ -276,6 +276,14 @@
     {
       "path": "fixtures/phase-6/sensitivity.json",
       "sha256": "95eddf3434952941be5b4fff211187d086b2394d4b4b1fd4117d82636c01ec82"
+    },
+    {
+      "path": "fixtures/physical-south-pole/scenario-later.json",
+      "sha256": "9c65d0c88c25f9b6ed9930c6380516f1e34018b11bac94d914a2c91f811993d2"
+    },
+    {
+      "path": "fixtures/physical-south-pole/scenario.json",
+      "sha256": "ebf69b9959e6aad2ade38fc6d1d0e673d9140a97c12532c4b7c90cb1d4ab8c99"
     },
     {
       "path": "fixtures/physical-south-pole/terrain-verification.json",
@@ -503,7 +511,7 @@
     },
     {
       "path": "soma/__main__.py",
-      "sha256": "39ae267db2f9b403f700177be6b51bbef7b6cade97c433dd46209785e7d23ff9"
+      "sha256": "aa357b6c380bdd4d6829605e0af44b042de9ba57522c88966d2af4a4a4505685"
     },
     {
       "path": "soma/api/__init__.py",
@@ -626,8 +634,20 @@
       "sha256": "0485422fca9bf039ea443166f21605f6dfc8996863572ff906ca64f798af1f25"
     },
     {
+      "path": "soma/docs/physical-first-release/build_scenarios.py",
+      "sha256": "f72f90f5be23e660d23f145299f8f0be453ff0edc47fa883665b9e8aa6bc371e"
+    },
+    {
+      "path": "soma/docs/physical-first-release/reproduce.py",
+      "sha256": "9539e95d3e078efe6c0423ea95a70b73f5053c9e7a7bcc6aabb8b2b097fa33b5"
+    },
+    {
+      "path": "soma/docs/physical-first-release/sampling_check.py",
+      "sha256": "7eff0b9f1722bd22b692503f47178a48f7552c33eb6c496c41580c9040f69311"
+    },
+    {
       "path": "soma/engine.py",
-      "sha256": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b"
+      "sha256": "d2d0e62a77fb83b2135152944e6a7781d7c5a3a71af6c8499f90b5fe32fa9d00"
     },
     {
       "path": "soma/environment.py",
@@ -635,11 +655,11 @@
     },
     {
       "path": "soma/exports/__init__.py",
-      "sha256": "65252c0229af6f4bfaccd1a0ec79fd04f6f37016eaed9e2ec7f9cb8dd0bc2e5c"
+      "sha256": "c8144ae3d09e016d34075febf376a94de19f23ee880edc4f598fffc0ba43e5b6"
     },
     {
       "path": "soma/exports/display.py",
-      "sha256": "6822040a51d43827569fe61e5fbda9a3f9fe64aa3f5b0fd398859b46ef46cb09"
+      "sha256": "fcfe00f15c1195faf85169a18ea4e4ba1911e3e9d260569370f2119ab6d73677"
     },
     {
       "path": "soma/geometry/__init__.py",
@@ -698,12 +718,16 @@
       "sha256": "acc8c377ac353ff9e0aaf3bf2c7469c9619f94b16345cccf4ccb5129bdf85b20"
     },
     {
+      "path": "soma/physical.py",
+      "sha256": "8096c20aee5679a9646bce12514645f3e924040cd55d1187aefc531b4a8aeb67"
+    },
+    {
       "path": "soma/power/__init__.py",
       "sha256": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd"
     },
     {
       "path": "soma/preparation.py",
-      "sha256": "a004acfacfcaee50bc0bb92b723929b02462eba0c0ec17d74c979fe69d386b47"
+      "sha256": "8bb4f362e95f4da67e00d217e05570babb745c731babccbc60860c8d74fff8d4"
     },
     {
       "path": "soma/schedule/__init__.py",
@@ -743,7 +767,7 @@
     },
     {
       "path": "soma/validation.py",
-      "sha256": "9dc4d4e82ef614f937d415e843c630ae6f00a91389bedd7204885ea18dcea898"
+      "sha256": "b57502dd5ea398fe212daa47fd170dfc64fb75dc732c44736fc1608bdbac6c21"
     },
     {
       "path": "soma/verification/__init__.py",
@@ -755,7 +779,7 @@
     },
     {
       "path": "soma/verification/exports.py",
-      "sha256": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1"
+      "sha256": "f1a6b1ed0a775ae93051a158f4457b5d7991de3208f4b5afc4a5b7658dabdee5"
     },
     {
       "path": "soma/verification/sensitivity.py",
@@ -844,6 +868,14 @@
     {
       "path": "tests/engine/test_phase6_sensitivity.py",
       "sha256": "8685b603887052e9b441053230e0eed08aec5d0ec4d776c90afe79f86574bfb5"
+    },
+    {
+      "path": "tests/engine/test_physical_contract.py",
+      "sha256": "ddf5420cdf0dd8c612d984a1934dadb69556d730f40595a190716abd2be0df91"
+    },
+    {
+      "path": "tests/engine/test_physical_planning.py",
+      "sha256": "59766f3f1bc4ccc6714f71ae53fe988a94bfb007ce3f9e1609d66735e810cdac"
     },
     {
       "path": "tests/engine/test_physical_terrain.py",
