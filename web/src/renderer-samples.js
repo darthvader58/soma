@@ -26,7 +26,7 @@ export function rendererSamplesAtTime(display, epoch, relayIds = []) {
     if (point.frame === registration?.renderer_frame && point.origin === 'MOON'
       && point.position_unit === 'm' && point.epoch === null && point.time_scale === 'static'
       && Array.isArray(point.position_m) && point.position_m.length === 3 && point.position_m.every(Number.isFinite)) {
-      points.set(point.id, point.position_m);
+      if (!points.has(point.id)) points.set(point.id, Array.isArray(point.antenna_position_m) && point.antenna_position_m.length === 3 && point.antenna_position_m.every(Number.isFinite) ? point.antenna_position_m : point.position_m);
     }
   }
   const links = [];

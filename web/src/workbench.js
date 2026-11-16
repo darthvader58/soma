@@ -2,11 +2,12 @@ import './workbench.css';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 import { createResearchClient, validateStudyInputs, storedSampleAt } from './research-client.js';
 import { createWorkbenchViewer } from './workbench-viewer.js';
+import { createDeliveryWorkspace } from './delivery-workspace.js';
 import bootstrapCatalog from '../fixtures/research-catalog.json' with { type: 'json' };
 
 const root = document.querySelector('#app');
 root.innerHTML = `
-<header class="research-header"><a class="research-brand" href="/">SOMA</a><div class="workspace-title"><h1>Lunar research workbench</h1><p>Selenographic Observation and Mission Atlas</p></div><nav aria-label="Resources"><a href="/docs/getting-started/live-research">Documentation</a><a href="/docs/reference/research-api">Python reference</a></nav></header>
+<header class="research-header"><a class="research-brand" href="/">SOMA</a><div class="workspace-title"><h1>Lunar research workbench</h1><p>Selenographic Observation and Mission Atlas</p></div><nav class="analysis-tools" aria-label="Analysis tools"><button type="button" data-analysis-mode="geometry" aria-pressed="true">Geometry</button><button type="button" data-analysis-mode="delivery" aria-pressed="false">Data delivery</button></nav><nav class="resource-links" aria-label="Resources"><a href="/docs/getting-started/live-research">Documentation</a><a href="/docs/reference/research-api">Python reference</a></nav></header>
 <main class="research-workspace">
   <section class="study-toolbar" id="study-inputs" aria-label="Geometry study inputs">
     <div class="analysis-name"><strong>Sun & Earth geometry</strong><span>Define a study. Inspect the calculated geometry.</span></div>
@@ -44,6 +45,32 @@ root.innerHTML = `
 </main>`;
 
 const $ = id => document.getElementById(id);
+const workspace = root.querySelector('.research-workspace');
+root.querySelector('.resource-links a:last-child').href = '/docs/reference/python-api';
+const networkCamera = document.createElement('button');
+networkCamera.type = 'button'; networkCamera.dataset.camera = 'network'; networkCamera.dataset.analysisTool = 'delivery';
+networkCamera.hidden = true; networkCamera.textContent = 'Earth network'; networkCamera.setAttribute('aria-pressed', 'false');
+root.querySelector('.scene-camera').append(networkCamera);
+for (const selector of ['#study-inputs', '.research-status', '.object-panel', '.inspector-panel', '.time-dock']) workspace.querySelector(selector).dataset.analysisTool = 'geometry';
+let activeTool = 'geometry';
+workspace.dataset.tool = activeTool;
+const deliveryWorkspace = createDeliveryWorkspace({ root: workspace, apiBase: import.meta.env.VITE_SOMA_API_URL || '/api',
+  getCatalog: () => catalog, getInspectedSite: () => catalog.find(site => site.id === inspected),
+  onGeometry: () => activateTool('geometry'),
+  onMap: (artifact, epoch) => { if (activeTool === 'delivery') { viewer?.setDelivery(artifact); viewer?.setTime(epoch); $('follow-spacecraft').disabled = !artifact.scenario.relay_refs.length; setCamera('polar'); } },
+  onTime: epoch => { if (activeTool === 'delivery') viewer?.setTime(epoch); },
+  onFocus: mode => { if (activeTool === 'delivery') setCamera(mode); },
+});
+function activateTool(tool) {
+  activeTool = tool; workspace.dataset.tool = tool;
+  for (const panel of workspace.querySelectorAll('[data-analysis-tool]')) panel.hidden = panel.dataset.analysisTool !== tool;
+  networkCamera.hidden = tool !== 'delivery';
+  for (const button of root.querySelectorAll('[data-analysis-mode]')) button.setAttribute('aria-pressed', String(button.dataset.analysisMode === tool));
+  pause();
+  if (tool === 'geometry') { deliveryWorkspace.deactivate(); viewer?.setCatalog(catalog); viewer?.setSelection([...selected], inspected); viewer?.setResult(result); if (result) viewer?.setTime(selectedEpoch()); $('follow-spacecraft').disabled = !result?.spacecraft?.length; }
+  else { viewer?.setResult(undefined); viewer?.setCatalog([]); $('follow-spacecraft').disabled = true; deliveryWorkspace.activate(); }
+}
+for (const button of root.querySelectorAll('[data-analysis-mode]')) button.addEventListener('click', () => activateTool(button.dataset.analysisMode));
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const client = createResearchClient({ baseUrl: `${(import.meta.env.VITE_SOMA_API_URL || '/api').replace(/\/$/, '')}/research` });
 let catalog = [], selected = new Set(), inspected, inspectedCraft, capabilities, viewer, result, completed, stale = false, running = false, revision = 0;
@@ -94,9 +121,9 @@ function renderSites() {
   }
   $('site-count').textContent = `${selected.size} / 8`;
   if (!$('site-list').childElementCount) $('site-list').textContent = 'No catalog sites match. Clear the search or add a custom site.';
-  viewer?.setCatalog(catalog); viewer?.setSelection([...selected], inspected);
+  if (activeTool === 'geometry') { viewer?.setCatalog(catalog); viewer?.setSelection([...selected], inspected); }
 }
-function inspect(id) { inspectedCraft = undefined; inspected = id; $('inspector-heading').textContent = 'Site inspector'; renderSites(); renderInspector(); renderChart(); viewer?.setSelection([...selected], id); }
+function inspect(id) { inspectedCraft = undefined; inspected = id; $('inspector-heading').textContent = 'Site inspector'; renderSites(); renderInspector(); renderChart(); if (activeTool === 'geometry') viewer?.setSelection([...selected], id); }
 function inspectSpacecraft(id) {
   inspectedCraft = id;
   const craft = result?.spacecraft.find(item => item.id === id);
@@ -158,7 +185,7 @@ function setCursor(milliseconds) {
   if (!result) return;
   const first = Date.parse(result.epochs_utc[0]), last = Date.parse(result.epochs_utc.at(-1));
   cursor = Math.min(last, Math.max(first, milliseconds)); $('study-cursor').value = String(cursor);
-  const epoch = selectedEpoch(); $('time-start').textContent = result.epochs_utc[0]; $('time-end').textContent = result.epochs_utc.at(-1); $('selected-utc').textContent = epoch; viewer?.setTime(epoch);
+  const epoch = selectedEpoch(); $('time-start').textContent = result.epochs_utc[0]; $('time-end').textContent = result.epochs_utc.at(-1); $('selected-utc').textContent = epoch; if (activeTool === 'geometry') viewer?.setTime(epoch);
   renderInspectorReadout(); renderChart();
   const sample = storedSampleAt(result.sites.find(item => item.id === inspected)?.samples, epoch);
   $('sample-note').textContent = `${stale ? 'Previous study. ' : ''}Scientific readout: stored sample ${sample?.epoch_utc ?? 'unavailable'}. Spacecraft motion between samples is linear display interpolation, with no extrapolation. Geometry does not establish terrain-clear access.`;
@@ -269,9 +296,10 @@ async function runStudy() {
     for (const id of ['play-study', 'previous-sample', 'next-sample', 'export-result', 'save-alternative']) $(id).disabled = false;
     $('follow-spacecraft').disabled = !result.spacecraft?.length;
     if (calculated.jobId) { $('export-package').href = client.exportUrl(calculated.jobId); $('export-package').hidden = false; }
-    viewer?.setResult(result); viewer?.setSelection([...selected], inspected); setCursor(Date.parse(result.epochs_utc[0])); renderComparison(); renderMethods();
-    if (locationsChanged) setCamera('site');
-    else if (requestedCamera === 'follow') setCamera(result.spacecraft?.length ? 'follow' : 'global');
+    if (activeTool === 'geometry') { viewer?.setResult(result); viewer?.setSelection([...selected], inspected); }
+    setCursor(Date.parse(result.epochs_utc[0])); renderComparison(); renderMethods();
+    if (activeTool === 'geometry' && locationsChanged) setCamera('site');
+    else if (activeTool === 'geometry' && requestedCamera === 'follow') setCamera(result.spacecraft?.length ? 'follow' : 'global');
     status(`Calculated in Python · ${result.sites.length} sites · ${result.epochs_utc.length} stored epochs · ${calculated.hash.slice(0, 12)}. ${sameStudy ? 'Same inputs; the geometry can look unchanged. ' : ''}Use Play or step through samples. Terrain visibility is not evaluated.`);
     if (inspectedCraft) inspectSpacecraft(inspectedCraft); else renderInspector();
   } catch (error) { if (error.name !== 'AbortError' && current === revision) status(`Analysis unavailable: ${error.message} No replacement result was generated.`); }
@@ -321,14 +349,14 @@ async function initialize() {
   selected = new Set([catalog[0], catalog[Math.floor(catalog.length / 2)], catalog.at(-1)].filter(Boolean).map(site => site.id));
   inspected = catalog[0]?.id; renderSites(); renderInspector();
   const mapPromise = createWorkbenchViewer($('research-moon'), { ionToken: import.meta.env.VITE_CESIUM_ION_TOKEN, apiBase: import.meta.env.VITE_SOMA_API_URL || '/api',
-    onStatus: message => { $('research-map-status').textContent = message; }, onSelect: inspect,
+    onStatus: message => { $('research-map-status').textContent = message; }, onSelect: id => activeTool === 'delivery' ? deliveryWorkspace.inspectNode(id) : inspect(id),
     onPick: coordinates => {
       if (selected.size >= 8) { status('Remove a site before adding a picked location. Maximum 8 sites.'); return; }
       const id = `custom-${++customIndex}`;
       catalog.push({ id, name: `Picked site ${customIndex}`, kind: 'display pick', ...coordinates, elevation_m: 0, antenna_height_m: 2, panel_height_m: 1, input_class: 'user_defined', coordinate_notes: 'Coordinates selected from rendered Moon. Elevation is explicitly 0 m above the reference sphere; not measured terrain.' });
       selected.add(id); inspect(id); markChanged();
     },
-  }).then(value => { viewer = value; viewer.setCatalog(catalog); viewer.setSelection([...selected], inspected); if (result) { viewer.setResult(result); viewer.setTime(selectedEpoch()); } if (requestedCamera !== 'global') viewer.camera(requestedCamera); });
+  }).then(value => { viewer = value; viewer.setCatalog(activeTool === 'geometry' ? catalog : []); if (activeTool === 'geometry') { viewer.setSelection([...selected], inspected); if (result) { viewer.setResult(result); viewer.setTime(selectedEpoch()); } if (requestedCamera !== 'global') viewer.camera(requestedCamera); } else deliveryWorkspace.refreshMap(); });
   const loaded = await Promise.allSettled([client.catalog(), client.capabilities()]);
   if (loaded[0].status === 'fulfilled' && revision === 0) {
     catalog = loaded[0].value.sites.map(site => ({ ...site, elevation_m: 0, antenna_height_m: 2, panel_height_m: 1 }));

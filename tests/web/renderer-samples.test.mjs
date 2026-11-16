@@ -4,6 +4,13 @@ import { rendererSamplesAtTime } from '../../web/src/renderer-samples.js';
 
 const epoch = '2026-11-24T08:00:00.123456Z';
 const frame = 'SOMA_MOON_ME_DE421_CORRECTED_V1';
+test('links use Python antenna positions and prefer exact registered lander endpoint states', () => {
+  const value = display();
+  value.surface_points[0].antenna_position_m = [4, 5, 6];
+  assert.deepEqual(rendererSamplesAtTime(value, epoch, ['relay']).links[0].positions[0], [4, 5, 6]);
+  value.renderer_states.push({ ...value.renderer_states[0], target: 'lander', position: [7, 8, 9] });
+  assert.deepEqual(rendererSamplesAtTime(value, epoch, ['lander', 'relay']).links[0].positions[0], [7, 8, 9]);
+});
 function display() {
   return {
     registration: { renderer_frame: frame, source_frame: 'MOON_ME_DE421' },
