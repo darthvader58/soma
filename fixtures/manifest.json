@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "9ae6e02c406898e6be9dc718e7e463e87056ff10ea5bca5ea31a6d465927acde"
+      "sha256": "a1ab4208e75200edf19cdf5a82af9dbc6102ef56e98f4238e12d7ab65f160fbd"
     },
     {
       "path": "data/README.md",
@@ -72,6 +72,14 @@
     {
       "path": "data/phase6-evidence.manifest.json",
       "sha256": "58e23772af21075c4a62db5f17addbdc33c79c04aeb334156afc1267a6a58d15"
+    },
+    {
+      "path": "data/physical-first-release.manifest.json",
+      "sha256": "24536b83018a870fd2c97c59c09b344212043279dfcdaca47a76cc968e02ab68"
+    },
+    {
+      "path": "data/physical-polar-window.manifest.json",
+      "sha256": "fe4018d635d727aa668bc6c10aa64970c4ae316f8d893d92ef56f75d3d701d4d"
     },
     {
       "path": "data/renderer-alignment-evidence.manifest.json",
@@ -268,6 +276,10 @@
     {
       "path": "fixtures/phase-6/sensitivity.json",
       "sha256": "95eddf3434952941be5b4fff211187d086b2394d4b4b1fd4117d82636c01ec82"
+    },
+    {
+      "path": "fixtures/physical-south-pole/terrain-verification.json",
+      "sha256": "becbe0e0a68be62b0389c9860099f2b7f748acdb160efbc787d2a81cc484bcd9"
     },
     {
       "path": "fixtures/registration/README.md",
@@ -718,6 +730,10 @@
       "sha256": "e0e6da75cc603ab3f6c298285212c5600d927c666079777e2fcb20d15b5e5b69"
     },
     {
+      "path": "soma/terrain/physical.py",
+      "sha256": "08854c8a6bc676c614cd86d901a75ca0282c1cbdd1b219ecba2a4437fc988c63"
+    },
+    {
       "path": "soma/time/__init__.py",
       "sha256": "a2813dcca3bc8cd233264b9464f355c0943fd915f4131f9dbd4b6527ff6c0c4e"
     },
@@ -828,6 +844,10 @@
     {
       "path": "tests/engine/test_phase6_sensitivity.py",
       "sha256": "8685b603887052e9b441053230e0eed08aec5d0ec4d776c90afe79f86574bfb5"
+    },
+    {
+      "path": "tests/engine/test_physical_terrain.py",
+      "sha256": "bccff1901f6479adca9722a913a451bf44239627ddfec6f7c7ae28d57c33c3d3"
     },
     {
       "path": "tests/engine/test_power.py",
