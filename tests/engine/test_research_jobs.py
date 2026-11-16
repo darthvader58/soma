@@ -214,3 +214,26 @@ def test_spawn_overrides_inherited_native_thread_defaults(monkeypatch):
         monkeypatch.setenv(name, '32')
     result = json.loads(run_sync(normalized(), planner=thread_budget_planner, timeout_s=10))
     assert set(result['thread_environment'].values()) == {'1'}
+
+
+def test_sync_interpreter_does_not_reenter_unguarded_server_main(tmp_path):
+    import subprocess
+    import sys
+    marker = tmp_path / 'entered.txt'
+    caller = tmp_path / 'server_bootstrap.py'
+    caller.write_text(
+        'from pathlib import Path\n'
+        f'marker = Path({str(marker)!r})\n'
+        "with marker.open('a') as stream: stream.write('entered\\n')\n"
+        'from soma.api.research_jobs import run_sync\n'
+        'from soma.research import validate_study\n'
+        'from test_research_jobs import study, trusted_planner\n'
+        'import json\n'
+        "result = json.loads(run_sync(validate_study(study()), planner=trusted_planner, timeout_s=5))\n"
+        "assert result['status'] == 'completed'\n")
+    environment = os.environ.copy()
+    environment['PYTHONPATH'] = os.pathsep.join(str(path or os.getcwd()) for path in sys.path)
+    completed = subprocess.run([sys.executable, str(caller)], env=environment,
+                               capture_output=True, text=True, timeout=10)
+    assert completed.returncode == 0, completed.stderr
+    assert marker.read_text().splitlines() == ['entered']

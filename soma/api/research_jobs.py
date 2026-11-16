@@ -2,6 +2,7 @@
 
 import hashlib
 import io
+import importlib
 import json
 import multiprocessing
 import os
@@ -11,6 +12,7 @@ import re
 import shutil
 import signal
 import sqlite3
+import subprocess
 import sys
 import tempfile
 import threading
@@ -53,7 +55,7 @@ def _atomic_write(path, content):
 
 def _worker(study, directory, data_root, progress_queue, canceled, planner, result_limit):
     configure_numerical_threads()
-    if hasattr(os, 'setsid'):
+    if hasattr(os, 'setsid') and os.getpgrp() != os.getpid():
         os.setsid()
     try:
         if sys.platform.startswith('linux'):
@@ -152,32 +154,73 @@ def _verify_result(study, content):
     return result
 
 
-def run_sync(study, *, data_root=None, planner=None, timeout_s=60, result_limit=4_000_000):
-    """Hard bounded synchronous compute, never a durable job identifier."""
-    configure_numerical_threads()
-    context = multiprocessing.get_context('spawn')
-    with tempfile.TemporaryDirectory(prefix='soma-research-sync-') as directory:
-        # Serverless Linux often has no /dev/shm. This synchronous worker uses
-        # process pipes only, with no multiprocessing semaphore/queue allocation.
-        process = context.Process(target=_worker, args=(study, directory, data_root,
-                                  None, None, planner, result_limit))
+def _stop_subprocess(process):
+    if process.poll() is not None:
+        return
+    try:
+        if os.name == 'posix':
+            os.killpg(process.pid, signal.SIGTERM)
+        else:
+            process.terminate()
+    except ProcessLookupError:
+        pass
+    try:
+        process.wait(timeout=0.5)
+    except subprocess.TimeoutExpired:
         try:
-            process.start()
-            process.join(timeout=timeout_s)
-            if process.is_alive():
-                _stop(process)
-                raise HTTPException(504, 'Synchronous research time budget exceeded; reduce study size')
-            if process.exitcode != 0:
+            if os.name == 'posix':
+                os.killpg(process.pid, signal.SIGKILL)
+            else:
+                process.kill()
+        except ProcessLookupError:
+            pass
+        process.wait(timeout=1)
+
+
+def _sync_worker_main(control_path):
+    """Read parent-created control metadata; this is never an HTTP input format."""
+    control_path = Path(control_path)
+    control = json.loads(control_path.read_bytes())
+    planner = None
+    if control['planner'] is not None:
+        planner = importlib.import_module(control['planner']['module'])
+        for name in control['planner']['qualname'].split('.'):
+            planner = getattr(planner, name)
+    _worker(control['study'], str(control_path.parent), control['data_root'], None, None,
+            planner, control['result_limit'])
+
+
+def run_sync(study, *, data_root=None, planner=None, timeout_s=60, result_limit=4_000_000):
+    """Execute a private interpreter without re-importing the server's __main__."""
+    configure_numerical_threads()
+    planner_reference = None
+    if planner is not None:
+        if '<' in planner.__qualname__ or planner.__module__ == '__main__':
+            raise ValueError('Injected synchronous planner must be an importable module-level callable')
+        planner_reference = {'module': planner.__module__, 'qualname': planner.__qualname__}
+    with tempfile.TemporaryDirectory(prefix='soma-research-sync-') as directory:
+        control_path = Path(directory, 'input.json')
+        _atomic_write(control_path, encode({'study': study, 'data_root': str(data_root) if data_root else None,
+                                           'planner': planner_reference, 'result_limit': result_limit}))
+        environment = os.environ.copy()
+        # Retain the function's installed/bundled module paths without inheriting its bootstrap.
+        environment['PYTHONPATH'] = os.pathsep.join(str(path or os.getcwd()) for path in sys.path)
+        process = subprocess.Popen([sys.executable, '-m', 'soma.api.research_jobs', str(control_path)],
+            env=environment, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL, start_new_session=os.name == 'posix')
+        try:
+            try:
+                process.wait(timeout=timeout_s)
+            except subprocess.TimeoutExpired:
+                _stop_subprocess(process)
+                raise HTTPException(504, 'Synchronous research time budget exceeded; reduce study size') from None
+            if process.returncode != 0:
                 raise HTTPException(503, 'Scientific worker exited before producing a result')
             content = _read_result(Path(directory), result_limit)
             _verify_result(study, content)
             return content
         finally:
-            if process.pid and process.is_alive():
-                _stop(process)
-            if process.pid:
-                process.join(timeout=0)
-            process.close()
+            _stop_subprocess(process)
 
 
 def create_package(study, result_content):
@@ -382,3 +425,9 @@ class ResearchJobStore:
             self.db.execute('PRAGMA wal_checkpoint(TRUNCATE)')
             self.db.close()
             self.owner.close()
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        raise SystemExit('Expected a parent-created research worker control file')
+    _sync_worker_main(sys.argv[1])
