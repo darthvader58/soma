@@ -1,0 +1,55 @@
+---
+title: Calculate a synthetic delivery
+description: Run a complete scenario, inspect its result, and save an auditable package.
+---
+
+The supplied synthetic relay fixture uses explicit software-test contacts, hardware, rates, and service assumptions. It requires no lunar raster or kernel downloads. Complete the [installation](/getting-started/installation) first.
+
+## Plan in Python
+
+```python
+from pathlib import Path
+from soma import plan_delivery
+from soma.validation import load_scenario
+
+scenario = load_scenario("fixtures/synthetic-relay/scenario.json")
+result = plan_delivery(scenario)
+
+print(result["status"])
+print(result["solver_status"])
+print(result["model_fidelity"])
+print(result["delivered_bytes"])
+print(result["final_byte_arrival_utc"])
+```
+
+The file is **100 MiB**, or 104,857,600 bytes. The fixture's direct contact from 08:50 to 09:10 UTC at 256,000 net bits/s carries 307,200,000 bits, less than the required 838,860,800 bits. A 2,000,000 bit/s relay hop needs 419.4304 seconds; a 10,000,000 bit/s ground hop needs 83.88608 seconds. These are synthetic arithmetic checks. Propagation delay is additional when enabled, and the scheduler also enforces resource constraints.
+
+## Keep the full calculation record
+
+```python
+from soma.engine import plan_run
+from soma.exports import create_run_package
+
+run = plan_run(scenario, options={
+    "chunk_bytes": 16_777_216,
+    "bin_s": 5,
+    "time_limit_s": 15,
+})
+Path("synthetic-relay.zip").write_bytes(create_run_package(run))
+
+print(run["validation"])
+```
+
+`run["validation"]` is `None` when no candidate schedule was replayed. Inspect `status` and `solver_status` before treating any returned object as a delivery conclusion.
+
+## Use the command line
+
+```bash
+python -m soma run fixtures/synthetic-relay/scenario.json --output-dir /tmp/soma-relay
+python -m soma replay /tmp/soma-relay/run.json
+python -m soma.verification.exports /tmp/soma-relay/run.zip
+```
+
+`python -m soma plan SCENARIO.json` prints native result JSON. `run` also writes the complete export package. Read [exports and replay](/reference/exports-replay) for the difference between schedule replay and package verification.
+
+A time-limited solve can return a feasible incumbent without proving optimality. Fresh optimization may select a different valid allocation; replay checks the specific schedule being audited.

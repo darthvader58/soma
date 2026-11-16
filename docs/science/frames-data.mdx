@@ -1,0 +1,34 @@
+---
+title: Frames, datasets, and provenance
+description: Keep numerical terrain, ephemerides, surface coordinates, and display registration consistent.
+---
+
+## Lunar geometry
+
+The initial physical model uses the documented **DE421 mean-Earth realization**, `MOON_ME_DE421`, with matched lunar frame, orientation, planetary ephemeris, and leap-second kernels. A generic `MOON_ME` alias or `IAU_MOON` is not an interchangeable substitute. An upgrade to DE440 requires a documented transformation and registration check.
+
+Surface points use planetocentric latitude and east-positive longitude with a declared reference radius and elevation datum. Antenna and panel heights are separate. Moon-centered inertial states and Moon-fixed surface positions are distinct representations; every state must retain origin, frame, epoch, time scale, and units.
+
+Boundary timestamps are timezone-qualified UTC. The engine's time layer handles conversion for kernel-backed geometry. Timestamp-plus-longitude arithmetic is not the lunar Sun direction.
+
+## Numerical terrain
+
+The physical pipeline reads numerical LOLA products independently of Cesium. Manifests preserve source URLs, checksums, bounds, product and frame metadata, interpolation, and count-mask information. Published-grid interpolation and explicitly declared coarse fallback do not become measured samples merely because a surface looks smooth.
+
+A missing terrain sample gives an unknown horizon. It cannot create an unobstructed path. Panel and antenna heights can produce different local horizons.
+
+Directional horizon profiles support justified distant-target classification. A finite spacecraft link requires a segment-limited terrain and body-shape test; terrain beyond the target must not block that link.
+
+## Display registration
+
+The reviewed corrected Moon representation is `SOMA_MOON_ME_DE421_CORRECTED_V1`. The versioned identity bridge applies **after** the engine's mesh conversion. It does not register the unmodified ion asset.
+
+Its verified region extends from **87.5°S to the south pole**, at the tested source-grid and mesh resolution. The declared registration tolerance is **10 m**, assessed with distributed terrain-feature controls and sampling allowances. This is a relative display check, not absolute navigation accuracy, arbitrary-location accuracy, or a guarantee for every level of detail.
+
+Display samples, marker offsets, and graphical satellite sizes do not change physical coordinates, equipment heights, range, contact boundaries, or energy calculations. The renderer's terrain is not the numerical DEM.
+
+## Provenance to retain
+
+Keep the scenario hash, native result, analysis inputs, kernel and dataset manifests, software source hashes, scheduler settings, and export checksums. Each input should remain identified as measured, published, synthetic, or assumed.
+
+The repository's [research register](https://github.com/darthvader58/soma/blob/main/plan/06-Research-and-Source-Register.md) distinguishes scientific papers, dataset documentation, software references, and SOMA design choices. Those references support methods and data definitions; they do not independently validate every generated schedule.

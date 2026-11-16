@@ -1,0 +1,36 @@
+---
+title: Assumptions and scientific limits
+description: Interpret feasibility within the declared physical, network, and numerical model.
+---
+
+A schedule is feasible only under its recorded inputs and assumptions. SOMA does not produce a probability of success, flight certification, landing-safety decision, or thermal-survival conclusion.
+
+## Coverage and architecture
+
+The physical provider is bounded near 89°S, 0°E during November 2026 and supports at most six-hour horizons. The registered display has its own wider tested polar region; that display coverage does not expand numerical analysis coverage.
+
+The baseline route families are direct-to-Earth and lander through one selected lunar relay to eligible configured stations. Earth-orbit relays and richer constellation search are not enabled. Earth receipt counts unique bytes at the configured sink, not delivery to a named terrestrial control center.
+
+## Declared network assumptions
+
+Synthetic two-body relay presets are software-model trajectories. They are not operational frozen orbits, Earth–Moon libration-point orbits, Queqiao-2 ephemerides, or current public service commitments.
+
+Station locations can illustrate geographic diversity without granting access to an antenna. A visible target is only a geometric opportunity until compatible terminals, pointing, service, rates, and applicable link-margin requirements are satisfied.
+
+Assumed net rates must stay labeled. A physically assessed link budget needs its hardware, loss, noise, coding, and margin inputs; drawing an unblocked line cannot establish a closed link.
+
+## Storage, delay, and energy
+
+Store-and-forward requires an explicitly capable relay with finite storage. A bent-pipe relay cannot hold chunks. Receiver radio occupancy and service are checked at arrival time after modeled propagation delay.
+
+Battery energy constrains the chosen schedule, including waiting periods and base load. Charging and discharging efficiencies act on their respective energy flows, surplus generation is curtailed at capacity, and instantaneous power limits matter in addition to stored energy. Radiated RF power is not automatically electrical demand.
+
+The power model uses declared solar collection and derating assumptions. It does not establish thermal survival, detailed temperature behavior, or self-shadowing outside the modeled profile.
+
+## Numerical and evidence limits
+
+Time bins, chunk sizes, geometry sampling, terrain resolution and extent, and simplified delay models introduce explicit approximations. Sensitivity runs show changes under stated perturbations; they are not calibrated confidence percentages.
+
+A timeout without a replayable incumbent is unresolved, not proof of infeasibility. Failure on incomplete contacts cannot prove infeasibility of the whole network. Missing data stay unknown.
+
+The independent replay validates the exported schedule against the supplied model. It cannot turn an assumed input into a measurement or an educational preset into an operational service. The project does not claim CCSDS SABR compliance, LunaNet compliance, institutional endorsement, or flight readiness.

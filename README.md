@@ -35,7 +35,9 @@ captured Python-engine results without installing anything.
 The hosted demo runs in **captured-result mode**. It accepts only exact matches
 to the supplied scenarios. An edited scenario needs a live Python service;
 the browser does not calculate a replacement result or scale a saved schedule.
-The public demo does not stream the optional corrected Cesium Moon mesh.
+The repository now includes a hosted display adapter for the corrected Cesium
+Moon mesh and captured physical runs. This deployment update still needs public
+verification; its configuration is described below.
 
 Saved demo packages preserve their original export format. The relay archive
 passes numerical replay but predates the display artifact required by the
@@ -199,8 +201,41 @@ curl --request POST http://127.0.0.1:8000/plans \
 
 Jobs run in isolated Python processes. The current service keeps a bounded,
 in-memory job registry and is intended for local use. A public live planner
-requires a separately designed service deployment; the static Vercel demo
-does not host this API.
+requires a separately designed service deployment; the Vercel display adapter
+does not host the planning job API.
+
+### Vercel deployment
+
+Deploy from the **repository root**, with the framework preset **Other**.
+The root `vercel.json` installs and builds `web/`, serves `web/dist`, and routes
+`/api/moon/*` to the Python function in `api/index.py`. This configuration is
+prepared for deployment; it is not confirmation that the public update is live.
+
+The Python function exposes registration, conversion metadata, and the bounded
+registered Moon tile stream. It reuses the engine's pinned display conversion
+and registration evidence, retains source attribution, and returns private,
+nonpersistent responses. It does not run planning jobs or replace numerical
+terrain analysis. Unsupported or oversized tile objects fail explicitly.
+
+Configure these deployment environment variables without committing token values:
+
+| Variable | Type and purpose |
+| --- | --- |
+| `VITE_SOMA_MODE` | Public build setting: `fixture` selects exact captured results. |
+| `VITE_SOMA_API_URL` | Public build setting: `/api` is the same-origin API prefix. |
+| `VITE_CESIUM_ION_TOKEN` | Public browser credential: a read-only application token scoped to Moon asset 2684829 and the intended public origin. Treat every `VITE_` value as visible to visitors. |
+| `SOMA_CESIUM_ION_TOKEN` | Server-side credential for the same authorized Moon asset, configured separately from browser build settings. |
+| `SOMA_PUBLIC_ORIGIN` | Server-side HTTPS origin: `https://soma-atlas-two.vercel.app`, used for authorized upstream requests. |
+
+Rotate the deployed ion application tokens by **December 15, 2026**. Keep their
+asset scope and allowed origins restricted, and recheck account access and
+usage terms when rotating them. Preview domains need their own explicitly
+authorized origin configuration.
+
+Captured physical examples preserve Python-calculated contacts, trajectories,
+energy histories, and schedules. An arbitrary edited site, date, or hardware
+profile requires the Python analysis engine and its datasets; neither this
+display function nor the browser computes a replacement plan.
 
 ## Terrain, ephemerides, and the optional Moon view
 
@@ -225,7 +260,8 @@ The versioned registration applies to the corrected representation from
 It is a relative display check, not absolute navigation accuracy.
 See the [map registration method](soma/docs/phase-5/map-alignment.md) and
 [source and usage review](soma/docs/phase-6/source-and-license-audit.md).
-Public hosting of the transformed ion stream is outside the static demo's scope.
+The repository-root Vercel configuration supports this display stream when
+the deployment credentials and origin are configured as described above.
 
 ## Model scope
 
@@ -259,7 +295,8 @@ python -m soma.verification.physical_completion
 In the live interface, select a **Physical** network example. The recorded story
 is direct success on November 24, direct-only failure on November 30, and
 store-and-forward relay delivery on November 30 under the same six-hour deadline
-rule. The public captured-result demo remains separate from this live workflow.
+rule. The hosted configuration also includes these captured physical runs;
+fresh calculations remain part of the Python engine workflow.
 The local service has finite result retention; export needed runs and restart it
 if the stated retention limit is reached. Optional Phase 7 additions remain future
 work.

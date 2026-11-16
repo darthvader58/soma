@@ -6,6 +6,11 @@ token must be supplied by the host application; absent tokens do not trigger an
 import, asset request, or evaluation-token fallback. Keep Cesium's credit display
 visible. The copy script retains the installed package's asset notices.
 
+The hosted captured planner supplies its engine-authored registration
+certificate from the static run artifacts and loads corrected tiles through
+the Python `/api/moon/*` endpoint. See [hosted configuration](hosted-deployment.md)
+for environment names, token rotation and the boundary with live planning.
+
 The engine supplies a v0.2 registration for its corrected Moon mesh in the
 tested latitude region -90 to -87.5 degrees. A matching completed display may
 show the backend's declared analysis point. No relay trajectory is invented for

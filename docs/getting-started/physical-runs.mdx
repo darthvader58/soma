@@ -1,0 +1,42 @@
+---
+title: Reproduce the physical examples
+description: Prepare pinned terrain and ephemerides, then recompute the bounded controlled date comparison.
+---
+
+The terrain-backed provider supports a bounded region near **89°S, 0°E**, during **November 2026**, with analysis horizons of at most **six hours**. It is not an arbitrary global or seasonal analysis service.
+
+Published LOLA terrain and DE421 ephemerides provide the physical geometry. Hardware, radio rates, station service, ideal pointing, and the two-body lunar relay remain declared assumptions.
+
+## Acquire the pinned inputs
+
+Install the full analysis stack and the verification extra, then run:
+
+```bash
+python -m pip install -e ".[analysis,planning,service,verification]"
+python -m soma fetch-geometry-data --data-root /tmp/soma-data --physical
+python -m soma verify-geometry --data-root /tmp/soma-data
+```
+
+Acquisition downloads scientific files and bounded extracts. Review the repository's [dataset guide](https://github.com/darthvader58/soma/blob/main/data/README.md) for sources, hashes, sizes, coverage, and terms before downloading. Installation itself does not acquire these files.
+
+## Recompute the controlled comparison
+
+```bash
+SOMA_DATA_ROOT=/tmp/soma-data python soma/docs/physical-first-release/reproduce.py --output-dir /tmp/soma-physical
+python -m soma.verification.exports /tmp/soma-physical/relay-later/run.zip
+python -m soma.verification.physical_completion
+```
+
+The reproduction script calculates three cases and verifies each exported ZIP before writing it. The completion command checks the repository's recorded first-release evidence; it is separate from verifying your newly generated ZIP.
+
+## Recorded outcomes
+
+| Case | Recorded model outcome |
+| --- | --- |
+| Direct, November 24 | Complete 16 MiB delivery under the declared assumptions |
+| Direct, November 30 | Infeasible in the bounded model |
+| Lunar relay, November 30 | Complete 16 MiB store-and-forward delivery under the declared assumptions |
+
+These outcomes come from the archived engine runs. The comparison holds site, data volume, hardware, initial battery, station locations, and synthetic orbit elements fixed. UTC dates move together while preserving the six-hour mission-age deadline rule and service duration.
+
+An assumed-rate feasible result is not a closed RF link or an operational relay booking. Unknown terrain and unsupported coverage must stay visible in the result. See [frames and datasets](/science/frames-data) and [assumptions](/science/assumptions-limits).

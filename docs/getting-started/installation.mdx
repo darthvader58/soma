@@ -1,0 +1,45 @@
+---
+title: Installation
+description: Install the source distribution and the dependencies required for your workflow.
+---
+
+Use **Python 3.12 or newer** for the full analysis stack. Python 3.14 has been used for repository verification. The package requires Python 3.12 or newer; NumPy 2.5.4 also requires this minimum.
+
+```bash
+git clone https://github.com/darthvader58/soma.git
+cd soma
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[analysis,planning,service]"
+```
+
+Run the examples from the repository root so their fixture paths resolve. These instructions install from the repository; they do not assume a published package index release.
+
+## Dependency groups
+
+| Extra | Purpose |
+| --- | --- |
+| `analysis` | NumPy, SpiceyPy, Rasterio, and PyProj for numerical geometry and terrain |
+| `planning` | PuLP and the bounded mixed-integer scheduling workflow |
+| `service` | FastAPI and Uvicorn for the local HTTP boundary |
+| `verification` | Skyfield for independent ephemeris comparisons |
+| `test` | Pytest and HTTP client support for engine tests |
+
+The core distribution installs JSON schema validation and canonical JSON hashing dependencies. It does not download kernels or terrain rasters during installation. The `hosted-display` dependency group used by the Vercel adapter contains only FastAPI, NumPy, and Rasterio; it is not a substitute for the analysis and planning extras above.
+
+For verification work:
+
+```bash
+python -m pip install -e ".[test,verification]"
+python -m pytest tests/engine -q
+```
+
+## Check the installation
+
+```bash
+python -c 'import soma; print(soma.__version__)'
+python -m soma --help
+python -m soma validate fixtures/synthetic-relay/scenario.json
+```
+
+Continue with the [synthetic quickstart](/getting-started/quickstart). Acquire scientific data separately only when running the [physical workflow](/getting-started/physical-runs).
