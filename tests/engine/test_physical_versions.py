@@ -49,7 +49,7 @@ def test_missing_v2_source_does_not_use_present_legacy_file(tmp_path):
     far = load_json(resource_directory('data')/'lola-far-phase2.manifest.json')
     with pytest.raises((FileNotFoundError, ValueError, OSError)):
         open_physical_dem(tmp_path, near, far, policy='published_grid')
-    assert not (tmp_path/'lola-near-elevation-v2.tif').exists()
+    assert not (tmp_path/'lola-near-elevation-v2-canonical.tif').exists()
 
 
 def test_available_original_and_complete_sources_have_exact_hashes_and_footprints():
@@ -68,4 +68,6 @@ def test_available_original_and_complete_sources_have_exact_hashes_and_footprint
     assert np.isfinite(legacy).sum() == 1710000
     assert np.isfinite(complete).sum() == 4000000
     np.testing.assert_array_equal(legacy[1145:], complete[1145:])
-    assert old['files'][1] == new['files'][1]
+    for key in ('parent', 'parent_file_sha256', 'source_pixel_window', 'bounds_xy_m', 'transform', 'dtype'):
+        assert old['files'][1][key] == new['files'][1][key]
+    assert new['files'][1]['sample_sha256'] == 'a95c40e058e3da32a2b1b27d73d64490075ef594548c9b72e6eb8f325aaf162e'

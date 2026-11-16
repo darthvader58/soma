@@ -34,8 +34,8 @@
     "required_max_extent_m": 250000
   },
   "near_manifest_ref": "lola-hosted-v2.manifest.json",
-  "far_manifest_ref": "lola-far-phase2.manifest.json",
-  "polar_manifest_ref": "physical-polar-window.manifest.json",
+  "far_manifest_ref": "lola-far-hosted-v2.manifest.json",
+  "polar_manifest_ref": "physical-polar-hosted-v2.manifest.json",
   "kernel_manifest_ref": "de421-phase2.manifest.json",
   "relay_preset_ref": "soma-polar-200km-v1",
   "assumed_rates_bps": {
@@ -64,6 +64,8 @@
   "dataset_revision": {
     "supersedes": "physical-lola-de421-v1",
     "purpose": "Complete source-tile acquisition for hosted fresh calculation; original v1 source hashes and archived results remain distinct.",
-    "near_elevation_finite_pixels": 4000000
+    "near_elevation_finite_pixels": 4000000,
+    "storage_encoding": "canonical_uncompressed_little_endian_strips_v1",
+    "storage_revision_scope": "Container bytes only; all six decoded sample bitstreams and georeferencing unchanged from the complete source grids"
   }
 }

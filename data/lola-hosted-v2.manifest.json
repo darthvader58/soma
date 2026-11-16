@@ -9,8 +9,8 @@
   "elevation_unit": "m",
   "pixel_size_m": 5,
   "interpolation_policy": "unknown_if_zero_count",
-  "elevation_sha256": "e9cb6fadf51baa44ab9ad9216e10746fc995b41344cef1262b56ea142bd671ef",
-  "count_sha256": "86e2f7169c8588599787ae5ba123fd9f72c77d2b028d446f81be6b3fca25386a",
+  "elevation_sha256": "b0c70da9c8c6bf9e9c18f654a99379ae4075686639ee423110658e1fc28fee18",
+  "count_sha256": "f971b16e6904dea33d6b2232e846cc211a3099638f6292d64f5fcc96cc655e01",
   "source_urls": [
     "https://pgda.gsfc.nasa.gov/products/81"
   ],
@@ -20,9 +20,9 @@
   "files": [
     {
       "role": "elevation",
-      "path": "lola-near-elevation-v2.tif",
-      "sha256": "e9cb6fadf51baa44ab9ad9216e10746fc995b41344cef1262b56ea142bd671ef",
-      "size_bytes": 13107372,
+      "path": "lola-near-elevation-v2-canonical.tif",
+      "sha256": "b0c70da9c8c6bf9e9c18f654a99379ae4075686639ee423110658e1fc28fee18",
+      "size_bytes": 16025978,
       "parent": {
         "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldem_87s_5mpp.tif",
         "size_bytes": 3465285714,
@@ -63,13 +63,14 @@
         2000,
         2000
       ],
-      "finite_samples": 4000000
+      "finite_samples": 4000000,
+      "storage_encoding": "canonical_uncompressed_little_endian_strips_v1"
     },
     {
       "role": "count",
-      "path": "lola-near-count.tif",
-      "sha256": "86e2f7169c8588599787ae5ba123fd9f72c77d2b028d446f81be6b3fca25386a",
-      "size_bytes": 389726,
+      "path": "lola-near-count-v2-canonical.tif",
+      "sha256": "f971b16e6904dea33d6b2232e846cc211a3099638f6292d64f5fcc96cc655e01",
+      "size_bytes": 4025922,
       "parent": {
         "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldec_87s_5mpp.tif",
         "size_bytes": 145895726,
@@ -110,7 +111,8 @@
         2000,
         2000
       ],
-      "finite_samples": 4000000
+      "finite_samples": 4000000,
+      "storage_encoding": "canonical_uncompressed_little_endian_strips_v1"
     }
   ],
   "redistribution": "not_bundled; local acquisition only; retain product citation",
@@ -126,5 +128,17 @@
     "supersedes": "pgda81-near-89s-0e-window-v1",
     "legacy_snapshot_difference": "Version 1 preserved unknown values in its first 1145 extract rows after historical acquisition; those missing values are not NASA parent nodata. Version 2 decodes all selected source tiles.",
     "maximum_elevation_transfer_bytes": 33554432
+  },
+  "storage_encoding": {
+    "id": "canonical_uncompressed_little_endian_strips_v1",
+    "driver": "GTiff",
+    "compress": "NONE",
+    "tiled": false,
+    "strip_rows": 1,
+    "endianness": "LITTLE",
+    "bigtiff": "NO",
+    "sample_hash_scope": "C-order decoded native samples in declared little-endian dtype, including exact NaN payload bits; independent of TIFF metadata and codecs",
+    "pixel_change": "none; canonical containers preserve the decoded source sample bits, dimensions, masks and georeferencing",
+    "interleave": "BAND"
   }
 }

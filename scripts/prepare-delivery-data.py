@@ -30,8 +30,8 @@ def prepare(output, *, source_root=None):
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=True)
     entries = source_entries()
-    if sum(item["size_bytes"] for item in entries) > 100_000_000:
-        raise ValueError("Pinned delivery inputs exceed the 100 MB source budget")
+    if sum(item["size_bytes"] for item in entries) > 160_000_000:
+        raise ValueError("Pinned delivery inputs exceed the 160 MB source budget")
     source_root = Path(source_root).resolve() if source_root is not None else None
     for entry in entries:
         relative = Path(entry["path"])

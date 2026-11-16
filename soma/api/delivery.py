@@ -37,7 +37,7 @@ LIMITS = {
 HOSTED_MODEL_ID = "physical-lola-de421-v2"
 DEFAULT_OPTIONS = {"chunk_bytes": 16777216, "bin_s": 60, "time_limit_s": 10}
 SOURCE_MANIFESTS = ("de421-phase2.manifest.json", "lola-hosted-v2.manifest.json",
-                    "lola-far-phase2.manifest.json", "physical-polar-window.manifest.json")
+                    "lola-far-hosted-v2.manifest.json", "physical-polar-hosted-v2.manifest.json")
 
 
 class DeliverySourceError(RuntimeError):

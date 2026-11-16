@@ -318,7 +318,7 @@ def acquire_polar_window(data_root, *, manifest=None, cancel_event=None):
     from urllib.request import Request, urlopen
     import rasterio
     from rasterio.windows import Window
-    from soma.datasets import _remote_identity, sha256
+    from soma.datasets import _remote_identity, sha256, canonical_raster_profile, verify_raster_artifact
 
     manifest = manifest or load_json(resource_directory('data')/'physical-polar-window.manifest.json')
     root = Path(data_root).resolve()
@@ -392,10 +392,10 @@ def acquire_polar_window(data_root, *, manifest=None, cancel_event=None):
                 profile.update(driver='GTiff',width=400,height=400,count=1,
                                transform=source.window_transform(window),compress='deflate',
                                tiled=True,blockxsize=256,blockysize=256)
+                profile = canonical_raster_profile(profile, entry)
                 with rasterio.open(partial,'w',**profile) as target:
                     target.write(values,1)
-            if sha256(partial) != entry['sha256']:
-                raise ValueError('Reproduced polar terrain window differs from pinned bytes')
+            verify_raster_artifact(partial, values, profile, entry)
             if _remote_identity(url) != parent:
                 raise ValueError('Official terrain parent changed during polar extraction')
             partial.replace(output)

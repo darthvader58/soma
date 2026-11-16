@@ -174,6 +174,30 @@ def _raster_mismatch(path, values, profile):
             ("driver", "dtype", "width", "height", "compress", "tiled", "blockxsize", "blockysize", "transform", "nodata")}},
         sort_keys=True))
 
+
+CANONICAL_RASTER_ENCODING = "canonical_uncompressed_little_endian_strips_v1"
+
+
+def canonical_raster_profile(profile, entry):
+    """Keep legacy writers intact; pin hosted strip layout without a codec."""
+    result = profile.copy()
+    if entry and entry.get("storage_encoding") == CANONICAL_RASTER_ENCODING:
+        result.pop("blockxsize", None)
+        result.update(compress="none", tiled=False, blockysize=1, interleave="band",
+                      ENDIANNESS="LITTLE", BIGTIFF="NO", SPARSE_OK="FALSE", NUM_THREADS=1)
+    return result
+
+
+def verify_raster_artifact(path, values, profile, expected):
+    if not expected:
+        return
+    if "sample_sha256" in expected:
+        actual = raster_sample_identity(values)
+        if any(actual[key] != expected[key] for key in actual):
+            raise ValueError("Decoded terrain samples differ from the declared source: "+json.dumps(actual, sort_keys=True))
+    if sha256(path) != expected["sha256"] or path.stat().st_size != expected["size_bytes"]:
+        raise ValueError(_raster_mismatch(path, values, profile))
+
 def extract_lola_window(data_root, *, expected_manifest=None):
     """Preserve an aligned 10 km square of elevation and float return counts.
 
@@ -244,11 +268,11 @@ def extract_lola_window(data_root, *, expected_manifest=None):
                     profile.update(driver="GTiff", width=2000, height=2000, count=1,
                                    transform=source.window_transform(window), compress="deflate",
                                    tiled=True, blockxsize=256, blockysize=256)
+                    profile = canonical_raster_profile(profile, expected)
                     with rasterio.open(partial, "w", **profile) as target:
                         target.write(values, 1)
                         target.update_tags(**source.tags())
-                    if expected and sha256(partial) != expected["sha256"]:
-                        raise ValueError(_raster_mismatch(partial, values, profile))
+                    verify_raster_artifact(partial, values, profile, expected)
                     partial.replace(output)
                     with rasterio.open(output) as target:
                         bounds = list(target.bounds)
@@ -313,8 +337,10 @@ def extract_lola_far_cap(data_root, *, expected_manifest=None):
         ("elevation", "ldem_64", "V3.1", "4e7a94c76c716a147b21ccf07669d004246b0d1b017b7d63d50befaa1a34142d"),
         ("count", "ldec_64", "V3.0", "c39096be522606065f7b9cce245e60d124ab397f4d33d3bd3248ff7bc7208e36"),
     ):
-        output = root / ("lola-far-" + role + ".tif")
         expected = None if expected_manifest is None else next(x for x in expected_manifest["files"] if x["role"] == role)
+        output = (root/(expected["path"] if expected else "lola-far-"+role+".tif")).resolve()
+        if not output.is_relative_to(root):
+            raise ValueError("Far terrain path escapes data_root")
         if expected and output.is_file() and sha256(output) == expected["sha256"]:
             entries.append(expected)
             continue
@@ -347,11 +373,11 @@ def extract_lola_far_cap(data_root, *, expected_manifest=None):
                    "dtype": str(values.dtype), "crs": "+proj=longlat +a=1737400 +b=1737400 +no_defs",
                    "transform": from_origin(0, -80, 1/64, 1/64), "compress": "deflate",
                    "tiled": True, "blockxsize": 256, "blockysize": 256}
+        profile = canonical_raster_profile(profile, expected)
         partial = output.with_suffix(".partial.tif")
         with rasterio.open(partial, "w", **profile) as dataset:
             dataset.write(values, 1)
-        if expected and sha256(partial) != expected["sha256"]:
-            raise ValueError("Converted far-field extract differs from pinned bytes")
+        verify_raster_artifact(partial, values, profile, expected)
         partial.replace(output)
         record = {"role": role, "path": output.name, "sha256": sha256(output),
                   "raw_extract_sha256": sha256(raw_path), "size_bytes": output.stat().st_size,
