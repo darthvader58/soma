@@ -1,4 +1,4 @@
-"""Hosted display adapter; planning remains in the separately run engine."""
+"""Vercel Moon display and bounded live geometry analysis adapters."""
 
 import gzip
 import ctypes
@@ -14,6 +14,11 @@ from urllib.request import Request, urlopen
 
 from fastapi import FastAPI
 from starlette.responses import JSONResponse
+
+from soma.api.research_jobs import configure_numerical_threads
+
+# Bound native allocation before importing geometry/NumPy for display or studies.
+configure_numerical_threads()
 
 from soma.api.moon import MAX_OBJECT, RegisteredMoon, moon_router
 
@@ -99,7 +104,8 @@ class HostedMoon(RegisteredMoon):
         return content, media, source_sha
 
 
-def create_app(provider=None):
+def create_app(provider=None, *, research_planner=None, research_data_root=None,
+               research_capabilities=None, research_catalog=None):
     application = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
     @application.middleware("http")
@@ -111,11 +117,18 @@ def create_app(provider=None):
     @application.exception_handler(Exception)
     async def unavailable(request, error):
         # Neither signed upstream URLs nor credentials belong in public errors.
-        return JSONResponse({"detail": "Registered Moon display is unavailable"},
+        message = ("Research service is unavailable" if request.url.path.startswith("/api/research")
+                   else "Registered Moon display is unavailable")
+        return JSONResponse({"detail": message},
                             status_code=503, headers={"Cache-Control": "private, no-store"})
 
     application.include_router(moon_router(provider=provider or HostedMoon(
         fetch=hosted_fetch, token_provider=hosted_token)), prefix="/api")
+    from soma.api.research import research_router
+    application.include_router(research_router(service_mode="serverless",
+        data_root=research_data_root or str(Path(__file__).parent / "_data"),
+        planner=research_planner, capabilities_provider=research_capabilities,
+        catalog_provider=research_catalog), prefix="/api")
     return application
 
 
