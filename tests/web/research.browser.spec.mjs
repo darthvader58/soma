@@ -40,7 +40,11 @@ test('default workbench submits multi-site Python study, shares time and preserv
  const pending=page.waitForEvent('download');await page.getByRole('button',{name:'Result JSON',exact:true}).click();
  const body=JSON.parse(await readFile(await(await pending).path(),'utf8'));expect(body).toEqual(researchResult(requests[0]));
  await page.getByRole('button',{name:'Save alternative',exact:true}).click();await expect(page.locator('#saved-alternatives')).toContainText('Saved calculated alternatives (1)');
- await expect(page.getByRole('link',{name:'Delivery archive',exact:true})).toHaveAttribute('href','/?mode=archive');
+ const savedPending=page.waitForEvent('download');await page.getByRole('button',{name:'Download saved result',exact:true}).click();
+ expect(JSON.parse(await readFile(await(await savedPending).path(),'utf8'))).toEqual(body);
+ const studyPending=page.waitForEvent('download');await page.getByRole('button',{name:'Study JSON',exact:true}).click();
+ expect(JSON.parse(await readFile(await(await studyPending).path(),'utf8'))).toEqual(requests[0]);
+ await expect(page.getByRole('link',{name:'Delivery archive',exact:true})).toHaveCount(0);
 });
 
 test('custom location and distinct equipment heights create changed real request; old result is visibly stale',async({page})=>{
@@ -77,6 +81,58 @@ test('narrow layout retains inputs, charts, keyboard focus and avoids horizontal
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await page.getByLabel('Start UTC',{exact:true}).focus();await expect(page.getByLabel('Start UTC',{exact:true})).toBeFocused();
  await expect(page.locator('#geometry-chart svg')).toBeVisible();
+});
+
+test('appearance is persisted and never changes scientific samples, inputs or selected UTC',async({page})=>{
+ const requests=await setup(page);await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ await expect(page.locator('html')).toHaveAttribute('data-theme','light');
+ await page.getByRole('button',{name:'Next stored sample'}).click();
+ const epoch=await page.locator('#selected-utc').textContent(),readout=await page.locator('#site-readout').textContent();
+ const initialRequests=requests.length;
+ await page.getByLabel('Appearance',{exact:true}).selectOption('dark');
+ await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+ await expect(page.getByRole('button',{name:'Run analysis',exact:true})).toHaveCSS('color','rgb(36, 45, 49)');
+ await expect(page.getByRole('button',{name:'Run analysis',exact:true})).toHaveCSS('background-color','rgb(232, 173, 77)');
+ await expect(page.locator('#selected-utc')).toHaveText(epoch);await expect(page.locator('#site-readout')).toHaveText(readout);
+ expect(requests.length).toBe(initialRequests);
+ await page.getByLabel('Appearance',{exact:true}).focus();await expect(page.getByLabel('Appearance',{exact:true})).toBeFocused();
+ expect(await page.getByLabel('Appearance',{exact:true}).evaluate(node=>getComputedStyle(node).outlineStyle)).not.toBe('none');
+ await page.setViewportSize({width:390,height:844});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+ await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ await page.getByLabel('Appearance',{exact:true}).selectOption('light');await expect(page.locator('html')).toHaveAttribute('data-theme','light');
+ await expect(page.getByRole('link',{name:'Documentation',exact:true})).toHaveAttribute('href','/docs/getting-started/live-research');
+ await expect(page.getByRole('link',{name:'Delivery archive',exact:true})).toHaveCount(0);
+});
+
+test('catalog, display layers, sample cursor and speed remain usable in the redesigned workspace',async({page})=>{
+ await setup(page);await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ await page.getByLabel('Find a lunar site',{exact:true}).fill('no matching site');await expect(page.locator('#site-list')).toContainText('No catalog sites match');
+ await page.getByLabel('Find a lunar site',{exact:true}).clear();await expect(page.locator('.site-row')).toHaveCount(3);
+ for(const label of ['Selected site labels','Stored spacecraft path','Sun / Earth schematics'])await page.getByLabel(label,{exact:true}).uncheck();
+ await expect(page.locator('#research-moon')).toHaveAttribute('data-layers',JSON.stringify({labels:false,paths:false,directions:false}));
+ for(const label of ['Selected site labels','Stored spacecraft path','Sun / Earth schematics'])await page.getByLabel(label,{exact:true}).check();
+ await page.getByRole('button',{name:'Selected site',exact:true}).click();await expect(page.locator('#research-moon')).toHaveAttribute('data-camera','site');
+ await page.getByRole('button',{name:'South pole',exact:true}).click();await expect(page.locator('#research-moon')).toHaveAttribute('data-camera','polar');
+ await page.getByRole('button',{name:'Global',exact:true}).click();await expect(page.locator('#research-moon')).toHaveAttribute('data-camera','global');
+ await page.locator('#playback-speed').selectOption('3600');await expect(page.locator('#playback-speed')).toHaveValue('3600');
+ await page.locator('#study-cursor').focus();await page.keyboard.press('End');await expect(page.locator('#selected-utc')).toHaveText('2026-11-16T06:00:00Z');
+ await page.getByLabel('Study time UTC',{exact:true}).focus();await page.keyboard.press('Home');await expect(page.locator('#selected-utc')).toHaveText('2026-11-16T00:00:00Z');
+});
+
+test('both appearances reflow from320px through tablet and the720px layout equivalent of200percent zoom',async({page})=>{
+ await setup(page);await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ for(const width of [320,390,720,768,1024,1440])for(const appearance of ['light','dark']){
+  await page.setViewportSize({width,height:900});await page.getByLabel('Appearance',{exact:true}).selectOption(appearance);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await expect(page.getByRole('button',{name:'Run analysis',exact:true})).toBeVisible();
+  await expect(page.locator('#geometry-chart svg')).toBeVisible();
+  if(width<=390){
+   const inclusion=page.locator('.site-inclusion').first();expect(await inclusion.evaluate(node=>node.clientWidth>=44&&node.clientHeight>=44)).toBe(true);
+   for(const name of ['Previous stored sample','Next stored sample'])expect(await page.getByRole('button',{name}).evaluate(node=>{const bounds=node.getBoundingClientRect();return bounds.width>=44&&bounds.height>=44})).toBe(true);
+  }
+ }
 });
 
 test('methods disclosure exposes every supplied limitation, assumption and source safely on a narrow keyboard layout',async({page})=>{

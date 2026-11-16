@@ -4,6 +4,12 @@ const require = createRequire(new URL('../../web/package.json', import.meta.url)
 const { test, expect } = require('@playwright/test');
 test.use({ reducedMotion: 'reduce' });
 
+async function settleGlobalView(page) {
+ await page.evaluate(async()=>{for(let frame=0;frame<4;frame++)await new Promise(requestAnimationFrame)});
+ await page.getByRole('button',{name:'Global',exact:true}).click();
+ await page.evaluate(async()=>{for(let frame=0;frame<4;frame++)await new Promise(requestAnimationFrame)});
+}
+
 test('prepared real DE421 and LRO sources calculate new custom global study through the browser',async({page})=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  const scientific=[];page.on('response',async response=>{if(response.url().endsWith('/research/analyze')&&response.ok())scientific.push(await response.json());});
@@ -31,4 +37,22 @@ test('prepared real DE421 and LRO sources calculate new custom global study thro
  expect(errors).toEqual([]);
  await page.getByRole('button',{name:'Global',exact:true}).click();
  await page.screenshot({path:'test-results-research-live/real-research-workbench.png',fullPage:true});
+ await page.setViewportSize({width:1440,height:900});
+ await settleGlobalView(page);
+ for(const appearance of ['light','dark']){
+  await page.getByLabel('Appearance',{exact:true}).selectOption(appearance);
+  await expect(page.locator('html')).toHaveAttribute('data-theme',appearance);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.evaluate(()=>new Promise(requestAnimationFrame));
+  await page.getByRole('button',{name:'Run analysis',exact:true}).screenshot({path:`test-results-research-live/dashboard-${appearance}-run-button.png`});
+  await page.screenshot({path:`test-results-research-live/dashboard-${appearance}-desktop.png`,fullPage:true});
+ }
+ await page.setViewportSize({width:390,height:844});
+ await settleGlobalView(page);
+ for(const appearance of ['light','dark']){
+  await page.getByLabel('Appearance',{exact:true}).selectOption(appearance);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.evaluate(()=>new Promise(requestAnimationFrame));
+  await page.screenshot({path:`test-results-research-live/dashboard-${appearance}-mobile.png`,fullPage:true});
+ }
 });
