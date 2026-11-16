@@ -338,8 +338,8 @@
     },
     {
       "path": "tests/web/browser.spec.mjs",
-      "sha256": "c8812b1a9b8fc5d2c20560a7bbdeae14ab12aaf926da4a605b79e83d80efeaab",
-      "size_bytes": 32760
+      "sha256": "df9d1e14667e9f7246dcb2b0dbbf946bdc9db9a0a9f97a5b0b978d44e9c852e1",
+      "size_bytes": 32952
     },
     {
       "path": "tests/web/comparison.test.mjs",
@@ -553,6 +553,8 @@
     "new_research_scope": "New geometry-study schemas, live analysis, catalog and workbench are separate additions. Historical Phase 1/6 and physical-first-release reviews do not certify them.",
     "new_research_covered_by_archived_reviews": false,
     "archived_scientific_artifacts_changed": false,
-    "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope."
+    "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope.",
+    "browser_setup_refresh_recorded_at_utc": "2026-11-17T04:19:30.007070Z",
+    "browser_setup_compatibility": "The archived fixture browser setup now waits for the Plan delivery button to become enabled after asynchronous fixture selection/local editing and after skip-link navigation triggers a case load. Assertions, archive runtime, archived scientific results, original verification counts and historical review scope are unchanged. This is a source-binding refresh only."
   }
 }

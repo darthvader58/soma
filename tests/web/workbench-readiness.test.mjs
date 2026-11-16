@@ -9,24 +9,29 @@ class DisplayEvent {
 }
 const tileset = () => ({ initialTilesLoaded: new DisplayEvent(), allTilesLoaded: new DisplayEvent(), tileVisible: new DisplayEvent() });
 
-for (const order of [
-  ['initialTilesLoaded', 'tileVisible'],
-  ['tileVisible', 'initialTilesLoaded'],
-  ['allTilesLoaded', 'tileVisible'],
-  ['tileVisible', 'allTilesLoaded'],
-]) test(`Moon handoff waits for both readiness signals: ${order.join(' then ')}`, () => {
+test('first visible Moon content reveals once without waiting for settled LOD', () => {
   const moon = tileset(); let reveals = 0;
   const dispose = observeMoonContent(moon, () => reveals++);
-  moon[order[0]].raiseEvent(); assert.equal(reveals, 0);
-  moon[order[1]].raiseEvent(); assert.equal(reveals, 1);
-  moon.initialTilesLoaded.raiseEvent(); moon.allTilesLoaded.raiseEvent(); moon.tileVisible.raiseEvent();
+  assert.equal(reveals, 0);
+  moon.tileVisible.raiseEvent(); assert.equal(reveals, 1);
+  moon.tileVisible.raiseEvent(); moon.allTilesLoaded.raiseEvent(); moon.initialTilesLoaded.raiseEvent();
   assert.equal(reveals, 1);
   dispose(); assert.ok(Object.values(moon).every(event => event.listeners.size === 0));
+});
+
+test('metadata and complete-loading events alone cannot hide the context Moon', () => {
+  const moon = tileset(); let reveals = 0;
+  const dispose = observeMoonContent(moon, () => reveals++);
+  moon.initialTilesLoaded.raiseEvent(); moon.allTilesLoaded.raiseEvent();
+  assert.equal(reveals, 0);
+  moon.tileVisible.raiseEvent(); assert.equal(reveals, 1);
+  dispose();
 });
 
 test('disposing a pending Moon handoff prevents a late visible-content event', () => {
   const moon = tileset(); let reveals = 0;
   const dispose = observeMoonContent(moon, () => reveals++);
-  moon.initialTilesLoaded.raiseEvent(); dispose(); moon.tileVisible.raiseEvent();
+  dispose(); moon.tileVisible.raiseEvent();
   assert.equal(reveals, 0);
+  assert.ok(Object.values(moon).every(event => event.listeners.size === 0));
 });

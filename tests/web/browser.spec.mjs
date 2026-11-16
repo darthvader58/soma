@@ -12,6 +12,7 @@ test.beforeEach(async ({ page }) => {
   await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
   await page.getByLabel('Declared network example').selectOption('0');
   await page.getByRole('button', { name: 'Enable local scenario editing', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Plan delivery', exact: true })).toBeEnabled();
   page.__somaErrors = errors;
 });
 
@@ -439,6 +440,7 @@ test('keyboard focus, skip link and 200 percent text resizing remain usable', as
   await page.getByRole('link', { name: 'Skip to scenario' }).focus();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#scenario$/);
+  await expect(page.getByRole('button', { name: 'Plan delivery', exact: true })).toBeEnabled();
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).focus();
   const focus = await page.locator('#plan-button').evaluate(node => getComputedStyle(node).outlineStyle);
   expect(focus).not.toBe('none');

@@ -26,7 +26,7 @@ reference sphere; the old regional terrain-registration certificate is not appli
 | Check | Actual result |
 | --- | --- |
 | Full engine suite after serverless startup fix | 445 passed, 0 failed, 0 skipped; 261.52 s |
-| Web unit suite | 94 passed |
+| Web unit suite after first-visible tile handoff | 97 passed |
 | Archive/workbench browser suite after loading/camera refinement | 28 passed |
 | Real-source browser study | Passed: 15 catalog records, native LRO playback, new 21.1827° N / 68.2714° E site, 1.7 m panel, changed hash and exact download |
 | Web production build | Passed |

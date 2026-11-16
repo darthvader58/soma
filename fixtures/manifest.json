@@ -75,7 +75,7 @@
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "9e68c1ff93dabda1f9573e3fea305a6e63ed75e2b5a61908e88f8968581fbe00"
+      "sha256": "77bc3cfa70005e43a0d3affde75ae2e625af4c0a2229a76601b28dd0dd51551c"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -1239,6 +1239,8 @@
     "new_research_scope": "New geometry-study schemas, live analysis, catalog and workbench are separate additions. Historical Phase 1/6 and physical-first-release reviews do not certify them.",
     "new_research_covered_by_archived_reviews": false,
     "archived_scientific_artifacts_changed": false,
-    "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope."
+    "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope.",
+    "browser_setup_refresh_recorded_at_utc": "2026-11-17T04:19:30.008061Z",
+    "browser_setup_compatibility": "The archived fixture browser setup now waits for the Plan delivery button to become enabled after asynchronous fixture selection/local editing and after skip-link navigation triggers a case load. Assertions, archive runtime, archived scientific results, original verification counts and historical review scope are unchanged. This is a source-binding refresh only."
   }
 }
