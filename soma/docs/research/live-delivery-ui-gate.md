@@ -16,6 +16,8 @@ Earth follow-up, November 23: the integrating agent personally inspected a fresh
 
 The final navigation suite passed all three cases in 8.0 seconds: camera controls, real Python-produced textured Earth/network display, and blue-body fallback after an intentional image failure. The image-failure screenshot was personally inspected. The fixture is served through a real gzip HTTP response, preserving transport size/decompression checks. Coarse-pointer devices use 44 px targets even at tablet widths. Nine viewer tests exercise exact Earth pose acceptance, missing/invalid pose rejection and Moon/Earth camera bounds. The final production build passed after the touch-target adjustment.
 
+Production check: PR #24 deployed on Vercel and the public Mintlify page contains the new Earth and navigation instructions. A fresh production calculation delivered 16,777,216 unique bytes and its downloaded native ZIP passed all 72 independent checks (ZIP SHA-256 `d3ca5ec808ad8b8f4d8d88497bce6f3aa651b367b06835e5022f5e6515cb54f2`). Its incumbent arrived at `2026-11-24T09:25:01.201519Z`; the difference from the local incumbent is not represented as an optimality claim. Personal production screenshot inspection caught a redundant Earth-center label behind the close-up body. The bounded correction hides that label in Earth and manual-Earth views, restores it in network view and retains the actual body, station markers, connection and attribution. The viewer regression checks those transitions.
+
 ## Hard gate
 
 - R-02 PASS: new workspace copy contains no em dash; scientific punctuation in source records is preserved.

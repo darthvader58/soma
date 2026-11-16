@@ -59,10 +59,14 @@ test('Earth body uses exact supplied pose and WGS84 radii, hides between epochs,
   assert.deepEqual(Cesium.Matrix4.getMatrix3(primitive.modelMatrix, new Cesium.Matrix3()), Cesium.Matrix3.fromRowMajorArray(fixture.rotation));
   assert.deepEqual(primitive.geometryInstances.geometry._radii, new Cesium.Cartesian3(...body.radii));
   api.camera('earth');
+  assert.equal(scene.entities.getById('delivery-node-EARTH').label.show.getValue(), false);
   assert.ok(Cesium.Cartesian3.distance(scene.camera.positionWC, new Cesium.Cartesian3(...body.center)) > 6378137);
   for (let index = 0; index < 100; index++) api.navigate('zoom-in');
+  api.setTime(fixture.epoch);
+  assert.equal(scene.entities.getById('delivery-node-EARTH').label.show.getValue(), false);
   assert.ok(Cesium.Cartesian3.distance(scene.camera.positionWC, new Cesium.Cartesian3(...body.center)) >= 6388137);
   api.camera('network'); assert.equal(primitive.show, true);
+  assert.equal(scene.entities.getById('delivery-node-EARTH').label.show.getValue(), true);
   const unsupportedEpoch = new Date(Date.parse(fixture.epoch) + 1).toISOString();
   api.setTime(unsupportedEpoch); assert.equal(primitive.show, false);
   assert.equal(earthBodyAtEpoch(fixture.display, unsupportedEpoch), undefined);
