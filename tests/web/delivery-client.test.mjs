@@ -58,3 +58,58 @@ test('decoded response budget rejects an oversized stream before parsing', async
   } })) });
   await assert.rejects(client.capabilities(), /response budget/);
 });
+
+const busy = retryAfter => new Response(JSON.stringify({ detail: 'One delivery computation is already active' }), {
+  status: 429, headers: retryAfter === undefined ? {} : { 'Retry-After': retryAfter },
+});
+
+test('429 retries sequentially with immutable scenario/options and waiting notification', async () => {
+  const bodies = [], notices = [], waits = [];
+  const input = structuredClone(scenario), options = { bin_s: 60 };
+  let inFlight = 0, peak = 0;
+  const client = createDeliveryClient({ wait: async delay => { waits.push(delay); input.scenario_id = 'edited'; options.bin_s = 300; }, fetchImpl: async (_, request) => {
+    inFlight++; peak = Math.max(peak, inFlight); bodies.push(request.body); inFlight--;
+    return bodies.length === 1 ? busy('3') : response(envelope());
+  } });
+  await client.analyze(input, options, { onWaiting: value => notices.push(value) });
+  assert.equal(peak, 1); assert.equal(bodies.length, 2); assert.equal(bodies[0], bodies[1]);
+  assert.equal(JSON.parse(bodies[1]).options.bin_s, 60); assert.deepEqual(waits, [3000]); assert.equal(notices.length, 1);
+});
+
+test('busy waiting is finite and Retry-After values are safely clamped', async () => {
+  for (const [header, delay] of [['garbage', 3000], ['-1', 3000], ['0', 1000], ['9999999', 30000],
+    ['Thu, 01 Jan 1970 00:00:10 GMT', 10000]]) {
+    let posts = 0, waited = 0;
+    const client = createDeliveryClient({ now: () => 0, retryBudgetMs: delay, wait: async ms => { waited += ms; },
+      fetchImpl: async () => { posts++; return busy(header); } });
+    await assert.rejects(client.analyze(scenario, {}), error => error.status === 429 && /bounded waiting/.test(error.message));
+    assert.equal(posts, 2); assert.equal(waited, delay);
+  }
+});
+
+test('validation and unavailable errors retain typed HTTP status and never retry', async () => {
+  for (const status of [422, 503]) {
+    let posts = 0;
+    const client = createDeliveryClient({ fetchImpl: async () => { posts++; return new Response('{"detail":"Rejected"}', { status }); } });
+    await assert.rejects(client.analyze(scenario, {}), error => error.name === 'DeliveryHTTPError' && error.status === status);
+    assert.equal(posts, 1);
+  }
+});
+
+test('cancel during a real retry timer prevents another post', async () => {
+  let queued, posts = 0;
+  const waiting = new Promise(resolve => { queued = resolve; });
+  const client = createDeliveryClient({ fetchImpl: async () => { posts++; return busy('1'); } });
+  const run = client.analyze(scenario, {}, { onWaiting: queued });
+  await waiting; client.cancel(); await assert.rejects(run, { name: 'AbortError' }); assert.equal(posts, 1);
+});
+
+test('superseding queued retries prevents stale publication even if wait ignores abort', async () => {
+  let release, queued, posts = 0;
+  const waiting = new Promise(resolve => { queued = resolve; });
+  const client = createDeliveryClient({ wait: () => new Promise(resolve => { release = resolve; }),
+    fetchImpl: async () => ++posts === 1 ? busy('1') : response(envelope()) });
+  const old = client.analyze(scenario, {}, { onWaiting: queued }); await waiting;
+  const fresh = client.analyze(scenario, { bin_s: 300 });
+  await fresh; release(); await assert.rejects(old, { name: 'AbortError' }); assert.equal(posts, 2);
+});

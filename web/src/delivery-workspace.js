@@ -219,7 +219,9 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
     $('delivery-elapsed').hidden = false; $('delivery-elapsed').textContent = 'Waiting: 0 s';
     waitingTimer = setInterval(() => { if (running && current === revision) $('delivery-elapsed').textContent = `Waiting: ${Math.floor((performance.now() - started) / 1000)} s`; }, 1000);
     try {
-      const response = await client.analyze(scenario, options);
+      const response = await client.analyze(scenario, options, { onWaiting: () => {
+        if (current === revision && running) message('Server is finishing another calculation. Waiting to retry automatically for up to 240 seconds. Stop waiting or edit inputs to cancel this browser wait.');
+      } });
       if (current !== revision) return;
       artifact = response; stale = false; renderProfiles(); renderArtifact();
       message(`Calculated delivery in Python · ${describeStatus(response.result).label} · ${response.scenario_sha256.slice(0, 12)}. Rates and service retain their declared assumptions.`);

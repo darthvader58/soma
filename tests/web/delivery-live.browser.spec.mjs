@@ -115,3 +115,34 @@ test('fresh Python delivery renders exact schedule, moves network focus, validat
   await expect(page.getByRole('button', { name: 'Geometry', exact: true })).toHaveAttribute('aria-pressed', 'true');
   expect(errors).toEqual([]);
 });
+
+test('busy delivery waits visibly, retries once at a time, and input edits or Stop waiting cancel queued retries', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Data delivery', exact: true }).click();
+  await expect(page.locator('#delivery-status')).toContainText('service ready');
+  let posts = 0;
+  await page.route('**/research/delivery/analyze', route => {
+    posts++;
+    return route.fulfill({ status: 429, contentType: 'application/json', headers: { 'Retry-After': '1' },
+      body: JSON.stringify({ detail: 'One delivery computation is already active' }) });
+  });
+  const plan = page.getByRole('button', { name: 'Plan delivery', exact: true });
+  await plan.click();
+  await expect(page.locator('#delivery-status')).toContainText('Server is finishing another calculation');
+  await expect(plan).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Stop waiting', exact: true })).toBeVisible();
+  await expect.poll(() => posts).toBeGreaterThan(1);
+  await expect(page.locator('#delivery-elapsed')).toContainText(/Waiting: [1-9]\d* s/);
+  await page.getByLabel('Delivery data volume', { exact: true }).fill('8');
+  const afterEdit = posts;
+  await expect(page.locator('#delivery-elapsed')).toBeHidden();
+  await expect(plan).toBeEnabled();
+  await page.waitForTimeout(1300); expect(posts).toBe(afterEdit);
+  await plan.click();
+  await expect(page.locator('#delivery-status')).toContainText('Server is finishing another calculation');
+  await page.getByRole('button', { name: 'Stop waiting', exact: true }).click();
+  const afterStop = posts;
+  await expect(page.locator('#delivery-status')).toContainText('may continue');
+  await expect(page.locator('#delivery-elapsed')).toBeHidden();
+  await page.waitForTimeout(1300); expect(posts).toBe(afterStop);
+});
