@@ -3,17 +3,12 @@ import { isMoonSurfacePick, siteCameraVectors, registrationGate } from './viewer
 import { storedSampleAt } from './research-client.js';
 
 export function observeMoonContent(tileset, onReady) {
-  let loaded = false, visible = false, revealed = false;
-  const maybeReveal = () => {
-    if (loaded && visible && !revealed) { revealed = true; onReady(); }
-  };
-  const markLoaded = () => { loaded = true; maybeReveal(); };
-  const removeListeners = [
-    tileset.initialTilesLoaded.addEventListener(markLoaded),
-    tileset.allTilesLoaded.addEventListener(markLoaded),
-    tileset.tileVisible.addEventListener(() => { visible = true; maybeReveal(); }),
-  ];
-  return () => removeListeners.forEach(remove => remove());
+  let revealed = false;
+  return tileset.tileVisible.addEventListener(() => {
+    if (revealed) return;
+    revealed = true;
+    onReady();
+  });
 }
 
 export async function createWorkbenchViewer(container, {
