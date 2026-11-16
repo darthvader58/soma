@@ -24,13 +24,28 @@ mission or a stored expected answer.
 4. If you deliberately want service to follow a changed analysis interval, use
    **Use analysis interval as assumed service**. This explicitly changes assumptions;
    it does not obtain access from a network operator.
-5. Choose **Plan delivery**. Wait for the bounded Python calculation. A failed or
-   unsupported request does not substitute an archived result.
+5. Choose **Plan delivery**. While Python calculates, the elapsed waiting time is
+   shown. On completion, the map focuses the first selected transmission and the
+   outcome reports the last-byte arrival. A failed or unsupported request does not
+   substitute an archived result.
 
 Python resolves ground elevation from the numerical DEM and records both requested
 and resolved values. A catalog point or rendered terrain pick is not a substitute
-for numerical terrain coverage. Copying an inspected global site can therefore
-produce an explicit out-of-coverage result rather than a fabricated schedule.
+for numerical terrain coverage. **Use inspected geometry site** checks the declared
+regional bounds before changing the delivery location. Apollo 11, for example, is
+outside this provider's region; the action explains that and preserves the current
+delivery task. Global geometry remains available for that location.
+
+If you enter unsupported coordinates, the reason appears beside the disabled
+**Plan delivery** action. Choose **Use supported south-pole site** to restore only
+the provider's regional study-point coordinates and heights, preserving your
+payload, dates, hardware and network settings. This point is a supported analysis
+input, not a certified landing-site recommendation. **Restore declared inputs**
+instead resets the entire task to the provider's initial values.
+
+Camera controls such as **Global**, **South pole** and **Earth network** change the
+view. They do not calculate a schedule. **Plan delivery** starts the calculation;
+afterward, transfer and wait controls inspect the returned Python timestamps.
 
 ## Inspect what reached Earth
 

@@ -19,12 +19,12 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
   toolbar.dataset.analysisTool = 'delivery';
   toolbar.hidden = true;
   toolbar.setAttribute('aria-label', 'Data delivery planning');
-  toolbar.innerHTML = `<div class="analysis-name"><strong>Lunar data delivery</strong><span>Plan last-byte arrival at the configured Earth network.</span></div><div class="study-run"><button id="plan-delivery" class="research-primary" type="button" disabled>Plan delivery</button><button id="stop-delivery" type="button" hidden>Stop waiting</button></div>`;
+  toolbar.innerHTML = `<div class="analysis-name"><strong>Lunar data delivery</strong><span>Plan last-byte arrival at the configured Earth network.</span></div><div class="delivery-primary-actions"><div class="study-run"><button id="plan-delivery" class="research-primary" type="button" aria-describedby="delivery-blocker" disabled>Plan delivery</button><button id="stop-delivery" type="button" hidden>Stop waiting</button><button id="delivery-supported-site" type="button" disabled>Use supported south-pole site</button></div><p id="delivery-blocker" role="status" hidden></p></div>`;
 
   const status = document.createElement('div');
   status.className = 'research-status delivery-status';
   status.dataset.analysisTool = 'delivery'; status.hidden = true;
-  status.innerHTML = '<p id="delivery-status" role="status" aria-live="polite">Checking the Python delivery service and declared modeling limits.</p><span id="delivery-budget"></span>';
+  status.innerHTML = '<p id="delivery-status" role="status" aria-live="polite">Checking the Python delivery service and declared modeling limits.</p><span id="delivery-elapsed" hidden></span><span id="delivery-budget"></span>';
 
   const inputs = document.createElement('aside');
   inputs.className = 'object-panel delivery-inputs'; inputs.id = 'delivery-inputs';
@@ -36,7 +36,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
   inspector.className = 'inspector-panel delivery-inspector';
   inspector.dataset.analysisTool = 'delivery'; inspector.hidden = true;
   inspector.setAttribute('aria-label', 'Earth delivery outcome');
-  inspector.innerHTML = '<h2>Earth delivery outcome</h2><div id="delivery-outcome"><p>No delivery has been calculated. A geometric opportunity alone does not establish delivery.</p></div><div id="delivery-profiles"></div>';
+  inspector.innerHTML = '<h2>Earth delivery outcome</h2><div id="delivery-outcome"><p>Choose Plan delivery to calculate this task in Python. To recover an unsupported location, choose Use supported south-pole site above, then Plan delivery.</p><p>Camera controls inspect views; they do not calculate a delivery plan.</p></div><div id="delivery-profiles"></div>';
 
   const dock = document.createElement('section');
   dock.className = 'time-dock delivery-dock';
@@ -52,7 +52,16 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
   const options = { chunk_bytes: 16_777_216, bin_s: 60, time_limit_s: 10 };
   const message = value => { $('delivery-status').textContent = value; };
   const hardware = () => scenario.profiles.hardware.find(item => item.id === scenario.hardware_profile_ref);
+  let waitingTimer;
+  function stopTimer() { clearInterval(waitingTimer); waitingTimer = undefined; $('delivery-elapsed').hidden = true; $('delivery-elapsed').textContent = ''; }
+  const supportedSite = site => {
+    const coverage = capabilities.coverage;
+    return Number.isFinite(site.latitude_deg) && Number.isFinite(site.longitude_deg_east) &&
+      site.latitude_deg >= coverage.latitude_bounds_deg[0] && site.latitude_deg <= coverage.latitude_bounds_deg[1] &&
+      site.longitude_deg_east >= coverage.longitude_bounds_deg_east[0] && site.longitude_deg_east <= coverage.longitude_bounds_deg_east[1];
+  };
   function invalidate() {
+    stopTimer();
     revision += 1; stale = Boolean(artifact);
     if (running) { client.cancel(); running = false; }
     $('stop-delivery').hidden = true;
@@ -84,10 +93,13 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
     if (!Number.isInteger(options.chunk_bytes) || options.chunk_bytes < 1 || Math.ceil(bytes / options.chunk_bytes) > limits.max_chunks) errors.push(`Choose an integer chunk size that requires at most ${limits.max_chunks} chunks.`);
     if (!Number.isInteger(options.bin_s) || options.bin_s < limits.min_bin_s || options.bin_s > limits.max_bin_s) errors.push(`Planning bin must be an integer from ${limits.min_bin_s} to ${limits.max_bin_s} seconds.`);
     if (!Number.isFinite(options.time_limit_s) || options.time_limit_s < 1 || options.time_limit_s > limits.max_solver_time_s) errors.push(`Solver limit must be 1 to ${limits.max_solver_time_s} seconds.`);
-    if (coverage && (scenario.lander.latitude_deg < coverage.latitude_bounds_deg[0] || scenario.lander.latitude_deg > coverage.latitude_bounds_deg[1] || scenario.lander.longitude_deg_east < coverage.longitude_bounds_deg_east[0] || scenario.lander.longitude_deg_east > coverage.longitude_bounds_deg_east[1])) errors.push('This location is outside the declared numerical terrain coverage. Global geometry remains available in the Geometry tool.');
+    if (!supportedSite(scenario.lander)) errors.push('This location is outside the declared numerical terrain coverage. Choose Use supported south-pole site to recover; global geometry remains available in the Geometry tool.');
     $('delivery-input-errors').textContent = errors.join(' ');
     $('delivery-input-errors').hidden = !errors.length;
     $('plan-delivery').disabled = running || !capabilities.ready || Boolean(errors.length);
+    $('delivery-blocker').textContent = errors.length ? `Plan delivery blocked: ${errors.join(' ')}` : !capabilities.ready ? 'Plan delivery unavailable: Python compute or source data are not ready.' : '';
+    $('delivery-blocker').hidden = !$('delivery-blocker').textContent;
+    if (errors.length && !running) message(`Plan delivery blocked: ${errors.join(' ')}`);
     $('delivery-budget').textContent = `${scenario.data_volume.value} ${scenario.data_volume.unit} · ${Number.isFinite(duration) ? duration / 3600 : '?'} h · ${scenario.route_families.length} route ${scenario.route_families.length === 1 ? 'family' : 'families'}`;
   }
   function renderForm() {
@@ -129,6 +141,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
     $('delivery-use-inspected').addEventListener('click', () => {
       const site = getInspectedSite();
       if (!site) { message('Inspect a geometry site first, then explicitly copy its declared inputs.'); return; }
+      if (!supportedSite(site)) { message(`${site.name} is outside the delivery provider’s supported south-pole terrain coverage. The current delivery site, task and exports remain unchanged. Use Geometry to inspect this location, or choose Use supported south-pole site for delivery.`); return; }
       for (const key of ['latitude_deg', 'longitude_deg_east', 'elevation_m', 'antenna_height_m', 'panel_height_m']) scenario.lander[key] = site[key];
       invalidate(); renderForm(); message(`Copied ${site.name}. Terrain coverage and numerical ground resolution remain Python checks.`);
     });
@@ -201,14 +214,17 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
   async function plan() {
     if (!scenario || running) return;
     const current = revision; running = true; $('stop-delivery').hidden = false; refreshBudget();
-    message('Calculating terrain, illumination, contacts, energy and the bounded delivery schedule in Python. This synchronous request has no durable job ID.');
+    message('Calculating this delivery in Python. The result and selected transfer will appear when complete.');
+    const started = performance.now();
+    $('delivery-elapsed').hidden = false; $('delivery-elapsed').textContent = 'Waiting: 0 s';
+    waitingTimer = setInterval(() => { if (running && current === revision) $('delivery-elapsed').textContent = `Waiting: ${Math.floor((performance.now() - started) / 1000)} s`; }, 1000);
     try {
       const response = await client.analyze(scenario, options);
       if (current !== revision) return;
       artifact = response; stale = false; renderProfiles(); renderArtifact();
       message(`Calculated delivery in Python · ${describeStatus(response.result).label} · ${response.scenario_sha256.slice(0, 12)}. Rates and service retain their declared assumptions.`);
     } catch (error) { if (error.name !== 'AbortError' && current === revision) message(`Delivery unavailable: ${error.message} No captured or fabricated result replaced it.`); }
-    finally { if (current === revision) { running = false; $('stop-delivery').hidden = true; refreshBudget(); } }
+    finally { if (current === revision) { stopTimer(); running = false; $('stop-delivery').hidden = true; refreshBudget(); } }
   }
   async function load() {
     message('Checking Python delivery readiness, numerical terrain coverage and explicit profiles.');
@@ -218,6 +234,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
       if (!scenario) throw new Error('The service did not supply a complete declared scenario template.');
       options.time_limit_s = Math.min(options.time_limit_s, capabilities.limits.max_solver_time_s);
       renderForm();
+      $('delivery-supported-site').disabled = false;
       renderProfiles();
       const methods = document.createElement('details'); methods.className = 'delivery-methods';
       methods.innerHTML = `<summary>Python library methods and availability</summary>${(capabilities.library_capabilities ?? []).map(item => `<section><h3><a href="${esc(item.docs_path)}">${esc(item.label)}</a></h3><p>${esc(item.python_module)} · ${esc(item.http_operation ?? 'Python only')}</p><p>${esc(item.limitation)}</p></section>`).join('')}`;
@@ -226,7 +243,15 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
     } catch (error) { message(`Delivery service unavailable: ${error.message}`); $('delivery-form').innerHTML = '<p>Source and compute readiness could not be established.</p><button id="delivery-retry" type="button">Retry delivery readiness</button>'; $('delivery-retry').addEventListener('click', load); }
   }
   $('plan-delivery').addEventListener('click', plan);
-  $('stop-delivery').addEventListener('click', () => { revision += 1; running = false; message(client.cancel()); $('stop-delivery').hidden = true; refreshBudget(); });
+  $('delivery-supported-site').addEventListener('click', () => {
+    if (!scenario || !capabilities) return;
+    for (const key of ['latitude_deg', 'longitude_deg_east', 'elevation_m', 'antenna_height_m', 'panel_height_m']) scenario.lander[key] = capabilities.scenario_template.lander[key];
+    invalidate(); renderForm();
+    if (!$('delivery-blocker').textContent) message('Supported south-pole lander inputs restored. Payload, task epochs, hardware, network and planning options are unchanged. Choose Plan delivery to calculate.');
+    if (active) onFocus('polar');
+  });
+  $('stop-delivery').title = 'Stops waiting in this browser. The Python calculation may continue on the server.';
+  $('stop-delivery').addEventListener('click', () => { stopTimer(); revision += 1; running = false; message(client.cancel()); $('stop-delivery').hidden = true; refreshBudget(); });
   $('delivery-export-scenario').addEventListener('click', () => download(`${JSON.stringify(scenario, null, 2)}\n`, 'soma-delivery-scenario.json', 'application/json'));
   $('delivery-export-result').addEventListener('click', () => { if (!stale && artifact) download(`${JSON.stringify(artifact.result, null, 2)}\n`, `soma-delivery-${artifact.scenario_sha256.slice(0, 12)}.json`, 'application/json'); });
   $('delivery-export-package').addEventListener('click', async () => {
@@ -237,7 +262,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
   });
   return {
     activate() { active = true; if (!capabilities) load(); else if (artifact) { onMap(artifact, epoch); } },
-    deactivate() { active = false; if (running) { revision += 1; running = false; message(client.cancel()); $('stop-delivery').hidden = true; refreshBudget(); } },
+    deactivate() { active = false; stopTimer(); if (running) { revision += 1; running = false; message(client.cancel()); $('stop-delivery').hidden = true; refreshBudget(); } },
     refreshMap() { if (active && artifact) onMap(artifact, epoch); },
     inspectNode(id) {
       const source = artifact?.scenario ?? scenario;

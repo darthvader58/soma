@@ -79,6 +79,11 @@ label { color: var(--muted); }
 .analysis-tools button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 700; }
 .research-header .resource-links { margin-left: auto; }
 .delivery-section-heading { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
+.delivery-primary-actions { min-width: 0; max-width: 750px; }
+.delivery-primary-actions .study-run { flex-wrap: wrap; }
+#delivery-blocker { margin-top: 10px; color: var(--accent); font-size: 12px; overflow-wrap: anywhere; }
+#delivery-elapsed { display: inline !important; white-space: nowrap; }
+#delivery-elapsed[hidden] { display: none !important; }
 .delivery-inputs p, .delivery-inspector p, .delivery-dock > div > p { color: var(--muted); font-size: 11px; line-height: 1.5; margin-top: 10px; }
 .delivery-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0 18px; }
 .delivery-fields label, .delivery-inputs > div > label { display: flex; flex-direction: column; gap: 6px; min-width: 0; font-size: 11px; }

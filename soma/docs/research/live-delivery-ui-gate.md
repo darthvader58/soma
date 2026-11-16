@@ -4,6 +4,8 @@ Reviewed by the integrating agent on November 18, 2026. Scope: the new Data deli
 
 Evidence: personal Aside inspection of fresh Linux preview calculations, direct and relay transfer/wait controls, edits, failure and loading states, downloads and numerical fallback when tiles fail; personal inspection of desktop and 390 px browser screenshots; 106 web unit tests; the fresh-service browser test including automatic transfer focus, keyboard use, profile disclosure synchronization and original ZIP verification. Export replay is recorded separately in `live-delivery-verification.md`.
 
+Follow-up interaction review, November 18: the user's Apollo 11 screenshot exposed a discoverability failure missed by the earlier review. The copy action could replace a supported site and leave Plan delivery disabled with its reason in a scrolled panel. The correction checks published bounds before copying, preserves a valid task and result on rejection, exposes blocking reasons beside the primary action, and offers an explicit site-only recovery. The integrating agent reran all 106 web unit tests and the fresh-service browser case (21.3 seconds; total 23.8 seconds), personally inspected the new desktop and 390 px screenshots, and confirmed an actual 16 MiB direct calculation in the user's production tab. The browser case also verifies truthful elapsed waiting time and cleanup on completion, Stop waiting and tool change. Every gate item below was rechecked for this bounded change; no scientific calculation or coverage claim was expanded.
+
 ## Hard gate
 
 - R-02 PASS: new workspace copy contains no em dash; scientific punctuation in source records is preserved.
@@ -13,13 +15,13 @@ Evidence: personal Aside inspection of fresh Linux preview calculations, direct 
 - R-23 PASS: existing Cesium content and source-backed scientific objects supply the visuals; navigation follows the explicitly requested library and communications work.
 - R-24 PASS: documentation pages exist and Mintlify reports no broken links or anchors.
 - R-25 PASS: checked normal text pairs are 6.44:1 or higher; the control border is 4.45:1 against its surface, above the 3:1 non-text requirement.
-- R-26 PASS: planning, route selection, task edits, service alignment, transfer/wait focus and three downloads have implemented behavior; the single hardware profile is read-only text.
-- R-27 PASS: no-result, connecting, running, stale, invalid-input, failed-request and tile-failure states are visible and distinct.
+- R-26 PASS: planning, route selection, task edits, service alignment, transfer/wait focus and downloads have implemented behavior; unsupported copies preserve the task, and supported-site recovery preserves non-site inputs.
+- R-27 PASS: no-result, connecting, running, stale, invalid-input, failed-request and tile-failure states are distinct; the primary action now has an adjacent blocking reason and real elapsed waiting time.
 - R-28 PASS: no generic FAQ was introduced.
 - R-32 PASS: native controls and visible focus support keyboard use; browser verification includes Tab navigation and focus on the task action.
 - R-33 PASS: implementation lives in the maintained application source; no runtime source-rewriting script supplies the feature.
 - R-34 PASS: the user requested dark only; no incomplete theme toggle is present.
-- R-35 PASS: the application was built and exercised with the live service; fresh request, editing, focus, keyboard and original ZIP download were tested.
+- R-35 PASS: the application was built and exercised with the live service; fresh request, rejected site copy, task-preserving recovery, elapsed lifecycle, focus, keyboard and original ZIP download were tested.
 - R-36 PASS: no flight, security, compliance, latency or customer claim was added.
 - R-37 PASS: the approved research-dashboard direction and three dials are recorded in `web/DESIGN.md`.
 - R-38 PASS: the relay orbit, station service, pointing and rates retain explicit synthetic or assumed labels; actual solver outcomes supply the result text.
