@@ -39,6 +39,7 @@ function harness({ assetFails = false, depth = true, deferredAsset = false, hash
     Ellipsoid: { MOON: {} }, Ion: {}, SceneMode: { SCENE3D: 3 },
     Color: { WHITE: 'white', BLACK: 'black', fromCssColorString: (value) => value },
     Cartesian3, Cartesian2: class { constructor(x, y) { Object.assign(this, { x, y }); } },
+    ArcType: { NONE: 'none' }, PolylineDashMaterialProperty: class { constructor(options) { Object.assign(this, options); } },
     LightingModel: { UNLIT: 'unlit' }, ScreenSpaceEventType: { LEFT_CLICK: 'click' },
     JulianDate: { fromIso8601: (epoch) => { if (!Number.isFinite(Date.parse(epoch))) throw Error(); return epoch; } },
     Math: { toDegrees: (radians) => radians * 180 / Math.PI },
@@ -199,6 +200,40 @@ test('mismatched completed conversion cannot draw a declared point', async () =>
   api.setDisplay({ registration });
   assert.equal(h.state.statuses.at(-1).overlaysBlocked, true);
   assert.match(h.state.statuses.at(-1).message, /does not match/);
+  api.destroy();
+});
+
+test('stored relay and allocation overlays disappear between samples and on replacement', async () => {
+  const h = harness(); const api = await h.start();
+  const epoch = '2026-11-24T08:00:00Z';
+  api.setScenario({ lander: { frame: 'MOON_ME_DE421', latitude_deg: -89, longitude_deg_east: 0 }, relay_refs: ['relay'] });
+  const registration = syntheticCertificate();
+  const display = { registration,
+    surface_points: [{ id: 'lander', position_m: [1, 2, 3], frame: registration.renderer_frame,
+      origin: 'MOON', position_unit: 'm', epoch: null, time_scale: 'static', provenance_label: 'Synthetic point' }],
+    renderer_states: [{ target: 'relay', position: [10, 20, 30], frame: registration.renderer_frame,
+      source_frame: 'MOON_ME_DE421', origin: 'MOON', position_unit: 'm', epoch, epoch_format: 'rfc3339', time_scale: 'UTC',
+      transform_ref: 'renderer-registration.json', transform_epoch_utc: epoch, provenance_label: 'synthetic_two_body_lunar_preset' }],
+    contacts: [{ contact_id: 'c', sender: 'lander', receiver: 'relay', source_transmit_window: { start_utc: epoch, end_utc: '2026-11-24T08:01:00Z' } }],
+    allocations: [] };
+  api.setDisplay(display);
+  api.setTime(epoch);
+  assert.equal(h.state.entities.length, 3);
+  assert.deepEqual({ ...h.state.entities.find(item => item.id === 'stored-relay').position }, { x: 10, y: 20, z: 30 });
+  let line = h.state.entities.find(item => item.id === 'contact-c');
+  assert.equal(line.polyline.arcType, 'none');
+  assert.equal(line.polyline.material.dashLength, 16);
+  display.allocations = [{ contact_id: 'c', source_transmit_interval: display.contacts[0].source_transmit_window }];
+  api.setDisplay(display);
+  line = h.state.entities.find(item => item.id === 'contact-c');
+  assert.equal(line.polyline.material, 'white');
+  assert.match(line.description, /Scheduled transmission/);
+  api.setTime('2026-11-24T08:00:00.000001Z');
+  assert.equal(h.state.entities.length, 1);
+  api.setTime(epoch);
+  assert.equal(h.state.entities.length, 3);
+  api.setDisplay(undefined);
+  assert.equal(h.state.entities.length, 0);
   api.destroy();
 });
 

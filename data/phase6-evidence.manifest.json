@@ -246,8 +246,8 @@
     },
     {
       "path": "tests/web/live.browser.spec.mjs",
-      "sha256": "9fcb95ff5f093b2120f1096d4bfde9ff26623eac9fff5113226ddae8df745063",
-      "size_bytes": 15504
+      "sha256": "d8d58be2f1608b356519815ef8d482cb75009fa51c57baeac7b4883091842f7f",
+      "size_bytes": 15494
     },
     {
       "path": "web/docs/phase-6-independent-review.json",
@@ -276,8 +276,8 @@
     },
     {
       "path": "web/src/comparison.js",
-      "sha256": "7ca1373179b0011bc9f58f77bff2d1bdbcbe9fcc15550b988c4c0b4c9c80e544",
-      "size_bytes": 6231
+      "sha256": "7576ba20458a3f8367ec228cc15e82823253b083affa51d7fa7683baec5175dc",
+      "size_bytes": 7562
     }
   ],
   "phase6_complete": true,

@@ -214,7 +214,7 @@ test('unsupported operating day explains coverage and cannot retain a previous s
   const rejection = await responsePromise;
   expect(rejection.status()).toBe(422);
   const detail = (await rejection.json()).detail;
-  expect(detail).toBe('Unsupported dates: horizon is outside the declared synthetic fixture domain');
+  expect(detail).toBe('Unsupported dates: horizon is outside the declared dataset domain');
   await expect(page.locator('#validation-errors')).toContainText(`Scenario rejected: ${detail}`);
   await expect(page.locator('#result')).toContainText('No engine result has been loaded');
   await expect(page.getByRole('button', { name: 'Download run package (ZIP)', exact: true })).toBeDisabled();

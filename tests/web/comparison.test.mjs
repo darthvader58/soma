@@ -34,3 +34,21 @@ test('comparison reads only a matching replayed Python summary and preserves com
  entry.summary.replay.passed = false;
  assert.equal(comparisonViewModel([entry]).rows[0].route, undefined);
 });
+
+test('site comparison exposes changed observer heights, terrain manifest and analysis horizon', () => {
+ const a = { ...structuredClone(scenario), analysis_mode: 'terrain_ephemeris', dataset_manifest_ref: 'lola-v1',
+  analysis_horizon: { start_utc: '2026-11-14T00:00:00Z', end_utc: '2026-11-15T00:00:00Z' },
+  lander: { latitude_deg: -89, longitude_deg_east: 0, frame: 'MOON_ME_DE421', antenna_height_m: 2, panel_height_m: 1 } };
+ const b = structuredClone(a);
+ b.lander.latitude_deg = -89.1;
+ let model = comparisonViewModel([{ scenario: a }, { scenario: b }]);
+ assert.ok(model.differences.every(item => !item.changed));
+ b.lander.panel_height_m = 3;
+ b.dataset_manifest_ref = 'lola-v2';
+ b.analysis_horizon.end_utc = '2026-11-14T12:00:00Z';
+ model = comparisonViewModel([{ scenario: a }, { scenario: b }]);
+ for (const label of ['Panel height (m)', 'Dataset manifest', 'Analysis horizon']) {
+  assert.equal(model.differences.find(item => item.label === label).changed, true);
+ }
+ assert.equal(model.differences.find(item => item.label === 'Antenna height (m)').changed, false);
+});

@@ -37,6 +37,10 @@ const fixtures = [
 ];
 const fixtureMode = import.meta.env.VITE_SOMA_MODE === 'fixture';
 const apiUrl = fixtureMode ? undefined : import.meta.env.VITE_SOMA_API_URL || '/api';
+const physicalPresets = Object.entries(import.meta.glob('../fixtures/physical-south-pole/scenario*.json', { eager: true, import: 'default' }))
+  .map(([, scenario]) => ({ name: `Physical · ${scenario.scenario_id}`, scenario }))
+  .sort((a, b) => a.scenario.data_ready_utc.localeCompare(b.scenario.data_ready_utc));
+const examples = apiUrl ? [...fixtures, ...physicalPresets] : fixtures;
 const client = fixtureMode ? createFixtureClient(fixtures) : createPlanClient({ baseUrl: apiUrl });
 const root = document.querySelector('#app');
 root.innerHTML = `
@@ -50,7 +54,7 @@ root.innerHTML = `
     <div class="workspace">
       <aside class="scenario-panel panel" id="scenario" aria-labelledby="scenario-title">
         <div class="panel-heading"><h2 id="scenario-title">Scenario</h2><span class="section-index">01</span></div>
-        <div class="fixture-control"><label for="fixture-select">Declared network example</label><select id="fixture-select"><option value="0">Direct to Earth</option><option value="1">One lunar relay</option></select><p class="muted">Both examples use the same 100 MiB task and hardware. All contact windows are synthetic.</p></div>
+        <div class="fixture-control"><label for="fixture-select">Declared network example</label><select id="fixture-select"><option value="0">Direct to Earth</option><option value="1">One lunar relay</option></select><p id="example-context" class="muted">Both synthetic examples use the same 100 MiB task and hardware. All contact windows are synthetic.</p></div>
         <div class="scenario-actions"><button class="primary" id="plan-button" type="button">Plan delivery</button><button id="cancel-button" type="button" hidden>Cancel job</button><button id="restore-button" type="button">Restore fixture</button><button id="retry-button" type="button" hidden>Retry same scenario</button></div>
         <p id="job-status" role="status" aria-live="polite">Ready to inspect the captured engine result.</p>
         <div id="validation-errors" class="error-message" role="alert" hidden></div>
@@ -60,7 +64,7 @@ root.innerHTML = `
         <section class="map-panel panel" aria-labelledby="map-title">
           <div class="panel-heading"><div><h2 id="map-title">Lunar context</h2><p class="muted">Terrain display. Scientific analysis comes from the Python engine.</p></div><span class="section-index">02</span></div>
           <div id="moon-view" class="moon-view" aria-label="Moon terrain viewport"></div>
-          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
+          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p class="muted">Stored relay samples only; no motion is inferred between samples. Dashed lines show available contacts; solid lines show scheduled source transmissions. Lines require both stored endpoints. Earth-bound transfers remain in the text schedule when no registered endpoint is supplied.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
         </section>
         <section class="panel timeline-panel" aria-labelledby="timeline-title">
           <div class="panel-heading"><h2 id="timeline-title">Contact timeline</h2><span class="section-index">03</span></div>
@@ -95,11 +99,18 @@ const byId = id => document.getElementById(id);
 byId('workspace-mode').textContent = apiUrl ? 'Live · Python planning service' : 'Offline · Captured fixtures';
 if (apiUrl) {
   byId('download-package').textContent = 'Download run package (ZIP)';
-  document.querySelector('.project-notice').textContent = 'Live planning service. The declared examples use synthetic geometry, service and rate assumptions. Results come from Python; failed service requests do not load a fixture result.';
+  document.querySelector('.project-notice').textContent = 'Live planning service. Choose a declared scenario and inspect its input classes. Python supplies geometry, power and schedules; assumed radio rates and service remain labeled. Failed service requests do not load a fixture result.';
   byId('job-status').textContent = 'Ready to submit the declared scenario to Python.';
   byId('result-context').textContent = 'Choose Plan delivery to request a result from the live service.';
 }
-let activeFixture = fixtures[0];
+for (const [index, example] of examples.entries()) {
+  if (index < fixtures.length) continue;
+  const option = document.createElement('option');
+  option.value = String(index);
+  option.textContent = example.name;
+  byId('fixture-select').append(option);
+}
+let activeFixture = examples[0];
 let scenario = structuredClone(activeFixture.scenario);
 let result = null;
 let currentSummary;
@@ -145,11 +156,12 @@ function showErrors(messages = []) {
 }
 
 function updateLocation() {
-  const fixturePoint = apiUrl ? scenario.lander : activeFixture.scenario.lander;
-  const label = apiUrl ? 'Declared scenario point (not renderer-resolved)' : 'Fixture analysis point (synthetic, not service-resolved)';
-  byId('analysis-location').textContent = `${label}: ${fixturePoint.latitude_deg}° planetocentric, ${fixturePoint.longitude_deg_east}° east. ${fixturePoint.frame}. Declared elevation ${fixturePoint.elevation_m} m (${fixturePoint.elevation_datum}); reference radius ${fixturePoint.reference_radius_m} m. Antenna ${fixturePoint.antenna_height_m} m; panel ${fixturePoint.panel_height_m} m above declared ground.`;
+  const resolved = apiUrl && currentDisplay?.environment?.analysis_point;
+  const fixturePoint = resolved || (apiUrl ? scenario.lander : activeFixture.scenario.lander);
+  const label = resolved ? 'Completed-job analysis point from Python' : apiUrl ? 'Declared scenario point (not renderer-resolved)' : 'Fixture analysis point (synthetic, not service-resolved)';
+  byId('analysis-location').textContent = `${label}: ${fixturePoint.latitude_deg}° planetocentric, ${fixturePoint.longitude_deg_east}° east. ${fixturePoint.frame}. ${resolved ? 'Numerical DEM' : 'Declared'} elevation ${fixturePoint.elevation_m} m (${fixturePoint.elevation_datum}); reference radius ${fixturePoint.reference_radius_m} m. Antenna ${fixturePoint.antenna_height_m} m; panel ${fixturePoint.panel_height_m} m above ${resolved ? 'resolved' : 'declared'} ground.`;
   const draft = byId('draft-location');
-  draft.hidden = !modified;
+  draft.hidden = !modified || !!resolved;
   const lander = scenario.lander;
   const reference = apiUrl ? 'The declared point has not been registered to the renderer.' : 'The fixture point above is a reference only.';
   draft.textContent = pendingFields
@@ -168,7 +180,7 @@ function refreshOutput() {
   renderResult(byId('result'), { result, scenario, contacts, expected });
   timeline?.destroy();
   timeline = renderTimeline(byId('timeline'), {
-    scenario, result, contacts, expected,
+    scenario, result, contacts, expected, sampleEpochs: currentDisplay?.sample_epochs_utc ?? [],
     onTimeChange(epoch) { selectedTime = epoch; viewer?.setTime(epoch); science?.setTime(epoch); refreshSelectedState(); },
   });
   timeline.setTime(selectedTime);
@@ -178,7 +190,7 @@ function refreshOutput() {
   refreshSelectedState();
   byId('download-result').disabled = !result;
   byId('download-package').disabled = !result;
-  byId('hand-reference').disabled = modified;
+  byId('hand-reference').disabled = modified || !activeFixture.expected;
   byId('save-a').disabled = !result;
   byId('save-b').disabled = !result;
 }
@@ -243,6 +255,11 @@ function restoreFixture() {
   pendingFields = false;
   selectedTime = scenario.data_ready_utc;
   byId('hand-reference').checked = false;
+  const physical = scenario.analysis_mode === 'terrain_ephemeris';
+  byId('example-context').textContent = physical
+    ? 'Physical preset: Python resolves numerical terrain elevation and validates coverage. This full preset restores its declared dates and service calendars. Changing the selection replaces the scenario; compare saved results to check which task controls changed.'
+    : 'Both synthetic examples use the same 100 MiB task and hardware. All contact windows are synthetic.';
+  byId('science-source').options[0].textContent = physical ? 'Completed-job terrain and ephemeris inputs' : 'Scenario-matched synthetic inputs';
   clearDisplayPick();
   byId('result-context').textContent = apiUrl ? 'Choose Plan delivery to request a live result for this scenario.' : 'Choose Plan delivery to load the captured engine output for this exact fixture.';
   form.setScenario(scenario);
@@ -253,7 +270,7 @@ function restoreFixture() {
 }
 
 byId('fixture-select').addEventListener('change', event => {
-  activeFixture = fixtures[Number(event.target.value)];
+  activeFixture = examples[Number(event.target.value)];
   restoreFixture();
 });
 byId('restore-button').addEventListener('click', restoreFixture);

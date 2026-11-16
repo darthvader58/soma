@@ -41,5 +41,9 @@ test('rendered diagnostic labels provenance, blocked reasons and contact semanti
   assert.doesNotMatch(root.textContent,/Renderer registration is blocked/);
   assert.match(root.textContent,/Fixture-backed/);assert.match(root.textContent,/Height: 1 m/);assert.match(root.textContent,/source-digest/);assert.match(root.textContent,/solid_body_intersection/);assert.match(root.textContent,/No usable contacts supplied/);assert.match(root.textContent,/Selected transmissions appear only/);
   control.setTime('b');assert.match(root.textContent,/Selected UTC: b/);control.destroy();assert.equal(root.textContent,'');
+  env.provenance.terrain={source_hashes:['physical-digest'],datasets:[{elevation_sha256:'dataset-digest'}],terrain_policy:'published_grid'};
+  renderScience(root,{environment:env,selectedTime:'b',fixtureBacked:false});
+  assert.match(root.textContent,/physical-digest/);assert.match(root.textContent,/dataset-digest/);
+  assert.match(root.textContent,/Complete environment provenance/);assert.match(root.textContent,/published_grid/);
  }finally{globalThis.document=prior;}
 });

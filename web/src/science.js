@@ -168,9 +168,12 @@ export function renderScience(container, { environment, selectedTime, fixtureBac
     const model=scienceViewModel(environment,epoch,role); const profile=model.profile; const site=profile?.site;
     container.append(el('p', `Selected UTC: ${text(epoch)}. Exact stored samples only; no interpolation.`, 'science-selected-time'));
     container.append(el('h3', `${role === 'panel' ? 'Panel' : 'Antenna'} horizon`));
-    const terrain=environment.provenance?.terrain ?? [];
+    const terrainSource=environment.provenance?.terrain;
+    const terrain=Array.isArray(terrainSource) ? terrainSource
+      : terrainSource ? [terrainSource, ...(terrainSource.datasets ?? [])] : [];
     const hashes = terrain.flatMap(item => [
       item.sha256, item.source_sha256, item.source_hash, item.elevation_sha256, item.count_sha256,
+      item.manifest_sha256, ...(item.source_hashes ?? []),
       ...Object.values(item.files ?? {}).map(file => file.sha256),
     ]).filter(known);
     container.append(el('p', `Height: ${text(site?.height_m)} m · Frame: ${text(site?.frame ?? environment.frame)} · Datum: ${text(site?.elevation_datum)}. Source hashes: ${[...new Set(hashes)].join(', ') || 'Unknown'}. Horizon cache SHA-256: ${text(profile?.cache_key)}.`, 'science-provenance'));
@@ -220,6 +223,9 @@ export function renderScience(container, { environment, selectedTime, fixtureBac
     table(container,['Candidate','Decision','Reasons'],model.decisions.map(d=>[d.candidate_id,d.status,d.reasons.join('; ')]),'Unknown: no contact decision reasons supplied.');
     container.append(el('p','Selected transmissions appear only in the delivery result allocations. A geometric opportunity or blocked decision is not a transmission.'));
     for(const [heading,items] of [['Assumptions',environment.assumptions],['Warnings',environment.warnings]]) {container.append(el('h3',heading));const list=el('ul');for(const item of items??[])list.append(el('li',item));if(!items?.length)list.append(el('li','None supplied.'));container.append(list);}
+    const provenanceDetails=el('details');
+    provenanceDetails.append(el('summary','Complete environment provenance'),el('pre',JSON.stringify(environment.provenance ?? null,null,2)));
+    container.append(provenanceDetails);
   }
   render();return {setTime(value){epoch=value;render();},destroy(){container.replaceChildren();}};
 }

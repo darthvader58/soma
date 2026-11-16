@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { patchScenario } from '../../web/src/scenario.js';
+import { patchScenario, scenarioProvenance } from '../../web/src/scenario.js';
 
 const fixture = JSON.parse(await readFile(new URL('../../fixtures/synthetic-relay/scenario.json', import.meta.url)));
 
@@ -31,4 +31,18 @@ test('qualified epochs round trip exactly and edits cannot introduce undocumente
   assert.equal(patchScenario(fixture, 'data_ready_utc', epoch).data_ready_utc, epoch);
   assert.throws(() => patchScenario(fixture, 'battery.capacity', 1000), /Unknown scenario field/);
   assert.throws(() => patchScenario(fixture, 'lander.solar_hour', 12), /Unknown scenario field/);
+});
+
+test('physical scenario provenance preserves input classes and synthetic trajectory labels', () => {
+  const scenario = structuredClone(fixture);
+  scenario.analysis_mode = 'terrain_ephemeris';
+  scenario.profiles.relays[0].trajectory.kind = 'synthetic_two_body_lunar_preset';
+  const provenance = scenarioProvenance(scenario);
+  assert.equal(provenance.mode, 'terrain_ephemeris');
+  assert.equal(provenance.rate, 'assumed_net_rate');
+  assert.deepEqual(provenance.inputs, scenario.input_provenance);
+  assert.equal(provenance.relays[0].trajectory, 'synthetic_two_body_lunar_preset');
+  assert.deepEqual(provenance.relays[0].coverage, scenario.profiles.relays[0].trajectory.coverage);
+  scenario.relay_refs = [];
+  assert.deepEqual(scenarioProvenance(scenario).relays, []);
 });

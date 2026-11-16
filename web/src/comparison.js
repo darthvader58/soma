@@ -5,6 +5,12 @@ const display = value => {
 };
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const hardware = scenario => scenario?.profiles?.hardware?.find(item => item.id === scenario.hardware_profile_ref);
+const hardwareConfiguration = scenario => {
+  const profile = hardware(scenario);
+  if (!profile) return undefined;
+  const { service, ...equipment } = profile;
+  return equipment;
+};
 const network = scenario => ({
   relays: scenario.relay_refs,
   stations: scenario.station_refs,
@@ -14,6 +20,7 @@ const network = scenario => ({
   rate: scenario.rate_method,
   pointing: scenario.pointing_assumption,
   service: scenario.service_assumption_label,
+  landerService: hardware(scenario)?.service,
 });
 
 export function comparisonViewModel(entries = []) {
@@ -35,6 +42,7 @@ export function comparisonViewModel(entries = []) {
     minimumReserve: supplied?.minimum_margin_above_reserve_wh,
     completion: result?.final_byte_arrival_utc,
     limitingReason: result?.provenance?.reason,
+    comparisonRule: scenario.input_provenance?.find(item => item.scope === 'controlled date comparison')?.description,
     scenario,
   });
   });
@@ -45,8 +53,14 @@ export function comparisonViewModel(entries = []) {
     const checks = [
       ['Data volume', a.data_volume, b.data_volume],
       ['Deadline (fixed absolute UTC)', a.deadline_utc, b.deadline_utc],
+      ['Analysis horizon', a.analysis_horizon, b.analysis_horizon],
+      ['Analysis mode', a.analysis_mode, b.analysis_mode],
+      ['Dataset manifest', a.dataset_manifest_ref, b.dataset_manifest_ref],
+      ['Antenna height (m)', a.lander?.antenna_height_m, b.lander?.antenna_height_m],
+      ['Panel height (m)', a.lander?.panel_height_m, b.lander?.panel_height_m],
+      ['Lunar frame', a.lander?.frame, b.lander?.frame],
       ['Hardware profile', a.hardware_profile_ref, b.hardware_profile_ref],
-      ['Hardware configuration', hardware(a), hardware(b)],
+      ['Hardware configuration', hardwareConfiguration(a), hardwareConfiguration(b)],
       ['Initial battery energy (Wh)', hardware(a)?.battery?.initial_energy_wh, hardware(b)?.battery?.initial_energy_wh],
       ['Network configuration', network(a), network(b)],
     ];
@@ -77,7 +91,7 @@ export function renderComparison(container, { entries = [] }) {
     if (model.rows.length !== 2) {
       container.append(el('p', 'Save two scenario results to inspect task differences.'));
     }
-    container.append(el('p', 'Deadline rule: fixed absolute UTC. No deadline moves automatically with the data-ready date.'));
+    container.append(el('p', 'Dates and deadlines are compared as absolute UTC. Selecting a full preset may replace the declared mission window; manual date edits do not move the deadline automatically.'));
     if (model.dateChanged) {
       container.append(el('p', model.deadlineChanged
         ? 'Data-ready time changed; the absolute deadline also changed.'
@@ -106,6 +120,7 @@ export function renderComparison(container, { entries = [] }) {
       ['Communications energy (Wh)', 'energy'],
       ['Minimum margin above reserve (Wh)', 'minimumReserve'],
       ['Limiting reason', 'limitingReason'],
+      ['Declared date-comparison rule', 'comparisonRule'],
     ];
     for (const [label, key] of metrics) {
       const tr = el('tr');
@@ -118,6 +133,10 @@ export function renderComparison(container, { entries = [] }) {
     table.append(body);
     wrapper.append(table);
     container.append(wrapper, el('h3', 'Task controls'));
+    for (const row of model.rows) {
+      const site = row.scenario.lander;
+      container.append(el('p', `${row.name}: site ${display(site?.latitude_deg)}° planetocentric, ${display(site?.longitude_deg_east)}° east; data ready ${display(row.scenario.data_ready_utc)}. Analysis mode ${display(row.scenario.analysis_mode)}; dataset ${display(row.scenario.dataset_manifest_ref)}.`));
+    }
     const controls = el('ul');
     for (const item of model.differences) {
       const status = item.unknown ? 'Unknown' : item.changed ? 'Changed' : 'Unchanged';

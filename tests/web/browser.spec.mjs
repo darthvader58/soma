@@ -38,7 +38,7 @@ test('computed direct failure and replayed relay schedule remain separate from h
   await page.keyboard.press('End');
   await expect(page.locator('.timeline-time')).toHaveText('2026-11-14T10:05:00Z');
   await page.getByText('Declared hardware and assumptions', { exact: true }).click();
-  await expect(page.locator('.scenario-form pre')).toContainText('storage_capacity_bytes');
+  await expect(page.locator('.scenario-hardware')).toContainText('storage_capacity_bytes');
   await page.getByText('Complete engine provenance', { exact: true }).click();
   await expect(page.locator('#result details pre')).toContainText('implementation_status');
   await page.evaluate(() => window.scrollTo(0, 0));

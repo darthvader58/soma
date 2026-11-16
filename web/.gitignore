@@ -5,4 +5,5 @@ public/cesium/
 *.local
 test-results/
 test-results-live/
+test-results-physical/
 playwright-report/
