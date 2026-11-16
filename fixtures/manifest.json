@@ -75,7 +75,7 @@
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "193152d3b125c391908d286a5b9c60c039298db0ef38d0d199da00f00e17fb53"
+      "sha256": "9e68c1ff93dabda1f9573e3fea305a6e63ed75e2b5a61908e88f8968581fbe00"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -1238,6 +1238,7 @@
     "archive_interface": "The original delivery interface moved to web/src/archive.js; its navigation/header and dispatcher changed to distinguish the archive from the new workbench.",
     "new_research_scope": "New geometry-study schemas, live analysis, catalog and workbench are separate additions. Historical Phase 1/6 and physical-first-release reviews do not certify them.",
     "new_research_covered_by_archived_reviews": false,
-    "archived_scientific_artifacts_changed": false
+    "archived_scientific_artifacts_changed": false,
+    "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope."
   }
 }

@@ -36,6 +36,7 @@ root.innerHTML = `
     <label class="cursor-label" for="study-cursor">Study time UTC</label><input id="study-cursor" type="range" min="0" max="1" value="0" step="1" disabled><div class="time-extent"><span id="time-start">Start UTC</span><span id="time-end">End UTC</span></div>
     <div class="dock-data"><div class="geometry-chart"><div class="chart-heading"><h2>Local center elevation</h2><span>Sun: solid · Earth: dashed</span></div><div id="geometry-chart"><p>Run a study to inspect changing geometry.</p></div></div><div class="geometry-table"><h2>Site comparison</h2><div id="site-comparison"><p>Same interval and sampling for every selected site.</p></div></div></div>
     <p id="sample-note" class="sample-note">Geometry does not evaluate terrain visibility, sunlight fraction, power or usable communications.</p><div id="saved-alternatives"></div>
+    <details id="study-methods" class="source-details" style="overflow-wrap:anywhere;min-width:0" hidden><summary>Methods & sources</summary><div id="study-methods-content" role="region" aria-label="Study methods and sources" tabindex="0" style="max-height:min(22dvh,180px);overflow:auto;overscroll-behavior:contain;min-width:0;padding:0 4px 6px 0"></div></details>
   </section>
 </main>`;
 
@@ -69,7 +70,7 @@ function markChanged() {
   if (running) { client.cancel().then(message => status(`Inputs changed. ${message}`)).catch(error => status(error.message)); setRunning(false); }
   else status(result ? 'Inputs changed. Displayed samples belong to the previous study; run analysis to update.' : 'Ready to calculate these inputs in Python.');
   $('export-result').disabled = stale || !result; $('save-alternative').disabled = stale || !result; $('export-package').hidden = true;
-  budget(); renderInspectorReadout();
+  budget(); renderInspectorReadout(); renderMethods();
 }
 function renderSites() {
   const query = $('site-search').value.toLowerCase();
@@ -173,6 +174,47 @@ function renderComparison() {
   if (!result) return;
   $('site-comparison').innerHTML = `<table><thead><tr><th>Site</th><th>Sun min / max</th><th>Earth min / max</th></tr></thead><tbody>${result.sites.map(site => `<tr><th>${esc(site.name)}</th><td>${deg(site.summary.sun_elevation_min_deg)} / ${deg(site.summary.sun_elevation_max_deg)}</td><td>${deg(site.summary.earth_elevation_min_deg)} / ${deg(site.summary.earth_elevation_max_deg)}</td></tr>`).join('')}</tbody></table>`;
 }
+function renderMethods() {
+  $('study-methods').hidden = !result;
+  if (!result) return;
+  const content = $('study-methods-content'); content.replaceChildren();
+  const appendText = (parent, tag, value) => {
+    const element = document.createElement(tag); element.textContent = value; parent.append(element); return element;
+  };
+  if (stale) appendText(content, 'p', 'These methods and sources describe the previous study shown above.');
+  const provenance = result.provenance;
+  const fields = document.createElement('dl'); content.append(fields);
+  for (const [label, value] of [
+    ['Study SHA256', result.study_sha256], ['Provider', provenance.provider], ['Frame', result.frame],
+    ['Origin', result.origin], ['Aberration convention', provenance.aberration], ['Geometry model', provenance.geometry_model],
+    ['Kernel manifest SHA256', provenance.kernel_manifest_sha256], ['Effective kernel manifest SHA256', provenance.effective_kernel_manifest_sha256],
+  ]) { appendText(fields, 'dt', label); appendText(fields, 'dd', value); }
+  const sources = [...provenance.kernels, ...provenance.spacecraft_sources.map(source => source.manifest ?? source)];
+  appendText(content, 'h3', 'Kernel sources');
+  const kernels = document.createElement('ul'); content.append(kernels);
+  for (const source of sources) {
+    const item = document.createElement('li'); kernels.append(item);
+    appendText(item, 'p', source.name ?? source.path ?? source.id ?? 'Name not supplied');
+    appendText(item, 'p', `SHA256: ${source.sha256 ?? 'not supplied'}`);
+    let officialUrl;
+    try {
+      const url = new URL(source.source_url);
+      if (url.protocol === 'https:' && !url.username && !url.password && !url.port &&
+          (url.hostname === 'nasa.gov' || url.hostname.endsWith('.nasa.gov'))) officialUrl = url.href;
+    } catch { /* Missing or malformed source metadata remains plain text. */ }
+    if (officialUrl) {
+      const link = appendText(item, 'a', source.source_url); link.href = officialUrl; link.target = '_blank'; link.rel = 'noreferrer';
+    } else if (source.source_url) appendText(item, 'p', source.source_url);
+    if (Array.isArray(source.limitations)) {
+      const list = document.createElement('ul'); item.append(list);
+      for (const limitation of source.limitations) appendText(list, 'li', limitation);
+    }
+  }
+  for (const [title, values] of [['Limitations', result.limitations], ['Assumptions', provenance.assumptions]]) {
+    appendText(content, 'h3', title); const list = document.createElement('ul'); content.append(list);
+    for (const value of values) appendText(list, 'li', value);
+  }
+}
 function setRunning(value) { running = value; $('run-study').disabled = value; $('cancel-study').hidden = !value; $('cancel-study').textContent = capabilities?.async_available === true ? 'Cancel study' : 'Stop waiting'; }
 async function runStudy() {
   const check = budget();
@@ -186,7 +228,7 @@ async function runStudy() {
     for (const id of ['play-study', 'previous-sample', 'next-sample', 'export-result', 'save-alternative']) $(id).disabled = false;
     $('follow-spacecraft').disabled = !result.spacecraft?.length;
     if (calculated.jobId) { $('export-package').href = client.exportUrl(calculated.jobId); $('export-package').hidden = false; }
-    viewer?.setResult(result); setCursor(Date.parse(result.epochs_utc[0])); renderComparison();
+    viewer?.setResult(result); setCursor(Date.parse(result.epochs_utc[0])); renderComparison(); renderMethods();
     status(`Calculated in Python · ${result.sites.length} sites · ${result.epochs_utc.length} stored epochs · ${calculated.hash.slice(0, 12)}. Reference-sphere geometry; terrain visibility is not evaluated.`);
     if (inspectedCraft) inspectSpacecraft(inspectedCraft); else renderInspector();
   } catch (error) { if (error.name !== 'AbortError' && current === revision) status(`Analysis unavailable: ${error.message} No replacement result was generated.`); }

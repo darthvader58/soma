@@ -79,6 +79,40 @@ test('narrow layout retains inputs, charts, keyboard focus and avoids horizontal
  await expect(page.locator('#geometry-chart svg')).toBeVisible();
 });
 
+test('methods disclosure exposes every supplied limitation, assumption and source safely on a narrow keyboard layout',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await setup(page);
+ let supplied;
+ await page.route('**/api/research/analyze',async route=>{
+  supplied=researchResult(route.request().postDataJSON());
+  supplied.limitations=['Terrain visibility was not evaluated.','Same-epoch geometric directions are not apparent directions.'];
+  supplied.provenance.assumptions=['Sun uses panel height.','Future leap seconds remain unknown.'];
+  supplied.provenance.kernels=[
+   {path:'de421.bsp',sha256:'1'.repeat(64),source_url:'https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de421.bsp'},
+   {path:'moon_080317.tf',sha256:'2'.repeat(64),source_url:'https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf'},
+   {path:'moon_pa_de421_1900-2050.bpc',sha256:'3'.repeat(64),source_url:'https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc'},
+   {path:'untrusted-test-only',sha256:'4'.repeat(64),source_url:'javascript:alert(1)'},
+  ];
+  supplied.provenance.spacecraft_sources=[{manifest:{name:'Test archived SPK',path:'test.bsp',sha256:'5'.repeat(64),source_url:'https://naif.jpl.nasa.gov/pub/naif/test-only.bsp',limitations:['Archived geometry grants no relay service.']}}];
+  await route.fulfill({json:supplied});
+ });
+ await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ const disclosure=page.locator('#study-methods');const summary=disclosure.locator('summary');
+ await expect(disclosure).not.toHaveAttribute('open','');await summary.focus();await expect(summary).toBeFocused();
+ expect(await summary.evaluate(node=>getComputedStyle(node).outlineStyle)).not.toBe('none');
+ await page.keyboard.press('Enter');await expect(disclosure).toHaveAttribute('open','');
+ for(const text of [...supplied.limitations,...supplied.provenance.assumptions,'Archived geometry grants no relay service.',supplied.study_sha256,supplied.provenance.provider,supplied.frame,supplied.provenance.aberration])await expect(disclosure).toContainText(text);
+ for(const kernel of supplied.provenance.kernels){await expect(disclosure).toContainText(kernel.path);await expect(disclosure).toContainText(kernel.sha256);}
+ await expect(disclosure.locator('a')).toHaveCount(4);
+ await expect(disclosure.locator('a[href^="javascript:"]')).toHaveCount(0);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ const region=page.getByRole('region',{name:'Study methods and sources',exact:true});
+ await region.focus();await expect(region).toBeFocused();
+ expect(await region.evaluate(node=>node.clientHeight<=180&&node.scrollHeight>node.clientHeight)).toBe(true);
+ await page.keyboard.press('PageDown');
+ await expect.poll(()=>region.evaluate(node=>node.scrollTop)).toBeGreaterThan(0);
+ await summary.focus();await page.keyboard.press('Enter');await expect(disclosure).not.toHaveAttribute('open','');
+});
+
 test('real Cesium reference-sphere fallback renders without erasing scientific arrays',async({page})=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
  await setup(page,{mockViewer:false});await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');

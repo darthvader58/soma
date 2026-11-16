@@ -434,11 +434,11 @@
   "preexisting_core_source_acquisition_note": "Core DE421 kernels were already present locally; hashes were reverified. Their original acquisition date is not inferred from filesystem timestamps.",
   "passed": true,
   "local_hosted_adapter_integration": {
-    "scope": "Local TestClient through the actual hosted Vercel adapter and spawned worker, without injected planner; not a deployed-host measurement",
+    "scope": "Local TestClient through the actual hosted Vercel adapter and a private Python interpreter, without an injected planner; not a deployed-host measurement.",
     "ready": true,
     "service_mode": "serverless",
     "async_available": false,
-    "first_http_elapsed_s": 1.211659458000213,
+    "first_http_elapsed_s": 1.7872375829610974,
     "response_bytes": 2614411,
     "epochs": 1441,
     "site_count": 3,
@@ -447,7 +447,9 @@
     "changed_study_sha256": "afa397a6a7ca0a5317cc481dc0a18b2f5aa09fd5bd8aa53cf95576d361dbec3c",
     "changed_inputs_changed_geometry": true,
     "response_cache_control": "private, no-store",
-    "source_manifest_sha256": "f39c7e8951834cad1cc9104127bf9c31ffe6b41eac71db9df53af243d6255c01"
+    "source_manifest_sha256": "f39c7e8951834cad1cc9104127bf9c31ffe6b41eac71db9df53af243d6255c01",
+    "worker_execution": "subprocess private interpreter: python -m soma.api.research_jobs; server __main__ is not re-imported",
+    "code_revision": "1bf9c6689c5295ee4a31b04fc67d1a2657504769"
   },
   "execution_environment": {
     "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
@@ -463,22 +465,19 @@
     "sources": "No network fetch during calculations; verify the recorded source hashes before repeating."
   },
   "engine_regression_run": {
-    "recorded_at_utc": "2026-11-16T23:52:12.791076Z",
+    "recorded_at_utc": "2026-11-17T01:50:49.879592Z",
     "command": ".venv/bin/pytest -q tests/engine",
+    "code_revision": "1bf9c6689c5295ee4a31b04fc67d1a2657504769",
+    "working_tree_note": "Includes the separately authorized archived-guide dependency-binding refresh; no scientific code was changed during this audit.",
     "data_root": "/private/tmp/soma-phase2-data",
-    "passed": 444,
+    "passed": 445,
     "failed": 0,
     "skipped": 0,
-    "warnings": 75611,
-    "duration_s": 241.57,
-    "warning_scope": "Deprecation warnings from the pinned PuLP, FastAPI/Starlette and Skyfield dependencies.",
-    "scope": "Current engine regression suite after source-binding refresh, with real local matched kernels and LRO SPK available. This does not extend historical archived scientific certificates or establish deployed-host behavior.",
-    "previous_failed_checks": {
-      "command": ".venv/bin/pytest -q tests/engine/test_fixture_manifest.py tests/engine/test_phase6_completion.py",
-      "passed": 4,
-      "failed": 0,
-      "duration_s": 12.4
-    },
+    "warnings": 75610,
+    "duration_s": 261.52,
+    "warning_scope": "Deprecation warnings from pinned PuLP, FastAPI/Starlette and Skyfield dependencies.",
+    "scope": "Engine regression after the explicit private-interpreter execution fix. Historical archived scientific certificates remain scoped to their original records; this is not production deployment approval.",
+    "verified_old_binding_count": 436,
     "refreshed_manifests": [
       {
         "path": "data/phase6-evidence.manifest.json",
@@ -486,12 +485,118 @@
       },
       {
         "path": "data/physical-first-release-evidence.manifest.json",
-        "sha256": "193152d3b125c391908d286a5b9c60c039298db0ef38d0d199da00f00e17fb53"
+        "sha256": "9e68c1ff93dabda1f9573e3fea305a6e63ed75e2b5a61908e88f8968581fbe00"
       },
       {
         "path": "fixtures/manifest.json",
-        "sha256": "d092c62111bf7a4cd970eff1ebff73491d7517a81a9f0c11e9c5900488f95996"
+        "sha256": "d5e6430a6117ea096cf69364173681a366255d126cee89b102b50c2873c35fe7"
       }
     ]
-  }
+  },
+  "local_hosted_adapter_integration_history": [
+    {
+      "scope": "Local TestClient through the actual hosted Vercel adapter and spawned worker, without injected planner; not a deployed-host measurement",
+      "ready": true,
+      "service_mode": "serverless",
+      "async_available": false,
+      "first_http_elapsed_s": 1.211659458000213,
+      "response_bytes": 2614411,
+      "epochs": 1441,
+      "site_count": 3,
+      "spacecraft_count": 1,
+      "study_sha256": "13b4491fe0942968fd7ecd9815b567422376c90d3ca9a7e5bca9e78d66c2daa4",
+      "changed_study_sha256": "afa397a6a7ca0a5317cc481dc0a18b2f5aa09fd5bd8aa53cf95576d361dbec3c",
+      "changed_inputs_changed_geometry": true,
+      "response_cache_control": "private, no-store",
+      "source_manifest_sha256": "f39c7e8951834cad1cc9104127bf9c31ffe6b41eac71db9df53af243d6255c01"
+    }
+  ],
+  "hosted_execution_fix": {
+    "code_revision": "1bf9c6689c5295ee4a31b04fc67d1a2657504769",
+    "trigger_reported_by_integrating_agent": "An actual Vercel preview timed out because multiprocessing.spawn re-entered the hosting __main__.",
+    "resolution": "Synchronous study execution now starts a private interpreter with python -m soma.api.research_jobs. Source verification, process isolation, deadline, output, thread and memory budgets remain in force.",
+    "local_evidence": "The native adapter calculation above and the full engine regression recorded below exercise the corrected execution path. Deployed-host behavior is verified separately."
+  },
+  "cross_platform_preview_review": {
+    "reported_by": "Integrating root agent, based on its actual Vercel preview/browser run and local recomputation of the downloaded study.",
+    "preview_url": "https://soma-atlas-odah6xtby-rajayshashwatgmailcoms-projects.vercel.app",
+    "deployment_scope": "Vercel preview; this record does not claim production promotion.",
+    "worker_execution": "Private Python interpreter; the hosted __main__ re-entry timeout was resolved.",
+    "default_study": {
+      "sites": 3,
+      "epochs": 181,
+      "included_spacecraft": "LRO",
+      "study_sha256_prefix": "9769f09d7734"
+    },
+    "changed_study": {
+      "sites": 4,
+      "epochs": 181,
+      "custom_site": {
+        "latitude_deg": 14.5082,
+        "longitude_deg_east": 30.1746,
+        "panel_height_m": 1.8
+      },
+      "study_sha256": "b7f2117563736e0430a194cfaea0bd9202fc37bf0801d4575af137616cfba1d6",
+      "exact_json_download_reported": true
+    },
+    "recomputed_platform": "macOS, compared with Vercel Linux",
+    "normalized_request_hash_identical": true,
+    "epochs_identical": true,
+    "provider_versions": {
+      "spice_toolkit": "CSPICE_N0067",
+      "spiceypy": "8.4.0"
+    },
+    "maximum_position_residual_m": {
+      "SUN": 0.036215861664459385,
+      "EARTH": 9.429779656960637e-05,
+      "LRO": 4.472555830006526e-07
+    },
+    "maximum_velocity_residual_m_s": {
+      "SUN": 8.898818559589332e-08,
+      "EARTH": 1.2041284541336365e-11,
+      "LRO": 3.9938754492988587e-10
+    },
+    "maximum_elevation_residual_deg": 1.3855583347321954e-11,
+    "position_comparison_bounds_m": {
+      "SUN": 1,
+      "EARTH": 0.001,
+      "LRO": 0.0001
+    },
+    "passed_quantity_specific_comparison_bounds": true,
+    "scope": "Cross-platform implementation/floating-point agreement for shared source kernels and model; not a physical ephemeris accuracy, terrain or mission-service claim."
+  },
+  "engine_regression_run_history": [
+    {
+      "recorded_at_utc": "2026-11-16T23:52:12.791076Z",
+      "command": ".venv/bin/pytest -q tests/engine",
+      "data_root": "/private/tmp/soma-phase2-data",
+      "passed": 444,
+      "failed": 0,
+      "skipped": 0,
+      "warnings": 75611,
+      "duration_s": 241.57,
+      "warning_scope": "Deprecation warnings from the pinned PuLP, FastAPI/Starlette and Skyfield dependencies.",
+      "scope": "Current engine regression suite after source-binding refresh, with real local matched kernels and LRO SPK available. This does not extend historical archived scientific certificates or establish deployed-host behavior.",
+      "previous_failed_checks": {
+        "command": ".venv/bin/pytest -q tests/engine/test_fixture_manifest.py tests/engine/test_phase6_completion.py",
+        "passed": 4,
+        "failed": 0,
+        "duration_s": 12.4
+      },
+      "refreshed_manifests": [
+        {
+          "path": "data/phase6-evidence.manifest.json",
+          "sha256": "dace1657dd0ed405e49a693cda721166342f3bdb84f2dae808e986cdbe28ee03"
+        },
+        {
+          "path": "data/physical-first-release-evidence.manifest.json",
+          "sha256": "193152d3b125c391908d286a5b9c60c039298db0ef38d0d199da00f00e17fb53"
+        },
+        {
+          "path": "fixtures/manifest.json",
+          "sha256": "d092c62111bf7a4cd970eff1ebff73491d7517a81a9f0c11e9c5900488f95996"
+        }
+      ]
+    }
+  ]
 }

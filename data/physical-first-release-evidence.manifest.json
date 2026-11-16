@@ -88,8 +88,8 @@
     },
     {
       "path": "docs/guides/hackathon-demo.mdx",
-      "sha256": "bc997a509b84cd514ad127c088a84a0c51a78785c78fb66f86278548878281dc",
-      "size_bytes": 14423
+      "sha256": "24e239f60682213b62beb95562e3e09acf128bc021156dbcc43e1992f5079e9f",
+      "size_bytes": 14655
     },
     {
       "path": "fixtures/demo-constraints/README.md",
@@ -545,12 +545,14 @@
       "web/index.html",
       "web/package.json",
       "web/src/main.js",
-      "web/src/archive.js"
+      "web/src/archive.js",
+      "docs/guides/hackathon-demo.mdx"
     ],
     "scope": "Current source/dependency binding refresh only. Original verification counts, scientific scopes, archived inputs/results, frozen delivery schemas and historical review claims are preserved.",
     "archive_interface": "The original delivery interface moved to web/src/archive.js; its navigation/header and dispatcher changed to distinguish the archive from the new workbench.",
     "new_research_scope": "New geometry-study schemas, live analysis, catalog and workbench are separate additions. Historical Phase 1/6 and physical-first-release reviews do not certify them.",
     "new_research_covered_by_archived_reviews": false,
-    "archived_scientific_artifacts_changed": false
+    "archived_scientific_artifacts_changed": false,
+    "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope."
   }
 }

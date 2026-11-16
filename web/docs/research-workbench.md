@@ -26,6 +26,7 @@ Every scientific readout uses a stored source epoch. The spacecraft display uses
 - Play/pause, previous/next sample, speed and scrub share a UTC cursor. The chart and inspector remain available after tile failure.
 - The ephemeris interval action picks a covered six-hour interval, explicitly includes the spacecraft and submits a calculation.
 - Save alternative retains a detached calculated result; study/result JSON exports preserve current inputs or exact validated scientific objects. No ZIP is reconstructed in JavaScript.
+- Methods & sources opens a collapsed disclosure with the complete supplied study hash, provider, frame, aberration convention, kernel names/checksums, official NASA source links, limitations and assumptions. Spacecraft source limitations are also shown. Its content has a keyboard-focusable scroll region bounded to 180 px, so long provenance does not replace the lunar scene or time controls. Non-official or unsafe source URLs remain plain text.
 
 ## Verification
 
@@ -40,3 +41,5 @@ Final local evidence on 16 November 2026: 94 unit tests passed, all 26 archive/w
 [Real-source browser evidence](research-evidence/real-sources-reference-sphere.png) shows the labeled reference-sphere fallback, because the isolated test intentionally has no ion token. It is not a screenshot of globally registered terrain. Production Moon tiles remain a separate deployment check.
 
 Contrast was computed with the skill's WCAG checker: primary text/panel 12.19:1, secondary text/panel 7.00:1, run-button text/accent 8.84:1. The final control edge is 3.22:1 against its button fill and 3.78:1 against the panel. Focus uses the selection accent. Mobile tests check 390 px overflow and keyboard focus; a physical-device virtual keyboard was not tested. Saved alternatives currently retain immutable result objects and expose input metadata; a richer comparison of saved run results is not claimed.
+
+Methods & sources verification: the final full browser suite passed 27/27 tests in 17.3 seconds, including every supplied limitation and assumption, complete hashes, kernel names, safe official links, blocked unsafe links, keyboard expansion/collapse, keyboard scrolling inside the 180 px region and no horizontal overflow at 390 px. The final 94 unit tests and production build also passed. The test server stopped afterward. Only the workbench module, its research browser test and this report changed for this transparency fix.

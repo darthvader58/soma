@@ -25,9 +25,9 @@ reference sphere; the old regional terrain-registration certificate is not appli
 
 | Check | Actual result |
 | --- | --- |
-| Full engine suite | 444 passed, 0 failed, 0 skipped; 241.57 s |
+| Full engine suite after serverless startup fix | 445 passed, 0 failed, 0 skipped; 261.52 s |
 | Web unit suite | 94 passed |
-| Archive/workbench browser suite | 26 passed |
+| Archive/workbench browser suite after methods disclosure | 27 passed |
 | Real-source browser study | Passed: 15 catalog records, native LRO playback, new 21.1827° N / 68.2714° E site, 1.7 m panel, changed hash and exact download |
 | Web production build | Passed |
 | Mintlify validation and anchor checks | Passed |
@@ -36,7 +36,16 @@ reference sphere; the old regional terrain-registration certificate is not appli
 | Private source and unsupported job routes | HTTP 404 and 503 respectively |
 
 Local measurements are not production-latency or field-performance guarantees.
-The actual Linux runtime and production Moon tiles require a separate deployment check.
+The corrected Vercel Linux preview calculated the default three-site study and a new
+four-site study at 14.5082° N, 30.1746° E with a 1.8 m panel. Its exact JSON export
+was recalculated on macOS with identical request hash and epochs. Maximum position
+differences were 0.0363 m for the Sun, 0.000095 m for Earth and 0.000000448 m for LRO;
+maximum site elevation difference was 1.39e-11 degrees. These are cross-platform
+implementation comparisons, not bounds on absolute ephemeris accuracy.
+Production promotion and Moon tiles require a separate final check.
+The interface's Methods & sources disclosure exposes every returned limitation,
+assumption and source checksum in a bounded, keyboard-scrollable region. Its mobile
+keyboard and source-link behavior passed the final 27-test browser suite.
 The optional Docker image was not built because no Docker daemon was available.
 
 Numerical reader comparisons are recorded in
