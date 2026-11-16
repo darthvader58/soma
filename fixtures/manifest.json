@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "edae19c1bfd665168bc084cd2dee9743730fb4d4b185d0c441f708dc6c092d94"
+      "sha256": "7f62f4e3021a14b712c388754fd7dfe4962972effe1bc971dedf396b8c0632fc"
     },
     {
       "path": "data/README.md",
@@ -71,11 +71,11 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "caccb42c236f65fc3e8099cedb85bf678dd1b3343e340147ec9883d4941434e1"
+      "sha256": "5734571a75b948d4b46c8dd63617b4ae05e87611f1402a69251afb082f598c25"
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "f8f1801e1470a16fb80e99126c7377af96f5c705b79d622f38cc7ed8644afeaf"
+      "sha256": "42e77c765b1d3351c297ce8a3c3bfbd480215f358933452c8aa9c5ac24d98b61"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -124,6 +124,166 @@
     {
       "path": "data/renderer-uv-fit.manifest.json",
       "sha256": "bc2556cd205a81db17005ea4fb62a39cf809b3ec810dcba68a8113a88eefd07b"
+    },
+    {
+      "path": "fixtures/demo-constraints/README.md",
+      "sha256": "e86312c3302b50c341e97f1d59b44acf41707e7d90b8f6c0a07b5ae7625c6410"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/analysis-inputs.json",
+      "sha256": "6641ced212643b7d885c91036507a72ac7ac035c4d55b0fa3603e1d79e58681b"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/baseline-counterfactual-replay.json",
+      "sha256": "9a2eb8476abdcbc448ffe04406bb07fed76140e6775b43e6c193ef005829d6ee"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/buffer-history.csv",
+      "sha256": "59a731671982aae79cff358b04cd847ce0714ad7d20f977b36a0b4ebea4e81b7"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/contacts.csv",
+      "sha256": "c095daf506697bb3fdd2ee73e45aa7447b1a5195bba0662170880956a52f569b"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/display-data.json",
+      "sha256": "fdf52ce8479caec8eefe6ed13fba3e5ef3dc4893910892fca2e06e80484224ba"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/display.czml",
+      "sha256": "753d8b7719e4c2e91a3e38ba419e49a87800253dad3a36ab152debfd2c8678be"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/energy.csv",
+      "sha256": "edb40563f8f3ab30e6287f4bdd52b6132ae60fdb4d10989280c55ed5e999c6aa"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/explanation.md",
+      "sha256": "bb644cc579b6c0f8fb8d08cda3c840473ebe908e04a6b9a2b886da31b1c0eb9b"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/renderer-conversion.json",
+      "sha256": "5810f9c662b59136eac702be59dda25eb82edf47fad99f1e33777490dfc29714"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/renderer-registration.json",
+      "sha256": "3165c7a2a558425331d947bf54488dbcb885a8a459c4426a830376e085fcbdc9"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/replay.json",
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/result.json",
+      "sha256": "a35f1b5cc0dfd9c1115f11726da7a74331d19484db00c962dbc42d13180b451b"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/run-manifest.json",
+      "sha256": "d7c9a4de435d5497553b9790c558f35270a031745ce6691049f601f508ed47b4"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/run.json",
+      "sha256": "c7293fdf76da91f2ede9918c33dfd4823cf6a22a9d653c647ca4763670afc95f"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/run.zip",
+      "sha256": "2b486774ee8fc58137fc82f72495dfb09236c99c95fffd0b55e226a908896fa1"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/scenario.json",
+      "sha256": "394ec404ea425e59d4469d48b54a7b8c48db62ec377eadc1d944d521d682c5ec"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/schedule.csv",
+      "sha256": "21f812f345c5490e22d7d26f53cacae375d18dee7317f7ce2ad855af3ca431e1"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/summary.json",
+      "sha256": "4309139b7e5cb2524ea3739c02b244ba167aa3b009571a9a1f06e38ed953e069"
+    },
+    {
+      "path": "fixtures/demo-constraints/battery-low/verification.json",
+      "sha256": "16dff91dc89f721512d151a8f10b687b49015b8758dac77151b7198ef9f046da"
+    },
+    {
+      "path": "fixtures/demo-constraints/demonstration.json",
+      "sha256": "dd8903db0b6f5f4d83ebeacbcac5bd3d76fce5ff4e05c285ed99a5f1db384297"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/analysis-inputs.json",
+      "sha256": "5de10900a75120430dff43c9aed5d302a14bb1d81af6b3137b0b60e8064a6ba7"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/baseline-counterfactual-replay.json",
+      "sha256": "168142beac4beb8d1e0751398f11ba6aa897833f549f6974f225f39f0e1acd04"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/buffer-history.csv",
+      "sha256": "59a731671982aae79cff358b04cd847ce0714ad7d20f977b36a0b4ebea4e81b7"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/contacts.csv",
+      "sha256": "c095daf506697bb3fdd2ee73e45aa7447b1a5195bba0662170880956a52f569b"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/display-data.json",
+      "sha256": "27d37878bd1e7abc377ff71efe45063a6b740ec155c8d9a0c4575f982fd2e3ec"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/display.czml",
+      "sha256": "5b6ff424e5cc83bf8c6d5be93c5d7dfc27ae2f9d76cc61590dec415e000cd3b6"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/energy.csv",
+      "sha256": "edb40563f8f3ab30e6287f4bdd52b6132ae60fdb4d10989280c55ed5e999c6aa"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/explanation.md",
+      "sha256": "ee2a35197b8c2e7272a96d997164ef422b59cc59a296322c0dea9248dd4613ec"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/renderer-conversion.json",
+      "sha256": "5810f9c662b59136eac702be59dda25eb82edf47fad99f1e33777490dfc29714"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/renderer-registration.json",
+      "sha256": "3165c7a2a558425331d947bf54488dbcb885a8a459c4426a830376e085fcbdc9"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/replay.json",
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/result.json",
+      "sha256": "7b0ea88877d907e137e554592ebc9335734139904322c074670cc4ae6dbfc1a5"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/run-manifest.json",
+      "sha256": "64afdd1312cf6e0c2705b9113e25d7481c8ae59df20e311b9d75951f58db1068"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/run.json",
+      "sha256": "e11d04429c2ff93aa6769e876f530cc9a9f6fe4b992ff1108da645e013df429c"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/run.zip",
+      "sha256": "0a9b10604c3fbbc0311d06d9fd542be55a50d83a357e98aad9bf1754847be548"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/scenario.json",
+      "sha256": "582fe2aaa92901ef7285cdafc8d41386ff5c432b9bc89aa8bea71ab1c4a1889c"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/schedule.csv",
+      "sha256": "21f812f345c5490e22d7d26f53cacae375d18dee7317f7ce2ad855af3ca431e1"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/summary.json",
+      "sha256": "b03977e31c7488504110272d219ce66bfd98b5b4c1a06de5c17499d24344945c"
+    },
+    {
+      "path": "fixtures/demo-constraints/service-off/verification.json",
+      "sha256": "0494ea4079157bb1fd28268cb15ed124b518ccabbdd7b3a2f4a95e2f9aabae24"
     },
     {
       "path": "fixtures/hash-vectors.json",
@@ -610,6 +770,26 @@
       "sha256": "b8ed10a5dc5ca7b78a9d9f72f8d7faf9e35382ad47278788f04d4a61989a6295"
     },
     {
+      "path": "soma/docs/hackathon-demo-script.md",
+      "sha256": "7999fab66202e54c169bfc3c99e68e8f812f7f5cd0e40280839297450588ce2c"
+    },
+    {
+      "path": "soma/docs/hosted-deployment-verification.md",
+      "sha256": "bbf6c097744eedda5790fc667d81a0b2effd9e7121e6c65446d2c188970ec2f9"
+    },
+    {
+      "path": "soma/docs/hosted-evidence/production-moon.webp",
+      "sha256": "2944a52b7f9b46b718e6888e7cd2dee79d70a488e8ada851ffb06a3fb7897bea"
+    },
+    {
+      "path": "soma/docs/hosted-evidence/production-relay.webp",
+      "sha256": "d046391d2b24b3ab5db129d369c9e6fc69f50d1611c17117c97dc63a2e09434d"
+    },
+    {
+      "path": "soma/docs/hosted-evidence/production-workspace.jpeg",
+      "sha256": "f85e241e478751c84912461659d342905d92af905496b5e0bb4b7cf4257721c3"
+    },
+    {
       "path": "soma/docs/phase-2/README.md",
       "sha256": "39748196acb9373a40714d6b739563f701e69194126703589379e9b45cc6cc47"
     },
@@ -886,6 +1066,10 @@
       "sha256": "38c9dd5f8262b3099af6a46cd4e7b6c8a6327ed603a9ad5e288c20e780d107eb"
     },
     {
+      "path": "tests/engine/test_demo_constraints.py",
+      "sha256": "fe6f3e7c71d7518baec424a253b7c831da3a6716cca000d50f4dd4f8b2ee5ada"
+    },
+    {
       "path": "tests/engine/test_diagnostics.py",
       "sha256": "66dcb6b0fefe8fecddb361505e7c55918d6529a6ca8b16921a5d049cc1618f7a"
     },
@@ -916,6 +1100,10 @@
     {
       "path": "tests/engine/test_horizons.py",
       "sha256": "bd2721fb4e64b25030577a4c815d9eeb8cae05c2835e8956fb4ba6434de47ad0"
+    },
+    {
+      "path": "tests/engine/test_hosted_moon_api.py",
+      "sha256": "2dbfcf36bdc1812e5bbe97b8dfcdc79275a5a6ad7d297313a4089b32c1a31a49"
     },
     {
       "path": "tests/engine/test_illumination.py",
@@ -1016,10 +1204,6 @@
     {
       "path": "tests/engine/test_trajectories.py",
       "sha256": "f6728d8d4e9f75769e765d348bd1dbffd6b935642cd0c93d88fa4893f582b270"
-    },
-    {
-      "path": "soma/docs/hosted-deployment-verification.md",
-      "sha256": "bbf6c097744eedda5790fc667d81a0b2effd9e7121e6c65446d2c188970ec2f9"
     }
   ],
   "scientific_analysis_scope": "captured_delivery_planner_results_only",
@@ -1030,5 +1214,6 @@
   "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
   "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately.",
   "hosted_operations_evidence_ref": "soma/docs/hosted-deployment-verification.md",
-  "hosted_operations_scope": "Public transport, documentation navigation and presentation verification; separate from archived scientific completion and review claims."
+  "hosted_operations_scope": "Public transport, documentation navigation and presentation verification; separate from archived scientific completion and review claims.",
+  "presentation_compatibility_update": "Five-case presentation compatibility update: guided mission selection, README and recording script now present three archived physical cases plus two supplemental controls of the same 16 MiB November 30 mission. The controls preserve published DE421/LOLA inputs and native unknown outcomes under incomplete contact coverage. No scientific core, native schema, original numerical archive or historical review scope is changed."
 }

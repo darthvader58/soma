@@ -95,6 +95,8 @@ pre { font-family: ui-monospace, monospace; font-size: .75rem; white-space: pre-
 .moon-fallback-copy { font-size: .9rem; color: #e0e6dd; line-height: 1.65; }
 .viewer-notice { position: absolute; left: .75rem; right: .75rem; bottom: .75rem; background: #17231f; color: #f8f8ef; padding: .5rem; font-size: .8rem; z-index: 2; }
 .map-details { padding: .8rem 1rem; }
+.camera-controls { display: flex; flex-wrap: wrap; gap: .6rem; }
+.camera-controls button { min-height: 44px; }
 .map-details p { font-size: .82rem; overflow-wrap: anywhere; }
 .map-details p:first-child { font-weight: 600; }
 .timeline-controls { display: grid; gap: .4rem; margin-top: .75rem; }

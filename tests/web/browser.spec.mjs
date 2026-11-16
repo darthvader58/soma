@@ -51,6 +51,32 @@ test('mission case navigation binds deep links, native outcomes and exact relay 
   await expect(focus).toBeHidden();
 });
 
+test('camera controls follow completed displays and relay focus selects the overview', async ({ page }) => {
+  await page.route('**/src/viewer.js', route => route.fulfill({ contentType: 'text/javascript', body: `
+    export function registrationGate() { return { passed: true, reason: 'Test registration' }; }
+    export async function createMoonViewer(container, { onStatus }) {
+      return {
+        setScenario() { onStatus({ message: 'Waiting', cameraAvailable: false }); },
+        setDisplay(display) { onStatus({ message: 'Test display', cameraAvailable: Boolean(display) }); },
+        setTime(epoch) { container.dataset.selectedTime = epoch; }, clearDisplayPick() {}, destroy() {},
+        inspectSiteTerrain() { container.dataset.camera = 'site'; },
+        relayOverview() { container.dataset.camera = 'overview'; },
+      };
+    }
+  ` }));
+  await page.goto('/?case=relay-later');
+  await expect(page.getByRole('button', { name: 'Inspect site terrain' })).toBeEnabled();
+  await page.getByRole('button', { name: 'Inspect site terrain' }).click();
+  await expect(page.locator('#moon-view')).toHaveAttribute('data-camera', 'site');
+  await page.getByRole('button', { name: 'Show relay transmission · 09:33:30 UTC' }).click();
+  await expect(page.locator('#moon-view')).toHaveAttribute('data-camera', 'overview');
+  await expect(page.locator('#moon-view')).toHaveAttribute('data-selected-time', '2026-11-30T09:33:30Z');
+  await page.getByRole('button', { name: 'Enable local scenario editing' }).click();
+  await page.getByLabel('Panel height (m)', { exact: true }).fill('3');
+  await expect(page.getByRole('button', { name: 'Inspect site terrain' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Relay overview' })).toBeDisabled();
+});
+
 test('captured physical cases show computed transmissions, exact failure reason and unchanged run package', async ({ page }) => {
   await page.reload();
   await expect(page.getByLabel('Declared network example')).toHaveValue('2');

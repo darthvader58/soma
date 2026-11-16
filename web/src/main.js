@@ -79,7 +79,7 @@ root.innerHTML = `
         <section class="map-panel panel" aria-labelledby="map-title">
           <div class="panel-heading"><div><h2 id="map-title">Lunar context</h2><p class="muted">Terrain display. Scientific analysis comes from the Python engine.</p></div><span class="section-index">02</span></div>
           <div id="moon-view" class="moon-view" aria-label="Moon terrain viewport"></div>
-          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p class="muted">Stored relay samples only; no motion is inferred between samples. Dashed lines show offered contact windows; solid lines show scheduled source transmissions. An offered window does not establish available service. Lines require both stored endpoints. Earth-bound transfers remain in the text schedule when no registered endpoint is supplied.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
+          <div class="map-details"><p id="map-status" role="status">Preparing map context.</p><div class="camera-controls" aria-label="Map camera views"><button id="inspect-site" type="button" disabled>Inspect site terrain</button><button id="relay-overview" type="button" disabled>Relay overview</button></div><p class="muted">Camera views change the display only; they do not change the analysis.</p><p id="display-status" role="status"></p><p id="selected-state" class="muted"></p><p class="muted">Stored relay samples only; no motion is inferred between samples. Dashed lines show offered contact windows; solid lines show scheduled source transmissions. An offered window does not establish available service. Lines require both stored endpoints. Earth-bound transfers remain in the text schedule when no registered endpoint is supplied.</p><p id="analysis-location"></p><p id="draft-location" class="muted" hidden></p><p id="display-pick" class="muted" role="status" hidden></p></div>
         </section>
         <section class="panel timeline-panel" id="timeline-section" aria-labelledby="timeline-title">
           <div class="panel-heading"><h2 id="timeline-title">Contact timeline</h2><span class="section-index">03</span></div>
@@ -272,8 +272,11 @@ byId('enable-editing').addEventListener('click', () => {
 byId('relay-focus').addEventListener('click', () => {
   if (!hasRelayFocus(currentDisplay)) return;
   selectedTime = relayFocusEpoch; timeline.setTime(selectedTime); viewer?.setTime(selectedTime); science?.setTime(selectedTime); refreshSelectedState();
+  viewer?.relayOverview?.();
   byId('moon-view').scrollIntoView({ block: 'center' });
 });
+byId('inspect-site').addEventListener('click', () => viewer?.inspectSiteTerrain?.());
+byId('relay-overview').addEventListener('click', () => viewer?.relayOverview?.());
 window.addEventListener('popstate', () => { if (fixtureMode) selectCase(missionCaseFromUrl(location.search, availableCases.map(item => item.id)), false); });
 
 function refreshSelectedState() {
@@ -492,6 +495,8 @@ viewer = await createMoonViewer(byId('moon-view'), {
   scenario, ionToken: import.meta.env.VITE_CESIUM_ION_TOKEN,
   onStatus(status) {
     byId('map-status').textContent = status.message;
+    byId('inspect-site').disabled = !status.cameraAvailable;
+    byId('relay-overview').disabled = !status.cameraAvailable;
     if (['fallback', 'tile_failure', 'render_failure'].includes(status.state)) byId('display-pick').hidden = true;
   },
   onPick(pick) {

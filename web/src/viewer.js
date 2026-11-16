@@ -3,6 +3,19 @@ import { rendererSamplesAtTime } from './renderer-samples.js';
 
 export const MOON_ASSET_ID = 2684829;
 
+export function siteCameraVectors(position) {
+  if (!Array.isArray(position) || position.length !== 3 || !position.every(Number.isFinite)) return undefined;
+  const length = Math.hypot(...position);
+  if (!Number.isFinite(length) || length === 0) return undefined;
+  const radial = position.map(v => v / length);
+  const axis = Math.abs(radial[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0];
+  const dot = axis[0] * radial[0] + axis[1] * radial[1] + axis[2] * radial[2];
+  const tangent = axis.map((v, i) => v - dot * radial[i]);
+  const tangentLength = Math.hypot(...tangent);
+  return { destination: position.map((v, i) => v + 80000 * radial[i]),
+    direction: radial.map(v => -v), up: tangent.map(v => v / tangentLength) };
+}
+
 // This checks supplied review evidence; it does not perform frame registration.
 export function registrationGate(registration, sourceFrame = 'MOON_ME_DE421', position) {
   const blocked = (reason) => ({ passed: false, reason });
@@ -88,15 +101,17 @@ export async function createMoonViewer(container, {
   let completedDisplay;
   let selectedEpoch = scenario?.data_ready_utc;
   let hasCompletedDisplay = false;
+  let cameraTarget;
   const removeListeners = [];
   const document = container.ownerDocument;
   let gate = registrationGate(registration, scenario?.lander?.frame);
-  const report = (state, message) => onStatus({ state, message, overlaysBlocked: !healthy || !gate.passed || !hasCompletedDisplay, registration: gate });
+  const report = (state, message) => onStatus({ state, message, overlaysBlocked: !healthy || !gate.passed || !hasCompletedDisplay, cameraAvailable: Boolean(healthy && gate.passed && hasCompletedDisplay && siteCameraVectors(cameraTarget)), registration: gate });
   const clearResult = () => {
     if (viewer && !viewer.isDestroyed()) resultEntities.forEach(entity => viewer.entities.remove(entity));
     resultEntities = [];
     clearSamples();
     completedDisplay = undefined;
+    cameraTarget = undefined;
   };
   const clearSamples = () => {
     if (viewer && !viewer.isDestroyed()) sampleEntities.forEach(entity => viewer.entities.remove(entity));
@@ -162,6 +177,26 @@ export async function createMoonViewer(container, {
   };
   const api = {
     clearDisplayPick,
+    inspectSiteTerrain() {
+      if (!healthy || !gate.passed || !hasCompletedDisplay || !cameraTarget) return false;
+      const vectors = siteCameraVectors(cameraTarget);
+      if (!vectors) return false;
+      viewer.camera.setView({
+        destination: new cesium.Cartesian3(...vectors.destination),
+        orientation: { direction: new cesium.Cartesian3(...vectors.direction), up: new cesium.Cartesian3(...vectors.up) },
+      });
+      viewer.scene.requestRender();
+      return true;
+    },
+    relayOverview() {
+      if (!healthy || !gate.passed || !hasCompletedDisplay || !siteCameraVectors(cameraTarget)) return false;
+      viewer.camera.setView({
+        destination: new cesium.Cartesian3(0, 0, -5000000),
+        orientation: { direction: new cesium.Cartesian3(0, 0, 1), up: new cesium.Cartesian3(1, 0, 0) },
+      });
+      viewer.scene.requestRender();
+      return true;
+    },
     setScenario(nextScenario) {
       scenario = nextScenario;
       api.setDisplay(undefined);
@@ -204,7 +239,9 @@ export async function createMoonViewer(container, {
       viewer?.scene.requestRender();
       hasCompletedDisplay = gate.passed;
       completedDisplay = gate.passed ? display : undefined;
+      cameraTarget = gate.passed ? display.surface_points?.[0]?.position_m : undefined;
       drawSamples();
+      api.inspectSiteTerrain();
       report(gate.passed ? 'registered' : 'registration_blocked', `${gate.reason}${gate.passed && !display.states?.length ? ' No stored relay trajectory.' : ''}`);
     },
     setTime(epoch) {
