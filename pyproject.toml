@@ -28,6 +28,7 @@ include = ["soma*"]
 [tool.setuptools.data-files]
 "share/soma/schemas" = ["schemas/*.schema.json"]
 "share/soma/data" = ["data/*.manifest.json", "data/research-sites.json"]
+"share/soma/data/pinned" = ["data/pinned/*.bpc", "data/pinned/README.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests/engine"]

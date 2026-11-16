@@ -3,9 +3,10 @@
 import hashlib
 import json
 from pathlib import Path
+import shutil
 from urllib.request import Request, urlopen
 
-from soma.validation import load_json
+from soma.validation import load_json, resource_directory
 
 
 def sha256(path):
@@ -29,13 +30,19 @@ def fetch_kernels(manifest_path, data_root):
         destination.parent.mkdir(parents=True, exist_ok=True)
         partial = destination.with_suffix(destination.suffix + ".partial")
         try:
-            with urlopen(entry["source_url"], timeout=60) as source, partial.open("wb") as output:
-                total = 0
-                while chunk := source.read(1024 * 1024):
-                    total += len(chunk)
-                    if total > 64 * 1024 * 1024:
-                        raise ValueError("Kernel exceeds the declared acquisition budget")
-                    output.write(chunk)
+            retained = resource_directory('data')/'pinned'/entry['path']
+            if retained.is_file():
+                if sha256(retained) != entry['sha256']:
+                    raise ValueError('Retained kernel SHA256 mismatch: ' + entry['path'])
+                shutil.copyfile(retained, partial)
+            else:
+                with urlopen(entry["source_url"], timeout=60) as source, partial.open("wb") as output:
+                    total = 0
+                    while chunk := source.read(1024 * 1024):
+                        total += len(chunk)
+                        if total > 64 * 1024 * 1024:
+                            raise ValueError("Kernel exceeds the declared acquisition budget")
+                        output.write(chunk)
             if sha256(partial) != entry["sha256"]:
                 raise ValueError(f"Downloaded kernel SHA256 mismatch: {entry['path']}")
             partial.replace(destination)

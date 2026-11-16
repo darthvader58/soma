@@ -2,8 +2,11 @@
 
 The historical Phase 1 [datasets.manifest.json](datasets.manifest.json) and
 `kernels.manifest.json` remain metadata-only snapshots. Phase 2 now has separate
-actual acquisition records described below. No binary kernel or numerical
-terrain file is bundled in the repository.
+actual acquisition records described below. Numerical terrain files are not
+bundled in the repository. One unmodified, hash-pinned Earth-orientation kernel
+is retained in [pinned/](pinned/README.md) because its original rolling NAIF URL
+no longer serves that revision. It preserves the existing scientific inputs;
+the retained file does not upgrade the ephemeris or change the frame realization.
 
 `synthetic-contract-v1` declares the supported coordinates and UTC dates for
 invented contract inputs: planetocentric latitude from −90 to −80 degrees,
