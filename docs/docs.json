@@ -6,6 +6,7 @@
   "navigation": {
     "groups": [
       {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/quickstart", "getting-started/physical-runs"]},
+      {"group": "Demonstration", "pages": ["guides/hackathon-demo"]},
       {"group": "Library reference", "pages": ["reference/python-api", "reference/scenarios-results", "reference/service", "reference/exports-replay"]},
       {"group": "Scientific model", "pages": ["science/frames-data", "science/assumptions-limits"]}
     ]
