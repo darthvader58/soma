@@ -31,7 +31,10 @@ button:disabled { background: #e6e6df; border-color: #8a918b; color: #555e59; }
 .identity { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; font-size: .95rem; }
 .wordmark { font-size: 1.3rem; font-weight: 800; letter-spacing: .08em; }
 .identity-rule { height: 1.2rem; border-left: 1px solid var(--border); }
-.phase-label { font-size: .85rem; color: var(--muted); }
+.header-navigation { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.documentation-link { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem .8rem; border: 1px solid var(--muted); border-radius: .25rem; text-decoration: none; color: #262d2b; }
+.documentation-link:hover { background: #eeeadc; text-decoration: underline; }
+.documentation-link:active { transform: translateY(1px); }
 main { width: min(100%, 100rem); margin: auto; padding: 1.3rem 1rem 2rem; }
 .page-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; column-gap: 1rem; }
 h1 { font-size: clamp(1.5rem, 2.2vw, 2.2rem); line-height: 1.2; font-weight: 500; margin: .5rem 0; letter-spacing: -.025em; }

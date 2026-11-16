@@ -1,6 +1,7 @@
 """Hosted display adapter; planning remains in the separately run engine."""
 
 import gzip
+import logging
 import os
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
@@ -47,7 +48,12 @@ def hosted_fetch(url, bearer=None):
 
 class HostedMoon(RegisteredMoon):
     def get(self, path):
-        content, media, source_sha = super().get(path)
+        try:
+            content, media, source_sha = super().get(path)
+        except Exception as error:
+            # Log only the failure class; transport messages may contain signed URLs.
+            logging.getLogger(__name__).error("Moon display preparation failed: %s", type(error).__name__)
+            raise
         if len(content) > MAX_HOSTED_RESPONSE:
             raise ValueError("Converted display object exceeds the hosted response limit")
         return content, media, source_sha
