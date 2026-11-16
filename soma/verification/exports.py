@@ -9,7 +9,7 @@ from pathlib import Path
 import zipfile
 
 from soma.schedule.replay import replay_schedule
-from soma.validation import scenario_sha256, validate_document
+from soma.validation import scenario_sha256, validate_document, validate_documents
 
 
 def verify_run_package(source):
@@ -61,10 +61,24 @@ def verify_run_package(source):
         check('analysis_contacts_equal_native', analysis['contacts']==result['contacts'])
         if display:
             check('display_environment_exact', display.get('environment')==analysis.get('environment'))
+            if 'states' in analysis:
+                check('display_states_exact', display.get('states') == analysis['states'])
+                validate_documents(analysis['states'], 'state')
+                registration = display['registration']
+                matrix = registration.get('transform_column_major')
+                expected = []
+                if matrix is not None and registration['release_gate']['overlays_allowed']:
+                    for state in analysis['states']:
+                        expected.append({**state,
+                            'position':[sum(matrix[c*4+r]*state['position'][c] for c in range(3))+matrix[12+r] for r in range(3)],
+                            'source_frame':state['frame'], 'frame':registration['renderer_frame'],
+                            'transform_ref':'renderer-registration.json', 'transform_epoch_utc':state['epoch']})
+                check('renderer_states_registered', display.get('renderer_states') == expected)
         environment = analysis.get('environment')
         if environment:
             epochs={sample['epoch_utc'] for track in environment.get('tracks',[]) for sample in track.get('samples',[])}
             epochs.update(sample['epoch_utc'] for key in ('solar_samples','power_samples') for sample in environment.get(key,[]))
+            epochs.update(state['epoch'] for state in analysis.get('states', []))
             if display:
                 check('display_sample_epochs_exact', display['sample_epochs_utc']==sorted(epochs))
             check('environment_scenario_binding', environment['scenario_sha256']==digest)
@@ -119,7 +133,10 @@ def verify_run_package(source):
         for name, field, quantity in [('energy.csv','energy_history','stored_energy_wh'),('buffer-history.csv','buffer_history','stored_bytes')]:
             csv_check(name,['node_id','epoch_utc',quantity],[[r['node_id'],r['epoch_utc'],r[quantity]] for r in result[field]])
         if result['status']=='feasible_under_assumptions':
-            check('analysis_complete', analysis['contacts_complete'] is True and analysis['generation_complete'] is True)
+            known_physical_subset = (scenario['analysis_mode'] == 'terrain_ephemeris'
+                and result['solver_status'] == 'feasible_incumbent' and bool(analysis['contacts']))
+            check('analysis_complete', analysis['generation_complete'] is True and
+                  (analysis['contacts_complete'] is True or known_physical_subset))
             replay = replay_schedule(scenario,analysis['contacts'],result['allocations'],analysis['generation_bins'])
             report['replay']=replay
             check('independent_replay', replay['passed'], str(replay['errors']))

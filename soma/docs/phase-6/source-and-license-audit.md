@@ -152,6 +152,15 @@ Exploration, with external-terms and no-NASA-endorsement boundaries.
 | Temporal dynamics | Timeline uses exact engine contacts/allocations and receiver availability | A contact-only synthetic relay has no physical state; it cannot support a real spacecraft animation. Sunset/Earthset prediction and long seasonal exploration are not demonstrated by that case. |
 | Broad accessibility and usable comparisons | Text result and exported package remain useful without tiles | No audience usability study, speed benchmark or general mission-planning validation is claimed. |
 
+This table records the original reduced Phase 6 scope. The subsequent
+[physical first release](../physical-first-release/README.md) supplies the bounded
+LOLA/DE421 date comparison, generated power/contacts and stored synthetic relay
+states that were missing here. Published interpolation/count quality remains
+explicit, as do the limits on continuous sampling and operational service.
+The new polar extract uses the same reviewed PGDA parent product, remains local,
+and is identified by its own source metadata and hashes. These additions do not
+establish arbitrary global coverage, a user study or new redistribution rights.
+
 The reduced reschedulable transfer demonstration is supported by plan Part 5,
 but it does not complete every challenge objective. No general event submission
 rules, judging rubric or submission deadline were verified in this audit.

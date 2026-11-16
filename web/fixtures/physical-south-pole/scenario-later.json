@@ -1,0 +1,286 @@
+{
+  "run_version": "0.1.0",
+  "scenario_id": "physical-south-pole-nov-30",
+  "analysis_mode": "terrain_ephemeris",
+  "dataset_manifest_ref": "physical-lola-de421-v1",
+  "lander": {
+    "id": "polar-lander",
+    "latitude_deg": -89.03093035536243,
+    "longitude_deg_east": 1.389336784014743,
+    "frame": "MOON_ME_DE421",
+    "reference_radius_m": 1737400,
+    "elevation_datum": "height_above_reference_sphere",
+    "elevation_m": 0,
+    "antenna_height_m": 2,
+    "panel_height_m": 1,
+    "pole_reference_meridian_deg_east": 0
+  },
+  "data_ready_utc": "2026-11-30T08:00:00Z",
+  "data_volume": {
+    "value": 16,
+    "unit": "MiB"
+  },
+  "deadline_utc": "2026-11-30T14:00:00Z",
+  "analysis_horizon": {
+    "start_utc": "2026-11-30T08:00:00Z",
+    "end_utc": "2026-11-30T14:00:00Z"
+  },
+  "hardware_profile_ref": "synthetic-lander-hardware-v1",
+  "relay_refs": [
+    "synthetic-lunar-relay"
+  ],
+  "station_refs": [
+    "educational-americas",
+    "educational-europe",
+    "educational-australia"
+  ],
+  "route_families": [
+    "direct_to_earth",
+    "single_lunar_relay"
+  ],
+  "rate_method": "assumed_net_rate",
+  "pointing_assumption": "ideal_pointing",
+  "service_assumption_label": "Assumed finite six-hour educational service; no operator allocation",
+  "profiles": {
+    "hardware": [
+      {
+        "id": "synthetic-lander-hardware-v1",
+        "input_class": "assumed",
+        "storage_capacity_bytes": 209715200,
+        "base_load_w": 5,
+        "battery": {
+          "capacity_wh": 100,
+          "initial_energy_wh": 80,
+          "reserve_wh": 10,
+          "max_charge_w": 50,
+          "max_discharge_w": 100,
+          "charge_efficiency": 0.9,
+          "discharge_efficiency": 0.9
+        },
+        "panel": {
+          "kind": "fixed",
+          "area_m2": 1,
+          "normal_local_enu": [
+            0,
+            0,
+            1
+          ],
+          "efficiency": 0.2,
+          "lumped_derating": 0.8,
+          "irradiance_at_1au_w_m2": 1361
+        },
+        "terminals": [
+          {
+            "id": "lander-radio",
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "mode_ids": [
+              "synthetic-direct-256k",
+              "synthetic-uplink-2m"
+            ],
+            "acquisition_s": 0,
+            "teardown_s": 0,
+            "tx_electrical_w": 20,
+            "rx_electrical_w": 5
+          }
+        ],
+        "service": {
+          "label": "Assumed finite six-hour educational service; no operator allocation",
+          "input_class": "assumed",
+          "windows": [
+            {
+              "start_utc": "2026-11-30T08:00:00Z",
+              "end_utc": "2026-11-30T14:00:00Z"
+            }
+          ]
+        }
+      }
+    ],
+    "relays": [
+      {
+        "id": "synthetic-lunar-relay",
+        "input_class": "synthetic",
+        "behavior": "store_and_forward",
+        "storage_capacity_bytes": 104857600,
+        "processing_delay_s": 0,
+        "trajectory": {
+          "kind": "synthetic_two_body_lunar_preset",
+          "reference": "soma-polar-200km-v1",
+          "origin": "MOON",
+          "frame": "J2000",
+          "time_scale": "UTC",
+          "position_unit": "m",
+          "coverage": {
+            "start_utc": "2026-11-30T08:00:00Z",
+            "end_utc": "2026-11-30T14:00:00Z"
+          }
+        },
+        "terminals": [
+          {
+            "id": "relay-radio",
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "mode_ids": [
+              "synthetic-uplink-2m",
+              "synthetic-downlink-10m"
+            ],
+            "acquisition_s": 0,
+            "teardown_s": 0,
+            "tx_electrical_w": 20,
+            "rx_electrical_w": 5
+          }
+        ],
+        "service": {
+          "label": "Assumed finite six-hour educational service; no operator allocation",
+          "input_class": "assumed",
+          "windows": [
+            {
+              "start_utc": "2026-11-30T08:00:00Z",
+              "end_utc": "2026-11-30T14:00:00Z"
+            }
+          ]
+        },
+        "power_assumption_label": "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled"
+      }
+    ],
+    "stations": [
+      {
+        "id": "educational-americas",
+        "input_class": "assumed",
+        "latitude_deg": 35,
+        "longitude_deg_east": -117,
+        "height_m": 0,
+        "frame": "ITRF93",
+        "reference_ellipsoid": "WGS84",
+        "minimum_elevation_deg": 10,
+        "storage_capacity_bytes": 209715200,
+        "terminals": [
+          {
+            "id": "station-radio",
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "mode_ids": [
+              "synthetic-direct-256k",
+              "synthetic-downlink-10m"
+            ],
+            "acquisition_s": 0,
+            "teardown_s": 0,
+            "tx_electrical_w": 20,
+            "rx_electrical_w": 5
+          }
+        ],
+        "service": {
+          "label": "Assumed finite six-hour educational service; no operator allocation",
+          "input_class": "assumed",
+          "windows": [
+            {
+              "start_utc": "2026-11-30T08:00:00Z",
+              "end_utc": "2026-11-30T14:00:00Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": "educational-europe",
+        "input_class": "assumed",
+        "latitude_deg": 40,
+        "longitude_deg_east": -4,
+        "height_m": 0,
+        "frame": "ITRF93",
+        "reference_ellipsoid": "WGS84",
+        "minimum_elevation_deg": 10,
+        "storage_capacity_bytes": 209715200,
+        "terminals": [
+          {
+            "id": "station-radio",
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "mode_ids": [
+              "synthetic-direct-256k",
+              "synthetic-downlink-10m"
+            ],
+            "acquisition_s": 0,
+            "teardown_s": 0,
+            "tx_electrical_w": 20,
+            "rx_electrical_w": 5
+          }
+        ],
+        "service": {
+          "label": "Assumed finite six-hour educational service; no operator allocation",
+          "input_class": "assumed",
+          "windows": [
+            {
+              "start_utc": "2026-11-30T08:00:00Z",
+              "end_utc": "2026-11-30T14:00:00Z"
+            }
+          ]
+        }
+      },
+      {
+        "id": "educational-australia",
+        "input_class": "assumed",
+        "latitude_deg": -35,
+        "longitude_deg_east": 149,
+        "height_m": 0,
+        "frame": "ITRF93",
+        "reference_ellipsoid": "WGS84",
+        "minimum_elevation_deg": 10,
+        "storage_capacity_bytes": 209715200,
+        "terminals": [
+          {
+            "id": "station-radio",
+            "band": "SYNTHETIC_X_band",
+            "duplex": "half_duplex",
+            "mode_ids": [
+              "synthetic-direct-256k",
+              "synthetic-downlink-10m"
+            ],
+            "acquisition_s": 0,
+            "teardown_s": 0,
+            "tx_electrical_w": 20,
+            "rx_electrical_w": 5
+          }
+        ],
+        "service": {
+          "label": "Assumed finite six-hour educational service; no operator allocation",
+          "input_class": "assumed",
+          "windows": [
+            {
+              "start_utc": "2026-11-30T08:00:00Z",
+              "end_utc": "2026-11-30T14:00:00Z"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "input_provenance": [
+    {
+      "scope": "terrain and celestial geometry",
+      "input_class": "published",
+      "description": "Numerical LOLA near/far products and matched DE421 SPICE; ground elevation resolved by the engine. Published interpolation quality is retained, not relabeled as measured terrain.",
+      "source_urls": [
+        "https://pgda.gsfc.nasa.gov/products/81",
+        "https://naif.jpl.nasa.gov/naif/spiceconcept.html"
+      ]
+    },
+    {
+      "scope": "hardware, rates, pointing and service",
+      "input_class": "assumed",
+      "description": "Educational lander profile, ideal pointing, assumed net payload rates and finite six-hour service calendars. Three rounded geographic station proxies illustrate diversity; they are not actual DSN antenna coordinates or booked service.",
+      "source_urls": []
+    },
+    {
+      "scope": "lunar relay trajectory",
+      "input_class": "synthetic",
+      "description": "synthetic_two_body_lunar_preset soma-polar-200km-v1. Explicit conic model, not an operational frozen orbit, libration orbit or real relay ephemeris.",
+      "source_urls": []
+    },
+    {
+      "scope": "controlled date comparison",
+      "input_class": "assumed",
+      "description": "Same site, data volume, hardware, initial battery, network and six-hour mission-age deadline. Ready time, horizon, finite service calendars and synthetic trajectory coverage move together with the selected operating day.",
+      "source_urls": []
+    }
+  ]
+}

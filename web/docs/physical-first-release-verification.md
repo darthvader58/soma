@@ -1,0 +1,20 @@
+# Physical scenario interface verification
+
+Actor: Developer B using automated Chrome/Playwright and Aside inspection. This is an engineering walkthrough, not a human study. The live Python service was used with the frozen physical scenarios and numerical data; the map had no ion token, so tiles were unavailable and aligned overlays stayed blocked. This walkthrough does not verify visual map registration.
+
+The November 24 and November 30 presets kept the site, 16 MiB task, hardware, initial 80 Wh battery and declared network fixed. Each full preset supplied its own six-hour UTC window and service calendars. The interface displayed separate antenna and panel heights, the synthetic two-body relay label, and the assumed nature of hardware and rates. The hand-calculated synthetic reference was disabled. Aside confirmed that the tile failure retained coordinate entry and the numerical result area.
+
+| Preset | Status / solver | Last-byte arrival UTC | Allocations | Replay |
+| --- | --- | --- | ---: | --- |
+| November 24 | feasible under assumptions / feasible incumbent | 08:10:01.201519 | 1 | passed |
+| November 30 | feasible under assumptions / feasible incumbent | 09:37:01.238933 | 2 | passed |
+
+Both results delivered 16,777,216 bytes and identify their fidelity as an assumed-rate simulation. An incumbent does not establish optimality. The later case includes a synthetic lunar relay and storage; neither case grants station access or predicts mission performance. The UI read stored engine samples on the shared timeline without submitting a new plan.
+
+For each completed run, the browser download matched the service ZIP byte-for-byte. The package contained scenario and result JSON, run manifest, contacts and schedule CSV, energy and buffer CSV, replay, display data and CZML, registration records, analysis inputs, summary and explanation. Exported scenario JSON matched the respective native fixture; schedule row counts matched the allocation counts; replay passed with no errors. Hashes and file lists are in [the machine-readable receipt](physical-first-release-verification.json). Screenshots show the [November 24](physical-first-release-evidence/physical-south-pole-nov-24.png) and [November 30](physical-first-release-evidence/physical-south-pole-nov-30.png) completed states.
+
+Validation: `npm test` passed 80 tests, `npm run build` passed, and the fixture browser suite passed 17 tests using installed Chrome. The live physical browser walkthrough passed all three cases on a fresh service. The November 30 direct-only run returned `infeasible_in_model`, `proven_infeasible_discretized_model`, zero contacts and zero delivered bytes. Its displayed explanation states that available direct contacts provide at most zero payload bits for the 134,217,728-bit file; see the [desktop](physical-first-release-evidence/physical-result-desktop.png) and [mobile](physical-first-release-evidence/physical-result-mobile.png) captures. Its package passed ZIP integrity inspection, and its browser download matched the service bytes. The same byte comparison passed for both feasible cases.
+
+An earlier run reached the service’s finite retained-results byte limit after repeated jobs. Aside confirmed the UI displayed the actual error in an alert. A fresh local service allowed the three-case walkthrough to complete; the limit was not changed.
+
+The registered-Moon check used the existing token and the local port 5173. Bundled Chromium headless shell with SwiftShader displayed lunar terrain, the engine-authored relay marker, and a solid scheduled link at the exact stored 2026-11-30 09:33:30 UTC sample, the start of allocation-0. The matching renderer-state coordinates and interval are recorded in the JSON receipt. The [capture](physical-first-release-evidence/physical-registered-moon.png) shows that scene; it is an engineering check, not a physical prediction. No Cesium requests failed during this run. A separate preview on port 5190 returned HTTP 403 and displayed the fallback; that result does not establish the reason for rejection. No token or signed URL was recorded.

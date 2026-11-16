@@ -88,9 +88,7 @@ def schema_registry():
     return schemas, Registry().with_resources(resources)
 
 
-def validate_document(document, schema_name: str) -> None:
-    """Check structural contract validity; this does not replay a schedule."""
-    _check_json_values(document)
+def _document_validator(schema_name):
     schemas, registry = schema_registry()
     name = schema_name.removesuffix(".schema.json")
     if name not in schemas:
@@ -106,12 +104,28 @@ def validate_document(document, schema_name: str) -> None:
         parse_utc(value)
         return True
 
-    validator = Draft202012Validator(schemas[name], registry=registry, format_checker=checker)
+    return Draft202012Validator(schemas[name], registry=registry, format_checker=checker)
+
+
+def _validate_with(document, validator):
+    _check_json_values(document)
     errors = sorted(validator.iter_errors(document), key=lambda error: str(list(error.path)))
     if errors:
         error = errors[0]
         path = ".".join(map(str, error.absolute_path)) or "$"
         raise ScenarioValidationError(f"{path}: {error.message}")
+
+
+def validate_document(document, schema_name: str) -> None:
+    """Check structural contract validity; this does not replay a schedule."""
+    _validate_with(document, _document_validator(schema_name))
+
+
+def validate_documents(documents, schema_name: str) -> None:
+    """Validate a batch against one fresh bundled-schema snapshot."""
+    validator = _document_validator(schema_name)
+    for document in documents:
+        _validate_with(document, validator)
 
 
 def _interval(value, label):
@@ -165,21 +179,27 @@ def _validate_scenario_semantics(scenario):
     deadline = parse_utc(scenario["deadline_utc"])
     if not start <= ready < deadline <= end:
         raise ScenarioValidationError("Require horizon start <= data ready < deadline <= horizon end")
-    if scenario["analysis_mode"] != "synthetic_fixture":
-        raise ScenarioValidationError("terrain_ephemeris analysis is not implemented; no physical coverage is available")
-    manifest = load_json(resource_directory("data") / "datasets.manifest.json")
-    datasets = _indexed(manifest["datasets"], "dataset manifest")
-    dataset = datasets.get(scenario["dataset_manifest_ref"])
-    if dataset is None or dataset["status"] != "synthetic_fixture_only":
-        raise ScenarioValidationError("Dataset is unavailable for Phase 1 synthetic fixture validation")
+    physical = scenario["analysis_mode"] == "terrain_ephemeris"
+    if physical:
+        dataset = load_json(resource_directory("data") / "physical-first-release.manifest.json")
+        if scenario["dataset_manifest_ref"] != dataset["id"]:
+            raise ScenarioValidationError("terrain_ephemeris requires a supported physical dataset_manifest_ref")
+        if (end-start).total_seconds() > dataset["maximum_analysis_duration_s"]:
+            raise ScenarioValidationError("Physical analysis horizon exceeds the declared workload limit")
+    else:
+        manifest = load_json(resource_directory("data") / "datasets.manifest.json")
+        datasets = _indexed(manifest["datasets"], "dataset manifest")
+        dataset = datasets.get(scenario["dataset_manifest_ref"])
+        if dataset is None or dataset["status"] != "synthetic_fixture_only":
+            raise ScenarioValidationError("Dataset is unavailable for synthetic fixture validation")
     coverage_start, coverage_end = _interval(dataset["coverage"], "dataset fixture coverage")
     if start < coverage_start or end > coverage_end:
-        raise ScenarioValidationError("Unsupported dates: horizon is outside the declared synthetic fixture domain")
+        raise ScenarioValidationError("Unsupported dates: horizon is outside the declared dataset domain")
     lander = scenario["lander"]
     lat_min, lat_max = dataset["latitude_bounds_deg"]
     lon_min, lon_max = dataset["longitude_bounds_deg_east"]
     if not lat_min <= lander["latitude_deg"] <= lat_max or not lon_min <= lander["longitude_deg_east"] < lon_max:
-        raise ScenarioValidationError("Unsupported coordinates: outside the declared synthetic fixture domain")
+        raise ScenarioValidationError("Unsupported coordinates: outside the declared dataset domain")
     if lander["frame"] != dataset["frame"] or lander["reference_radius_m"] != dataset["reference_radius_m"]:
         raise ScenarioValidationError("Lander frame/reference radius must match the declared dataset")
     if lander["reference_radius_m"] + lander["elevation_m"] <= 0:
@@ -220,8 +240,14 @@ def _validate_scenario_semantics(scenario):
         coverage_start, coverage_end = _interval(relay["trajectory"]["coverage"], "relay trajectory coverage")
         if coverage_start > start or coverage_end < end:
             raise ScenarioValidationError("Relay trajectory coverage must contain the analysis horizon")
-        if relay["trajectory"]["kind"] != "synthetic_contact_fixture":
-            raise ScenarioValidationError("Phase 1 supports only synthetic_contact_fixture trajectories")
+        trajectory = relay["trajectory"]
+        if physical:
+            if (trajectory["kind"], trajectory["reference"], trajectory["frame"],
+                    trajectory["time_scale"], trajectory["position_unit"]) != (
+                    "synthetic_two_body_lunar_preset", dataset["relay_preset_ref"], "J2000", "UTC", "m"):
+                raise ScenarioValidationError("Physical relay requires the declared synthetic two-body preset and its exact frame/time/units")
+        elif trajectory["kind"] != "synthetic_contact_fixture":
+            raise ScenarioValidationError("Synthetic fixtures support only synthetic_contact_fixture trajectories")
 
 
 def validate_scenario(scenario: dict) -> dict:

@@ -13,9 +13,14 @@ radio conflicts, propagation delay, and lander energy constrain the plan.
 [Local web application](#run-the-web-application) ·
 [Scientific methods](plan/README.md)
 
-SOMA is a planning model under declared assumptions. The supplied delivery
-examples use synthetic geometry and assumed rates and service; they are
-software demonstrations, not lunar mission predictions.
+SOMA is a planning model under declared assumptions. The original examples use
+synthetic geometry. The physical first release connects published LOLA terrain
+and DE421 ephemerides to the scheduler for a bounded south-polar region and
+operating period. Hardware, radio rates, station service and the two-body relay
+remain declared assumptions; these results are not lunar mission predictions.
+
+The [physical first-release report](soma/docs/physical-first-release/README.md)
+maps the required `plan/` scope to computed evidence and exact run commands.
 
 ## Try the web demo
 
@@ -224,14 +229,16 @@ Public hosting of the transformed ion stream is outside the static demo's scope.
 
 ## Model scope
 
-- The default delivery provider supports the supplied synthetic operating
-  scenario and its declared coverage. Unsupported sites, dates, heights, or
-  trajectories return `unknown` or fail input validation explicitly.
+- Synthetic examples retain their fixed declared coverage. The physical provider
+  supports a small region near 89°S, 0°E during November 2026, with analysis
+  horizons of at most six hours. Unsupported inputs fail explicitly or remain
+  unknown; arbitrary global coverage is not claimed.
 - Direct-to-Earth and one configured store-and-forward lunar relay are the
   supported baseline route families. Earth-orbit routing is not enabled.
-- Measured LOLA/SPICE diagnostics are separate from the synthetic delivery
-  examples. Their current horizon gaps do not support a favorable physical
-  site/date comparison.
+- The physical date comparison uses published-grid interpolation with count
+  masks, explicit coarse fallback, separate equipment heights and checked
+  horizon extent. Strict measured-only diagnostics retain their gaps. No
+  interpolated sample is relabeled as a measurement.
 - Contact-only relay examples contain no spacecraft ephemeris. Missing
   spacecraft states stay unknown rather than becoming an invented orbit.
 - Time bins and chunk sizes introduce declared conservatism. Fresh,
@@ -239,6 +246,23 @@ Public hosting of the transformed ion stream is outside the static demo's scope.
   replaying a recorded run verifies that specific result.
 - SOMA does not reserve ground service, implement a flight DTN stack,
   certify a landing site, or model thermal survival or mission-success probability.
+
+To prepare and run the physical demonstration after installing the full stack:
+
+```sh
+python -m soma fetch-geometry-data --data-root /private/tmp/soma-phase2-data --physical
+SOMA_DATA_ROOT=/private/tmp/soma-phase2-data python soma/docs/physical-first-release/reproduce.py --output-dir PHYSICAL_RUNS
+python -m soma.verification.exports PHYSICAL_RUNS/relay-later/run.zip
+python -m soma.verification.physical_completion
+```
+
+In the live interface, select a **Physical** network example. The recorded story
+is direct success on November 24, direct-only failure on November 30, and
+store-and-forward relay delivery on November 30 under the same six-hour deadline
+rule. The public captured-result demo remains separate from this live workflow.
+The local service has finite result retention; export needed runs and restart it
+if the stated retention limit is reached. Optional Phase 7 additions remain future
+work.
 
 ## Verification and documentation
 
@@ -257,6 +281,7 @@ Additional browser checks and reproducibility commands are documented in the
 | Resource | Contents |
 | --- | --- |
 | [Scientific plan](plan/README.md) | Geometry, illumination, communications, power, scheduling, and design boundaries. |
+| [Physical first release](soma/docs/physical-first-release/README.md) | Computed date comparison, required-plan coverage, reproduction and numerical limits. |
 | [Research and source register](plan/06-Research-and-Source-Register.md) | Papers, official datasets, standards, and the claims each supports. |
 | [Scheduler methods](soma/docs/phase-4/scheduler.md) | Objective ordering, event bins, capacity, storage, conflicts, and energy constraints. |
 | [Independent replay](soma/docs/phase-4/replay.md) | Byte conservation, causality, occupancy, storage, energy, and deadline checks. |

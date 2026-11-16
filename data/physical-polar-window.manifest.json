@@ -1,0 +1,83 @@
+{
+  "manifest_version": "0.2.0",
+  "dataset_id": "pgda81-pole-2km-window-v1",
+  "status": "local_window_extracted",
+  "input_class": "published",
+  "frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "elevation_datum": "height_above_reference_sphere",
+  "elevation_unit": "m",
+  "pixel_size_m": 5,
+  "interpolation_policy": "unknown_if_zero_count",
+  "elevation_sha256": "9aba9a6fcafbb448e401194e809f34d53e21b1b9a4a03d654568526f75901038",
+  "count_sha256": "f96a8de5f74a700054adea1aec40f2e9be61210ddcd20d6501838fdf39980f3b",
+  "source_urls": [
+    "https://pgda.gsfc.nasa.gov/products/81"
+  ],
+  "method_source": "https://doi.org/10.1016/j.pss.2020.105119",
+  "count_convention": "floating_point_LOLA_returns_after_field_blending",
+  "nodata_convention": "NaN; zero or masked return counts remain unknown",
+  "files": [
+    {
+      "role": "elevation",
+      "path": "lola-pole-elevation.tif",
+      "sha256": "9aba9a6fcafbb448e401194e809f34d53e21b1b9a4a03d654568526f75901038",
+      "size_bytes": 511469,
+      "parent": {
+        "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldem_87s_5mpp.tif",
+        "size_bytes": 3465285714,
+        "etag": "W/\"ce8c1052-17c7ede95a8\"",
+        "last_modified": "Thu, 14 Oct 2021 12:54:49 GMT",
+        "parent_sha256": null
+      },
+      "source_pixel_window": [
+        19800,
+        19800,
+        400,
+        400
+      ]
+    },
+    {
+      "role": "count",
+      "path": "lola-pole-count.tif",
+      "sha256": "f96a8de5f74a700054adea1aec40f2e9be61210ddcd20d6501838fdf39980f3b",
+      "size_bytes": 16278,
+      "parent": {
+        "url": "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldec_87s_5mpp.tif",
+        "size_bytes": 145895726,
+        "etag": "W/\"8b2312e-17c7f5b5b10\"",
+        "last_modified": "Thu, 14 Oct 2021 15:11:06 GMT",
+        "parent_sha256": null
+      },
+      "source_pixel_window": [
+        19800,
+        19800,
+        400,
+        400
+      ]
+    }
+  ],
+  "redistribution": "not_bundled; local acquisition only; retain product citation",
+  "far_field_coverage": "Numerical polar coverage patch only; coarse native southcap supplies far field.",
+  "software": {
+    "rasterio": "1.5.2",
+    "gdal": "3.12.2"
+  },
+  "bounds_xy_m": [
+    -1000,
+    -1000,
+    1000,
+    1000
+  ],
+  "quality_notes": [
+    "Published finite interpolated heights are enabled only by the parent physical dataset manifest published_grid policy.",
+    "NaN, GDAL nodata, and missing counts remain unknown. Strict measurements policy rejects zero-count elevations."
+  ],
+  "acquisition": "validated_bounded_BigTIFF_directory_and_four_compressed_tile_HTTP_ranges",
+  "reproducibility": {
+    "call": "soma.terrain.physical.acquire_polar_window(data_root)",
+    "verified_independent_destination": "Pinned elevation and count hashes reproduced in a separate empty local directory.",
+    "transferred_parent_data": "396153 metadata bytes plus exactly four compressed 256x256 tiles per source; at most 8 MiB per source permitted.",
+    "temporary_storage": "Sparse parent reconstruction is removed after local decoding; no full parent is downloaded."
+  }
+}

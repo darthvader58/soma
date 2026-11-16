@@ -1,0 +1,43 @@
+{
+  "artifact_type": "physical_controlled_date_demonstration",
+  "cases": [
+    {
+      "case_id": "direct-ready",
+      "delivered_bytes": 16777216,
+      "export_verified": true,
+      "final_byte_arrival_utc": "2026-11-24T08:10:01.201519Z",
+      "generation_max_w": 9.662743659668473,
+      "generation_min_w": 9.64997688720111,
+      "scenario_sha256": "42b8c54cc18c8305b830018cd0f168a87ed0fa673400cc26ebcd1a26af731445",
+      "solver_status": "proven_optimum",
+      "status": "feasible_under_assumptions",
+      "zip_sha256": "3a2598b5c3463f1a1568d9dacf4abdc886fe1caf59c40d44b48cb10877e02bce"
+    },
+    {
+      "case_id": "direct-later",
+      "delivered_bytes": 0,
+      "export_verified": true,
+      "final_byte_arrival_utc": null,
+      "generation_max_w": 0.0,
+      "generation_min_w": 0.0,
+      "scenario_sha256": "5f436971da5c81cfef984a36835504356ca29d12cac667d6ca99c38300e37531",
+      "solver_status": "proven_infeasible_discretized_model",
+      "status": "infeasible_in_model",
+      "zip_sha256": "05a33dfec5b21cded84611658d03d229d8c792c5b9ad162ff7359458027dc58a"
+    },
+    {
+      "case_id": "relay-later",
+      "delivered_bytes": 16777216,
+      "export_verified": true,
+      "final_byte_arrival_utc": "2026-11-30T09:37:01.238933Z",
+      "generation_max_w": 0.0,
+      "generation_min_w": 0.0,
+      "scenario_sha256": "b048823ff9b51ec1a50271f0a97a3b7b9f1cae08bc0fcf2ded8b8305c3f44f20",
+      "solver_status": "feasible_incumbent",
+      "status": "feasible_under_assumptions",
+      "zip_sha256": "27ea8e3448375df79bb05863f8ebc34cc513e7282ba3461214f767029b271d39"
+    }
+  ],
+  "comparison_rule": "Same site, volume, hardware, initial battery, station locations and synthetic orbit elements; same six-hour mission-age deadline and service duration. UTC operating dates move together.",
+  "outcomes_selected_from_computed_results": true
+}

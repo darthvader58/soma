@@ -5,7 +5,7 @@ const el = (tag, text, className) => {
   return node;
 };
 
-export function renderTimeline(container, { scenario, result, contacts = [], expected, onTimeChange = () => {} }) {
+export function renderTimeline(container, { scenario, result, contacts = [], expected, sampleEpochs = [], onTimeChange = () => {} }) {
   container.replaceChildren();
   const horizon = scenario.analysis_horizon;
   const start = Date.parse(horizon.start_utc), end = Date.parse(horizon.end_utc);
@@ -18,12 +18,21 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
   slider.setAttribute('aria-label', 'Selected timeline time (UTC / stated offset)'); label.append(slider);
   const output = el('output', horizon.start_utc, 'timeline-time');
   const scale = el('span', undefined, 'muted');
+  const samples = el('select');
+  samples.setAttribute('aria-label', 'Stored engine sample (UTC / stated offset)');
+  const noSample = el('option', 'Select an exact stored engine sample'); noSample.value = ''; samples.append(noSample);
+  for (const epoch of [...new Set(sampleEpochs)].filter(epoch => {
+    const time = Date.parse(epoch); return Number.isFinite(time) && time >= start && time <= end;
+  })) {
+    const option = el('option', epoch); option.value = epoch; samples.append(option);
+  }
   function update(epoch, notify) {
     const time = Date.parse(epoch);
     if (!validHorizon || !Number.isFinite(time) || time < start || time > end) return;
     selectedTime = epoch;
     slider.value = String(Math.round((time - start) / (end - start) * 10000));
     output.textContent = epoch; slider.setAttribute('aria-valuetext', epoch);
+    samples.value = sampleEpochs.find(sample => sameDisplayEpoch(sample, epoch)) ?? '';
     scale.textContent = epoch.endsWith('Z') ? 'UTC' : `UTC${epoch.slice(-6)}`;
     if (notify) onTimeChange(epoch);
   }
@@ -32,6 +41,11 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
     update(fraction === 0 ? horizon.start_utc : fraction === 1 ? horizon.end_utc : new Date(start + (end - start) * fraction).toISOString(), true);
   });
   controls.append(label, output, scale); container.append(controls);
+  if (samples.options.length > 1) {
+    const sampleLabel = el('label', 'Stored engine sample (UTC / stated offset)');
+    sampleLabel.append(samples); controls.append(sampleLabel);
+    samples.addEventListener('change', () => { if (samples.value) update(samples.value, true); });
+  }
   container.append(el('p', 'Endpoints retain their supplied timestamps and timezone offsets. Intermediate slider times are displayed in UTC to millisecond precision. Scrubbing reads records; it does not run analysis.', 'muted'));
   if (!validHorizon) {
     output.textContent = 'Timeline unavailable';
@@ -74,3 +88,4 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
   update(horizon.start_utc, false);
   return { setTime(epoch) { update(epoch, false); }, getTime: () => selectedTime, destroy() { container.replaceChildren(); } };
 }
+import { sameDisplayEpoch } from './display-time.js';

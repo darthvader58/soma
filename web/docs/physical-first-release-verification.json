@@ -1,0 +1,145 @@
+{
+  "actor": {
+    "actor_type": "agent",
+    "human_usability_study": false
+  },
+  "browser": "Chrome via Playwright; Aside inspected preset and tile fallback",
+  "cases": [
+    {
+      "export_sha256": "e344211ecfdd8779a66ba6aefd528ff5f8be956bfd1098e35e3b3e45c892e88b",
+      "files": [
+        "analysis-inputs.json",
+        "buffer-history.csv",
+        "contacts.csv",
+        "display-data.json",
+        "display.czml",
+        "energy.csv",
+        "explanation.md",
+        "renderer-conversion.json",
+        "renderer-registration.json",
+        "replay.json",
+        "result.json",
+        "run-manifest.json",
+        "scenario.json",
+        "schedule.csv",
+        "summary.json"
+      ],
+      "result": {
+        "scenario_sha256": "4cf70f2d63d39e1dd2db21eee583e36873801d03d6d5436fc7165ece9ae2cd0f",
+        "status": "feasible_under_assumptions",
+        "solver_status": "feasible_incumbent",
+        "delivered_bytes": 16777216,
+        "final_byte_arrival_utc": "2026-11-24T08:10:01.201519Z"
+      },
+      "replay_passed": true,
+      "replay_errors": [],
+      "scenario_matches_native_fixture": true,
+      "name": "nov-24",
+      "scenario_sha256": "4cf70f2d63d39e1dd2db21eee583e36873801d03d6d5436fc7165ece9ae2cd0f",
+      "status": "feasible_under_assumptions",
+      "export_verified": true,
+      "browser_download_bytes_match": true
+    },
+    {
+      "export_sha256": "de54ae206a0c67d8f4ea944e4b7ee5b00cd312250b329bdfe0885cb4f38481a6",
+      "files": [
+        "analysis-inputs.json",
+        "buffer-history.csv",
+        "contacts.csv",
+        "display-data.json",
+        "display.czml",
+        "energy.csv",
+        "explanation.md",
+        "renderer-conversion.json",
+        "renderer-registration.json",
+        "replay.json",
+        "result.json",
+        "run-manifest.json",
+        "scenario.json",
+        "schedule.csv",
+        "summary.json"
+      ],
+      "result": {
+        "scenario_sha256": "b048823ff9b51ec1a50271f0a97a3b7b9f1cae08bc0fcf2ded8b8305c3f44f20",
+        "status": "feasible_under_assumptions",
+        "solver_status": "feasible_incumbent",
+        "delivered_bytes": 16777216,
+        "final_byte_arrival_utc": "2026-11-30T09:37:01.238933Z"
+      },
+      "replay_passed": true,
+      "replay_errors": [],
+      "scenario_matches_native_fixture": true,
+      "name": "nov-30-relay",
+      "scenario_sha256": "b048823ff9b51ec1a50271f0a97a3b7b9f1cae08bc0fcf2ded8b8305c3f44f20",
+      "status": "feasible_under_assumptions",
+      "export_verified": true,
+      "browser_download_bytes_match": true
+    },
+    {
+      "name": "nov-30-direct-only",
+      "scenario_sha256": "5f436971da5c81cfef984a36835504356ca29d12cac667d6ca99c38300e37531",
+      "status": "infeasible_in_model",
+      "solver_status": "proven_infeasible_discretized_model",
+      "export_verified": true,
+      "export_sha256": "5fc5993a2ec86450514b351caeb5511fd2e2792e13e56dc15ecd797f5394a02d",
+      "browser_download_bytes_match": true,
+      "limiting_reason": "Direct contacts after data readiness and before the receiver deadline provide at most 0 payload bits for a 134,217,728-bit file; the complete file cannot fit in the declared network.",
+      "replay": "not applicable to infeasible result"
+    }
+  ],
+  "tests": {
+    "unit": "80 passed",
+    "fixture_browser": "17 passed",
+    "build": "passed",
+    "live_physical_browser": "1 passed (three cases and three byte-identical browser downloads, fresh service)"
+  },
+  "map": "No ion token; tiles unavailable and overlays blocked; visual registration not verified in this walkthrough.",
+  "passed": true,
+  "checks": {
+    "physical_site_date_controls": true,
+    "exact_stored_states": true,
+    "map_failure_text_fallback": true,
+    "direct_limiting_reason": true,
+    "download_bytes_match": true
+  },
+  "failure_limit_verification": {
+    "passed": true,
+    "message": "ValueError: Local retained result byte limit reached",
+    "actor": "Aside browser inspected visible alert on exhausted service",
+    "limitation": "The local service has a finite retained-result byte budget; restart the local service to clear retained jobs."
+  },
+  "optional_registered_moon_check": {
+    "registration": "passed for declared -90 to -87.5 degree region",
+    "preview_5190": "HTTP 403 from api.cesium.com under existing token configuration",
+    "existing_origin_5173": "visible lunar terrain, exact stored relay marker and solid allocated link verified in bundled Chromium headless shell with SwiftShader; no failed Cesium requests",
+    "scenario_sha256": "b048823ff9b51ec1a50271f0a97a3b7b9f1cae08bc0fcf2ded8b8305c3f44f20",
+    "sample_epoch_utc": "2026-11-30T09:33:30Z",
+    "renderer_position_m": [
+      295639.4303804659,
+      -698665.101793075,
+      -1785126.1758989308
+    ],
+    "allocation_id": "allocation-0",
+    "source_transmit_start_utc": "2026-11-30T09:33:30Z",
+    "source_transmit_end_utc": "2026-11-30T09:35:00Z",
+    "screenshot": "physical-first-release-evidence/physical-registered-moon.png",
+    "image_pixel_check": {
+      "size": [
+        948,
+        417
+      ],
+      "inspected_rows": [
+        0,
+        349
+      ],
+      "unique_rgb_colors": 431,
+      "pixels_with_any_channel_above_40": 165215,
+      "bright_pixel_bounds": [
+        170,
+        0,
+        777,
+        349
+      ]
+    }
+  }
+}

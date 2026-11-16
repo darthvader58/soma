@@ -1,4 +1,5 @@
 import { loadRegisteredMoon } from './registered-moon.js';
+import { rendererSamplesAtTime } from './renderer-samples.js';
 
 export const MOON_ASSET_ID = 2684829;
 
@@ -83,6 +84,9 @@ export async function createMoonViewer(container, {
   let sceneRegistration;
   let conversionSha;
   let resultEntities = [];
+  let sampleEntities = [];
+  let completedDisplay;
+  let selectedEpoch = scenario?.data_ready_utc;
   let hasCompletedDisplay = false;
   const removeListeners = [];
   const document = container.ownerDocument;
@@ -91,6 +95,31 @@ export async function createMoonViewer(container, {
   const clearResult = () => {
     if (viewer && !viewer.isDestroyed()) resultEntities.forEach(entity => viewer.entities.remove(entity));
     resultEntities = [];
+    clearSamples();
+    completedDisplay = undefined;
+  };
+  const clearSamples = () => {
+    if (viewer && !viewer.isDestroyed()) sampleEntities.forEach(entity => viewer.entities.remove(entity));
+    sampleEntities = [];
+  };
+  const drawSamples = () => {
+    clearSamples();
+    if (!healthy || !gate.passed || !completedDisplay) return;
+    const sample = rendererSamplesAtTime(completedDisplay, selectedEpoch, scenario?.relay_refs ?? []);
+    for (const state of sample.states) sampleEntities.push(viewer.entities.add({
+      id: `stored-${state.target}`, position: new cesium.Cartesian3(...state.position),
+      description: `${state.provenance_label}. Exact stored UTC ${state.epoch}; ${state.transform_ref}.`,
+      point: { pixelSize: 9, color: cesium.Color.WHITE, outlineColor: cesium.Color.BLACK, outlineWidth: 2 },
+      label: { text: `${state.target} (stored sample)`, font: '14px sans-serif', fillColor: cesium.Color.WHITE,
+        pixelOffset: new cesium.Cartesian2(0, -24), showBackground: true, backgroundColor: cesium.Color.BLACK },
+    }));
+    for (const { contact, allocation, positions } of sample.links) sampleEntities.push(viewer.entities.add({
+      id: `contact-${contact.contact_id}`,
+      description: `${allocation ? 'Scheduled transmission' : 'Available contact only'}: ${contact.sender} to ${contact.receiver}. Endpoint positions at selected source epoch; not a light-time ray path. ${contact.service_provenance}`,
+      polyline: { positions: positions.map(position => new cesium.Cartesian3(...position)),
+        arcType: cesium.ArcType.NONE, width: allocation ? 4 : 2,
+        material: allocation ? cesium.Color.WHITE : new cesium.PolylineDashMaterialProperty({ color: cesium.Color.WHITE, dashLength: 16 }) },
+    }));
   };
   const clearDisplayPick = () => {
     if (displayPick && viewer && !viewer.isDestroyed()) {
@@ -172,6 +201,8 @@ export async function createMoonViewer(container, {
       }
       viewer?.scene.requestRender();
       hasCompletedDisplay = gate.passed;
+      completedDisplay = gate.passed ? display : undefined;
+      drawSamples();
       report(gate.passed ? 'registered' : 'registration_blocked', `${gate.reason}${gate.passed && !display.states?.length ? ' No stored relay trajectory.' : ''}`);
     },
     setTime(epoch) {
@@ -182,6 +213,8 @@ export async function createMoonViewer(container, {
       }
       try {
         viewer.clock.currentTime = cesium.JulianDate.fromIso8601(epoch);
+        selectedEpoch = epoch;
+        drawSamples();
         viewer.scene.requestRender();
       } catch { report('invalid_time', 'Map time must be a timezone-qualified timestamp.'); }
     },

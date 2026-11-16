@@ -186,8 +186,8 @@
     },
     {
       "path": "soma/docs/phase-6/source-and-license-audit.md",
-      "sha256": "0382110b610ca5e72f28630aafa504e829a760e4f7bc24fcfe88e312af2a40cb",
-      "size_bytes": 16572
+      "sha256": "fdc0b2aeee097d93117fd208461f67effca7a1a1937b912f3bd8370b80df4808",
+      "size_bytes": 17199
     },
     {
       "path": "soma/docs/phase-6/ui-delivery-gate.md",
@@ -196,8 +196,8 @@
     },
     {
       "path": "soma/engine.py",
-      "sha256": "93e3d7059eac5bc6c9a23043d0d70a99fac6908df132ce8c0719b67873e7d37b",
-      "size_bytes": 9832
+      "sha256": "d2d0e62a77fb83b2135152944e6a7781d7c5a3a71af6c8499f90b5fe32fa9d00",
+      "size_bytes": 11198
     },
     {
       "path": "soma/verification/completion.py",
@@ -206,8 +206,8 @@
     },
     {
       "path": "soma/verification/exports.py",
-      "sha256": "c7de0f35ccbc75b28eeb906cd30b6fbdda58751aff93c8edbcdb561d6ce01ed1",
-      "size_bytes": 10619
+      "sha256": "f1a6b1ed0a775ae93051a158f4457b5d7991de3208f4b5afc4a5b7658dabdee5",
+      "size_bytes": 11931
     },
     {
       "path": "soma/verification/sensitivity.py",
@@ -246,8 +246,8 @@
     },
     {
       "path": "tests/web/live.browser.spec.mjs",
-      "sha256": "9fcb95ff5f093b2120f1096d4bfde9ff26623eac9fff5113226ddae8df745063",
-      "size_bytes": 15504
+      "sha256": "d8d58be2f1608b356519815ef8d482cb75009fa51c57baeac7b4883091842f7f",
+      "size_bytes": 15494
     },
     {
       "path": "web/docs/phase-6-independent-review.json",
@@ -276,8 +276,8 @@
     },
     {
       "path": "web/src/comparison.js",
-      "sha256": "7ca1373179b0011bc9f58f77bff2d1bdbcbe9fcc15550b988c4c0b4c9c80e544",
-      "size_bytes": 6231
+      "sha256": "7576ba20458a3f8367ec228cc15e82823253b083affa51d7fa7683baec5175dc",
+      "size_bytes": 7562
     }
   ],
   "phase6_complete": true,
@@ -305,5 +305,6 @@
     "errors": [],
     "report_ref": "fixtures/phase-6/completion-report.json",
     "report_sha256": "b78158dc76a8214feee57d88e6a4098f977fed73d578b5c01afaa878fcd3ba3f"
-  }
+  },
+  "compatibility_update": "Physical first-release integration preserves the archived synthetic baseline; source bindings refreshed after exact stored-state and physical-preparation changes."
 }

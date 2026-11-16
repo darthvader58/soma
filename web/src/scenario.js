@@ -19,6 +19,20 @@ const el = (tag, text, className) => {
 };
 let formNumber = 0;
 
+export function scenarioProvenance(scenario) {
+  return {
+    mode: scenario.analysis_mode,
+    dataset: scenario.dataset_manifest_ref,
+    rate: scenario.rate_method,
+    pointing: scenario.pointing_assumption,
+    service: scenario.service_assumption_label,
+    inputs: scenario.input_provenance ?? [],
+    relays: (scenario.profiles?.relays ?? []).filter(relay => scenario.relay_refs.includes(relay.id))
+      .map(relay => ({ id: relay.id, input_class: relay.input_class, trajectory: relay.trajectory.kind,
+        reference: relay.trajectory.reference, coverage: relay.trajectory.coverage })),
+  };
+}
+
 export function renderScenarioForm(container, { scenario, onChange = () => {} }) {
   let current = structuredClone(scenario);
   const prefix = `scenario-${++formNumber}`;
@@ -29,8 +43,17 @@ export function renderScenarioForm(container, { scenario, onChange = () => {} })
     container.append(form);
     const note = el('p', current.analysis_mode === 'synthetic_fixture'
       ? 'Synthetic fixture. Coordinates, dates, hardware and contact windows are invented test inputs.'
-      : 'Terrain and ephemeris analysis requires engine-confirmed coverage.', 'notice');
+      : 'Terrain and ephemeris scenario. Python checks numerical terrain and kernel coverage; radio rates, hardware and service remain subject to their declared assumptions.', 'notice');
     form.append(note);
+    const provenance = el('details');
+    provenance.append(el('summary', 'Scenario sources and input classes'));
+    const provenanceText = el('pre', JSON.stringify(scenarioProvenance(current), null, 2), 'scenario-provenance');
+    provenance.append(provenanceText);
+    form.append(provenance);
+    function notify() {
+      provenanceText.textContent = JSON.stringify(scenarioProvenance(current), null, 2);
+      onChange(structuredClone(current));
+    }
     function section(title) {
       const group = el('fieldset', undefined, 'form-section');
       group.append(el('legend', title));
@@ -57,7 +80,7 @@ export function renderScenarioForm(container, { scenario, onChange = () => {} })
       input.addEventListener('change', () => {
         if (!input.reportValidity()) return;
         current = patchScenario(current, path, type === 'number' && !options ? input.valueAsNumber : input.value);
-        onChange(structuredClone(current));
+        notify();
       });
       wrapper.append(caption, input); parent.append(wrapper);
       return input;
@@ -88,7 +111,7 @@ export function renderScenarioForm(container, { scenario, onChange = () => {} })
         const selected = new Set(current.route_families);
         input.checked ? selected.add(family) : selected.delete(family);
         current = patchScenario(current, 'route_families', [...selected]);
-        onChange(structuredClone(current));
+        notify();
       }); wrapper.append(input, document.createTextNode(label)); network.append(wrapper);
     }
     const futureRoute = el('label', undefined, 'check-field field-wide');
@@ -100,13 +123,13 @@ export function renderScenarioForm(container, { scenario, onChange = () => {} })
       const input = el('input'); input.type = 'checkbox'; input.checked = current.relay_refs.includes(relay.id);
       input.addEventListener('change', () => {
         const refs = new Set(current.relay_refs); input.checked ? refs.add(relay.id) : refs.delete(relay.id);
-        current = patchScenario(current, 'relay_refs', [...refs]); onChange(structuredClone(current));
-      }); label.append(input, document.createTextNode(`${relay.id} (${relay.input_class}; ${relay.behavior}; storage ${relay.storage_capacity_bytes.toLocaleString('en-US')} bytes)`)); network.append(label);
+        current = patchScenario(current, 'relay_refs', [...refs]); notify();
+      }); label.append(input, document.createTextNode(`${relay.id} (${relay.input_class}; ${relay.trajectory.kind}; ${relay.behavior}; storage ${relay.storage_capacity_bytes.toLocaleString('en-US')} bytes)`)); network.append(label);
     }
     if (!current.profiles.relays.length) network.append(el('p', 'No relay profile is embedded in this scenario. Load the relay fixture to inspect that network.', 'muted field-wide'));
     const details = el('details'); details.append(el('summary', 'Declared hardware and assumptions'));
     const hardware = current.profiles.hardware.find(profile => profile.id === current.hardware_profile_ref);
-    const pre = el('pre', JSON.stringify({ hardware, rate_method: current.rate_method, pointing_assumption: current.pointing_assumption, service_assumption_label: current.service_assumption_label, station_refs: current.station_refs }, null, 2));
+    const pre = el('pre', JSON.stringify({ hardware, rate_method: current.rate_method, pointing_assumption: current.pointing_assumption, service_assumption_label: current.service_assumption_label, station_refs: current.station_refs }, null, 2), 'scenario-hardware');
     hardwareSelect.addEventListener('change', () => {
       pre.textContent = JSON.stringify({ hardware: current.profiles.hardware.find(profile => profile.id === current.hardware_profile_ref), rate_method: current.rate_method, pointing_assumption: current.pointing_assumption, service_assumption_label: current.service_assumption_label, station_refs: current.station_refs }, null, 2);
     });

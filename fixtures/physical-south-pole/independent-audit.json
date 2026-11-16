@@ -1,0 +1,67 @@
+{
+  "artifact_type": "independent_physical_workflow_audit",
+  "version": "1.0.0",
+  "scope": "Pinned physical workflow and archived-input reoptimization; not independent validation of lunar ground truth or operational service",
+  "targeted_tests": {
+    "command": ".venv/bin/pytest -q tests/engine/test_physical_contract.py tests/engine/test_physical_planning.py tests/engine/test_physical_terrain.py",
+    "passed": 29,
+    "warnings": "PuLP deprecations"
+  },
+  "archive_checks": [
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/run.zip",
+      "hash": "3a2598b5c3463f1a1568d9dacf4abdc886fe1caf59c40d44b48cb10877e02bce",
+      "verified": true,
+      "replay": true,
+      "original_status": "feasible_under_assumptions",
+      "original_solver": "proven_optimum",
+      "reoptimized_status": "feasible_under_assumptions",
+      "reoptimized_solver": "proven_optimum",
+      "reoptimized_bytes": 16777216,
+      "options": {
+        "bin_s": 60,
+        "chunk_bytes": 16777216,
+        "time_limit_s": 15
+      }
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/run.zip",
+      "hash": "05a33dfec5b21cded84611658d03d229d8c792c5b9ad162ff7359458027dc58a",
+      "verified": true,
+      "replay": null,
+      "original_status": "infeasible_in_model",
+      "original_solver": "proven_infeasible_discretized_model",
+      "reoptimized_status": "infeasible_in_model",
+      "reoptimized_solver": "proven_infeasible_discretized_model",
+      "reoptimized_bytes": 0,
+      "options": {
+        "bin_s": 60,
+        "chunk_bytes": 16777216,
+        "time_limit_s": 15
+      }
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/run.zip",
+      "hash": "27ea8e3448375df79bb05863f8ebc34cc513e7282ba3461214f767029b271d39",
+      "verified": true,
+      "replay": true,
+      "original_status": "feasible_under_assumptions",
+      "original_solver": "feasible_incumbent",
+      "reoptimized_status": "feasible_under_assumptions",
+      "reoptimized_solver": "feasible_incumbent",
+      "reoptimized_bytes": 16777216,
+      "options": {
+        "bin_s": 60,
+        "chunk_bytes": 16777216,
+        "time_limit_s": 15
+      }
+    }
+  ],
+  "limitations": [
+    "Replay verifies a feasible allocation, not physical truth or infeasibility.",
+    "Reoptimization uses archived geometry and generation, not independently recomputed terrain or ephemerides.",
+    "Terrain interpolation, sampling, global height envelope, radio rates, service and pointing are declared assumptions.",
+    "The later relay solution is an incumbent and is not proven optimal.",
+    "Observed event brackets and representative retarded-time samples are not continuous interval bounds."
+  ]
+}
