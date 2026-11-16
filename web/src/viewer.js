@@ -181,6 +181,7 @@ export async function createMoonViewer(container, {
       if (!healthy || !gate.passed || !hasCompletedDisplay || !cameraTarget) return false;
       const vectors = siteCameraVectors(cameraTarget);
       if (!vectors) return false;
+      viewer.resize?.();
       viewer.camera.setView({
         destination: new cesium.Cartesian3(...vectors.destination),
         orientation: { direction: new cesium.Cartesian3(...vectors.direction), up: new cesium.Cartesian3(...vectors.up) },
@@ -190,6 +191,7 @@ export async function createMoonViewer(container, {
     },
     relayOverview() {
       if (!healthy || !gate.passed || !hasCompletedDisplay || !siteCameraVectors(cameraTarget)) return false;
+      viewer.resize?.();
       viewer.camera.setView({
         destination: new cesium.Cartesian3(0, 0, -5000000),
         orientation: { direction: new cesium.Cartesian3(0, 0, 1), up: new cesium.Cartesian3(1, 0, 0) },
@@ -280,7 +282,7 @@ export async function createMoonViewer(container, {
       animation: false, timeline: false, homeButton: false, navigationHelpButton: false,
       fullscreenButton: false, selectionIndicator: false, infoBox: false,
       skyBox: false, skyAtmosphere: false, shadows: false, shouldAnimate: false,
-      requestRenderMode: true,
+      requestRenderMode: false,
     });
     healthy = true;
     removeListeners.push(viewer.scene.renderError.addEventListener(() => {
@@ -306,6 +308,7 @@ export async function createMoonViewer(container, {
       return api;
     }
     viewer.scene.primitives.add(moon);
+    viewer.resize?.();
     viewer.camera.setView({
       destination: new cesium.Cartesian3(0, 0, -5000000),
       orientation: { direction: new cesium.Cartesian3(0, 0, 1), up: new cesium.Cartesian3(1, 0, 0) },

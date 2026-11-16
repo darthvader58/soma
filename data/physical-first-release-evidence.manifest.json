@@ -518,8 +518,8 @@
     },
     {
       "path": "web/src/viewer.js",
-      "sha256": "2f85849a990a25d9463fb264bd0ccc47b914bcda47aeaa3d008ec4fe55c12675",
-      "size_bytes": 20944
+      "sha256": "8b2f43988642063d343c9f738d43aefef858c792c87ce2e76dfdfabe8ef4670e",
+      "size_bytes": 21018
     }
   ],
   "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
