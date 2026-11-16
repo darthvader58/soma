@@ -2,12 +2,26 @@ import { loadRegisteredMoon } from './registered-moon.js';
 import { isMoonSurfacePick, siteCameraVectors, registrationGate } from './viewer.js';
 import { storedSampleAt } from './research-client.js';
 
+export function observeMoonContent(tileset, onReady) {
+  let loaded = false, visible = false, revealed = false;
+  const maybeReveal = () => {
+    if (loaded && visible && !revealed) { revealed = true; onReady(); }
+  };
+  const markLoaded = () => { loaded = true; maybeReveal(); };
+  const removeListeners = [
+    tileset.initialTilesLoaded.addEventListener(markLoaded),
+    tileset.allTilesLoaded.addEventListener(markLoaded),
+    tileset.tileVisible.addEventListener(() => { visible = true; maybeReveal(); }),
+  ];
+  return () => removeListeners.forEach(remove => remove());
+}
+
 export async function createWorkbenchViewer(container, {
   ionToken, apiBase = '/api', onStatus = () => {}, onSelect = () => {}, onPick = () => {},
   loadCesium = () => import('cesium'), fetchImpl = globalThis.fetch,
 } = {}) {
   let C, viewer, moon, handler, shader, result, selectedId, epoch, destroyed = false;
-  let resizeObserver, resizeFrame, cameraMode = 'global';
+  let resizeObserver, resizeFrame, removeMoonReadiness, cameraMode = 'global';
   let catalog = [], selected = new Set(), siteEntities = [], resultEntities = [], directions = [], spacecraftEntities = new Map();
   let labels = true, paths = true, bodyDirections = true;
   const report = message => onStatus(message);
@@ -118,7 +132,7 @@ export async function createWorkbenchViewer(container, {
       }
       fitContextCamera(mode, true);
     },
-    destroy() { destroyed = true; resizeObserver?.disconnect(); if (resizeFrame) cancelAnimationFrame(resizeFrame); handler?.destroy(); viewer?.destroy(); shader?.destroy(); },
+    destroy() { destroyed = true; removeMoonReadiness?.(); resizeObserver?.disconnect(); if (resizeFrame) cancelAnimationFrame(resizeFrame); handler?.destroy(); viewer?.destroy(); shader?.destroy(); },
   };
   try {
     globalThis.CESIUM_BASE_URL = '/cesium/';
@@ -169,16 +183,16 @@ export async function createWorkbenchViewer(container, {
       shader = new C.CustomShader({ lightingModel: C.LightingModel.UNLIT });
       const loaded = await loadRegisteredMoon(C, { apiBase, customShader: shader, expectedModelSha256: registration.conversion_manifest_sha256 });
       if (destroyed) { loaded.tileset.destroy(); return api; }
-      moon = loaded.tileset; viewer.scene.primitives.add(moon);
-      let visibleContent = false;
-      moon.tileVisible.addEventListener(() => { visibleContent = true; });
-      moon.initialTilesLoaded.addEventListener(() => {
-        if (!visibleContent || destroyed) return;
+      moon = loaded.tileset;
+      let loadFailed = false;
+      removeMoonReadiness = observeMoonContent(moon, () => queueMicrotask(() => {
+        if (destroyed || loadFailed) return;
         sphere.show = false;
         report('Cesium Moon · neutral lighting. Global sites are reference-sphere context; tested terrain registration covers -90° to -87.5° only.');
         viewer.scene.requestRender();
-      });
-      moon.tileFailed.addEventListener(() => { report('Some Moon tiles failed. Context markers, stored samples and charts remain available.'); sphere.show = true; });
+      }));
+      viewer.scene.primitives.add(moon);
+      moon.tileFailed.addEventListener(() => { loadFailed = true; report('Some Moon tiles failed. Context markers, stored samples and charts remain available.'); sphere.show = true; });
       report('Reference-sphere context while Moon tiles load. Neutral display lighting; global terrain registration is not certified.');
       viewer.scene.requestRender();
     } catch { report('Moon tiles unavailable. Reference-sphere context only; scientific samples and charts remain available.'); }
