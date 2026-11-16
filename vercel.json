@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "npm --prefix web ci",
-  "buildCommand": "python3 scripts/prepare-hosted-runtime.py && python3 scripts/prepare-research-data.py && npm --prefix web run build",
+  "buildCommand": "python3 scripts/prepare-hosted-runtime.py && python3 scripts/prepare-research-data.py && python3 scripts/prepare-delivery-data.py --output api/_data && npm --prefix web run build",
   "outputDirectory": "web/dist",
   "functions": {
     "api/index.py": {
