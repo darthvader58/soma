@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import time
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from soma.validation import load_json, resource_directory
@@ -59,6 +61,32 @@ def _remote_identity(url):
                 "parent_sha256": None}
 
 
+
+_LOLA_RANGE_BUDGET = 32*1024*1024
+_LOLA_TRANSPORT_SECONDS = 120
+_LOLA_REQUEST_SPACING_S = 0.35
+_transport_now = time.monotonic
+_transport_sleep = time.sleep
+_ACQUISITION_USER_AGENT = "SOMA-scientific-acquisition/0.1 (+https://github.com/darthvader58/soma)"
+
+
+def _retry_after_seconds(value):
+    if not value:
+        return 0
+    try:
+        seconds = float(value)
+    except ValueError:
+        from datetime import datetime, timezone
+        from email.utils import parsedate_to_datetime
+        try:
+            seconds = (parsedate_to_datetime(value)-datetime.now(timezone.utc)).total_seconds()
+        except (TypeError, ValueError, OverflowError):
+            return 0
+    import math
+    if not math.isfinite(seconds):
+        return 0
+    return max(0, seconds)
+
 def _acquire_lola_elevation_tiles(root, parent):
     """Stage exact parent metadata and selected compressed tiles in a sparse file.
 
@@ -73,30 +101,62 @@ def _acquire_lola_elevation_tiles(root, parent):
     if url != "https://pgda.gsfc.nasa.gov/data/LOLA_5mpp/87S/ldem_87s_5mpp.tif":
         raise ValueError("Unrecognized LOLA elevation source")
     transferred = 0
-    budget = 32*1024*1024
+    deadline = _transport_now()+_LOLA_TRANSPORT_SECONDS
+    next_request = _transport_now()
+
+    def wait_bounded(delay):
+        if _transport_now()+delay >= deadline:
+            raise TimeoutError("LOLA acquisition exceeded its 120-second transport budget")
+        if delay > 0:
+            _transport_sleep(delay)
 
     def read_range(start, length):
-        nonlocal transferred
+        nonlocal transferred, next_request
         if start < 0 or length <= 0 or start+length > parent["size_bytes"]:
             raise ValueError("Invalid bounded LOLA byte range")
         for attempt in range(3):
-            if transferred+length+1 > budget:
+            if transferred+length+1 > _LOLA_RANGE_BUDGET:
                 raise ValueError("LOLA elevation exceeds its 32 MiB transport budget")
+            wait_bounded(max(0, next_request-_transport_now()))
+            next_request = _transport_now()+_LOLA_REQUEST_SPACING_S
+            retry_after = 0
             try:
                 request = Request(url, headers={"Range": f"bytes={start}-{start+length-1}",
-                                                "Accept-Encoding": "identity"})
-                with urlopen(request, timeout=45) as response:
+                    "Accept-Encoding": "identity", "User-Agent": _ACQUISITION_USER_AGENT})
+                with urlopen(request, timeout=min(45, deadline-_transport_now())) as response:
                     expected = f"bytes {start}-{start+length-1}/{parent['size_bytes']}"
                     if response.status != 206 or response.headers.get("Content-Range") != expected:
                         raise ValueError("LOLA server did not honor the exact bounded byte range")
-                    content = response.read(length+1)
-                    transferred += len(content)
+                    content = bytearray()
+                    read = getattr(response, "read1", response.read)
+                    while len(content) <= length:
+                        if _transport_now() >= deadline:
+                            raise TimeoutError("LOLA acquisition exceeded its 120-second transport budget")
+                        chunk = read(min(65536, length+1-len(content)))
+                        transferred += len(chunk)
+                        content.extend(chunk)
+                        if not chunk:
+                            break
+                    if _transport_now() >= deadline:
+                        raise TimeoutError("LOLA acquisition exceeded its 120-second transport budget")
                 if len(content) != length:
                     raise ValueError("Incomplete LOLA byte range")
-                return content
-            except (OSError, ValueError):
+                return bytes(content)
+            except HTTPError as error:
+                retry_after = _retry_after_seconds(error.headers.get("Retry-After") if error.headers else None)
+                error.close()
+                if error.code not in (403, 429) and not 500 <= error.code <= 599:
+                    raise
                 if attempt == 2:
                     raise
+            except OSError:
+                if attempt == 2 or _transport_now() >= deadline:
+                    raise
+            # A server-directed wait longer than our bound ends acquisition;
+            # retrying sooner would disregard its request to reduce load.
+            if retry_after > 30:
+                raise TimeoutError("LOLA Retry-After exceeds the bounded 30-second retry wait")
+            wait_bounded(max(2**(attempt+1), retry_after))
 
     metadata = read_range(0, 396153)
     if metadata[:8] != b"II+\x00\x08\x00\x00\x00":
