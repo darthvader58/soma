@@ -7,6 +7,7 @@ export async function createWorkbenchViewer(container, {
   loadCesium = () => import('cesium'), fetchImpl = globalThis.fetch,
 } = {}) {
   let C, viewer, moon, handler, shader, result, selectedId, epoch, destroyed = false;
+  let resizeObserver, resizeFrame, cameraMode = 'global';
   let catalog = [], selected = new Set(), siteEntities = [], resultEntities = [], directions = [], spacecraftEntities = new Map();
   let labels = true, paths = true, bodyDirections = true;
   const report = message => onStatus(message);
@@ -15,6 +16,24 @@ export async function createWorkbenchViewer(container, {
   // The marker lift only prevents display z-fighting; it never changes study coordinates or equipment heights.
   const contextMarker = value => cartesian(value.map(component => component * (1 + 10000 / Math.hypot(...value))));
   const clear = entities => { entities.forEach(entity => viewer?.entities.remove(entity)); entities.length = 0; };
+  function fitContextCamera(mode, animate = false) {
+    viewer.resize();
+    const aspect = viewer.scene.canvas.clientWidth / viewer.scene.canvas.clientHeight;
+    const verticalHalfAngle = viewer.camera.frustum.fovy / 2;
+    const halfAngle = Math.min(verticalHalfAngle, Math.atan(Math.tan(verticalHalfAngle) * aspect));
+    if (!Number.isFinite(halfAngle) || halfAngle <= 0) return;
+    // This fits the display body to the viewport; it does not alter any scientific position.
+    const distance = 1750000 / Math.sin(halfAngle) * 1.18;
+    const axis = mode === 'polar' ? new C.Cartesian3(0, 0, -1) : new C.Cartesian3(4.7, -1.3, 1.3);
+    const outward = C.Cartesian3.normalize(axis, new C.Cartesian3());
+    const destination = C.Cartesian3.multiplyByScalar(outward, distance, new C.Cartesian3());
+    const direction = C.Cartesian3.negate(outward, new C.Cartesian3());
+    const view = { destination, orientation: { direction, up: mode === 'polar' ? C.Cartesian3.UNIT_X : C.Cartesian3.UNIT_Z } };
+    viewer.camera.cancelFlight();
+    if (animate && !globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches) viewer.camera.flyTo({ ...view, duration: 0.7 });
+    else viewer.camera.setView(view);
+    viewer.scene.requestRender();
+  }
   function drawSites() {
     if (!viewer || destroyed) return;
     clear(siteEntities);
@@ -88,6 +107,7 @@ export async function createWorkbenchViewer(container, {
     setTime(next) { epoch = next; if (!viewer || destroyed) return; viewer.clock.currentTime = C.JulianDate.fromIso8601(next); drawDirections(); viewer.scene.requestRender(); },
     camera(mode) {
       if (!viewer || destroyed) return;
+      cameraMode = mode;
       viewer.trackedEntity = undefined;
       if (mode === 'follow') { const item = spacecraftEntities.values().next().value; if (item) viewer.trackedEntity = item.entity; return; }
       if (mode === 'site') {
@@ -96,12 +116,9 @@ export async function createWorkbenchViewer(container, {
         if (vectors) viewer.camera.flyTo({ destination: cartesian(vectors.destination), orientation: { direction: cartesian(vectors.direction), up: cartesian(vectors.up) }, duration: 0.7 });
         return;
       }
-      const destination = mode === 'polar' ? new C.Cartesian3(0, 0, -5100000) : new C.Cartesian3(4700000, -1300000, 1300000);
-      const direction = C.Cartesian3.normalize(C.Cartesian3.negate(destination, new C.Cartesian3()), new C.Cartesian3());
-      viewer.camera.flyTo({ destination, orientation: { direction, up: mode === 'polar' ? C.Cartesian3.UNIT_X : C.Cartesian3.UNIT_Z },
-        duration: globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 0 : 0.7 });
+      fitContextCamera(mode, true);
     },
-    destroy() { destroyed = true; handler?.destroy(); viewer?.destroy(); shader?.destroy(); },
+    destroy() { destroyed = true; resizeObserver?.disconnect(); if (resizeFrame) cancelAnimationFrame(resizeFrame); handler?.destroy(); viewer?.destroy(); shader?.destroy(); },
   };
   try {
     globalThis.CESIUM_BASE_URL = '/cesium/';
@@ -120,9 +137,15 @@ export async function createWorkbenchViewer(container, {
       }), attributes: { color: C.ColorGeometryInstanceAttribute.fromColor(C.Color.fromCssColorString('#586163')) } }),
       appearance: new C.PerInstanceColorAppearance({ flat: true, translucent: false, closed: true }),
     }));
-    const cameraPosition = new C.Cartesian3(4700000, -1300000, 1300000);
-    const cameraDirection = C.Cartesian3.normalize(C.Cartesian3.negate(cameraPosition, new C.Cartesian3()), new C.Cartesian3());
-    viewer.camera.setView({ destination: cameraPosition, orientation: { direction: cameraDirection, up: C.Cartesian3.UNIT_Z } });
+    fitContextCamera('global');
+    resizeObserver = new ResizeObserver(() => {
+      if (resizeFrame) cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = undefined;
+        if (!destroyed && (cameraMode === 'global' || cameraMode === 'polar')) fitContextCamera(cameraMode);
+      });
+    });
+    resizeObserver.observe(container);
     drawSites();
     report('Reference-sphere context. Loading Moon tiles; global terrain registration is not certified.');
     viewer.scene.renderError.addEventListener(() => report('Moon rendering failed. Scientific samples and charts remain available.'));
@@ -146,9 +169,17 @@ export async function createWorkbenchViewer(container, {
       shader = new C.CustomShader({ lightingModel: C.LightingModel.UNLIT });
       const loaded = await loadRegisteredMoon(C, { apiBase, customShader: shader, expectedModelSha256: registration.conversion_manifest_sha256 });
       if (destroyed) { loaded.tileset.destroy(); return api; }
-      moon = loaded.tileset; viewer.scene.primitives.add(moon); sphere.show = false;
+      moon = loaded.tileset; viewer.scene.primitives.add(moon);
+      let visibleContent = false;
+      moon.tileVisible.addEventListener(() => { visibleContent = true; });
+      moon.initialTilesLoaded.addEventListener(() => {
+        if (!visibleContent || destroyed) return;
+        sphere.show = false;
+        report('Cesium Moon · neutral lighting. Global sites are reference-sphere context; tested terrain registration covers -90° to -87.5° only.');
+        viewer.scene.requestRender();
+      });
       moon.tileFailed.addEventListener(() => { report('Some Moon tiles failed. Context markers, stored samples and charts remain available.'); sphere.show = true; });
-      report('Cesium Moon · neutral lighting. Global sites are reference-sphere context; tested terrain registration covers -90° to -87.5° only.');
+      report('Reference-sphere context while Moon tiles load. Neutral display lighting; global terrain registration is not certified.');
       viewer.scene.requestRender();
     } catch { report('Moon tiles unavailable. Reference-sphere context only; scientific samples and charts remain available.'); }
   } catch {

@@ -27,7 +27,7 @@ reference sphere; the old regional terrain-registration certificate is not appli
 | --- | --- |
 | Full engine suite after serverless startup fix | 445 passed, 0 failed, 0 skipped; 261.52 s |
 | Web unit suite | 94 passed |
-| Archive/workbench browser suite after methods disclosure | 27 passed |
+| Archive/workbench browser suite after loading/camera refinement | 28 passed |
 | Real-source browser study | Passed: 15 catalog records, native LRO playback, new 21.1827° N / 68.2714° E site, 1.7 m panel, changed hash and exact download |
 | Web production build | Passed |
 | Mintlify validation and anchor checks | Passed |
@@ -42,10 +42,19 @@ was recalculated on macOS with identical request hash and epochs. Maximum positi
 differences were 0.0363 m for the Sun, 0.000095 m for Earth and 0.000000448 m for LRO;
 maximum site elevation difference was 1.39e-11 degrees. These are cross-platform
 implementation comparisons, not bounds on absolute ephemeris accuracy.
-Production promotion and Moon tiles require a separate final check.
+The public Vercel production build at commit `6bda219` also passed native calculations,
+rendered lunar imagery, changing LRO states, play/pause UTC progression, complete
+methods/source disclosure, saved alternatives and exact result download. Advancing
+only the six-hour interval from 1 to 2 April changed the custom site's first Sun
+elevation from about 36.407° to 25.346° and changed its request hash. The exported
+request hash was reproduced locally. Details and actual timestamps are in
+[deployment-review.json](deployment-review.json).
 The interface's Methods & sources disclosure exposes every returned limitation,
 assumption and source checksum in a bounded, keyboard-scrollable region. Its mobile
-keyboard and source-link behavior passed the final 27-test browser suite.
+keyboard and source-link behavior passed the browser suite. The final 28-test run
+also checked real-Cesium whole-Moon bounds at 1440 × 900, after a 260 px map-height
+resize, and in polar view. The loading context remains visible until scientific
+display tiles are ready; this is a presentation handoff, not a terrain calculation.
 The optional Docker image was not built because no Docker daemon was available.
 
 Numerical reader comparisons are recorded in

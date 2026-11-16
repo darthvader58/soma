@@ -120,3 +120,31 @@ test('real Cesium reference-sphere fallback renders without erasing scientific a
  await expect(page.locator('#site-comparison tbody tr')).toHaveCount(3);expect(errors).toEqual([]);
  await page.screenshot({path:'test-results/research-workbench-contract.png',fullPage:true});
 });
+
+test('real Cesium global and polar cameras retain the whole context Moon after viewport height changes',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});await page.emulateMedia({reducedMotion:'reduce'});
+ await setup(page,{mockViewer:false});await page.goto('/');
+ await expect(page.locator('#research-map-status')).toContainText('no scoped ion token',{timeout:60000});
+ const canvas=page.locator('#research-moon canvas');
+ const bodyFits=async()=>{
+  const png=(await canvas.screenshot()).toString('base64');
+  return page.evaluate(async encoded=>{
+   const image=new Image();image.src=`data:image/png;base64,${encoded}`;await image.decode();
+   const sample=document.createElement('canvas');sample.width=image.width;sample.height=image.height;
+   const context=sample.getContext('2d');context.drawImage(image,0,0);
+   const pixels=context.getImageData(0,0,sample.width,sample.height).data;
+   let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity,count=0;
+   for(let y=0;y<sample.height;y++)for(let x=0;x<sample.width;x++){
+    const index=(y*sample.width+x)*4;
+    if(Math.abs(pixels[index]-88)<=2&&Math.abs(pixels[index+1]-97)<=2&&Math.abs(pixels[index+2]-99)<=2){
+     minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y);count++;
+    }
+   }
+   return count>1000&&[minX,minY,maxX,maxY].every(Number.isFinite)&&minX>10&&minY>10&&maxX<sample.width-10&&maxY<sample.height-10;
+  },png);
+ };
+ await page.getByRole('button',{name:'Global',exact:true}).click();await expect.poll(bodyFits).toBe(true);
+ await page.addStyleTag({content:'.scene-panel{height:260px;min-height:0}.research-moon{min-height:0}'});
+ await expect(canvas).toHaveJSProperty('clientHeight',260);await expect.poll(bodyFits).toBe(true);
+ await page.getByRole('button',{name:'South pole',exact:true}).click();await expect.poll(bodyFits).toBe(true);
+});

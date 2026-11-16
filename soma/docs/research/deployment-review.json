@@ -54,9 +54,31 @@
     "live_tutorial_verified": "https://soma-ce3178ca.mintlify.site/getting-started/live-research"
   },
   "production": {
-    "status": "awaiting_vercel_identity_verification",
+    "status": "verified_on_public_domain",
+    "verified_at_utc": "2026-11-17T02:44:22.559865+00:00",
     "public_url": "https://soma-atlas-two.vercel.app/",
-    "moon_tiles_verified_for_new_workbench": false
+    "source_commit": "6bda21968a32681affc47c0b47ff13f30e909072",
+    "deployment_id": "7DfVdgDYMdG5UtvhFWiENgWRrEyF",
+    "moon_tiles_verified_for_new_workbench": true,
+    "default_native_geometry_verified": true,
+    "methods_sources_disclosure_verified": true,
+    "native_lro_next_sample_verified": true,
+    "play_pause_utc_progression_verified": true,
+    "saved_alternative_verified": true,
+    "custom_site": {
+      "latitude_deg": 21.1827,
+      "longitude_deg_east": 68.2714,
+      "panel_height_m": 1.7
+    },
+    "controlled_date_change": {
+      "previous_study_sha256": "cf554256c3034f389d2ea43ad75039a86e2baeb323e073a734f360f17dd0a1a5",
+      "new_study_sha256": "4ccb13727a2a23b24c7576f7ab1f8d54835784a28760ea129779ada1c8879ebc",
+      "only_request_change": "Both UTC endpoints advanced one day, same six-hour duration",
+      "previous_first_sun_elevation_deg": 36.407,
+      "new_first_sun_elevation_deg": 25.34598240135054,
+      "exact_export_download_and_local_hash_reproduction": true
+    }
   },
-  "scope": "First live reference-sphere geometry increment; full research beta remains incomplete."
+  "scope": "First live reference-sphere geometry increment; full research beta remains incomplete.",
+  "final_scene_refinement": "A responsive whole-Moon camera and visible loading-context handoff were requested after the initial successful production scientific check; see the interface report for their separate checks."
 }
