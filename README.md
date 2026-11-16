@@ -212,14 +212,20 @@ site. Documentation source lives in [`docs/`](docs/README.md).
 
 Deploy from the **repository root**, with the framework preset **Other**.
 The root `vercel.json` installs and builds `web/`, serves `web/dist`, and routes
-`/api/moon/*` to the Python function in `api/index.py`. This configuration is
-prepared for deployment; it is not confirmation that the public update is live.
+`/api/moon/*` to the Python function in `api/index.py`. The public deployment
+at [soma-atlas-two.vercel.app](https://soma-atlas-two.vercel.app/) has been
+checked with rendered terrain, exact stored relay states, computed schedules,
+and a byte-identical run download. See the
+[hosted verification record](soma/docs/hosted-deployment-verification.md).
 
 The Python function exposes registration, conversion metadata, and the bounded
 registered Moon tile stream. It reuses the engine's pinned display conversion
 and registration evidence, retains source attribution, and returns private,
 nonpersistent responses. It does not run planning jobs or replace numerical
 terrain analysis. Unsupported or oversized tile objects fail explicitly.
+The Linux build bundles its system Expat library and license texts for
+Rasterio, records the package and checksum, and verifies the library before
+loading it. Generated native binaries stay out of Git.
 
 Configure these deployment environment variables without committing token values:
 

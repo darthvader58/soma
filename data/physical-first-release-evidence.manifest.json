@@ -48,8 +48,8 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "d7fd291fac1431a0406ea9023465128a6a6f1106b873de6e1f99e094aec67f2d",
-      "size_bytes": 16293
+      "sha256": "edae19c1bfd665168bc084cd2dee9743730fb4d4b185d0c441f708dc6c092d94",
+      "size_bytes": 16687
     },
     {
       "path": "data/phase6-evidence.manifest.json",
@@ -318,8 +318,8 @@
     },
     {
       "path": "tests/web/viewer-runtime.test.mjs",
-      "sha256": "d01bb56d537aeff72e0b6676eed83c2247788f6e8c07b23d205dc1ba02f1bf13",
-      "size_bytes": 15927
+      "sha256": "7a02a2e40a12b49d60f5ef3c963e35dd1d11ddd400ac58f61db4e5df1bc05176",
+      "size_bytes": 17470
     },
     {
       "path": "web/.gitignore",
@@ -423,8 +423,8 @@
     },
     {
       "path": "web/src/viewer.js",
-      "sha256": "ce45e9c4d0dc4798ef717f834ad412e16d9ee66def9f74f4cd7c532137c75565",
-      "size_bytes": 18929
+      "sha256": "ad968839434b43113956c93644398af0978198d032ddef8c4ba1accfbfd97436",
+      "size_bytes": 19050
     },
     {
       "path": "api/index.py",

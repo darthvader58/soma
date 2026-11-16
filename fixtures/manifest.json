@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "d7fd291fac1431a0406ea9023465128a6a6f1106b873de6e1f99e094aec67f2d"
+      "sha256": "edae19c1bfd665168bc084cd2dee9743730fb4d4b185d0c441f708dc6c092d94"
     },
     {
       "path": "data/README.md",
@@ -75,7 +75,7 @@
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "144552cfa639190cb72c933cd7d78978c1792b649dced56563e8c8eaa02683e9"
+      "sha256": "f8f1801e1470a16fb80e99126c7377af96f5c705b79d622f38cc7ed8644afeaf"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -1016,6 +1016,10 @@
     {
       "path": "tests/engine/test_trajectories.py",
       "sha256": "f6728d8d4e9f75769e765d348bd1dbffd6b935642cd0c93d88fa4893f582b270"
+    },
+    {
+      "path": "soma/docs/hosted-deployment-verification.md",
+      "sha256": "bbf6c097744eedda5790fc667d81a0b2effd9e7121e6c65446d2c188970ec2f9"
     }
   ],
   "scientific_analysis_scope": "captured_delivery_planner_results_only",
@@ -1024,5 +1028,7 @@
   "phase3_evidence_ref": "data/phase3-evidence.manifest.json",
   "analysis_scope": "synthetic_assumed_rate_delivery_runs_through_phase_5",
   "hosted_compatibility_update": "Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
-  "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately."
+  "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately.",
+  "hosted_operations_evidence_ref": "soma/docs/hosted-deployment-verification.md",
+  "hosted_operations_scope": "Public transport, documentation navigation and presentation verification; separate from archived scientific completion and review claims."
 }
