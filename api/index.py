@@ -66,6 +66,9 @@ class HostedMoon(RegisteredMoon):
     def get(self, path):
         try:
             content, media, source_sha = super().get(path)
+        except ImportError as error:
+            logging.getLogger(__name__).error("Moon dependency import failed: %s", error)
+            raise
         except Exception as error:
             # Log only the failure class; transport messages may contain signed URLs.
             logging.getLogger(__name__).error("Moon display preparation failed: %s", type(error).__name__)
