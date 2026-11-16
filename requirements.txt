@@ -1,8 +1,10 @@
-# Vercel display conversion and bounded live geometry; no delivery solver.
+# Vercel display conversion, bounded geometry and regional delivery planning.
 fastapi==0.163.0
 numpy==2.5.4
 rasterio==1.5.2
 spiceypy==8.4.0
+pyproj==3.8.0
+pulp==3.3.2
 jsonschema==4.26.0
 referencing==0.37.0
 rfc8785==0.1.4

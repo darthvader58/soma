@@ -225,7 +225,8 @@ class JobStore:
 
 def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32, moon_provider=None,
                research_planner=None, research_run_root=None, research_data_root=None,
-               research_capabilities=None, research_catalog=None):
+               research_capabilities=None, research_catalog=None, delivery_runner=None,
+               delivery_data_root=None, delivery_capabilities=None):
     """Planner injection is trusted startup configuration, never request data."""
     @asynccontextmanager
     async def lifespan(app):
@@ -251,6 +252,9 @@ def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32, moon
     app.include_router(research_router(data_root=research_data_root or configured_data_root(),
         planner=research_planner, capabilities_provider=research_capabilities,
         catalog_provider=research_catalog))
+    from soma.api.delivery import delivery_router
+    app.include_router(delivery_router(data_root=delivery_data_root or research_data_root or configured_data_root(),
+        runner=delivery_runner, capabilities_provider=delivery_capabilities))
     origins = [value.strip().rstrip("/") for value in os.environ.get("SOMA_RESEARCH_ALLOWED_ORIGINS", "").split(",") if value.strip()]
     if "*" in origins:
         raise ValueError("Research CORS requires explicit allowed origins")

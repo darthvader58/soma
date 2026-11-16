@@ -24,22 +24,7 @@ from soma.api.moon import MAX_OBJECT, RegisteredMoon, moon_router
 
 # Leave headroom beneath Vercel's buffered 4.5 MB response limit.
 MAX_HOSTED_RESPONSE = 4_000_000
-_native_handles = []
-
-
-def preload_hosted_libraries(directory=None):
-    directory = Path(directory) if directory is not None else Path(__file__).parent / "_native"
-    manifest_path = directory / "manifest.json"
-    if not manifest_path.is_file():
-        if os.environ.get("VERCEL") == "1":
-            raise ImportError("Hosted native dependency manifest is missing")
-        return
-    manifest = json.loads(manifest_path.read_text())
-    library = directory / "libexpat.so.1"
-    if manifest.get("file") != library.name or hashlib.sha256(library.read_bytes()).hexdigest() != manifest.get("sha256"):
-        raise ImportError("Hosted Expat dependency checksum mismatch")
-    _native_handles.append(ctypes.CDLL(str(library.resolve()), mode=ctypes.RTLD_GLOBAL))
-
+from soma.api.native import preload_hosted_libraries
 
 preload_hosted_libraries()
 
@@ -105,7 +90,8 @@ class HostedMoon(RegisteredMoon):
 
 
 def create_app(provider=None, *, research_planner=None, research_data_root=None,
-               research_capabilities=None, research_catalog=None):
+               research_capabilities=None, research_catalog=None, delivery_runner=None,
+               delivery_data_root=None, delivery_capabilities=None):
     application = FastAPI(docs_url=None, redoc_url=None, openapi_url=None)
 
     @application.middleware("http")
@@ -129,6 +115,10 @@ def create_app(provider=None, *, research_planner=None, research_data_root=None,
         data_root=research_data_root or str(Path(__file__).parent / "_data"),
         planner=research_planner, capabilities_provider=research_capabilities,
         catalog_provider=research_catalog), prefix="/api")
+    from soma.api.delivery import delivery_router
+    application.include_router(delivery_router(
+        data_root=delivery_data_root or research_data_root or str(Path(__file__).parent / "_data"),
+        runner=delivery_runner, capabilities_provider=delivery_capabilities), prefix="/api")
     return application
 
 
