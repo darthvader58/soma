@@ -1,0 +1,64 @@
+---
+title: Live lunar geometry
+description: Calculate a new multi-site study with matched DE421 kernels and a reconstructed LRO trajectory.
+---
+
+The [Vercel workbench](https://soma-atlas-two.vercel.app/) accepts new site coordinates, UTC intervals and equipment heights. Python evaluates the requested epochs; the browser displays the returned arrays. This workflow is independent of the archived delivery examples.
+
+## Run the browser study
+
+1. Select Apollo 11, Shackleton and Tycho from the catalog. Search for other locations or add a custom latitude/longitude.
+2. Choose **Use LRO coverage** to select a supported historical interval and the reconstructed spacecraft source. The source covers 15 March through 15 June 2026; it is not a live position feed.
+3. Run the geometry study. Inspect the selected site's Sun/Earth elevation history and source notes.
+4. Play or scrub UTC. The spacecraft follows engine-authored positions; numerical readouts use stored sample epochs.
+5. Edit a date or height. The previous calculation becomes stale until you run again. Export the new result as JSON.
+
+The named crater centers are context references, not proposed landing locations. Catalog elevation defaults to an explicitly assumed zero above the 1,737,400 m reference sphere. Read the [source and frame notes](/science/research-sources).
+
+## Reproduce the study in Python
+
+Install the [analysis dependencies](/getting-started/installation), then run these commands from the repository root:
+
+```bash
+python scripts/prepare-research-data.py --output /tmp/soma-research-sources
+python examples/research_geometry.py \
+  --data-root /tmp/soma-research-sources \
+  --output /tmp/lro-three-sites.json
+```
+
+Preparation acquires five pinned files from the public NASA NAIF archive, totaling 26,144,838 bytes. Every file must match its recorded size and SHA256. Calculations use local verified files and never download a replacement kernel during a run.
+
+The example evaluates three sites over six hours on 1 April 2026, with a 60-second step. It returns **361 epochs per site**, six-dimensional Moon-fixed Sun/Earth/LRO states, site-relative directions and provenance. The requested end is always included. A shorter final step is permitted when the duration is not divisible by the requested step.
+
+Executed on 16 November 2026, the normalized request hash was `9fb3d812a5f852bcb7cbb125754041085a2a339462918a973f3e1e575943d12b`. Sampled elevations rounded to three decimals were:
+
+| Site | Sun minimum / maximum | Earth minimum / maximum |
+| --- | --- | --- |
+| Apollo 11 | 80.848° / 83.887° | 70.798° / 70.933° |
+| Shackleton crater center | −1.044° / −1.020° | −3.140° / −2.789° |
+| Tycho crater center | 38.924° / 40.223° | 41.700° / 42.011° |
+
+These are computed spherical-horizontal center elevations, not terrain-clear access intervals or mission predictions.
+
+## Recalculate an exported browser request
+
+```python
+import json
+from pathlib import Path
+from soma.research import analyze_study, study_sha256
+
+saved = json.loads(Path("downloaded-study-result.json").read_text())
+assert study_sha256(saved["request"]) == saved["study_sha256"]
+
+recalculated = analyze_study(
+    saved["request"], data_root="/tmp/soma-research-sources"
+)
+assert recalculated["study_sha256"] == saved["study_sha256"]
+assert recalculated["epochs_utc"] == saved["epochs_utc"]
+```
+
+Matching request hashes identify the same normalized input, not agreement of independent physical measurements. Match source hashes and software versions when reproducing scientific arrays. See the [research API](/reference/research-api) for fields, units and limits.
+
+## Interpret this calculation
+
+Elevations are relative to the spherical local horizontal. A positive elevation does not establish terrain-clear visibility, solar power, a usable radio contact or permission to use a station. This study does not evaluate terrain shadows, finite solar-disk visibility, eclipses, power or data delivery. Those quantities must not be inferred from the rendered scene.

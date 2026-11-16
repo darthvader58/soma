@@ -1,16 +1,18 @@
 ---
 title: SOMA Python library
-description: Build auditable lunar data-delivery schedules under explicit geometry, network, and energy assumptions.
+description: Calculate lunar geometry from published sources and audit data-delivery schedules under explicit assumptions.
 ---
 
-SOMA answers when a declared lander can deliver a finite dataset to Earth, through which contacts, and where the data waits. The Python engine constrains the schedule with contact capacity, radio conflicts, propagation delay, finite storage, and lander energy.
+SOMA provides a Python lunar geometry library, an interactive Moon workbench and a bounded data-delivery planner. The live workbench calculates new multi-site Sun/Earth geometry and reconstructed LRO states. The delivery engine constrains schedules with contact capacity, radio conflicts, propagation delay, finite storage and lander energy.
 
-The distribution is `soma-lunar`; import it as `soma`. The current repository version is **0.1.0**. Install from source using the [installation guide](/getting-started/installation), then calculate a [synthetic example](/getting-started/quickstart) without downloading lunar datasets.
+The distribution is `soma-lunar`; import it as `soma`. The current repository version is **0.1.0**. Install from source using the [installation guide](/getting-started/installation), then reproduce a [live geometry study](/getting-started/live-research) with pinned NASA ephemerides. The [synthetic delivery tutorial](/getting-started/quickstart) remains available for hand-checkable scheduling tests without data downloads.
 
 ## Choose a workflow
 
 | Task | Start here |
 | --- | --- |
+| Calculate new site/date geometry and replay LRO | [Live lunar geometry](/getting-started/live-research) |
+| Use the geometry study library and Vercel API | [Research API](/reference/research-api) |
 | Calculate a standalone scenario | [Python quickstart](/getting-started/quickstart) |
 | Reproduce the terrain-backed date comparison | [Physical runs](/getting-started/physical-runs) |
 | Integrate with a local application | [HTTP service](/reference/service) |
@@ -21,6 +23,6 @@ The distribution is `soma-lunar`; import it as `soma`. The current repository ve
 
 A result reports `feasible_under_assumptions`, `infeasible_in_model`, or `unknown`. Solver status and model fidelity are separate fields. A feasible schedule using assumed radio rates remains an assumed-rate simulation.
 
-The browser displays engine-authored results. The public application can show captured physical runs and a registered Moon display; arbitrary new analysis requires the Python engine and its datasets. A rendered shadow or visible line is not a scientific result.
+The browser displays engine-authored results. The public Vercel application calculates new bounded geometry studies and keeps earlier captured delivery cases in an explicit archive. Geometry completion does not imply delivery feasibility. A rendered shadow or visible line is not a scientific result.
 
 SOMA is a planning model under declared assumptions. It does not reserve communications service, certify navigation or landing safety, or predict mission success. Read the [scientific limitations](/science/assumptions-limits) before interpreting a schedule.

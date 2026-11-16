@@ -2,7 +2,9 @@
 
 **Selenographic Observation and Mission Atlas**
 
-SOMA is a Python library and web interface for lunar data-delivery planning.
+SOMA is a Python library and web workbench for lunar geometry and data-delivery planning.
+The live workbench calculates multi-site Sun/Earth geometry from matched DE421
+kernels and plays a reconstructed LRO trajectory from the NASA PDS/NAIF archive.
 Given a landing site, data-ready time, file size, deadline, hardware profile,
 and declared network, it builds an explainable schedule for direct-to-Earth
 delivery or delivery through one lunar relay. Contact capacity, storage,
@@ -24,16 +26,32 @@ maps the required `plan/` scope to computed evidence and exact run commands.
 
 ## Try the web demo
 
-Open **[soma-atlas-two.vercel.app](https://soma-atlas-two.vercel.app)** to inspect
-captured Python-engine results without installing anything.
+Open **[soma-atlas-two.vercel.app](https://soma-atlas-two.vercel.app)** to calculate
+a new geometry study without installing anything. The app and public Python API
+run on Vercel.
 
-- Follow five cases in one hypothetical south-pole lander study: direct delivery,
-  a later date, lunar relay forwarding, low initial battery, and unavailable relay service.
-- Inspect contact windows, transmission timing, storage waits, and energy history.
-- Explore the supplied horizon, Sun/Earth, and power diagnostics.
-- Download scenario JSON, results, and the complete engine-authored run package.
+- Select from 15 sourced lunar locations or add a custom coordinate.
+- Change UTC dates, sampling and separate antenna/panel heights, then run Python analysis.
+- Use the reconstructed LRO coverage interval and play its supplied position history.
+- Inspect per-site Sun/Earth elevation histories, sources and exact sampled readouts.
+- Export the returned scientific JSON and reproduce it with the documented library.
 
-The hosted demo runs in **captured-result mode**. It accepts only exact matches
+The geometry endpoint uses a declared reference sphere. It does not evaluate terrain
+shadowing, solar-disk fractions, power, usable radio contacts or delivery. Catalog
+crater centers are context references, not certified landing sites. The workbench
+shows source coverage and rejects unsupported requests rather than inventing results.
+See the [live research tutorial](docs/getting-started/live-research.mdx),
+[API reference](docs/reference/research-api.mdx) and
+[source notes](docs/science/research-sources.mdx).
+
+To reproduce the three-site historical LRO study locally:
+
+```sh
+python scripts/prepare-research-data.py --output /tmp/soma-research-sources
+python examples/research_geometry.py --data-root /tmp/soma-research-sources --output /tmp/lro-three-sites.json
+```
+
+The **[delivery archive](https://soma-atlas-two.vercel.app/?mode=archive)** accepts only exact matches
 to the supplied scenarios. An edited scenario needs a live Python service;
 the browser does not calculate a replacement result or scale a saved schedule.
 The hosted display adapter serves the corrected Cesium Moon representation.
@@ -52,7 +70,7 @@ passes numerical replay but predates the display artifact required by the
 current complete-export verifier. Generate a fresh run with the CLI below to
 produce and verify the current package format.
 
-For live calculations and editable scenarios, run the application locally below.
+For live delivery calculations and editable delivery scenarios, run the application locally below.
 
 ## Use the Python library
 

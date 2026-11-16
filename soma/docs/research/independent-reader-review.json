@@ -461,5 +461,37 @@
     "site_elevation": "Subtract exported panel_position_m for Sun and antenna_position_m for Earth; independently form elementary spherical east/north/up components; elevation=atan2(up,hypot(east,north)). At the exact pole use longitude zero for the basis.",
     "lro_frame_check": "Evaluate pinned LRO SPK using native CSPICE spkezr(-85,ET,J2000,NONE,MOON), convert km and km/s to SI, and apply independent Skyfield R/Rdot as above. This checks the PCK/frame transformation, while SPK evaluation remains shared.",
     "sources": "No network fetch during calculations; verify the recorded source hashes before repeating."
+  },
+  "engine_regression_run": {
+    "recorded_at_utc": "2026-11-16T23:52:12.791076Z",
+    "command": ".venv/bin/pytest -q tests/engine",
+    "data_root": "/private/tmp/soma-phase2-data",
+    "passed": 444,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 75611,
+    "duration_s": 241.57,
+    "warning_scope": "Deprecation warnings from the pinned PuLP, FastAPI/Starlette and Skyfield dependencies.",
+    "scope": "Current engine regression suite after source-binding refresh, with real local matched kernels and LRO SPK available. This does not extend historical archived scientific certificates or establish deployed-host behavior.",
+    "previous_failed_checks": {
+      "command": ".venv/bin/pytest -q tests/engine/test_fixture_manifest.py tests/engine/test_phase6_completion.py",
+      "passed": 4,
+      "failed": 0,
+      "duration_s": 12.4
+    },
+    "refreshed_manifests": [
+      {
+        "path": "data/phase6-evidence.manifest.json",
+        "sha256": "dace1657dd0ed405e49a693cda721166342f3bdb84f2dae808e986cdbe28ee03"
+      },
+      {
+        "path": "data/physical-first-release-evidence.manifest.json",
+        "sha256": "193152d3b125c391908d286a5b9c60c039298db0ef38d0d199da00f00e17fb53"
+      },
+      {
+        "path": "fixtures/manifest.json",
+        "sha256": "d092c62111bf7a4cd970eff1ebff73491d7517a81a9f0c11e9c5900488f95996"
+      }
+    ]
   }
 }
