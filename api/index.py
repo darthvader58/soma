@@ -4,6 +4,7 @@ import gzip
 import logging
 import os
 from urllib.parse import urlsplit
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from fastapi import FastAPI
@@ -35,8 +36,12 @@ def hosted_fetch(url, bearer=None):
     headers = {"Referer": hosted_origin() + "/", "Accept-Encoding": "identity"}
     if bearer:
         headers["Authorization"] = "Bearer " + bearer
-    with urlopen(Request(url, headers=headers), timeout=30) as response:
-        content = response.read(MAX_OBJECT + 1)
+    try:
+        with urlopen(Request(url, headers=headers), timeout=30) as response:
+            content = response.read(MAX_OBJECT + 1)
+    except HTTPError as error:
+        logging.getLogger(__name__).error("Moon upstream returned HTTP %s from %s", error.code, urlsplit(url).hostname)
+        raise
     if len(content) > MAX_OBJECT:
         raise ValueError("Display object exceeds the source limit")
     if content[:2] == b"\x1f\x8b":
