@@ -6,7 +6,7 @@ const { test, expect } = require('@playwright/test');
 test('physical date presets use generated geometry and preserve exact engine artifacts without tiles', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/');
+  await page.goto('/?mode=archive');
   await expect(page.locator('#workspace-mode')).toContainText('Live');
   const submitted = [];
   for (const [name, slot] of [['physical-south-pole-nov-24', 'A'], ['physical-south-pole-nov-30', 'B']]) {
