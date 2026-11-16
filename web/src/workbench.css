@@ -187,6 +187,13 @@ label { color: var(--muted); }
 .scene-panel { position: relative; display: flex; flex-direction: column; min-height: 0; background: var(--scene); color: #edf1ef; }
 .scene-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 14px; position: absolute; top: 0; left: 0; right: 0; z-index: 2; background: linear-gradient(#101719f5, #10171900); }
 .scene-camera { display: flex; flex-wrap: wrap; gap: 5px; }
+.scene-navigation { position: absolute; z-index: 3; right: 12px; top: 78px; max-width: 210px; max-height: calc(100% - 150px); overflow: auto; padding: 8px; background: #202a30f5; border: 1px solid var(--control-edge); border-radius: 5px; }
+.navigation-essential { display: flex; gap: 5px; }
+.scene-navigation button { min-width: 44px; min-height: 44px; padding: 5px 8px; }
+.scene-navigation summary { cursor: pointer; font-size: 11px; padding-top: 10px; min-height: 35px; }
+.navigation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 5px; }
+.navigation-grid button:nth-last-child(-n+2) { font-size: 10px; }
+.scene-navigation output { display: block; font-size: 10px; color: var(--muted); max-width: 185px; margin-top: 5px; }
 .scene-camera button { background: #253138eb; color: #edf1ef; border-color: #85959e; border-radius: 4px; font-size: 10px; min-height: 31px; padding: 5px 9px; }
 .scene-camera button:hover:not(:disabled) { background: #3b4951; border-color: #c2ccd2; }
 .scene-camera button[aria-pressed="true"] { background: #e8ad4d; color: #242d31; border-color: #e8ad4d; }
@@ -316,6 +323,7 @@ tbody th { font-weight: 600; white-space: normal; }
   .dock-data { gap: 18px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 @media (max-width: 600px) {
+  .scene-navigation { top: 114px; right: 10px; padding: 5px; max-width: 200px; max-height: calc(100% - 180px); }
   .delivery-section-heading { flex-direction: column; align-items: stretch; }
   .delivery-downloads button, .delivery-fields input, .delivery-inputs select { min-height: 44px; }
   .delivery-dock { max-height: none; }
