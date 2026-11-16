@@ -57,6 +57,17 @@ test('all navigation actions move a real Cesium camera without changing source s
   }
 });
 
+test('unavailable network and site views cannot replace the last successful reset preset', async t => {
+  const previous = globalThis.matchMedia; globalThis.matchMedia = () => ({ matches: true }); t.after(() => { globalThis.matchMedia = previous; });
+  const { api, scene } = await displayHarness(t, true);
+  api.camera('global');
+  const globalPosition = Cesium.Cartesian3.clone(scene.camera.positionWC);
+  api.camera('network'); api.camera('site');
+  assert.equal(api.navigate('pan-left'), true);
+  assert.equal(api.navigate('reset'), true);
+  assert.ok(Cesium.Cartesian3.equalsEpsilon(globalPosition, scene.camera.positionWC, 1e-12, 1e-5));
+});
+
 test('manual navigation releases follow and reset restores the last network fit without Earth/station history paths', async t => {
   const previous = globalThis.matchMedia; globalThis.matchMedia = () => ({ matches: true }); t.after(() => { globalThis.matchMedia = previous; });
   const read = name => JSON.parse(readFileSync(new URL(`../../web/fixtures/physical-south-pole/relay-later/${name}.json`, import.meta.url)));
@@ -77,6 +88,19 @@ test('manual navigation releases follow and reset restores the last network fit 
   assert.equal(scene.entities.getById(`delivery-path-${scenario.relay_refs[0]}`).polyline.show.getValue(), false);
   assert.equal(scene.entities.getById(`delivery-node-${scenario.station_refs[0]}`).label.show.getValue(), true);
   assert.equal(scene.entities.getById('delivery-node-EARTH').show, false);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).show, false);
+  const lander = scene.entities.getById(`delivery-surface-${scenario.lander.id}`);
+  assert.equal(lander.label.show.getValue(), true);
+  display.contacts[0].sender = scenario.relay_refs[0];
+  api.setTime(state.epoch);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).show, true);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).label.show.getValue(), true);
+  assert.equal(lander.label.show.getValue(), false);
+  api.camera('moon-network');
+  assert.equal(lander.label.show.getValue(), true);
+  api.camera('network'); api.navigate('pan-right'); api.setTime(state.epoch);
+  assert.equal(lander.label.show.getValue(), false);
+  assert.equal(scene.entities.getById(`delivery-node-${scenario.relay_refs[0]}`).label.show.getValue(), true);
   assert.equal(api.navigate('reset'), true);
   assert.ok(Cesium.Cartesian3.equalsEpsilon(position, scene.camera.positionWC, 1e-12, 1e-5));
   assert.ok(Cesium.Cartesian3.equalsEpsilon(direction, scene.camera.directionWC, 1e-12, 1e-8));

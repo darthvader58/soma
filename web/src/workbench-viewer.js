@@ -49,7 +49,7 @@ export async function createWorkbenchViewer(container, {
   let labels = true, paths = true, bodyDirections = true;
   let delivery, deliveryGate, deliverySamples = [];
   let ready = false, lastPreset = 'global', cameraPivot;
-  let activeReceiver;
+  let activeReceiver, activeSender;
   const report = message => onStatus(message);
   const validPosition = value => Array.isArray(value) && value.length === 3 && value.every(Number.isFinite);
   const cartesian = value => new C.Cartesian3(...value);
@@ -63,14 +63,15 @@ export async function createWorkbenchViewer(container, {
       if (!node.entity.label) continue;
       const receivingStation = network && delivery.scenario.station_refs.includes(activeReceiver);
       if (network && receivingStation && (id === 'EARTH' || delivery.scenario.station_refs.includes(id) && id !== activeReceiver)) node.entity.show = false;
-      node.entity.label.show = labels && (network ? receivingStation ? id === activeReceiver : id === 'EARTH' : !delivery.scenario.station_refs.includes(id));
+      if (receivingStation && delivery.scenario.relay_refs.includes(id) && id !== activeSender) node.entity.show = false;
+      node.entity.label.show = labels && (network ? receivingStation ? id === activeReceiver || id === activeSender : id === 'EARTH' : !delivery.scenario.station_refs.includes(id));
       if (node.path) node.path.show = paths && !network;
       if (id === 'EARTH') node.entity.label.text = 'Earth network · educational stations';
       else if (delivery.scenario.station_refs.includes(id)) node.entity.label.text = `Earth receiver · ${id} · assumed service`;
       else if (delivery.scenario.relay_refs.includes(id)) node.entity.label.text = `${id} · synthetic relay`;
     }
     for (const entity of siteEntities) if (entity.id.startsWith('delivery-surface-') && entity.label) {
-      entity.label.show = labels;
+      entity.label.show = labels && !(network && delivery.scenario.relay_refs.includes(activeSender));
       entity.label.text = network ? 'Moon · lander' : `${delivery.scenario.lander.id} · lander`;
     }
   }
@@ -84,7 +85,9 @@ export async function createWorkbenchViewer(container, {
     }
     for (const [id, node] of spacecraftEntities) node.entity.show = sample.states.some(state => state.target === id);
     const allocated = sample.links.filter(link => link.allocation);
-    activeReceiver = allocated.find(link => delivery.scenario.station_refs.includes(link.contact.receiver))?.contact.receiver;
+    const downlink = allocated.find(link => delivery.scenario.station_refs.includes(link.contact.receiver));
+    activeReceiver = downlink?.contact.receiver;
+    activeSender = downlink?.contact.sender;
     const links = allocated.length ? allocated : sample.links;
     for (const { contact, allocation, positions } of links) deliverySamples.push(viewer.entities.add({
       id: `delivery-link-${contact.contact_id}`, description: `${allocation ? 'Allocated source transmission' : 'Usable contact window, not selected delivery'}: ${contact.sender} to ${contact.receiver}. Exact endpoint positions at source epoch; not a light-time ray path.`,
@@ -235,13 +238,12 @@ export async function createWorkbenchViewer(container, {
     camera(mode) {
       if (!viewer || destroyed) return;
       cameraMode = mode;
-      lastPreset = mode;
       onCameraChange({ mode });
       viewer.trackedEntity = undefined;
       viewer.camera.cancelFlight();
       viewer.camera.lookAtTransform?.(C.Matrix4.IDENTITY);
       if (delivery) drawDeliveryTime();
-      if (mode === 'follow') { const item = delivery ? spacecraftEntities.get(delivery.scenario.relay_refs[0]) : spacecraftEntities.values().next().value; if (item) viewer.trackedEntity = item.entity; return; }
+      if (mode === 'follow') { const item = delivery ? spacecraftEntities.get(delivery.scenario.relay_refs[0]) : spacecraftEntities.values().next().value; if (item) { viewer.trackedEntity = item.entity; lastPreset = mode; } return; }
       if (mode === 'network' || mode === 'moon-network') {
         if (!delivery || !deliveryGate?.passed) { report('Network view requires a registered Python delivery result.'); return; }
         const sample = rendererSamplesAtTime(delivery.display, epoch, [delivery.scenario.lander.id, ...delivery.scenario.relay_refs, ...(mode === 'network' ? [...delivery.scenario.station_refs, 'EARTH'] : [])]);
@@ -261,6 +263,7 @@ export async function createWorkbenchViewer(container, {
         const dot = reference.x * axis.x + reference.y * axis.y + reference.z * axis.z;
         const up = C.Cartesian3.normalize(new C.Cartesian3(reference.x - dot * axis.x, reference.y - dot * axis.y, reference.z - dot * axis.z), new C.Cartesian3());
         viewer.camera.setView({ destination: new C.Cartesian3(sphere.center.x + axis.x * range, sphere.center.y + axis.y * range, sphere.center.z + axis.z * range), orientation: { direction: C.Cartesian3.negate(axis, new C.Cartesian3()), up } });
+        lastPreset = mode;
         report(mode === 'network' ? `Network at ${epoch}. Moon and Earth endpoints retain Python distances; bodies are small at the real Moon–Earth distance and markers are enlarged. ${activeReceiver ? `Earth receiver: ${activeReceiver}, assumed educational service. ` : ''}Solid amber: allocated transfer; dashed: usable contact only.` : `Lunar hop at ${epoch}. Lander and synthetic relay retain their Python positions. Solid amber: allocated transfer; dashed: usable contact only. Earth-bound hops use Earth network view.`);
         viewer.scene.requestRender(); return;
       }
@@ -272,10 +275,12 @@ export async function createWorkbenchViewer(container, {
           const view = { destination: cartesian(vectors.destination), orientation: { direction: cartesian(vectors.direction), up: cartesian(vectors.up) } };
           if (globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches) viewer.camera.setView(view);
           else viewer.camera.flyTo({ ...view, duration: 0.7 });
+          lastPreset = mode;
         }
         return;
       }
       fitContextCamera(mode, true);
+      lastPreset = mode;
     },
     destroy() { destroyed = true; removeMoonReadiness?.(); resizeObserver?.disconnect(); if (resizeFrame) cancelAnimationFrame(resizeFrame); handler?.destroy(); viewer?.destroy(); shader?.destroy(); },
   };
