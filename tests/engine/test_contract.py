@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def test_all_schemas_are_valid_and_local():
     schemas, _ = schema_registry()
-    assert {"scenario", "result", "contact", "allocation", "state", "common"} == set(schemas)
+    assert {"scenario", "result", "contact", "allocation", "state", "common", "study", "study-result"} == set(schemas)
 
 
 @pytest.mark.parametrize("name", ["synthetic-direct", "synthetic-relay"])

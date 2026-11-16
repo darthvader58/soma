@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:soma:study-result:1.0.0",
+  "type": "object", "additionalProperties": false,
+  "required": ["study_version", "analysis_type", "study_sha256", "status", "request", "frame", "origin", "reference_radius_m", "epochs_utc", "sites", "bodies", "spacecraft", "provenance", "limitations"],
+  "properties": {
+    "study_version": {"const": "1.0.0"},
+    "analysis_type": {"const": "geometry"},
+    "study_sha256": {"$ref": "#/$defs/hash"},
+    "status": {"const": "completed"},
+    "request": {"$ref": "urn:soma:study:1.0.0"},
+    "frame": {"const": "MOON_ME_DE421"},
+    "origin": {"const": "MOON"},
+    "reference_radius_m": {"type": "number", "exclusiveMinimum": 0},
+    "epochs_utc": {"type": "array", "minItems": 2, "maxItems": 2000, "items": {"$ref": "#/$defs/epoch"}},
+    "sites": {"type": "array", "minItems": 1, "maxItems": 8, "items": {"$ref": "#/$defs/siteResult"}},
+    "bodies": {
+      "type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/$defs/body"},
+      "allOf": [
+        {"contains": {"properties": {"id": {"const": "SUN"}}}, "minContains": 1, "maxContains": 1},
+        {"contains": {"properties": {"id": {"const": "EARTH"}}}, "minContains": 1, "maxContains": 1}
+      ]
+    },
+    "spacecraft": {"type": "array", "items": {"$ref": "#/$defs/spacecraft"}},
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["provider", "software_version", "spiceypy_version", "spice_toolkit_version", "kernel_manifest_sha256", "effective_kernel_manifest_sha256", "kernels", "aberration", "geometry_model", "verified_coverage", "actual_coverage", "spacecraft_sources", "assumptions"],
+      "properties": {
+        "provider": {"type": "string"}, "software_version": {"type": "string"},
+        "spiceypy_version": {"type": "string"}, "spice_toolkit_version": {"type": "string"},
+        "kernel_manifest_sha256": {"$ref": "#/$defs/hash"},
+        "effective_kernel_manifest_sha256": {"$ref": "#/$defs/hash"},
+        "kernels": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "object"}},
+        "aberration": {"const": "NONE"}, "geometry_model": {"const": "same_epoch_geometric"},
+        "verified_coverage": {"$ref": "#/$defs/coverage"},
+        "actual_coverage": {"type": "object"},
+        "spacecraft_sources": {"type": "array", "items": {"type": "object"}},
+        "assumptions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  },
+  "$defs": {
+    "hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "epoch": {"type": "string", "format": "date-time"},
+    "vector": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "number"}},
+    "coverage": {"type": "object", "required": ["start_utc", "end_utc"], "properties": {"start_utc": {"$ref": "#/$defs/epoch"}, "end_utc": {"$ref": "#/$defs/epoch"}}},
+    "state": {
+      "type": "object", "additionalProperties": false,
+      "required": ["epoch_utc", "position_m", "velocity_m_s"],
+      "properties": {"epoch_utc": {"$ref": "#/$defs/epoch"}, "position_m": {"$ref": "#/$defs/vector"}, "velocity_m_s": {"$ref": "#/$defs/vector"}}
+    },
+    "direction": {
+      "type": "object", "additionalProperties": false,
+      "required": ["azimuth_deg", "elevation_deg", "range_m", "direction_moon_fixed"],
+      "properties": {
+        "azimuth_deg": {"type": "number", "minimum": 0, "maximum": 360},
+        "elevation_deg": {"type": "number", "minimum": -90, "maximum": 90},
+        "range_m": {"type": "number", "exclusiveMinimum": 0},
+        "direction_moon_fixed": {"$ref": "#/$defs/vector"}
+      }
+    },
+    "siteSample": {
+      "type": "object", "additionalProperties": false, "required": ["epoch_utc", "sun", "earth"],
+      "properties": {"epoch_utc": {"$ref": "#/$defs/epoch"}, "sun": {"$ref": "#/$defs/direction"}, "earth": {"$ref": "#/$defs/direction"}}
+    },
+    "siteResult": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "latitude_deg", "longitude_deg_east", "elevation_m", "antenna_height_m", "panel_height_m", "position_m", "antenna_position_m", "panel_position_m", "samples", "summary", "quality"],
+      "properties": {
+        "id": {"type": "string"}, "name": {"type": "string"},
+        "latitude_deg": {"type": "number"}, "longitude_deg_east": {"type": "number"},
+        "elevation_m": {"type": "number"}, "antenna_height_m": {"type": "number"}, "panel_height_m": {"type": "number"},
+        "position_m": {"$ref": "#/$defs/vector"}, "antenna_position_m": {"$ref": "#/$defs/vector"}, "panel_position_m": {"$ref": "#/$defs/vector"},
+        "samples": {"type": "array", "minItems": 2, "maxItems": 2000, "items": {"$ref": "#/$defs/siteSample"}},
+        "summary": {
+          "type": "object", "additionalProperties": false,
+          "required": ["sun_elevation_min_deg", "sun_elevation_max_deg", "earth_elevation_min_deg", "earth_elevation_max_deg"],
+          "properties": {"sun_elevation_min_deg": {"type": "number"}, "sun_elevation_max_deg": {"type": "number"}, "earth_elevation_min_deg": {"type": "number"}, "earth_elevation_max_deg": {"type": "number"}}
+        },
+        "quality": {
+          "type": "object", "additionalProperties": false,
+          "required": ["surface_model", "elevation_datum", "terrain_visibility", "solar_disk_fraction", "power", "usable_contacts", "pole_reference_meridian_deg_east", "sampling"],
+          "properties": {
+            "surface_model": {"const": "reference_sphere"}, "elevation_datum": {"const": "declared_height_above_reference_sphere"},
+            "terrain_visibility": {"const": "not_evaluated"}, "solar_disk_fraction": {"const": "not_evaluated"}, "power": {"const": "not_evaluated"}, "usable_contacts": {"const": "not_evaluated"},
+            "pole_reference_meridian_deg_east": {"const": 0}, "sampling": {"const": "discrete_epochs_no_event_detection"}
+          }
+        }
+      }
+    },
+    "body": {"type": "object", "additionalProperties": false, "required": ["id", "samples"], "properties": {"id": {"enum": ["SUN", "EARTH"]}, "samples": {"type": "array", "minItems": 2, "maxItems": 2000, "items": {"$ref": "#/$defs/state"}}}},
+    "spacecraft": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "name", "input_class", "source_ref", "samples"],
+      "properties": {
+        "id": {"type": "string"}, "name": {"type": "string"}, "input_class": {"const": "reconstructed_ephemeris"}, "source_ref": {"type": "string"},
+        "samples": {"type": "array", "minItems": 2, "maxItems": 2000, "items": {"$ref": "#/$defs/state"}}
+      }
+    }
+  }
+}

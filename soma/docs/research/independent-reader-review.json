@@ -1,0 +1,465 @@
+{
+  "scope": "Separate review by implementation author; independent numerical readers for Sun/Earth SPK and lunar PCK; shared kernel inputs and shared UTC-to-TDB conversion, not independent ephemeris accuracy or a non-author review. LRO SPK evaluation is shared CSPICE but frame transform is independently read.",
+  "checks": [
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "SUN",
+      "position_residual_m": 0.009416593347736906,
+      "velocity_residual_m_s": 2.2958114478814695e-08,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "SUN",
+      "site": "0",
+      "elevation_residual_deg": 4.884981308350689e-15,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "SUN",
+      "site": "1",
+      "elevation_residual_deg": 3.637978807091713e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "SUN",
+      "site": "2",
+      "elevation_residual_deg": 3.268496584496461e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "EARTH",
+      "position_residual_m": 1.900558409510138e-05,
+      "velocity_residual_m_s": 2.2688038172409436e-11,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "EARTH",
+      "site": "0",
+      "elevation_residual_deg": 2.9309887850104133e-13,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "EARTH",
+      "site": "1",
+      "elevation_residual_deg": 1.9753088054130785e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:00Z",
+      "target": "EARTH",
+      "site": "2",
+      "elevation_residual_deg": 2.6894042548519792e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "SUN",
+      "position_residual_m": 0.009373247583835285,
+      "velocity_residual_m_s": 2.2967189819289935e-08,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "SUN",
+      "site": "0",
+      "elevation_residual_deg": 3.1086244689504383e-15,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "SUN",
+      "site": "1",
+      "elevation_residual_deg": 3.623767952376511e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "SUN",
+      "site": "2",
+      "elevation_residual_deg": 3.247180302423658e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "EARTH",
+      "position_residual_m": 1.5396615339337874e-05,
+      "velocity_residual_m_s": 2.8722236948113536e-11,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "EARTH",
+      "site": "0",
+      "elevation_residual_deg": 1.376676550535194e-13,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "EARTH",
+      "site": "1",
+      "elevation_residual_deg": 1.5489831639570184e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "1950-02-01T00:00:10Z",
+      "target": "EARTH",
+      "site": "2",
+      "elevation_residual_deg": 2.1458390619955026e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "SUN",
+      "position_residual_m": 0.027834039995371755,
+      "velocity_residual_m_s": 6.835761207522665e-08,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "SUN",
+      "site": "0",
+      "elevation_residual_deg": 2.6645352591003757e-15,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "SUN",
+      "site": "1",
+      "elevation_residual_deg": 1.0629719326971099e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "SUN",
+      "site": "2",
+      "elevation_residual_deg": 9.79127889877418e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "EARTH",
+      "position_residual_m": 7.159726797247331e-05,
+      "velocity_residual_m_s": 6.770966186898818e-12,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "EARTH",
+      "site": "0",
+      "elevation_residual_deg": 1.9229062786507711e-13,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "EARTH",
+      "site": "1",
+      "elevation_residual_deg": 9.492850949754938e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "EARTH",
+      "site": "2",
+      "elevation_residual_deg": 1.014655026665423e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:00Z",
+      "target": "LRO",
+      "position_residual_m": 3.371453042299093e-07,
+      "velocity_residual_m_s": 6.69760763804517e-11,
+      "reference": "native J2000 spacecraft SPK state plus independent Skyfield binary-PCK six-dimensional transform"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "SUN",
+      "position_residual_m": 0.027808547671770507,
+      "velocity_residual_m_s": 6.828096438710642e-08,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "SUN",
+      "site": "0",
+      "elevation_residual_deg": 2.4424906541753444e-15,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "SUN",
+      "site": "1",
+      "elevation_residual_deg": 1.0629719326971099e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "SUN",
+      "site": "2",
+      "elevation_residual_deg": 9.777068044058979e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "EARTH",
+      "position_residual_m": 7.417533121382298e-05,
+      "velocity_residual_m_s": 1.6151452643322676e-11,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "EARTH",
+      "site": "0",
+      "elevation_residual_deg": 2.278177646530821e-13,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "EARTH",
+      "site": "1",
+      "elevation_residual_deg": 9.592326932761353e-12,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "EARTH",
+      "site": "2",
+      "elevation_residual_deg": 1.0345502232667059e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2026-04-01T00:00:10Z",
+      "target": "LRO",
+      "position_residual_m": 3.3788349394836146e-07,
+      "velocity_residual_m_s": 6.473392955101572e-11,
+      "reference": "native J2000 spacecraft SPK state plus independent Skyfield binary-PCK six-dimensional transform"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "SUN",
+      "position_residual_m": 0.09962691233404962,
+      "velocity_residual_m_s": 2.4613899000744674e-07,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "SUN",
+      "site": "0",
+      "elevation_residual_deg": 3.985700658404312e-14,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "SUN",
+      "site": "1",
+      "elevation_residual_deg": 3.792877123487415e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "SUN",
+      "site": "2",
+      "elevation_residual_deg": 2.4769519768597092e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "EARTH",
+      "position_residual_m": 0.00024084646764743246,
+      "velocity_residual_m_s": 7.468685087673437e-11,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "EARTH",
+      "site": "0",
+      "elevation_residual_deg": 8.171241461241152e-14,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "EARTH",
+      "site": "1",
+      "elevation_residual_deg": 3.1533886613033246e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:00Z",
+      "target": "EARTH",
+      "site": "2",
+      "elevation_residual_deg": 3.611688725868589e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "SUN",
+      "position_residual_m": 0.09961921156592193,
+      "velocity_residual_m_s": 2.4609403474745456e-07,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "SUN",
+      "site": "0",
+      "elevation_residual_deg": 4.107825191113079e-14,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "SUN",
+      "site": "1",
+      "elevation_residual_deg": 3.793587666223175e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "SUN",
+      "site": "2",
+      "elevation_residual_deg": 2.4769519768597092e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "EARTH",
+      "position_residual_m": 0.00024171442802554534,
+      "velocity_residual_m_s": 7.255470274474261e-11,
+      "reference": "Skyfield/jplephem SPK and binary-PCK readers, split-JD rotation_and_rate_at"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "EARTH",
+      "site": "0",
+      "elevation_residual_deg": 2.2026824808563106e-13,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "EARTH",
+      "site": "1",
+      "elevation_residual_deg": 3.157651917717885e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    },
+    {
+      "epoch": "2045-09-08T00:00:10Z",
+      "target": "EARTH",
+      "site": "2",
+      "elevation_residual_deg": 3.6209257814334705e-11,
+      "reference": "independent elementary ENU using independently read body vector"
+    }
+  ],
+  "max_position_residual_m": 0.09962691233404962,
+  "max_velocity_residual_m_s": 2.4613899000744674e-07,
+  "max_elevation_residual_deg": 3.793587666223175e-11,
+  "artifact_type": "research_geometry_independent_reader_review",
+  "artifact_version": "1.0.0",
+  "recorded_at_utc": "2026-11-16T21:58:49Z",
+  "reviewer_relation": "implementation_author; separate numerical-reader review, not independent non-author approval",
+  "frame": "MOON_ME_DE421",
+  "origin": "MOON",
+  "units": {
+    "position": "m",
+    "velocity": "m/s",
+    "elevation": "deg"
+  },
+  "aberration": "NONE",
+  "time_conversion": "Shared pinned-SPICE UTC-to-TDB conversion; split-JD TDB supplied to Skyfield. Historical pre-1972 dates follow the SPICE extended UTC convention.",
+  "reader_versions": {
+    "skyfield": "1.55",
+    "jplephem": "2.24",
+    "spiceypy": "8.4.0",
+    "numpy": "2.5.4"
+  },
+  "numerical_comparison_bounds": {
+    "SUN_position_m": 1.0,
+    "EARTH_position_m": 0.001,
+    "LRO_position_m": 0.0001,
+    "velocity_m_s": 1e-05,
+    "elevation_deg": 1e-07
+  },
+  "accuracy_scope": "These comparison bounds concern implementation agreement, not physical ephemeris uncertainty, absolute site knowledge or map registration.",
+  "source_manifests": [
+    {
+      "path": "data/de421-phase2.manifest.json",
+      "sha256": "f39c7e8951834cad1cc9104127bf9c31ffe6b41eac71db9df53af243d6255c01"
+    },
+    {
+      "path": "data/research-lro.manifest.json",
+      "sha256": "0b79caf08d7124a354048568ed259c8b2e70c7a70a9bf6747fd8f7ddba6c3a95"
+    }
+  ],
+  "sources": [
+    {
+      "role": "planetary_ephemeris",
+      "path": "de421.bsp",
+      "sha256": "08b20db2ae22488650641c5a9033e5bfda4b1c4b440cfeaf20f621cfa18ecdb3",
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de421.bsp"
+    },
+    {
+      "role": "leap_seconds",
+      "path": "naif0012.tls",
+      "sha256": "678e32bdb5a744117a467cd9601cd6b373f0e9bc9bbde1371d5eee39600a039b",
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls"
+    },
+    {
+      "role": "lunar_frame",
+      "path": "moon_080317.tf",
+      "sha256": "78732477b96f9863e7b0d65bcee3c22b8707ca5ed0db56d1173319cb2e8c7993",
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf"
+    },
+    {
+      "role": "lunar_orientation",
+      "path": "moon_pa_de421_1900-2050.bpc",
+      "sha256": "656f90616403d75a75f0cd6c8830fc5b44f8cb4facb5ccb8915e752b397520cf",
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc"
+    },
+    {
+      "id": "lro-reconstructed-2026-spring",
+      "path": "lrorg_2026074_2026166_v01.bsp",
+      "sha256": "5e17414e03c794e9dc29e4f4fde64d1d2d9fd106d87f26404188888495de28b1",
+      "size_bytes": 7557120,
+      "source_url": "https://naif.jpl.nasa.gov/pub/naif/pds/data/lro-l-spice-6-v1.0/lrosp_1000/data/spk/lrorg_2026074_2026166_v01.bsp",
+      "coverage": {
+        "start_utc": "2026-03-15T00:00:00.000000Z",
+        "end_utc": "2026-06-15T00:00:00.000000Z"
+      },
+      "acquisition_date_utc": "2026-11-16",
+      "acquisition_evidence": "Public PDS/NAIF archive acquisition and binary coverage verified in this implementation session."
+    }
+  ],
+  "preexisting_core_source_acquisition_note": "Core DE421 kernels were already present locally; hashes were reverified. Their original acquisition date is not inferred from filesystem timestamps.",
+  "passed": true,
+  "local_hosted_adapter_integration": {
+    "scope": "Local TestClient through the actual hosted Vercel adapter and spawned worker, without injected planner; not a deployed-host measurement",
+    "ready": true,
+    "service_mode": "serverless",
+    "async_available": false,
+    "first_http_elapsed_s": 1.211659458000213,
+    "response_bytes": 2614411,
+    "epochs": 1441,
+    "site_count": 3,
+    "spacecraft_count": 1,
+    "study_sha256": "13b4491fe0942968fd7ecd9815b567422376c90d3ca9a7e5bca9e78d66c2daa4",
+    "changed_study_sha256": "afa397a6a7ca0a5317cc481dc0a18b2f5aa09fd5bd8aa53cf95576d361dbec3c",
+    "changed_inputs_changed_geometry": true,
+    "response_cache_control": "private, no-store",
+    "source_manifest_sha256": "f39c7e8951834cad1cc9104127bf9c31ffe6b41eac71db9df53af243d6255c01"
+  },
+  "execution_environment": {
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O",
+    "python": "3.14.7"
+  },
+  "reproduction_method": {
+    "time": "ET=utc_to_et(epoch) under the matched SPICE context; t=SkyfieldTimescale.tdb_jd(2451545.0, ET/86400.0). This step is shared rather than independently verified.",
+    "rotation": "Read moon_080317.tf and moon_pa_de421_1900-2050.bpc with Skyfield.PlanetaryConstants; build MOON_ME_DE421; R,Rdot_day=frame.rotation_and_rate_at(t). The rate method uses split-JD precision.",
+    "sun_earth_position": "Skyfield load_file(de421.bsp); inertial=(ephemeris[target]-ephemeris[moon]).at(t); fixed_position_m=R @ inertial.position.m.",
+    "sun_earth_velocity": "fixed_velocity_m_s=R @ inertial.velocity.m_per_s + Rdot_day @ inertial.position.m / 86400.",
+    "site_elevation": "Subtract exported panel_position_m for Sun and antenna_position_m for Earth; independently form elementary spherical east/north/up components; elevation=atan2(up,hypot(east,north)). At the exact pole use longitude zero for the basis.",
+    "lro_frame_check": "Evaluate pinned LRO SPK using native CSPICE spkezr(-85,ET,J2000,NONE,MOON), convert km and km/s to SI, and apply independent Skyfield R/Rdot as above. This checks the PCK/frame transformation, while SPK evaluation remains shared.",
+    "sources": "No network fetch during calculations; verify the recorded source hashes before repeating."
+  }
+}
