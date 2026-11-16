@@ -1,6 +1,6 @@
 # Live delivery interface review
 
-Reviewed by the integrating agent on November 18, 2026. Scope: the Data delivery workspace, shared network camera and navigation controls, responsive layout and documentation links. This is an agent review, not a human usability study or a formal accessibility certification. Direction: professional lunar research workspace, dark only by explicit user instruction. ENERGY 2 / RHYTHM 2 / MOTION 2; reasons are recorded in `web/DESIGN.md`.
+Reviewed by the integrating agent on November 23, 2026. Scope: the Data delivery workspace, Earth body, shared network camera and navigation controls, responsive layout and documentation links. This is an agent review, not a human usability study or a formal accessibility certification. Direction: professional lunar research workspace, dark only by explicit user instruction. ENERGY 2 / RHYTHM 2 / MOTION 2; reasons are recorded in `web/DESIGN.md`.
 
 Evidence: personal Aside inspection of fresh Linux preview calculations, direct and relay transfer/wait controls, edits, failure and loading states, downloads and numerical fallback when tiles fail; personal inspection of desktop and 390 px browser screenshots; 106 web unit tests; the fresh-service browser test including automatic transfer focus, keyboard use, profile disclosure synchronization and original ZIP verification. Export replay is recorded separately in `live-delivery-verification.md`.
 
@@ -12,17 +12,21 @@ Final navigation refinements: all **109** web tests, including six camera tests,
 
 Release check: **110** web tests pass, including seven real-camera cases. Close-follow navigation uses the tracked object's existing position at the selected epoch before releasing tracking; its regression verifies a bounded 12% zoom step at a 1 km range, with unchanged source position and epoch. The essential Zoom/Reset row stays pinned while expanded controls scroll, with focused-control and caption-clearance assertions at 390 px. These refinements retain the same checked palette, native controls, scientific-data boundary and delivery-package behavior.
 
+Earth follow-up, November 23: the integrating agent personally inspected a fresh local Python 16 MiB calculation in Aside at desktop and 390 px widths. Earth close-up showed textured geography with the selected connection intact; Earth network restored the native-distance baseline. Zoom in/out, Reset, Pan left, Rotate right and keyboard Enter on Tilt down changed the view while preserving the scenario and selected UTC. The expanded icon palette, caption and NASA attribution occupy separate rows outside the canvas. All 117 web unit tests and the production build passed. The live-service browser cases passed for a fresh calculation/export and for visible sequential busy retries, edit cancellation and Stop waiting (2 tests, 29.8 seconds). The downloaded native ZIP independently passed all 72 verification checks, conserving 16,777,216 delivered bytes, with scenario SHA-256 `93779fee77b518f886aaec3f426743cb892be099f13b15528239a800c4ba2c52` and ZIP SHA-256 `88b2c915997dd5bac8465fd8d85e58ade6d193aeec95767fe60aea9b0e504400`. This run returned `feasible_incumbent`, not a proof of optimality. Mintlify build and link checks pass from `docs/`.
+
+The final navigation suite passed all three cases in 8.0 seconds: camera controls, real Python-produced textured Earth/network display, and blue-body fallback after an intentional image failure. The image-failure screenshot was personally inspected. The fixture is served through a real gzip HTTP response, preserving transport size/decompression checks. Coarse-pointer devices use 44 px targets even at tablet widths. Nine viewer tests exercise exact Earth pose acceptance, missing/invalid pose rejection and Moon/Earth camera bounds. The final production build passed after the touch-target adjustment.
+
 ## Hard gate
 
 - R-02 PASS: new workspace copy contains no em dash; scientific punctuation in source records is preserved.
 - R-03 PASS: the 390 px screenshot has no document overflow; wide scientific tables scroll within named, keyboard-focusable regions.
 - R-17 PASS: byte counts, times and resource histories come from the Python response; there are no invented adoption or performance numbers.
 - R-18 PASS: no testimonials, fictional people or avatars were added.
-- R-23 PASS: existing Cesium content and source-backed scientific objects supply the visuals; navigation follows the explicitly requested library and communications work.
+- R-23 PASS: the user explicitly requested an Earth body and compact translucent icon controls. The original NASA Earth Observatory November 2004 composite is attributed in the scene, asset README and checksummed manifest; its reference date is visible.
 - R-24 PASS: documentation pages exist and Mintlify reports no broken links or anchors.
-- R-25 PASS: checked normal text pairs are 6.44:1 or higher; the control border is 4.45:1 against its surface, above the 3:1 non-text requirement.
+- R-25 PASS: existing normal text pairs are 6.44:1 or higher; the control border is 4.45:1 against its surface. The new navigation glyph/text color #b3c0c7 against the composited #151e23 strip measures 9.08:1 with the skill's contrast checker; the strip sits outside the image, so geography cannot reduce that contrast. Amber focus remains visible.
 - R-26 PASS: planning, route selection, task edits, service alignment, transfer/wait focus and downloads have implemented behavior; all zoom, pan, rotate, tilt and reset actions move the real camera or report a limit; supported-site recovery preserves non-site inputs.
-- R-27 PASS: no-result, connecting, running, stale, invalid-input, failed-request and tile-failure states are distinct; the primary action now has an adjacent blocking reason and real elapsed waiting time.
+- R-27 PASS: no-result, connecting, running, stale, invalid-input, failed-request and tile-failure states are distinct. HTTP 429 shows elapsed waiting and retries sequentially within a finite budget; edits and Stop waiting cancel retries. Missing Earth poses hide the body; failed image loads retain an explicitly labeled blue reference surface.
 - R-28 PASS: no generic FAQ was introduced.
 - R-32 PASS: native controls and visible focus support keyboard use; browser verification includes Tab navigation and focus on the task action.
 - R-33 PASS: implementation lives in the maintained application source; no runtime source-rewriting script supplies the feature.
@@ -32,22 +36,22 @@ Release check: **110** web tests pass, including seven real-camera cases. Close-
 - R-37 PASS: the approved research-dashboard direction and three dials are recorded in `web/DESIGN.md`.
 - R-38 PASS: the relay orbit, station service, pointing and rates retain explicit synthetic or assumed labels; actual solver outcomes supply the result text.
 - R-39 PASS: fields have visible labels, controls use native roles and disabled states, focus remains visible, playback can pause and reduced-motion handling remains in place.
-- R-40 PASS: no new image or blocking third-party script was introduced; the scene has reserved layout space and no unmeasured performance figure is reported.
+- R-40 PASS: the original Earth JPEG has recorded 5400 by 2700 dimensions, byte count and SHA-256. Its renderer texture uses 2048 pixels in width for GPU compatibility. The canvas has reserved space; no blocking third-party script or unmeasured performance claim was added.
 
 ## Purpose gate
 
-- R-01 PASS: the limited scene scrim exists to keep camera controls and status readable, as documented in `web/DESIGN.md`.
-- R-04 PASS: no generic icon set or decorative magic symbol was introduced.
+- R-01 PASS: a subtly translucent strip separates camera controls from the image without covering endpoints, as documented in `web/DESIGN.md`.
+- R-04 PASS: small inline magnifiers, directional arrows and rotation marks encode the user's requested camera actions. Native controls carry accessible names and tooltips; no icon library or decorative magic symbol was added.
 - R-06 PASS: the existing reading face and tabular numerals serve dense scientific values; no decorative oversized monospace heading was added.
 - R-07 PASS: no decorative background grid was introduced.
 - R-08 PASS: arrows identify actual contact direction or the explicitly labeled camera movement/rotation; they are functional controls rather than decorative callouts.
 - R-09 PASS: status text communicates actual model and solver state; no promotional capsule badge was added.
-- R-10 PASS: the workspace uses solid working surfaces rather than stacked glass effects.
+- R-10 PASS: inputs and evidence retain solid working surfaces. Subtle transparency is limited to the shared scene chrome; no stacked blur effect was added.
 - R-12 PASS: panels use boundaries and spacing; no repeated floating-card shadows were added.
 - R-13 PASS: there is no distributed glow treatment.
 - R-14 PASS: the scene, input column, outcome inspector and evidence dock have different task-based proportions; there is no repeated feature-card grid.
 - R-19 PASS: motion is limited to requested camera changes and pausable playback, consistent with MOTION 2.
-- R-22 PASS: actual scientific state and existing Moon content replace generic illustrations.
+- R-22 PASS: Earth has physical WGS84 radii, native Python Earth centers and exact ITRF93-to-renderer orientation samples. The real NASA reference image supplies geography; it does not replace a scientific trajectory or station calculation.
 
 ## Liveliness
 

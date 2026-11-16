@@ -4,7 +4,7 @@ This directory is the Mintlify source root. It documents the repository's actual
 
 The documentation is live at https://soma-ce3178ca.mintlify.site/. Mintlify reads `darthvader58/soma`, branch `main`, subdirectory `docs` (confirmed in project Git settings on November 18, 2026). The application's Documentation button uses `/docs`, which redirects to this site.
 
-After merging the pull request, switch Mintlify's production branch to `main` in Git settings and verify the resulting deployment before deleting `web/hosted-planner-fix`.
+Changes merged into `main` publish automatically. Verify the resulting public documentation after each release.
 
 Use Node.js 20.17 or newer. From this directory:
 

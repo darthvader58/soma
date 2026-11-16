@@ -88,6 +88,15 @@ allocation epochs, labeled by `additional_states_provenance`. The native ZIP
 keeps the original exporter's display and full replay inputs. Preserve the full
 HTTP JSON response when auditing those supplementary map samples.
 
+When registration permits overlays, `display.earth_body` supplies a WGS84 Earth
+reference ellipsoid and exact-epoch orientations. Its center comes from the
+matching `EARTH` entry in `renderer_states`. The body record identifies `ITRF93`,
+the renderer frame, radii in meters and dimensionless row-major rotation matrices
+in `orientation_samples`. Python derives these matrices from the matched Earth
+orientation kernel and the registered frame bridge. Missing samples remain
+unknown; the browser does not invent an Earth rotation or extrapolate a pose.
+This is additional display context, not a change to the native ZIP or link model.
+
 ### Two independent compression layers
 
 The HTTP response may use `Content-Encoding: gzip`. Normal browser `fetch` and
@@ -113,7 +122,7 @@ includes executable download code and an independent verification command.
 | --- | --- |
 | `413` | Request, decoded result, wire result or export exceeds its declared budget. Reduce the workload; large responses require accepted HTTP gzip. |
 | `422` | Invalid native contract, unsupported option or input outside the bounded physical model. |
-| `429` | Another delivery calculation is active in this runtime instance. |
+| `429` | Another delivery calculation is active in this runtime instance; `Retry-After` declares a retry delay. |
 | `503` | Dependencies, sources, solver or worker are unavailable. No recorded result replaces the failed calculation. |
 | `504` | Worker exceeded the hard time budget. |
 
@@ -121,6 +130,14 @@ There is no durable job identifier or retained run store. Closing or stopping a
 browser request stops waiting; it does not promise server cancellation. The bounded
 worker is stopped at its hard deadline. Export a result you need to retain before
 leaving the page.
+
+The browser retries only rejected `429` requests, sequentially, with the exact same
+scenario and scheduler-option snapshot. It honors `Retry-After` within a 1–30 second
+delay range (3 seconds if unavailable) and stops after at most 240 seconds of busy
+waiting. The UI reports this wait and elapsed time. Editing inputs, changing tools
+or choosing **Stop waiting** cancels queued browser retries. This is not a durable
+server queue and does not cancel another calculation. Validation and general
+dependency failures are not retried automatically.
 
 For broader local workloads and explicit job cancellation, use the [local HTTP
 service](/reference/service). For reusable RF calculations beyond this provider's

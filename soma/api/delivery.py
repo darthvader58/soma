@@ -340,17 +340,40 @@ def delivery_display(run, *, data_root):
     manifest = load_json(resource_directory("data")/"de421-phase2.manifest.json")
     manifest["coverage"] = {"start_utc": epochs[0], "end_utc": epochs[-1]}
     states = []
+    matrix = payload["registration"].get("transform_column_major")
+    overlays_allowed = matrix is not None and payload["registration"]["release_gate"]["overlays_allowed"]
+    earth_body = {
+        "body_id": "EARTH", "reference_ellipsoid": "WGS84",
+        "radii_m": [6378137, 6378137, 6356752.314245179],
+        "body_fixed_frame": "ITRF93", "renderer_frame": payload["registration"]["renderer_frame"],
+        "center_state_target": "EARTH", "center_origin": "MOON",
+        "position_unit": "m", "time_scale": "UTC", "rotation_layout": "row_major",
+        "rotation_unit": "dimensionless", "orientation_samples": [],
+        "status": "available" if overlays_allowed else "unknown",
+        "provenance": {"scope": "Hosted display only; native ZIP and scientific result unchanged",
+            "method": "Matched Earth binary PCK: ITRF93 to MOON_ME_DE421 at each exact display epoch, premultiplied by registered engine-to-renderer rotation; translation excluded",
+            "ellipsoid": "WGS84 terrestrial reference ellipsoid, independent of the lunar reference sphere",
+            "interpolation": "none_unknown_between_samples"}}
+    if not overlays_allowed:
+        earth_body["unavailable_reason"] = "renderer_registration_blocks_earth_orientation"
     with SpiceGeometry(manifest, _data_root(data_root)) as geometry:
         presets = {p["id"]: _relay(geometry, scenario, p, site) for p in scenario["profiles"]["relays"]
                    if p["id"] in scenario["relay_refs"]}
         for epoch in epochs:
+            if overlays_allowed:
+                body_to_engine = geometry.spice.pxform("ITRF93", "MOON_ME_DE421", geometry._epoch(epoch))
+                rotation = [sum(matrix[k*4+row]*body_to_engine[k, column] for k in range(3))
+                            for row in range(3) for column in range(3)]
+                earth_body["orientation_samples"].append({"epoch_utc": epoch,
+                    "rotation_body_fixed_to_renderer_row_major": rotation})
             states.append(_state(scenario["lander"]["id"], epoch, site.position_m(site.antenna_height_m),
                                  "published_LOLA_resolved_site_explicit_antenna_height"))
-            states.append(geometry.state("EARTH", epoch))
-            states.extend(geometry.station_state(p, epoch) for p in scenario["profiles"]["stations"]
-                          if p["id"] in scenario["station_refs"])
+            states.append({**geometry.state("EARTH", epoch), "epoch": epoch})
+            states.extend({**geometry.station_state(p, epoch), "epoch": epoch}
+                          for p in scenario["profiles"]["stations"] if p["id"] in scenario["station_refs"])
             for node, preset in presets.items():
                 states.append(_state(node, epoch, geometry.transform_position(preset.state(epoch)["position"], epoch), preset.label))
+    payload["earth_body"] = earth_body
     payload["states"] = states
     payload["state_status"] = "stored_samples"
     payload["state_unavailable_reasons"] = []
@@ -497,6 +520,20 @@ def _accepts_gzip(value):
 def delivery_router(*, data_root, runner=None, capabilities_provider=None, timeout_s=None):
     router = APIRouter(prefix="/research/delivery", tags=["delivery"])
     slot = threading.BoundedSemaphore(1)
+    inflight = set()
+
+    def calculate_and_release(document):
+        # The thread owns the slot until the actual subprocess finishes, even
+        # if its asyncio waiter is canceled during disconnect or shutdown.
+        try:
+            return run_delivery_sync(document, data_root=data_root, runner=runner, timeout_s=timeout_s)
+        finally:
+            slot.release()
+
+    def finished(task):
+        inflight.discard(task)
+        if not task.cancelled():
+            task.exception()  # Observe failures when a disconnected waiter cannot receive them.
 
     @router.get("/capabilities")
     def capabilities():
@@ -516,10 +553,14 @@ def delivery_router(*, data_root, runner=None, capabilities_provider=None, timeo
         except (ValueError, UnicodeError, RecursionError) as error:
             raise HTTPException(422, str(error)[:2000]) from error
         if not slot.acquire(blocking=False):
-            raise HTTPException(429, "One delivery computation is already active")
-        task = asyncio.create_task(asyncio.to_thread(run_delivery_sync, document, data_root=data_root,
-                                                    runner=runner, timeout_s=timeout_s))
-        task.add_done_callback(lambda finished: slot.release())
+            raise HTTPException(429, "One delivery computation is already active", headers={"Retry-After": "3"})
+        try:
+            task = asyncio.create_task(asyncio.to_thread(calculate_and_release, document))
+        except BaseException:
+            slot.release()
+            raise
+        inflight.add(task)
+        task.add_done_callback(finished)
         content = await asyncio.shield(task)
         headers = {"Cache-Control": "private, no-store", "Vary": "Accept-Encoding"}
         if _accepts_gzip(request.headers.get("accept-encoding", "")):

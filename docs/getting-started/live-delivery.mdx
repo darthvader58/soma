@@ -29,6 +29,12 @@ mission or a stored expected answer.
    outcome reports the last-byte arrival. A failed or unsupported request does not
    substitute an archived result.
 
+If a previous calculation is still finishing, the page shows that it is waiting
+for server availability and retries the unchanged request automatically. You can
+edit the task or choose **Stop waiting** to stop those retries. A busy server no
+longer needs repeated clicks on Plan delivery; there is still only one calculation
+at a time per runtime instance.
+
 Python resolves ground elevation from the numerical DEM and records both requested
 and resolved values. A catalog point or rendered terrain pick is not a substitute
 for numerical terrain coverage. **Use inspected geometry site** checks the declared

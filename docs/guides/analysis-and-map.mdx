@@ -24,8 +24,9 @@ For an unchecked context site, **Include this site and run** explicitly adds it 
 
 Use the scene's navigation controls in either Geometry or Data delivery. **Zoom in**
 and **Zoom out** change viewing distance. The pan buttons move the view left, right,
-up or down; rotate and tilt buttons change the viewing angle. Open **Pan, rotate &
-tilt** to reach those additional controls. Buttons also
+up or down; rotate and tilt buttons change the viewing angle. Open the **Pan, rotate & tilt**
+icon control to reach those additional controls. The compact, translucent strip sits
+below the canvas so it does not cover the globe or connections. Buttons also
 work with keyboard Tab followed by Enter or Space.
 
 **Reset view** restores the most recently selected preset, including the full
@@ -39,6 +40,21 @@ for legibility. The emphasized line is a selected transmission at the current UT
 epoch. Earth and ground-station position histories are not shown as orbital trails.
 Use the exact transfer controls to inspect a particular hop, and Reset view to
 recover the full connection after zooming or panning.
+
+## Inspect Earth
+
+After a delivery result supplies Earth states and orientations, the scene renders
+Earth as a WGS84 ellipsoid at its Python-supplied position. Use **Earth**
+to inspect the globe, then **Earth network** to recover the whole connection.
+The body keeps its physical radius; its apparent size changes with the camera.
+
+The surface image is NASA Earth Observatory's Blue Marble November 2004 composite,
+used as reference appearance. It is not selected-date weather or a current cloud
+map. Earth's orientation comes from the matched SPICE Earth-orientation kernel;
+the image does not calculate station visibility, link closure or lighting. Earth
+and its texture are display context for the unchanged numerical schedule.
+
+Source: [NASA Earth Observatory, Blue Marble: Next Generation](https://science.nasa.gov/earth/earth-observatory/blue-marble-next-generation/).
 
 ## A controlled date check
 

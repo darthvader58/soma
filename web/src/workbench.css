@@ -185,26 +185,33 @@ label { color: var(--muted); }
 .spacecraft-section a { display: inline-block; font-size: 10px; margin-top: 8px; }
 .object-footnote { margin-top: 22px; font-size: 10px; color: var(--muted); }
 .scene-panel { position: relative; display: flex; flex-direction: column; min-height: 0; background: var(--scene); color: #edf1ef; }
-.scene-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 14px; position: absolute; top: 0; left: 0; right: 0; z-index: 2; background: linear-gradient(#101719f5, #10171900); }
+.scene-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 12px; position: relative; flex: none; z-index: 2; background: #182127b3; }
 .scene-camera { display: flex; flex-wrap: wrap; gap: 5px; }
-.scene-navigation { position: absolute; z-index: 3; right: 12px; top: 78px; max-width: 210px; max-height: calc(100% - 150px); overflow: auto; padding: 8px; background: #202a30f5; border: 1px solid var(--control-edge); border-radius: 5px; }
-.scene-navigation { scroll-padding-top: 58px; }
-.navigation-essential { position: sticky; top: 0; z-index: 1; display: flex; gap: 5px; background: var(--panel); padding-bottom: 5px; }
-.scene-navigation button { min-width: 44px; min-height: 44px; padding: 5px 8px; }
-.scene-navigation summary { cursor: pointer; font-size: 11px; padding-top: 10px; min-height: 35px; }
-.navigation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 5px; }
-.navigation-grid button:nth-last-child(-n+2) { font-size: 10px; }
-.scene-navigation output { display: block; font-size: 10px; color: var(--muted); max-width: 185px; margin-top: 5px; }
+.scene-navigation { display: flex; align-items: center; flex-wrap: wrap; flex: none; gap: 5px; padding: 5px 9px; border-top: 1px solid #42515a88; background: #182127b3; }
+.navigation-essential { display: flex; gap: 3px; }
+.scene-navigation button, .scene-navigation summary { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; min-height: 36px; padding: 0; border: 1px solid transparent; border-radius: 4px; background: transparent; color: var(--muted); }
+.scene-navigation button:hover:not(:disabled), .scene-navigation summary:hover { background: #34434c99; color: var(--ink); }
+.scene-navigation summary { cursor: pointer; list-style: none; }
+.scene-navigation summary::-webkit-details-marker { display: none; }
+.scene-navigation details[open] { order: 3; width: 100%; display: flex; }
+.scene-navigation details[open] summary { float: left; background: #34434c99; }
+.navigation-grid { display: grid; grid-template-columns: repeat(8, 36px); gap: 3px; margin-left: 42px; }
+@media (pointer: coarse) {
+  .scene-navigation button, .scene-navigation summary { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+  .navigation-grid { grid-template-columns: repeat(auto-fit, 44px); margin-left: 49px; }
+}
+.scene-navigation output { flex: 1; min-width: 100px; font-size: 10px; color: var(--muted); line-height: 1.4; }
+.earth-display-credit { flex: none; font-size: 9px; line-height: 1.4; color: var(--muted); padding: 3px 10px 5px; }
 .scene-camera button { background: #253138eb; color: #edf1ef; border-color: #85959e; border-radius: 4px; font-size: 10px; min-height: 31px; padding: 5px 9px; }
 .scene-camera button:hover:not(:disabled) { background: #3b4951; border-color: #c2ccd2; }
 .scene-camera button[aria-pressed="true"] { background: #e8ad4d; color: #242d31; border-color: #e8ad4d; }
 .scene-camera button[aria-pressed="true"]:hover { background: #f1bd69; color: #242d31; border-color: #f1bd69; }
 .scene-camera button:focus-visible { outline-color: #efbd73; }
 .scene-toolbar > span { font-size: 9px; letter-spacing: .3px; color: #c6d1d6; white-space: nowrap; }
-.research-moon { position: relative; min-height: 360px; height: 100%; flex: 1; }
-.research-moon .cesium-viewer-bottom { bottom: 47px !important; max-width: 100%; font-size: 8px; }
+.research-moon { position: relative; min-height: 0; height: 100%; flex: 1; }
+.research-moon .cesium-viewer-bottom { bottom: 0 !important; max-width: 100%; font-size: 8px; }
 .research-moon .cesium-widget-credits { font-size: 8px; }
-.scene-caption { position: absolute; bottom: 10px; left: 13px; right: 13px; padding: 7px 9px; font-size: 10px; line-height: 1.4; color: #d8e0e3; background: #172126e8; border-radius: 3px; pointer-events: none; }
+.scene-caption { position: relative; flex: none; padding: 6px 12px; font-size: 10px; line-height: 1.4; color: #d8e0e3; background: #172126b3; pointer-events: none; }
 .research-map-fallback { padding: 100px 40px; max-width: 480px; }
 .research-map-fallback h2 { font-size: 22px; margin-bottom: 12px; }
 .research-map-fallback p { color: #b3c0c7; font-size: 13px; }
@@ -324,7 +331,9 @@ tbody th { font-weight: 600; white-space: normal; }
   .dock-data { gap: 18px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 @media (max-width: 600px) {
-  .scene-navigation { top: 114px; right: 10px; padding: 5px; max-width: 200px; max-height: calc(100% - 180px); }
+  .scene-navigation { padding: 4px 8px; }
+  .scene-navigation button, .scene-navigation summary { width: 44px; height: 44px; min-width: 44px; min-height: 44px; }
+  .navigation-grid { grid-template-columns: repeat(4, 44px); margin-left: 49px; }
   .delivery-section-heading { flex-direction: column; align-items: stretch; }
   .delivery-downloads button, .delivery-fields input, .delivery-inputs select { min-height: 44px; }
   .delivery-dock { max-height: none; }
@@ -349,12 +358,12 @@ tbody th { font-weight: 600; white-space: normal; }
   .study-run button { min-height: 44px; }
   .study-run .research-primary { flex: 1; }
   .research-status { padding: 10px 15px; }
-  .scene-panel { order: 1; height: 380px; flex: none; }
-  .research-moon { min-height: 380px; }
+  .scene-panel { order: 1; height: 460px; flex: none; }
+  .research-moon { min-height: 0; }
   .scene-toolbar { padding: 10px; }
   .scene-camera { gap: 5px; }
   .scene-camera button { min-height: 44px; padding: 5px 7px; font-size: 9px; }
-  .scene-caption { font-size: 9px; left: 10px; right: 10px; bottom: 10px; }
+  .scene-caption { font-size: 9px; padding: 6px 10px; }
   .object-panel { order: 3; border-right: 0; border-top: 1px solid var(--line); max-height: 490px; padding: 20px 15px; }
   .inspector-panel { order: 4; padding: 22px 15px; }
   .time-dock { order: 2; padding: 15px; }
