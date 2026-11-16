@@ -1,0 +1,18 @@
+[
+  {
+    "id": "document",
+    "name": "SOMA planning result",
+    "version": "1.0"
+  },
+  {
+    "id": "soma-run",
+    "properties": {
+      "allocations_json": "[]",
+      "map_registration_passed": true,
+      "model_fidelity": "assumed_rate_simulation",
+      "registration_status": "registered_for_region",
+      "scenario_sha256": "22d6f59174516ab03473eb11f0c85f880f560091b5d094d08c72f742906a6dbc",
+      "warnings_json": "[\"No numerical lunar terrain or ephemeris; no mission prediction.\", \"No complete dataset schedule satisfies the declared discrete route, capacity, storage, service, radio and energy constraints.\", \"Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.\", \"This result does not book service or certify navigation, relay operation or thermal survival.\", \"Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage.\"]"
+    }
+  }
+]

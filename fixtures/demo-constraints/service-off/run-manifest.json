@@ -1,0 +1,207 @@
+{
+  "assumptions": [
+    "Rate method: assumed_net_rate",
+    "Pointing: ideal_pointing",
+    "Service: SYNTHETIC windows at both endpoints; no booked network service",
+    "SYNTHETIC fixture contacts; zero generation over the whole horizon; light time disabled for arithmetic.",
+    "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+    "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+    "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+    "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+    "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+    "Ground sink retains all received chunks with finite configured station storage.",
+    "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+    "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+    "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
+  ],
+  "csv_unknown_representation": "empty field; never zero",
+  "details": {
+    "analysis_provenance": {
+      "experiment": "phase6-one-control-sensitivity-v1",
+      "input_class": "synthetic"
+    },
+    "policy": "deadline_then_fewer_relay_hops_then_earlier_arrival_then_lower_lander_radio_energy",
+    "scheduler_options": {
+      "bin_s": 10,
+      "chunk_bytes": 16777216,
+      "time_limit_s": 20
+    },
+    "software": {
+      "source_sha256": {
+        "__init__.py": "96d6e2a93ea819922fa6f4568fc4ee934e1c31875ca9cbbbf50b9bb7c95b4904",
+        "__main__.py": "aa357b6c380bdd4d6829605e0af44b042de9ba57522c88966d2af4a4a4505685",
+        "api/__init__.py": "47138a01dcf04aefb8a9af1eb10a46e221c9be57e83c86d910f160ae17db2d6c",
+        "api/app.py": "64704f42381016b1e501dbb834b45c2fc9a57fc19b7734ca7edcd909ea177359",
+        "api/moon.py": "35f16feb66415e306387136d9e83995fafd93279329c202d266ecc11702e3942",
+        "datasets.py": "ce0a2647afb097e3194f37603be5a5e7670d9efaf29079c3094c5dc4e564e576",
+        "diagnostics.py": "ad0370f0664233e86cdbb7d321f053fb653b04d7d8dd72241359069a9f38f731",
+        "docs/phase-5/inspect-mesh.py": "e65359a95c9ceda23e1c58f75d8b88ab370d5ee70321c64329c71696a5a6664b",
+        "docs/phase-5/reproduction/build_certificate.py": "565a92fb48931ffee1d52f2db5de160c8244dc3fe768f1f0c052a922df5987ac",
+        "docs/phase-5/reproduction/fit_conversion.py": "3bcfc9230d11cf72fbc21c9b23474c39f4dba2b14cfbb1ca6570425f9ca317bf",
+        "docs/phase-5/reproduction/select_landmarks.py": "15521b83418ddd844786570bc9d61ea28334f9c8a856e92f0f418f4371de9992",
+        "docs/phase-6/reproduce-demo.py": "c1ec13c735bd904cf43ab63cd9e0a4457973c3a03af763a98ce9568cff9136fd",
+        "docs/physical-first-release/build_scenarios.py": "f72f90f5be23e660d23f145299f8f0be453ff0edc47fa883665b9e8aa6bc371e",
+        "docs/physical-first-release/reproduce.py": "9539e95d3e078efe6c0423ea95a70b73f5053c9e7a7bcc6aabb8b2b097fa33b5",
+        "docs/physical-first-release/sampling_check.py": "7eff0b9f1722bd22b692503f47178a48f7552c33eb6c496c41580c9040f69311",
+        "engine.py": "d2d0e62a77fb83b2135152944e6a7781d7c5a3a71af6c8499f90b5fe32fa9d00",
+        "environment.py": "7c925e6568e73553bf572e6e802956ac40cb81dd09cce0c9b52a51285e46e1f8",
+        "exports/__init__.py": "c8144ae3d09e016d34075febf376a94de19f23ee880edc4f598fffc0ba43e5b6",
+        "exports/display.py": "fcfe00f15c1195faf85169a18ea4e4ba1911e3e9d260569370f2119ab6d73677",
+        "geometry/__init__.py": "55d86096dfe120711dd9cad27cebf235d1d0f8c8e2817712f3c94180a432ae9c",
+        "geometry/registration.py": "61f17b250acb25d6bfc4e7150935dfb06f27deec0ab82f8391124ae1134616bd",
+        "geometry/registration_calibration.py": "07e9db63f3fd614260d08253aca916481b691a1303d5c77de00e5e72e758a602",
+        "geometry/registration_landmarks.py": "8916b3517adb3cdcc0ae46da25840cd92d128ce670253ab5575d519e8692cfc2",
+        "geometry/registration_measurements.py": "e86d773b324068b21c61d17e162af7b1850e4242181d1547b5c78bc87d31aa9b",
+        "geometry/renderer_mesh.py": "e65c4256ea16ce95d2dd54f09203c05061e99175b03bc082fbcc9fad813ebd31",
+        "geometry/spice.py": "5de1c0e8e1310e7847d2b3c7f9ed7aaa414ec5083d2d901ba4e24f64e8414f37",
+        "geometry/surface.py": "d9bd0800e289474852934325e1a2aec48cb99676492ff2d13526690cbac19037",
+        "geometry/trajectories.py": "76a051182c8ab45f329362923b13a059a19430e7589f08c15528b6a5e5331510",
+        "geometry_verification.py": "c79445b5e360ce85a053dfcfd693ecd5026f8d5d550c23cd2e5bbd0d95b19989",
+        "illumination/__init__.py": "02569a13cf81c48e5db583655ef8eca7b6a3c9170b6f6abd459ff9fe18685077",
+        "links/__init__.py": "d3704bdd5242ce44ae3241d3b2aa9dc85b85f4b438a1c963252d61a2c9811c00",
+        "links/budget.py": "3d76d1e91028b393d4ce0ec82f3ba76df93693435061db965762c20d57bda772",
+        "links/contacts.py": "acc8c377ac353ff9e0aaf3bf2c7469c9619f94b16345cccf4ccb5129bdf85b20",
+        "physical.py": "8096c20aee5679a9646bce12514645f3e924040cd55d1187aefc531b4a8aeb67",
+        "power/__init__.py": "8da40dcd73116fe95fe0f8982a839b55fdafb7446c79d61fb016931eea0dadfd",
+        "preparation.py": "8bb4f362e95f4da67e00d217e05570babb745c731babccbc60860c8d74fff8d4",
+        "schedule/__init__.py": "11670e0971df3feb33c6b2122b1a29c9c520ae295ba22066247bc8466c5df1c4",
+        "schedule/optimizer.py": "0a90c73a9f480d9258515cda574eb236618d1a947731adf1e2de6330cdcd1eae",
+        "schedule/replay.py": "80ac535fde189ab9e7543f825ed0c448feebef30b8e3c5b7c4fe16f399148851",
+        "terrain/__init__.py": "0aabc1c1ffc7a8a1b6ceb8357947a948b77018b869ce60d6fcb3ccc0cb89e4b6",
+        "terrain/dem.py": "63fb2f7fac0550df16a5ad9473e8ea613be23832786d30d1e294f3b6428fe52c",
+        "terrain/horizons.py": "e0e6da75cc603ab3f6c298285212c5600d927c666079777e2fcb20d15b5e5b69",
+        "terrain/physical.py": "08854c8a6bc676c614cd86d901a75ca0282c1cbdd1b219ecba2a4437fc988c63",
+        "time/__init__.py": "a2813dcca3bc8cd233264b9464f355c0943fd915f4131f9dbd4b6527ff6c0c4e",
+        "time/spice.py": "683fa6ccf1087f3a3606f946065737c419faa228058c9ebec4d4a6f24ce078f2",
+        "validation.py": "b57502dd5ea398fe212daa47fd170dfc64fb75dc732c44736fc1608bdbac6c21",
+        "verification/__init__.py": "e589bd42be2e5f6ee0da906c1eb3b3ce0a9e2c59a315c594c80b07052127769f",
+        "verification/completion.py": "2addfc827a7e52e52b5eb04f729904cb994bd6ac877a76e0fcf26a8640a54dd1",
+        "verification/exports.py": "f1a6b1ed0a775ae93051a158f4457b5d7991de3208f4b5afc4a5b7658dabdee5",
+        "verification/physical_completion.py": "4326b9c02017e35ae22af2e085c73576b2818cb4aad815540dffcc0e88548efc",
+        "verification/sensitivity.py": "6d4e1e849e7ef2e5d7e8302bd186f2a81f06083356ec6da2d3f04e3efef3d4c3"
+      },
+      "versions": {
+        "fastapi": "0.163.0",
+        "numpy": "2.5.4",
+        "pulp": "3.3.2",
+        "soma": "0.1.0",
+        "uvicorn": "0.54.0"
+      }
+    },
+    "solver": {
+      "bin_s": 10,
+      "candidate_count": 515,
+      "chunk_bytes": 16777216,
+      "generation_bins": [
+        {
+          "end_utc": "2026-11-14T10:05:00Z",
+          "generation_w": 0,
+          "power_model": "piecewise_constant",
+          "start_utc": "2026-11-14T08:50:00Z"
+        }
+      ]
+    }
+  },
+  "files": {
+    "analysis-inputs.json": {
+      "sha256": "59da2c258e89ec9a6af17beaa72d3f1c1e62d9ffabcf55a3b195e34476b4c7d3",
+      "size_bytes": 4043
+    },
+    "buffer-history.csv": {
+      "sha256": "59a731671982aae79cff358b04cd847ce0714ad7d20f977b36a0b4ebea4e81b7",
+      "size_bytes": 31
+    },
+    "contacts.csv": {
+      "sha256": "8a20e028acbd59d0ec06bc2a87a75a9551b1188ed24fbca7f356c6f66d077755",
+      "size_bytes": 1478
+    },
+    "display-data.json": {
+      "sha256": "5ff64443015f25309196b75548f6e98cb7b38a5155a08b15c1041c2f294966e0",
+      "size_bytes": 28187
+    },
+    "display.czml": {
+      "sha256": "f2d7a8ae15d9040635dcba072675163fe208d466f04e4cea05ae2eb99b8da5fb",
+      "size_bytes": 1009
+    },
+    "energy.csv": {
+      "sha256": "edb40563f8f3ab30e6287f4bdd52b6132ae60fdb4d10989280c55ed5e999c6aa",
+      "size_bytes": 35
+    },
+    "explanation.md": {
+      "sha256": "350a342a5cdf97b0778a96c6f18349cba81c42cd8ecf6cf7a2af99eee9ef1d2a",
+      "size_bytes": 7731
+    },
+    "renderer-conversion.json": {
+      "sha256": "5810f9c662b59136eac702be59dda25eb82edf47fad99f1e33777490dfc29714",
+      "size_bytes": 2724
+    },
+    "renderer-registration.json": {
+      "sha256": "3165c7a2a558425331d947bf54488dbcb885a8a459c4426a830376e085fcbdc9",
+      "size_bytes": 9104
+    },
+    "replay.json": {
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+      "size_bytes": 5
+    },
+    "result.json": {
+      "sha256": "ddee9719a264728f0e80a3ecd6f94b277f37ec05dbfa7efea9321d230e6978ad",
+      "size_bytes": 6825
+    },
+    "scenario.json": {
+      "sha256": "f3099c010d7bf3ee0b9b620940edf1d40a1700b32ceab36a5fd62625291e7f4b",
+      "size_bytes": 6004
+    },
+    "schedule.csv": {
+      "sha256": "21f812f345c5490e22d7d26f53cacae375d18dee7317f7ce2ad855af3ca431e1",
+      "size_bytes": 211
+    },
+    "summary.json": {
+      "sha256": "f94c121ca7699dc4527bec33ea476f31da7d1f09dbad8b47ce9f413f782621c7",
+      "size_bytes": 8767
+    }
+  },
+  "format_version": "1",
+  "provenance": {
+    "dataset_manifest_ref": "synthetic-contract-v1",
+    "engine_version": "0.1.0",
+    "implementation_status": "implemented",
+    "input_provenance": [
+      {
+        "description": "Invented contract/arithmetic test values, including location, dates, hardware, finite storage, nonzero lander base load, panel parameters and station proxy. No numerical terrain or ephemeris is supplied; no mission prediction.",
+        "input_class": "synthetic",
+        "scope": "all scenario values and contact windows",
+        "source_urls": []
+      },
+      {
+        "description": "Assumed net payload rates with overhead already applied once; ideal pointing; zero acquisition/teardown and relay processing for arithmetic only; light time disabled for synthetic test, not physically zero.",
+        "input_class": "assumed",
+        "scope": "rates, pointing, acquisition, processing and propagation",
+        "source_urls": []
+      }
+    ],
+    "kernel_manifest_ref": null,
+    "reason": "The bounded discretized model proved no complete-file schedule under the declared route, storage, radio, service and energy constraints.",
+    "source_urls": []
+  },
+  "scenario_sha256": "d7c1b741ddc6c648b21acb532671563080bf141d0afbdfff5217d81b20f3496e",
+  "software_versions": {
+    "fastapi": "0.163.0",
+    "jsonschema": "4.26.0",
+    "numpy": "2.5.4",
+    "pulp": "3.3.2",
+    "python": "3.14.7",
+    "rasterio": "1.5.2",
+    "rfc8785": "0.1.4",
+    "soma": "0.1.0",
+    "spiceypy": "8.4.0",
+    "uvicorn": "0.54.0"
+  },
+  "time_convention": "source transmit UTC; receiver occupancy and availability exported separately",
+  "warnings": [
+    "No numerical lunar terrain or ephemeris; no mission prediction.",
+    "No complete dataset schedule satisfies the declared discrete route, capacity, storage, service, radio and energy constraints.",
+    "Synthetic geometry and assumed service/rates are software-test inputs, not lunar mission predictions.",
+    "This result does not book service or certify navigation, relay operation or thermal survival.",
+    "Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage."
+  ]
+}

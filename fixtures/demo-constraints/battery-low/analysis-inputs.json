@@ -1,0 +1,116 @@
+{
+  "assumptions": [
+    "SYNTHETIC fixture contacts; zero generation over the whole horizon; light time disabled for arithmetic."
+  ],
+  "contacts": [
+    {
+      "available_capacity_bits": 307200000,
+      "contact_id": "synthetic-direct-contact",
+      "mode_id": "synthetic-direct-256k",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0
+      },
+      "payload_rate_bps": 256000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "synthetic_contact_fixture",
+        "assumed_net_rate",
+        "ideal_pointing",
+        "geometry_not_computed",
+        "link_budget_not_computed",
+        "light_time_disabled_for_arithmetic"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-earth-station",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "SYNTHETIC endpoint calendars in scenario.json; no operator service",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T09:10:00Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 1200000000,
+      "contact_id": "synthetic-relay-uplink",
+      "mode_id": "synthetic-uplink-2m",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0
+      },
+      "payload_rate_bps": 2000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "synthetic_contact_fixture",
+        "assumed_net_rate",
+        "ideal_pointing",
+        "geometry_not_computed",
+        "link_budget_not_computed",
+        "light_time_disabled_for_arithmetic"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-lunar-relay",
+      "receiver_terminal_id": "relay-radio",
+      "sender": "synthetic-lander",
+      "sender_terminal_id": "lander-radio",
+      "service_provenance": "SYNTHETIC endpoint calendars in scenario.json; no operator service",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T09:10:00Z",
+        "start_utc": "2026-11-14T09:00:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    },
+    {
+      "available_capacity_bits": 1800000000,
+      "contact_id": "synthetic-relay-downlink",
+      "mode_id": "synthetic-downlink-10m",
+      "one_way_delay": {
+        "model": "disabled_for_synthetic_test",
+        "seconds": 0
+      },
+      "payload_rate_bps": 10000000,
+      "payload_rate_definition": "net_payload_bits_per_second_overhead_already_applied",
+      "quality_flags": [
+        "synthetic_contact_fixture",
+        "assumed_net_rate",
+        "ideal_pointing",
+        "geometry_not_computed",
+        "link_budget_not_computed",
+        "light_time_disabled_for_arithmetic"
+      ],
+      "rate_method": "assumed_net_rate",
+      "receiver": "synthetic-earth-station",
+      "receiver_terminal_id": "station-radio",
+      "sender": "synthetic-lunar-relay",
+      "sender_terminal_id": "relay-radio",
+      "service_provenance": "SYNTHETIC endpoint calendars in scenario.json; no operator service",
+      "source_transmit_window": {
+        "end_utc": "2026-11-14T10:03:00Z",
+        "start_utc": "2026-11-14T10:00:00Z"
+      },
+      "timing_convention": "source_transmit_epochs"
+    }
+  ],
+  "contacts_complete": true,
+  "format_version": "0.4.0",
+  "generation_bins": [
+    {
+      "end_utc": "2026-11-14T10:05:00Z",
+      "generation_w": 0,
+      "power_model": "piecewise_constant",
+      "start_utc": "2026-11-14T08:50:00Z"
+    }
+  ],
+  "generation_complete": true,
+  "provenance": {
+    "experiment": "phase6-one-control-sensitivity-v1",
+    "input_class": "synthetic"
+  },
+  "scenario_sha256": "22d6f59174516ab03473eb11f0c85f880f560091b5d094d08c72f742906a6dbc",
+  "warnings": [
+    "No numerical lunar terrain or ephemeris; no mission prediction."
+  ]
+}

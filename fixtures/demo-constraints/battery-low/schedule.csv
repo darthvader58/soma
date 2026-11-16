@@ -1,0 +1,1 @@
+allocation_id,chunk_id,byte_offset_bytes,byte_length_bytes,contact_id,sender,receiver,source_transmit_start_utc,source_transmit_end_utc,receiver_occupancy_start_utc,receiver_occupancy_end_utc,byte_available_utc

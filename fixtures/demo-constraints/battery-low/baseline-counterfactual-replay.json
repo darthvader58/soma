@@ -1,0 +1,488 @@
+{
+  "buffer_history": [
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 104857600
+    },
+    {
+      "epoch_utc": "2026-11-14T09:01:10Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T09:02:30Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T09:03:40Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 54525952
+    },
+    {
+      "epoch_utc": "2026-11-14T09:04:50Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 37748736
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:20Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T09:07:20Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T09:08:30Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-lander",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T09:00:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T09:01:20Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T09:02:30Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 50331648
+    },
+    {
+      "epoch_utc": "2026-11-14T09:03:40Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 67108864
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T09:06:10Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T09:07:20Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 104857600
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:20Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:40Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:50Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 67108864
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:10Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 50331648
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:30Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:50Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T10:02:10Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-lunar-relay",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 0
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:00Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 16777216
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:20Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 33554432
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:40Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 37748736
+    },
+    {
+      "epoch_utc": "2026-11-14T10:00:50Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 54525952
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:10Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 71303168
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:30Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 88080384
+    },
+    {
+      "epoch_utc": "2026-11-14T10:01:50Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 104857600
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-earth-station",
+      "stored_bytes": 104857600
+    }
+  ],
+  "delivered_bytes": 104857600,
+  "details": {
+    "algorithm": "independent_whole_chunk_replay_v1",
+    "availability_policy": "declared availability may conservatively delay physical availability",
+    "buffer_conservatism": "reserve incoming whole chunk at first arrival; release at transmit end",
+    "external_power": "relay and station power follows explicit profile assumptions",
+    "setup_power_assumption": "acquisition and teardown draw the respective TX/RX electrical watts"
+  },
+  "energy_history": [
+    {
+      "epoch_utc": "2026-11-14T08:50:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 11
+    },
+    {
+      "epoch_utc": "2026-11-14T09:00:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 10.074074074074074
+    },
+    {
+      "epoch_utc": "2026-11-14T09:01:10Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 9.533950617283951
+    },
+    {
+      "epoch_utc": "2026-11-14T09:01:20Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 9.518518518518519
+    },
+    {
+      "epoch_utc": "2026-11-14T09:02:30Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 8.978395061728396
+    },
+    {
+      "epoch_utc": "2026-11-14T09:03:40Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 8.438271604938272
+    },
+    {
+      "epoch_utc": "2026-11-14T09:04:50Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 7.898148148148149
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 7.882716049382717
+    },
+    {
+      "epoch_utc": "2026-11-14T09:05:20Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 7.728395061728396
+    },
+    {
+      "epoch_utc": "2026-11-14T09:06:10Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 7.651234567901235
+    },
+    {
+      "epoch_utc": "2026-11-14T09:07:20Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 7.111111111111112
+    },
+    {
+      "epoch_utc": "2026-11-14T09:08:30Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 6.570987654320988
+    },
+    {
+      "epoch_utc": "2026-11-14T10:05:00Z",
+      "node_id": "synthetic-lander",
+      "stored_energy_wh": 1.3395061728395072
+    }
+  ],
+  "errors": [
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:01:10Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:01:20Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:02:30Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:03:40Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:04:50Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:05:00Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:05:20Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:06:10Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:07:20Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T09:08:30Z"
+    },
+    {
+      "code": "energy_reserve",
+      "reason": "energy below reserve at 2026-11-14T10:05:00Z"
+    }
+  ],
+  "final_byte_arrival_utc": "2026-11-14T10:02:10Z",
+  "passed": false,
+  "storage_intervals": [
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-14T09:01:10Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-14T10:00:20Z",
+        "start_utc": "2026-11-14T09:00:00Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-1",
+      "interval": {
+        "end_utc": "2026-11-14T09:02:30Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-1",
+      "interval": {
+        "end_utc": "2026-11-14T10:00:40Z",
+        "start_utc": "2026-11-14T09:01:20Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-2",
+      "interval": {
+        "end_utc": "2026-11-14T09:03:40Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-2",
+      "interval": {
+        "end_utc": "2026-11-14T10:01:10Z",
+        "start_utc": "2026-11-14T09:02:30Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-3",
+      "interval": {
+        "end_utc": "2026-11-14T09:04:50Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-3",
+      "interval": {
+        "end_utc": "2026-11-14T10:01:30Z",
+        "start_utc": "2026-11-14T09:03:40Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 4194304,
+      "chunk_id": "chunk-6",
+      "interval": {
+        "end_utc": "2026-11-14T09:05:20Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 4194304,
+      "chunk_id": "chunk-6",
+      "interval": {
+        "end_utc": "2026-11-14T10:00:50Z",
+        "start_utc": "2026-11-14T09:05:00Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-4",
+      "interval": {
+        "end_utc": "2026-11-14T09:07:20Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-4",
+      "interval": {
+        "end_utc": "2026-11-14T10:01:50Z",
+        "start_utc": "2026-11-14T09:06:10Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-5",
+      "interval": {
+        "end_utc": "2026-11-14T09:08:30Z",
+        "start_utc": "2026-11-14T08:50:00Z"
+      },
+      "node_id": "synthetic-lander"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-5",
+      "interval": {
+        "end_utc": "2026-11-14T10:02:10Z",
+        "start_utc": "2026-11-14T09:07:20Z"
+      },
+      "node_id": "synthetic-lunar-relay"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-0",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:00Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-1",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:20Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 4194304,
+      "chunk_id": "chunk-6",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:40Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-2",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:00:50Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-3",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:01:10Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-4",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:01:30Z"
+      },
+      "node_id": "synthetic-earth-station"
+    },
+    {
+      "byte_length": 16777216,
+      "chunk_id": "chunk-5",
+      "interval": {
+        "end_utc": "2026-11-14T10:05:00Z",
+        "start_utc": "2026-11-14T10:01:50Z"
+      },
+      "node_id": "synthetic-earth-station"
+    }
+  ]
+}

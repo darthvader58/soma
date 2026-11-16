@@ -1,0 +1,253 @@
+{
+  "checks": [
+    {
+      "name": "unique_safe_member_names",
+      "passed": true
+    },
+    {
+      "name": "required_members",
+      "passed": true
+    },
+    {
+      "name": "manifest_complete",
+      "passed": true
+    },
+    {
+      "name": "checksum:analysis-inputs.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:buffer-history.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:contacts.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:display-data.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:display.czml",
+      "passed": true
+    },
+    {
+      "name": "checksum:energy.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:explanation.md",
+      "passed": true
+    },
+    {
+      "name": "checksum:renderer-conversion.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:renderer-registration.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:replay.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:result.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:scenario.json",
+      "passed": true
+    },
+    {
+      "name": "checksum:schedule.csv",
+      "passed": true
+    },
+    {
+      "name": "checksum:summary.json",
+      "passed": true
+    },
+    {
+      "name": "schema:scenario",
+      "passed": true
+    },
+    {
+      "name": "schema:result",
+      "passed": true
+    },
+    {
+      "name": "schema:contact",
+      "passed": true
+    },
+    {
+      "name": "schema:allocation",
+      "passed": true
+    },
+    {
+      "name": "feasible_display_present",
+      "passed": true
+    },
+    {
+      "name": "scenario_hash_bindings",
+      "passed": true
+    },
+    {
+      "name": "analysis_contacts_equal_native",
+      "passed": true
+    },
+    {
+      "name": "display_environment_exact",
+      "passed": true
+    },
+    {
+      "name": "display_native:contacts",
+      "passed": true
+    },
+    {
+      "name": "display_native:allocations",
+      "passed": true
+    },
+    {
+      "name": "display_native:storage_intervals",
+      "passed": true
+    },
+    {
+      "name": "display_native:energy_history",
+      "passed": true
+    },
+    {
+      "name": "display_native:buffer_history",
+      "passed": true
+    },
+    {
+      "name": "display_native:assumptions",
+      "passed": true
+    },
+    {
+      "name": "display_native:warnings",
+      "passed": true
+    },
+    {
+      "name": "summary_native:scenario_id",
+      "passed": true
+    },
+    {
+      "name": "summary_native:scenario_sha256",
+      "passed": true
+    },
+    {
+      "name": "summary_native:status",
+      "passed": true
+    },
+    {
+      "name": "summary_native:solver_status",
+      "passed": true
+    },
+    {
+      "name": "summary_native:model_fidelity",
+      "passed": true
+    },
+    {
+      "name": "summary_native:delivered_bytes",
+      "passed": true
+    },
+    {
+      "name": "summary_native:final_byte_arrival_utc",
+      "passed": true
+    },
+    {
+      "name": "summary_native:assumptions",
+      "passed": true
+    },
+    {
+      "name": "summary_native:warnings",
+      "passed": true
+    },
+    {
+      "name": "display_summary_exact",
+      "passed": true
+    },
+    {
+      "name": "manifest_native:warnings",
+      "passed": true
+    },
+    {
+      "name": "explanation:warnings",
+      "passed": true
+    },
+    {
+      "name": "manifest_native:assumptions",
+      "passed": true
+    },
+    {
+      "name": "explanation:assumptions",
+      "passed": true
+    },
+    {
+      "name": "explanation_outcome",
+      "passed": true
+    },
+    {
+      "name": "registration_exact",
+      "passed": true
+    },
+    {
+      "name": "conversion_exact",
+      "passed": true
+    },
+    {
+      "name": "czml_native",
+      "passed": true
+    },
+    {
+      "name": "czml_registration",
+      "passed": true
+    },
+    {
+      "name": "csv_header:schedule.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:schedule.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_header:contacts.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:contacts.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_header:energy.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:energy.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_header:buffer-history.csv",
+      "passed": true
+    },
+    {
+      "name": "csv_native:buffer-history.csv",
+      "passed": true
+    },
+    {
+      "name": "no_allocations_without_feasibility",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": true,
+  "replay": null,
+  "replay_status": "no_feasible_schedule_claimed; infeasibility is not independently proved by replay",
+  "reproduce_command": ".venv/bin/python -m soma.verification.exports RUN_ZIP",
+  "scenario_sha256": "d7c1b741ddc6c648b21acb532671563080bf141d0afbdfff5217d81b20f3496e",
+  "solver_status": "proven_infeasible_discretized_model",
+  "status": "infeasible_in_model",
+  "zip_sha256": "8f93e19bb61fac53c3e52e701fd0f8c8633d25b8684de844151dc02a27971b73"
+}
