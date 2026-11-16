@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "a1ab4208e75200edf19cdf5a82af9dbc6102ef56e98f4238e12d7ab65f160fbd"
+      "sha256": "c1493d628d87836f161ee20a5321c9f6dc2777aaa14dcab491295cb2befadb58"
     },
     {
       "path": "data/README.md",
@@ -276,6 +276,74 @@
     {
       "path": "fixtures/phase-6/sensitivity.json",
       "sha256": "95eddf3434952941be5b4fff211187d086b2394d4b4b1fd4117d82636c01ec82"
+    },
+    {
+      "path": "fixtures/physical-south-pole/README.md",
+      "sha256": "6d228c2c883f438214bc2cb945d76d3e2b91d96f5cabd312463d33d0f3a71bd4"
+    },
+    {
+      "path": "fixtures/physical-south-pole/completion-report.json",
+      "sha256": "ad835c4d92b037e53db0b60f44bafd82373d548051faa5c495486cea3ca792f6"
+    },
+    {
+      "path": "fixtures/physical-south-pole/demonstration.json",
+      "sha256": "16daf524d7c16e98b589a4470fd94f823004b055c6aa46080ac5ea75b356480b"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/run.zip",
+      "sha256": "05a33dfec5b21cded84611658d03d229d8c792c5b9ad162ff7359458027dc58a"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/scenario.json",
+      "sha256": "68babeaef0dac49c7785c1e0e258b11a935b1b8a9d483e136305474ca7397582"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/summary.json",
+      "sha256": "46762aaf92dd884e2da9311032084ec358a141813d9007b6354dd2fa5f35ed77"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-later/verification.json",
+      "sha256": "9e48c9d0acb091a7e5467dc9a226b7ca13f0181e637e850b45d8de4063e6c0ff"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/run.zip",
+      "sha256": "3a2598b5c3463f1a1568d9dacf4abdc886fe1caf59c40d44b48cb10877e02bce"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/scenario.json",
+      "sha256": "c8852a0df54710ce69a4f44d92d44fddf03f91026d06f321b3becac7d9b10547"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/summary.json",
+      "sha256": "51a3705003e60caff2dfcd33bf5131b5f3c45c00ec2c42b87502fac28999c411"
+    },
+    {
+      "path": "fixtures/physical-south-pole/direct-ready/verification.json",
+      "sha256": "36202a77f60a702ed62563ba22765e58d1e9c304a5d524115c6235ba47d96b83"
+    },
+    {
+      "path": "fixtures/physical-south-pole/independent-audit.json",
+      "sha256": "32daa21ae925682e68a386b3fa0c04cacdd475d20124a581362ada6121706217"
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/run.zip",
+      "sha256": "27ea8e3448375df79bb05863f8ebc34cc513e7282ba3461214f767029b271d39"
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/scenario.json",
+      "sha256": "dfd384f8872b8ceeae634dd86416d6190393cfbad5067b15c26afccf3009acd4"
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/summary.json",
+      "sha256": "ddcdb3fc53a772a6de8a6ae09216e8da60b4792b0f491524140ea5086a34ef9e"
+    },
+    {
+      "path": "fixtures/physical-south-pole/relay-later/verification.json",
+      "sha256": "1845b6c138dc9f5fc5ddcd4f4ec571c5bcdd0df7e55d1d06cd90135e84d4a36f"
+    },
+    {
+      "path": "fixtures/physical-south-pole/sampling-verification.json",
+      "sha256": "33b57b64e60ff9b7c4997c26ace4b8385990e9def398196c22323d3f9b843f8c"
     },
     {
       "path": "fixtures/physical-south-pole/scenario-later.json",
@@ -535,7 +603,7 @@
     },
     {
       "path": "soma/docs/challenge-alignment.md",
-      "sha256": "f23d8a884b1e6c3fa3478545258cb4a896ea707425110ed0047c77cc1ce229e2"
+      "sha256": "b8ed10a5dc5ca7b78a9d9f72f8d7faf9e35382ad47278788f04d4a61989a6295"
     },
     {
       "path": "soma/docs/phase-2/README.md",
@@ -634,8 +702,16 @@
       "sha256": "0485422fca9bf039ea443166f21605f6dfc8996863572ff906ca64f798af1f25"
     },
     {
+      "path": "soma/docs/physical-first-release/README.md",
+      "sha256": "97707e35ac7100b03766043e53754c85173f310bdb2eb8c00e019c5280a6b342"
+    },
+    {
       "path": "soma/docs/physical-first-release/build_scenarios.py",
       "sha256": "f72f90f5be23e660d23f145299f8f0be453ff0edc47fa883665b9e8aa6bc371e"
+    },
+    {
+      "path": "soma/docs/physical-first-release/independent-audit.md",
+      "sha256": "6d51a60f83b6e4775c28250e7b2d332eb51219d002b35026782394e9ab33a37f"
     },
     {
       "path": "soma/docs/physical-first-release/reproduce.py",
@@ -780,6 +856,10 @@
     {
       "path": "soma/verification/exports.py",
       "sha256": "f1a6b1ed0a775ae93051a158f4457b5d7991de3208f4b5afc4a5b7658dabdee5"
+    },
+    {
+      "path": "soma/verification/physical_completion.py",
+      "sha256": "4326b9c02017e35ae22af2e085c73576b2818cb4aad815540dffcc0e88548efc"
     },
     {
       "path": "soma/verification/sensitivity.py",

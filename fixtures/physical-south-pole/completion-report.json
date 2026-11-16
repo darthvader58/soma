@@ -1,0 +1,141 @@
+{
+  "artifact_type": "soma_physical_first_release_verification",
+  "scope": "required_bounded_first_release_in_plan",
+  "checks": [
+    {
+      "name": "export:direct-ready",
+      "passed": true
+    },
+    {
+      "name": "export:direct-later",
+      "passed": true
+    },
+    {
+      "name": "export:relay-later",
+      "passed": true
+    },
+    {
+      "name": "computed_physical_demo_outcomes",
+      "passed": true
+    },
+    {
+      "name": "physical_inputs_and_assumed_rates",
+      "passed": true
+    },
+    {
+      "name": "same_task_and_site",
+      "passed": true
+    },
+    {
+      "name": "same_hardware_and_initial_battery",
+      "passed": true
+    },
+    {
+      "name": "six_hour_mission_age_deadline",
+      "passed": true
+    },
+    {
+      "name": "direct_then_enabled_configured_relay",
+      "passed": true
+    },
+    {
+      "name": "direct_failure_has_no_available_contacts",
+      "passed": true
+    },
+    {
+      "name": "complete_generation:direct-ready",
+      "passed": true
+    },
+    {
+      "name": "resolved_ground_and_two_heights:direct-ready",
+      "passed": true
+    },
+    {
+      "name": "real_stored_synthetic_orbit:direct-ready",
+      "passed": true
+    },
+    {
+      "name": "no_full_optimality_over_unknown_contacts:direct-ready",
+      "passed": true
+    },
+    {
+      "name": "complete_generation:direct-later",
+      "passed": true
+    },
+    {
+      "name": "resolved_ground_and_two_heights:direct-later",
+      "passed": true
+    },
+    {
+      "name": "real_stored_synthetic_orbit:direct-later",
+      "passed": true
+    },
+    {
+      "name": "no_full_optimality_over_unknown_contacts:direct-later",
+      "passed": true
+    },
+    {
+      "name": "complete_generation:relay-later",
+      "passed": true
+    },
+    {
+      "name": "resolved_ground_and_two_heights:relay-later",
+      "passed": true
+    },
+    {
+      "name": "real_stored_synthetic_orbit:relay-later",
+      "passed": true
+    },
+    {
+      "name": "no_full_optimality_over_unknown_contacts:relay-later",
+      "passed": true
+    },
+    {
+      "name": "date_changes_solar_inputs",
+      "passed": true
+    },
+    {
+      "name": "causal_relay_wait",
+      "passed": true
+    },
+    {
+      "name": "terrain_count_mask_preserved",
+      "passed": true
+    },
+    {
+      "name": "terrain_extent_and_omitted_envelope",
+      "passed": true
+    },
+    {
+      "name": "independent_scalar_horizon",
+      "passed": true
+    },
+    {
+      "name": "current_sampling_source",
+      "passed": true
+    },
+    {
+      "name": "time_resolution_comparison",
+      "passed": true
+    },
+    {
+      "name": "sampling_replay:60",
+      "passed": true
+    },
+    {
+      "name": "sampling_replay:30",
+      "passed": true
+    },
+    {
+      "name": "independent_archive_reproduction",
+      "passed": true
+    },
+    {
+      "name": "physical_interface_walkthrough",
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "required_first_release_complete": true,
+  "optional_phase7_implemented": false
+}

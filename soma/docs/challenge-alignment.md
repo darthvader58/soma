@@ -1,5 +1,13 @@
 # Official challenge alignment review
 
+Current bounded physical first-release evidence is in the
+[physical workflow report](physical-first-release/README.md). The historical
+phase snapshots below are retained as development history. The official
+Details and Resources tabs were reread through Aside on November 15, 2026;
+the central site/date, Sun/Earth/horizon, power and direct-communications task
+remains the implementation target. The new computed date comparison supplies
+the previously missing physical workflow for one supported numerical site.
+
 Reviewed 14 November 2026. This is a scope review, not scientific validation or a claim of challenge completion.
 
 ## Live source and evidence
