@@ -220,6 +220,8 @@ def _validate_scenario_semantics(scenario):
     node_ids = [lander["id"], *relays, *stations]
     if len(node_ids) != len(set(node_ids)):
         raise ScenarioValidationError("Lander, relay, and station node identifiers must be distinct")
+    if physical and {"SUN", "EARTH"}.intersection(node_ids):
+        raise ScenarioValidationError("Physical node identifiers SUN and EARTH are reserved for celestial-body states")
 
     for profile in profiles["hardware"]:
         battery = profile["battery"]
