@@ -17,7 +17,7 @@ planning = ["pulp==3.3.2"]
 service = ["fastapi==0.163.0", "uvicorn==0.54.0"]
 
 [dependency-groups]
-hosted-display = ["fastapi==0.163.0", "numpy==2.5.4", "rasterio==1.5.2"]
+hosted-display = ["fastapi==0.163.0", "numpy==2.5.4", "rasterio==1.5.2", "spiceypy==8.4.0"]
 
 [tool.uv]
 default-groups = ["hosted-display"]
@@ -27,7 +27,7 @@ include = ["soma*"]
 
 [tool.setuptools.data-files]
 "share/soma/schemas" = ["schemas/*.schema.json"]
-"share/soma/data" = ["data/*.manifest.json"]
+"share/soma/data" = ["data/*.manifest.json", "data/research-sites.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests/engine"]

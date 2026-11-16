@@ -1,0 +1,101 @@
+---
+title: Research geometry API
+description: Versioned study validation, source readiness, native ephemeris sampling and Vercel endpoints.
+---
+
+The `soma.research` API is additive. Existing delivery scenario/result contracts and `soma.plan_delivery` retain their behavior. Study version `1.0.0` currently supports `analysis_type: "geometry"` with `MOON_ME_DE421` axes and a declared reference sphere.
+
+## Python functions
+
+```python
+from soma.research import (
+    StudyValidationError, StudyCancelled,
+    validate_study, study_sha256, runtime_capabilities, analyze_study,
+)
+from soma.research.catalog import site_catalog, resolve_site
+
+catalog = site_catalog()
+site = resolve_site("apollo-11")
+coverage = runtime_capabilities(data_root="/tmp/soma-research-sources")
+```
+
+| Function | Behavior |
+| --- | --- |
+| `site_catalog()` | Returns detached published location records, Python reference-sphere positions, source URLs, coordinate notes and the catalog source SHA256 |
+| `resolve_site(identifier)` | Returns one detached catalog record; raises `ValueError` for an unknown identifier |
+| `validate_study(document)` | Validates schema and bounds, normalizes timezone-qualified epochs to UTC, and returns detached data; raises `StudyValidationError` |
+| `study_sha256(request)` | Returns RFC 8785 SHA256 after validation and UTC normalization |
+| `runtime_capabilities(*, data_root=None)` | Verifies local source hashes and actual SPICE coverage; core readiness and spacecraft availability are separate |
+| `analyze_study(request, *, data_root=None, progress=None, cancel_event=None)` | Returns a completed study after native SPICE evaluation and result validation; no network acquisition or invented spacecraft |
+
+`progress` receives stage dictionaries with `completed_epochs` and `total_epochs`. `cancel_event` supports `is_set()`; interruption raises `StudyCancelled`. Python calculations restore the previous SPICE kernel pool. HTTP workers run in separate processes.
+
+## Request
+
+```json
+{
+  "study_version": "1.0.0",
+  "analysis_type": "geometry",
+  "frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "surface_model": "reference_sphere",
+  "sites": [{
+    "id": "custom-1", "name": "Declared study location",
+    "latitude_deg": 12.2, "longitude_deg_east": 24.7,
+    "elevation_m": 0, "antenna_height_m": 2, "panel_height_m": 1
+  }],
+  "time": {
+    "start_utc": "2026-04-01T00:00:00Z",
+    "end_utc": "2026-04-01T06:00:00Z", "step_s": 60
+  },
+  "spacecraft_refs": ["lro-reconstructed-2026-spring"]
+}
+```
+
+Latitude is planetocentric; longitude is east-positive in `[-180, 180)`. Elevation and separate equipment heights are meters above the declared reference sphere. Site IDs must be unique. All numeric values must be finite and every timestamp must include a timezone. `spacecraft_refs: []` requests only Sun/Earth geometry.
+
+| Budget | Limit |
+| --- | --- |
+| Sites | 1–8 |
+| Duration | At most 31 days, within actual selected-source coverage |
+| Sampling step | At least 10 seconds |
+| Epochs | At most 2,000, including the requested end |
+| Site/epoch pairs | At most 5,000 |
+| Vercel request/result | 128,000 / 4,000,000 bytes |
+| Vercel scientific worker | 60-second wall-time cap |
+
+The size cap can reject a request that otherwise fits the sampling limits. Reduce the interval, site count or sampling density. The service never truncates scientific arrays to fit.
+
+## Result and units
+
+`status: "completed"` means a geometry study finished. It is not the delivery planner's `feasible_under_assumptions` status.
+
+| Field | Meaning |
+| --- | --- |
+| `study_sha256`, `request` | Canonical hash and normalized original request |
+| `frame`, `origin`, `reference_radius_m` | `MOON_ME_DE421`, `MOON`, meters |
+| `epochs_utc` | Exact sampled UTC epochs, including both endpoints |
+| `sites[].position_m` | Python site position; antenna/panel positions are separate fields |
+| `sites[].samples[].sun/earth` | Azimuth/elevation in degrees, range in meters, Moon-fixed unit direction |
+| `sites[].summary` | Sampled minimum/maximum Sun/Earth elevation; not continuous-time extrema |
+| `sites[].quality` | Explicit evaluated/unevaluated quantities and pole reference meridian |
+| `bodies[].samples`, `spacecraft[].samples` | Epoch, Moon-fixed position in meters and velocity in meters/second |
+| `provenance` | Software, toolkit, checksums, actual coverage, source manifests and assumptions |
+| `limitations` | Scientific interpretation constraints |
+
+Sun directions use the panel observer; Earth-center directions use the antenna observer. At a geographic pole the local basis uses reference meridian 0° east. States use same-epoch geometric `NONE` aberration. Moon-fixed velocities are derivatives in rotating axes, not inertial velocities.
+
+## Vercel HTTP routes
+
+Public base: `https://soma-atlas-two.vercel.app/api/research`.
+
+| Method and path | Response |
+| --- | --- |
+| `GET /catalog` | Sourced locations and reference-sphere context positions |
+| `GET /capabilities` | Readiness, actual source intervals, budgets and supported service mode |
+| `POST /analyze` | Complete scientific JSON result for a validated request |
+| Job routes | HTTP 503; durable jobs are unavailable on this synchronous Vercel service |
+
+The browser exports the exact returned JSON. Invalid requests return HTTP 422; oversized requests return 413; an occupied per-process calculation slot returns 429. Missing sources, timeouts and oversized results fail explicitly. Canceling an HTTP request stops waiting; it does not guarantee the server worker stopped. The worker deadline still applies.
+
+The [optional local service](https://github.com/darthvader58/soma/blob/main/deploy/research/README.md) uses `/research` and can enable bounded SQLite-backed jobs. It is a local reproduction option, separate from Vercel hosting.

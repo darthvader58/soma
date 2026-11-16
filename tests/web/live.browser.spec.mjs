@@ -30,7 +30,7 @@ test.beforeEach(async ({ page }) => {
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   page.__somaErrors = errors;
-  await page.goto('/');
+  await page.goto('/?mode=archive');
   await expect(page.locator('#workspace-mode')).toContainText('Live');
   await expect(page.getByRole('heading', { name: 'Lunar terrain unavailable' })).toBeVisible();
 });

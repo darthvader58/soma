@@ -223,19 +223,46 @@ class JobStore:
         self.temp.cleanup()
 
 
-def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32, moon_provider=None):
+def create_app(*, planner=None, temp_root=None, max_workers=2, max_jobs=32, moon_provider=None,
+               research_planner=None, research_run_root=None, research_data_root=None,
+               research_capabilities=None, research_catalog=None):
     """Planner injection is trusted startup configuration, never request data."""
     @asynccontextmanager
     async def lifespan(app):
         app.state.jobs = JobStore(planner=planner, temp_root=temp_root, max_workers=max_workers, max_jobs=max_jobs)
+        from soma.api.research_jobs import ResearchJobStore
+        run_root = research_run_root or os.environ.get("SOMA_RESEARCH_RUN_ROOT")
+        app.state.research_jobs = None
         try:
+            if run_root:
+                app.state.research_jobs = ResearchJobStore(run_root, planner=research_planner,
+                    data_root=research_data_root or configured_data_root())
             yield
         finally:
+            if app.state.research_jobs is not None:
+                await asyncio.to_thread(app.state.research_jobs.close)
             await asyncio.to_thread(app.state.jobs.close)
 
+    from soma.api.research import configured_data_root, research_router
+    from fastapi.middleware.cors import CORSMiddleware
     app = FastAPI(title="SOMA local planning service", lifespan=lifespan)
     from soma.api.moon import moon_router
     app.include_router(moon_router(moon_provider))
+    app.include_router(research_router(data_root=research_data_root or configured_data_root(),
+        planner=research_planner, capabilities_provider=research_capabilities,
+        catalog_provider=research_catalog))
+    origins = [value.strip().rstrip("/") for value in os.environ.get("SOMA_RESEARCH_ALLOWED_ORIGINS", "").split(",") if value.strip()]
+    if "*" in origins:
+        raise ValueError("Research CORS requires explicit allowed origins")
+    if origins:
+        app.add_middleware(CORSMiddleware, allow_origins=origins,
+            allow_methods=["GET", "POST", "DELETE"], allow_headers=["Content-Type"],
+            expose_headers=["X-SOMA-Study-SHA256", "Content-Disposition"])
+
+    @app.get("/health")
+    def health():
+        return {"status": "ok", "service": "soma", "research_async_available":
+                getattr(app.state, "research_jobs", None) is not None}
 
     @app.post("/plans", status_code=202)
     async def post_plan(request: Request):

@@ -1,0 +1,88 @@
+---
+title: Record the live workbench
+description: A six-minute screen recording of new calculations, reconstructed LRO motion and reproducible scientific results.
+---
+
+Use the [live workbench](https://soma-atlas-two.vercel.app/) for this recording. The earlier [delivery-case script](/guides/hackathon-demo) uses the separate archive. This tour demonstrates implemented geometry; it does not present terrain shadows, power or communications feasibility as outputs of the geometry endpoint.
+
+Record at 1920 × 1080, 100% zoom, with microphone narration and Cesium attribution visible. Rehearse once and wait for the initial calculation and Moon tiles to finish before recording. Keep this guide, the app and the [Python tutorial](/getting-started/live-research) in separate tabs. Use normal speaking speed and hold each important numerical state for several seconds. The actions and narration below target **six minutes**, including approximately one minute of deliberate interaction and reading time.
+
+## 0:00–0:45 — State the research question
+
+**Record:** Show the whole workbench: several selected locations, the Moon, an LRO track, UTC controls and the inspector. Keep playback paused.
+
+**Say:**
+
+“A lunar map is useful for finding a place. Planning an observation also requires asking what is visible from that place, at a particular time, and which data supports the answer.
+
+This is SOMA. I can select several published lunar locations, add my own coordinates, change the date, and ask Python to calculate a new study. The browser displays those returned results rather than animating a preset answer. Today I will compare the Sun and Earth geometry at different locations, inspect a reconstructed spacecraft trajectory, and export a calculation that another researcher can reproduce.”
+
+## 0:45–1:35 — Inspect multiple real references
+
+**Record:** Inspect Apollo 11. Open its coordinate source in another tab, briefly show the NASA table, then return. Inspect Haworth and Tycho. Use **Global** and **South pole**. Hold the source notes and comparison table.
+
+**Say:**
+
+“The catalog includes six historical Apollo landing sites and nine named crater centers. These are sourced references, with different levels of coordinate information. NASA explicitly identifies the Apollo coordinates in the DE421 mean-Earth system. The crater records preserve their USGS source and precision notes.
+
+A crater center is not automatically a suitable landing site. These markers also use a declared zero elevation on a reference sphere; they are not a claim of precise global registration to the rendered terrain. That distinction matters when a visual feature could otherwise look more certain than the underlying data.
+
+The comparison uses the same UTC interval and sampling for every selected location. I can inspect the different Sun and Earth center elevations without assigning an unexplained best-site score.”
+
+## 1:35–2:35 — Follow an actual archived spacecraft
+
+**Record:** Click **Use LRO coverage**, wait for calculation, then **Inspect stored state** and **Follow spacecraft**. Click **Next stored sample** twice. Play at 600× or 3600×, then pause after at least ten seconds. Scrub to a different UTC epoch.
+
+**Say:**
+
+“This spacecraft is NASA's Lunar Reconnaissance Orbiter. Its trajectory comes from a reconstructed SPICE product in the public PDS archive. It is not a synthetic ellipse and it is not a live position feed. The selected source covers March fifteenth through June fifteenth, 2026, so SOMA chooses a covered historical interval.
+
+Here are the native Moon-fixed position and velocity values for a stored epoch. Advancing the sample changes those numerical states. Playback follows the supplied history, and I can stop at a time of interest.
+
+Between stored epochs, the browser interpolates position only for smooth presentation. The numerical inspector identifies its stored sample. The application does not extrapolate this trajectory beyond its coverage, and it does not infer a communications relay service or an instrument footprint from the orbit alone.”
+
+## 2:35–3:40 — Calculate a location that was not a preset
+
+**Record:** Pause. Click **+ Custom site**. Enter latitude **21.1827**, east longitude **68.2714**, panel height **1.7 m**, antenna height **2 m**, and elevation **0 m**. Show the stale-result message, click **Run analysis**, then hold the new four-site comparison and study hash.
+
+**Say:**
+
+“I am now adding a user-defined study location: twenty-one point one eight two seven degrees north, sixty-eight point two seven one four degrees east. This is my declared input, not another catalog entry. I will give it a one point seven meter panel height and keep the antenna height separate.
+
+Editing the input marks the previous calculation stale. That prevents an old plot from being presented as the answer to a new request. Running analysis sends the selected sites and UTC epochs to Python. The resulting hash identifies the normalized request, and the fourth row contains the new site's calculated geometry.
+
+The elevations here are Sun and Earth center directions relative to a spherical local horizontal. Positive elevation does not establish terrain-clear access. The geometry result explicitly says that terrain shadows, finite solar-disk visibility, eclipses, power and usable contacts were not evaluated.”
+
+## 3:40–4:35 — Make a controlled date comparison
+
+**Record:** Save the calculated alternative. Change both date fields from **1 April** to **2 April 2026**, preserving 00:00–06:00 UTC and the same sampling/heights. Run again. Show the changed hash and elevation readouts, then the saved alternatives table. Do not claim it provides an automatic scientific ranking.
+
+**Say:**
+
+“A map point by itself does not change when I ask a different research question. Its geometry can. I am keeping the site set, elevations, equipment heights and sampling unchanged, while moving the six-hour interval forward by one day.
+
+This is another calculation, with another request hash. The new values come from the selected ephemerides for those epochs. The saved alternative retains the earlier result and its input metadata, so I can distinguish the two studies. It does not manufacture a ranking or hide which conditions changed.
+
+Coverage and numerical budgets are also explicit. Unsupported trajectory dates are rejected. A request that exceeds the sampled-epoch or response budget must be made smaller; scientific arrays are not silently cut down.”
+
+## 4:35–5:30 — Export and reproduce
+
+**Record:** Click **Result JSON**. Open the downloaded file and show `request`, `study_sha256`, `provenance`, `kernels`, `spacecraft_sources` and `limitations`. Click **Documentation** and show the executed tutorial plus API signatures.
+
+**Say:**
+
+“The export contains the exact scientific response, including the normalized request, sampled arrays, software versions and source checksums. Someone else can verify the hash and rerun that request with the same pinned sources.
+
+The documentation gives the actual Python functions, fields and units, the supported source intervals, and a complete three-site reproduction example. It also records calculated elevations and the example request hash. That makes this more than a visual demonstration: the calculation can leave the website and become an inspectable research artifact.
+
+The public application and its synchronous Python API both run on Vercel. Durable background jobs are not advertised on this deployment.”
+
+## 5:30–6:00 — Finish with the supported contribution
+
+**Record:** Return to the app. Select **Global**, briefly play the reconstructed history, then pause with the inspector and comparison visible.
+
+**Say:**
+
+“SOMA connects a lunar location, a time interval and identifiable scientific sources in one interactive workflow. I can move from published references to a new user-defined calculation, inspect native spacecraft states, and export a reproducible result.
+
+This view supports geometry research. The separate delivery engine addresses a different, bounded network-and-energy problem under declared assumptions. Keeping those meanings clear is part of making the tool useful: the user can see what was calculated, what the sources support, and what remains unresolved.”

@@ -1,0 +1,42 @@
+---
+title: Research sources and accuracy
+description: Published catalog coordinates, reconstructed LRO coverage and interpretation of sampled geometry.
+---
+
+## Catalog
+
+Six historical Apollo Lunar Module positions come from [NASA NSSDCA's lunar site table](https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html). The source explicitly identifies planetocentric Mean Earth/Polar Axis coordinates in the DE421 realization. The catalog preserves the published coordinates and source update date, 6 March 2017. Published digits do not establish absolute positional accuracy.
+
+Nine named crater centers come from the [IAU/USGS Gazetteer](https://planetarynames.wr.usgs.gov/SearchResults?Target=16_Moon&Feature+Type=9_Crater): Shackleton, Haworth, Cabeus, de Gerlache, Faustini, Nobile, Shoemaker, Malapert and Tycho. Each inspected feature page selected the LOLA 2011 control network. Values retain two decimal places. The [USGS coordinate explanation](https://planetarynames.wr.usgs.gov/GIS_Downloads) states that planetographic and planetocentric latitude coincide for its spherical lunar cartographic reference.
+
+The inspected crater pages do not independently certify a precise `MOON_ME_DE421` realization. Their markers are contextual references, with that limitation retained in every record. Malapert denotes the crater, not Malapert Massif. Crater centers are not landing-region boundaries, certified safe sites or measured elevations.
+
+The Gazetteer CSV was acquired through the official search-results download on 16 November 2026: 183,546 bytes, SHA256 `4cf364c7757faba6c11155400d68aceca745649f1978986116df6f7c256db73b`. Its download supplied no publication timestamp; the acquisition date is not a claim about when its coordinates were measured or updated.
+
+All catalog positions initially use assumed zero elevation on a 1,737,400 m sphere. Python derives Cartesian display positions. The regional terrain-registration certificate from the delivery work does not certify this global catalog against the Cesium mesh.
+
+## Matched lunar geometry
+
+The study uses the pinned DE421 planetary ephemeris, `naif0012.tls`, `moon_080317.tf` and `moon_pa_de421_1900-2050.bpc`. The binary set supplies Moon-centered Sun/Earth states and the documented `MOON_ME_DE421` orientation. File sizes, source URLs and SHA256 values are in `data/de421-phase2.manifest.json`.
+
+Readiness inspects actual SPK/PCK coverage and its intersection. Requested intervals must fit the selected sources. No terrestrial refraction or timestamp-plus-longitude solar-hour approximation is used. Future UTC beyond the leap-second kernel's publication cannot include unannounced future leap seconds.
+
+Before 1972, UTC labels use SPICE's extended convention rather than reconstructing historical civil UTC. Interpret broad kernel coverage separately from the validity of a particular time convention or mission source.
+
+## Reconstructed LRO
+
+The source is [NASA PDS/NAIF's LRO SPICE archive](https://naif.jpl.nasa.gov/pub/naif/pds/data/lro-l-spice-6-v1.0/lrosp_1000/data/spk/spkinfo.txt), product `lrorg_2026074_2026166_v01.bsp`, created 3 September 2026. Its label identifies a regular definitive trajectory from NASA GSFC Flight Dynamics Facility. SOMA verifies LRO target −85, Moon center 301, native J2000 SPK segments and actual continuous coverage from **2026-03-15T00:00:00Z through 2026-06-15T00:00:00Z**.
+
+The manifest pins 7,557,120 bytes and SHA256:
+
+```text
+5e17414e03c794e9dc29e4f4fde64d1d2d9fd106d87f26404188888495de28b1
+```
+
+Native SPICE evaluation supplies six-dimensional states; the engine transforms them to rotating `MOON_ME_DE421` axes. The browser may interpolate positions for smooth presentation within the supplied interval. Scientific readouts remain tied to stored epochs. No extrapolation, real-time tracking, LRO relay service or instrument footprint is implied. Attitude and instrument kernels would be required for a physical footprint.
+
+## What validation establishes
+
+Tests exercise coverage rejection, checksum tampering, native state/velocity semantics, local bases at the poles, independent published frame-vector comparison and restoration of SPICE kernel state. Sampling a smaller step changes the requested numerical study; coarse sampled extrema are not an event-location or physical accuracy guarantee.
+
+This first live study evaluates reference-sphere geometry only. Terrain clearance, solar-disk masks, eclipses, power, usable contacts, coverage footprints and scheduling are not evaluated by this endpoint. The [existing delivery model](/science/assumptions-limits) has a different, bounded terrain/network scope and retains its own assumptions.

@@ -1,0 +1,222 @@
+{
+  "catalog_version": "1.0.0",
+  "frame": "MOON_ME_DE421",
+  "reference_radius_m": 1737400,
+  "description": "Published lunar locations for geometry studies. Catalog points are not landing-safety recommendations or measurements of surface elevation.",
+  "marker_model": "Python reference-sphere positions with declared zero elevation; not terrain-clamped coordinates.",
+  "sites": [
+    {
+      "id": "apollo-11",
+      "name": "Apollo 11 landing site",
+      "kind": "historic_landing_site",
+      "latitude_deg": 0.67416,
+      "longitude_deg_east": 23.47314,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+      ],
+      "source_updated": "2017-03-06",
+      "coordinate_notes": "NASA NSSDCA Lunar Module coordinates derived from LRO images; planetocentric Mean Earth/Polar Axis lunar reference system, DE421. Published digits do not establish an absolute accuracy guarantee."
+    },
+    {
+      "id": "apollo-12",
+      "name": "Apollo 12 landing site",
+      "kind": "historic_landing_site",
+      "latitude_deg": -3.0128,
+      "longitude_deg_east": -23.4219,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+      ],
+      "source_updated": "2017-03-06",
+      "coordinate_notes": "NASA NSSDCA Lunar Module coordinates derived from LRO images; planetocentric Mean Earth/Polar Axis lunar reference system, DE421. Published digits do not establish an absolute accuracy guarantee."
+    },
+    {
+      "id": "apollo-14",
+      "name": "Apollo 14 landing site",
+      "kind": "historic_landing_site",
+      "latitude_deg": -3.64589,
+      "longitude_deg_east": -17.47194,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+      ],
+      "source_updated": "2017-03-06",
+      "coordinate_notes": "NASA NSSDCA Lunar Module coordinates derived from LRO images; planetocentric Mean Earth/Polar Axis lunar reference system, DE421. Published digits do not establish an absolute accuracy guarantee."
+    },
+    {
+      "id": "apollo-15",
+      "name": "Apollo 15 landing site",
+      "kind": "historic_landing_site",
+      "latitude_deg": 26.13239,
+      "longitude_deg_east": 3.6333,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+      ],
+      "source_updated": "2017-03-06",
+      "coordinate_notes": "NASA NSSDCA Lunar Module coordinates derived from LRO images; planetocentric Mean Earth/Polar Axis lunar reference system, DE421. Published digits do not establish an absolute accuracy guarantee."
+    },
+    {
+      "id": "apollo-16",
+      "name": "Apollo 16 landing site",
+      "kind": "historic_landing_site",
+      "latitude_deg": -8.9734,
+      "longitude_deg_east": 15.5011,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+      ],
+      "source_updated": "2017-03-06",
+      "coordinate_notes": "NASA NSSDCA Lunar Module coordinates derived from LRO images; planetocentric Mean Earth/Polar Axis lunar reference system, DE421. Published digits do not establish an absolute accuracy guarantee."
+    },
+    {
+      "id": "apollo-17",
+      "name": "Apollo 17 landing site",
+      "kind": "historic_landing_site",
+      "latitude_deg": 20.1911,
+      "longitude_deg_east": 30.7723,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://nssdc.gsfc.nasa.gov/planetary/lunar/lunar_sites.html"
+      ],
+      "source_updated": "2017-03-06",
+      "coordinate_notes": "NASA NSSDCA Lunar Module coordinates derived from LRO images; planetocentric Mean Earth/Polar Axis lunar reference system, DE421. Published digits do not establish an absolute accuracy guarantee."
+    },
+    {
+      "id": "shackleton",
+      "name": "Shackleton crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -89.67,
+      "longitude_deg_east": 129.78,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/5450",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "haworth",
+      "name": "Haworth crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -87.45,
+      "longitude_deg_east": -5.17,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/14502",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "cabeus",
+      "name": "Cabeus crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -85.33,
+      "longitude_deg_east": -42.13,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/953",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "de-gerlache",
+      "name": "de Gerlache crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -88.48,
+      "longitude_deg_east": -88.34,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/1439",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "faustini",
+      "name": "Faustini crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -87.18,
+      "longitude_deg_east": 84.31,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/1919",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "nobile",
+      "name": "Nobile crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -85.28,
+      "longitude_deg_east": 53.27,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/4321",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "shoemaker",
+      "name": "Shoemaker crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -88.14,
+      "longitude_deg_east": 45.91,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/5494",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "malapert",
+      "name": "Malapert crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -85,
+      "longitude_deg_east": 11.4,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/3603",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    },
+    {
+      "id": "tycho",
+      "name": "Tycho crater reference",
+      "kind": "named_lunar_feature",
+      "latitude_deg": -43.3,
+      "longitude_deg_east": -11.22,
+      "input_class": "published_coordinates",
+      "source_urls": [
+        "https://planetarynames.wr.usgs.gov/Feature/6163",
+        "https://planetarynames.wr.usgs.gov/GIS_Downloads"
+      ],
+      "source_control_network": "LOLA2011",
+      "coordinate_precision_deg": 0.01,
+      "coordinate_notes": "IAU/USGS Gazetteer crater reference center, published to 0.01 degree, LOLA2011 control network. Planetographic and planetocentric latitude coincide on the lunar spherical reference. Imported as a DE421 context coordinate; precise datum/terrain registration is not certified. This center is not a proposed landing-region boundary or a landing-safety recommendation."
+    }
+  ]
+}

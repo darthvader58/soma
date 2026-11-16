@@ -1,0 +1,16 @@
+.git
+.venv
+tatcenv
+.runtime
+**/node_modules
+web/dist
+**/__pycache__
+**/.env*
+.aws
+.codex
+.agents
+api/_data
+api/_native
+fixtures
+task_outputs
+langtour-memory

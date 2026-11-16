@@ -23,7 +23,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "7f62f4e3021a14b712c388754fd7dfe4962972effe1bc971dedf396b8c0632fc"
+      "sha256": "c35a6788f62b9338da35e43b3058e080bde69d6b8aee6288e525bf14a914073a"
     },
     {
       "path": "data/README.md",
@@ -71,11 +71,11 @@
     },
     {
       "path": "data/phase6-evidence.manifest.json",
-      "sha256": "5734571a75b948d4b46c8dd63617b4ae05e87611f1402a69251afb082f598c25"
+      "sha256": "dace1657dd0ed405e49a693cda721166342f3bdb84f2dae808e986cdbe28ee03"
     },
     {
       "path": "data/physical-first-release-evidence.manifest.json",
-      "sha256": "bc1acdc2f104c1899921ed7a0a8eefe48e73040cd0c27a5209be4f40f2524376"
+      "sha256": "9e68c1ff93dabda1f9573e3fea305a6e63ed75e2b5a61908e88f8968581fbe00"
     },
     {
       "path": "data/physical-first-release.manifest.json",
@@ -711,7 +711,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "d4678fddb67c9e09ce9773a23db253047ba370035556095dcede23dbb97ece79"
+      "sha256": "ee1fa5c8074fab1e07be3499212d6b97fa556b77e8df600a74956a9a1b8f57e5"
     },
     {
       "path": "schemas/allocation.schema.json",
@@ -751,7 +751,7 @@
     },
     {
       "path": "soma/api/app.py",
-      "sha256": "64704f42381016b1e501dbb834b45c2fc9a57fc19b7734ca7edcd909ea177359"
+      "sha256": "77339b492dff29ef2e9e7cdf738f296eb87cdbe4a2af391ead891eb6883401f4"
     },
     {
       "path": "soma/api/moon.py",
@@ -1071,7 +1071,7 @@
     },
     {
       "path": "tests/engine/test_contract.py",
-      "sha256": "38c9dd5f8262b3099af6a46cd4e7b6c8a6327ed603a9ad5e288c20e780d107eb"
+      "sha256": "169265ba707571ea233dc221e9284c066b35d40a2614827d898bd216fea9d547"
     },
     {
       "path": "tests/engine/test_demo_constraints.py",
@@ -1223,5 +1223,22 @@
   "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately.",
   "hosted_operations_evidence_ref": "soma/docs/hosted-deployment-verification.md",
   "hosted_operations_scope": "Public transport, documentation navigation and presentation verification; separate from archived scientific completion and review claims.",
-  "presentation_compatibility_update": "Five-case presentation compatibility update: guided mission selection, README and recording script now present three archived physical cases plus two supplemental controls of the same 16 MiB November 30 mission. The controls preserve published DE421/LOLA inputs and native unknown outcomes under incomplete contact coverage. No scientific core, native schema, original numerical archive or historical review scope is changed."
+  "presentation_compatibility_update": "Five-case presentation compatibility update: guided mission selection, README and recording script now present three archived physical cases plus two supplemental controls of the same 16 MiB November 30 mission. The controls preserve published DE421/LOLA inputs and native unknown outcomes under incomplete contact coverage. No scientific core, native schema, original numerical archive or historical review scope is changed.",
+  "research_dependency_refresh": {
+    "recorded_at_utc": "2026-11-16T23:47:24.381503Z",
+    "changed_bindings": [
+      "README.md",
+      "data/phase6-evidence.manifest.json",
+      "data/physical-first-release-evidence.manifest.json",
+      "pyproject.toml",
+      "soma/api/app.py",
+      "tests/engine/test_contract.py"
+    ],
+    "scope": "Current source/dependency binding refresh only. Original verification counts, scientific scopes, archived inputs/results, frozen delivery schemas and historical review claims are preserved.",
+    "archive_interface": "The original delivery interface moved to web/src/archive.js; its navigation/header and dispatcher changed to distinguish the archive from the new workbench.",
+    "new_research_scope": "New geometry-study schemas, live analysis, catalog and workbench are separate additions. Historical Phase 1/6 and physical-first-release reviews do not certify them.",
+    "new_research_covered_by_archived_reviews": false,
+    "archived_scientific_artifacts_changed": false,
+    "guide_link_compatibility": "The archived demo guide links now select archive mode and identify the separate live geometry guide. This source-binding refresh preserves original recorded science and historical review scope."
+  }
 }

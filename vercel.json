@@ -2,21 +2,39 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "npm --prefix web ci",
-  "buildCommand": "python3 scripts/prepare-hosted-runtime.py && npm --prefix web run build",
+  "buildCommand": "python3 scripts/prepare-hosted-runtime.py && python3 scripts/prepare-research-data.py && npm --prefix web run build",
   "outputDirectory": "web/dist",
   "functions": {
     "api/index.py": {
       "maxDuration": 300,
-      "includeFiles": "{soma/**,data/*.manifest.json,api/_native/**}",
+      "includeFiles": "{soma/**,data/*.manifest.json,data/research-sites.json,api/_native/**,api/_data/**,schemas/**}",
       "excludeFiles": "{web/**,tests/**,fixtures/**,.venv/**,tatcenv/**,plan/**,task_outputs/**,.runtime/**,.git/**,**/__pycache__/**}"
     }
   },
   "redirects": [
-    {"source": "/docs", "destination": "https://soma-ce3178ca.mintlify.site/", "permanent": false},
-    {"source": "/docs/:path*", "destination": "https://soma-ce3178ca.mintlify.site/:path*", "permanent": false}
+    {
+      "source": "/docs",
+      "destination": "https://soma-ce3178ca.mintlify.site/",
+      "permanent": false
+    },
+    {
+      "source": "/docs/:path*",
+      "destination": "https://soma-ce3178ca.mintlify.site/:path*",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    {"source": "/api/moon/:path*", "destination": "/api/index"},
-    {"source": "/((?!api/).*)", "destination": "/index.html"}
+    {
+      "source": "/api/moon/:path*",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/api/research/:path*",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ]
 }

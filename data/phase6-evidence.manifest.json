@@ -246,8 +246,8 @@
     },
     {
       "path": "tests/web/live.browser.spec.mjs",
-      "sha256": "d8d58be2f1608b356519815ef8d482cb75009fa51c57baeac7b4883091842f7f",
-      "size_bytes": 15494
+      "sha256": "d6ab863af75457d88284cf0bffbbf071bdfa12a3bda8ae25eba5c0a497532252",
+      "size_bytes": 15507
     },
     {
       "path": "web/docs/phase-6-independent-review.json",
@@ -308,5 +308,16 @@
   },
   "compatibility_update": "Physical first-release integration preserves the archived synthetic baseline; source bindings refreshed after exact stored-state and physical-preparation changes. Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
   "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately.",
-  "presentation_compatibility_update": "Five-case presentation compatibility update: guided mission selection, README and recording script now present three archived physical cases plus two supplemental controls of the same 16 MiB November 30 mission. The controls preserve published DE421/LOLA inputs and native unknown outcomes under incomplete contact coverage. No scientific core, native schema, original numerical archive or historical review scope is changed."
+  "presentation_compatibility_update": "Five-case presentation compatibility update: guided mission selection, README and recording script now present three archived physical cases plus two supplemental controls of the same 16 MiB November 30 mission. The controls preserve published DE421/LOLA inputs and native unknown outcomes under incomplete contact coverage. No scientific core, native schema, original numerical archive or historical review scope is changed.",
+  "research_dependency_refresh": {
+    "recorded_at_utc": "2026-11-16T23:47:24.381503Z",
+    "changed_bindings": [
+      "tests/web/live.browser.spec.mjs"
+    ],
+    "scope": "Current source/dependency binding refresh only. Original verification counts, scientific scopes, archived inputs/results, frozen delivery schemas and historical review claims are preserved.",
+    "archive_interface": "The original delivery interface moved to web/src/archive.js; its navigation/header and dispatcher changed to distinguish the archive from the new workbench.",
+    "new_research_scope": "New geometry-study schemas, live analysis, catalog and workbench are separate additions. Historical Phase 1/6 and physical-first-release reviews do not certify them.",
+    "new_research_covered_by_archived_reviews": false,
+    "archived_scientific_artifacts_changed": false
+  }
 }

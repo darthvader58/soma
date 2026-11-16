@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
-  await page.goto('/');
+  await page.goto('/?mode=archive');
   await expect(page.getByRole('heading', { name: 'Lunar terrain unavailable' })).toBeVisible();
   await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
   await page.getByLabel('Declared network example').selectOption('0');
@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
 test.afterEach(async ({ page }) => { expect(page.__somaErrors).toEqual([]); });
 
 test('mission case navigation binds deep links, native outcomes and exact relay focus', async ({ page }) => {
-  await page.goto('/?case=direct-later');
+  await page.goto('/?mode=archive&case=direct-later');
   await expect(page.locator('#case-title')).toHaveText('Later direct');
   await expect(page.locator('#case-outcome')).toContainText('Infeasible in model');
   await expect(page.locator('#case-outcome')).toContainText('at most 0 payload bits');
@@ -64,7 +64,7 @@ test('camera controls follow completed displays and relay focus selects the over
       };
     }
   ` }));
-  await page.goto('/?case=relay-later');
+  await page.goto('/?mode=archive&case=relay-later');
   await expect(page.getByRole('button', { name: 'Inspect site terrain' })).toBeEnabled();
   await page.getByRole('button', { name: 'Inspect site terrain' }).click();
   await expect(page.locator('#moon-view')).toHaveAttribute('data-camera', 'site');

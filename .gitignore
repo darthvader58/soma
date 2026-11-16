@@ -7,3 +7,5 @@ build/
 dist/
 /AGENTS.md
 /AGENTS-B.md
+/api/_data/
+/web/test-results-research-live/

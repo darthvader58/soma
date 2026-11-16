@@ -1,4 +1,8 @@
-# Hosted display conversion only: no kernels, solver, or analysis service.
+# Vercel display conversion and bounded live geometry; no delivery solver.
 fastapi==0.163.0
 numpy==2.5.4
 rasterio==1.5.2
+spiceypy==8.4.0
+jsonschema==4.26.0
+referencing==0.37.0
+rfc8785==0.1.4
