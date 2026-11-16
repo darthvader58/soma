@@ -1,3 +1,4 @@
+import { installLegacyArchiveHarness } from './legacy-archive-support.mjs';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
@@ -25,7 +26,8 @@ async function completed(page, job) {
   return body.result;
 }
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, baseURL }) => {
+  await installLegacyArchiveHarness(page, { baseURL });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });

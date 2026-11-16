@@ -1,9 +1,11 @@
+import { installLegacyArchiveHarness } from './legacy-archive-support.mjs';
 import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 const require = createRequire(new URL('../../web/package.json', import.meta.url));
 const { test, expect } = require('@playwright/test');
 
-test.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page, baseURL }) => {
+  await installLegacyArchiveHarness(page, { baseURL });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });

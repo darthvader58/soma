@@ -1,5 +1,6 @@
-if (new URLSearchParams(location.search).get('mode') === 'archive') {
-  await import('./archive.js');
-} else {
-  await import('./workbench.js');
+const entryURL = new URL(location.href);
+if (entryURL.searchParams.get('mode') === 'archive') {
+  history.replaceState(null, '', '/');
 }
+
+await import('./workbench.js');
