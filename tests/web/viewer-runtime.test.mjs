@@ -179,7 +179,7 @@ test('approved job draws only the backend declared point and clears it on replac
   assert.equal(h.state.statuses.at(-1).overlaysBlocked, false);
   assert.equal(h.state.entities.length, 1);
   assert.deepEqual({ ...h.state.entities[0].position }, { x: 123, y: 456, z: -1737400 });
-  assert.equal(h.state.entities[0].label.text, 'Declared analysis point');
+  assert.equal(h.state.entities[0].label.text, 'Engine analysis site');
   assert.equal(h.state.entities[0].description, 'Synthetic declared test position');
   api.setDisplay(undefined);
   assert.equal(h.state.entities.length, 0);
@@ -190,6 +190,28 @@ test('approved job draws only the backend declared point and clears it on replac
   assert.equal(h.state.entities.length, 0);
   assert.equal(h.state.statuses.at(-1).overlaysBlocked, true);
   assert.match(h.state.statuses.at(-1).message, /outside/);
+  api.destroy();
+});
+
+test('site annotation remains readable while repeated results keep one physically positioned marker', async () => {
+  const h = harness(); const api = await h.start();
+  const registration = syntheticCertificate();
+  const display = { registration, surface_points: [{ id: 'lander', position_m: [1, 2, 3],
+    frame: registration.renderer_frame, origin: 'MOON', position_unit: 'm', epoch: null,
+    time_scale: 'static', provenance_label: 'Engine supplied test site' }] };
+  api.setDisplay(display);
+  assert.deepEqual(h.state.entities.map(entity => entity.id), ['analysis-lander']);
+  assert.equal(h.state.entities[0].label.disableDepthTestDistance, Number.POSITIVE_INFINITY);
+  assert.equal(h.state.entities[0].point.disableDepthTestDistance, undefined);
+  assert.deepEqual({ ...h.state.entities[0].position }, { x: 1, y: 2, z: 3 });
+  api.setDisplay(display);
+  assert.deepEqual(h.state.entities.map(entity => entity.id), ['analysis-lander']);
+  api.setDisplay(undefined);
+  assert.equal(h.state.entities.length, 0);
+  api.setScenario({ lander: { frame: 'MOON_ME_DE421', latitude_deg: -89, longitude_deg_east: 0 } });
+  assert.equal(h.state.entities.length, 0);
+  api.setDisplay(display);
+  assert.deepEqual(h.state.entities.map(entity => entity.id), ['analysis-lander']);
   api.destroy();
 });
 
@@ -220,6 +242,8 @@ test('stored relay and allocation overlays disappear between samples and on repl
   api.setTime(epoch);
   assert.equal(h.state.entities.length, 3);
   assert.deepEqual({ ...h.state.entities.find(item => item.id === 'stored-relay').position }, { x: 10, y: 20, z: 30 });
+  assert.equal(h.state.entities.find(item => item.id === 'stored-relay').label.disableDepthTestDistance, Number.POSITIVE_INFINITY);
+  assert.equal(h.state.entities.find(item => item.id === 'stored-relay').point.disableDepthTestDistance, undefined);
   let line = h.state.entities.find(item => item.id === 'contact-c');
   assert.equal(line.polyline.arcType, 'none');
   assert.equal(line.polyline.material.dashLength, 16);

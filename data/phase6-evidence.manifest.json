@@ -241,8 +241,8 @@
     },
     {
       "path": "tests/web/client.test.mjs",
-      "sha256": "95a371f2a4078853436f47ce09288a3562c7368d7d7dbf7fb35f5fbc71a42a35",
-      "size_bytes": 15383
+      "sha256": "10cba1112a3a145583fdc2e038a23c6ceec2a052dc6ab7a62323a89baaa8fda3",
+      "size_bytes": 16094
     },
     {
       "path": "tests/web/live.browser.spec.mjs",
@@ -266,13 +266,13 @@
     },
     {
       "path": "web/docs/phase-6-verification.md",
-      "sha256": "50ff7a83a25650a51eecc94071900ccb390dacc836336b0916881e3473f9890a",
-      "size_bytes": 7239
+      "sha256": "c498b4e813b275629f9c4ff5aa2e275b52a86699ac8bfe91f9bcbc6ed3a07212",
+      "size_bytes": 7286
     },
     {
       "path": "web/src/client.js",
-      "sha256": "91ba2eb182a07b8f244fa234486bffe761859ca00aa759d108a40bf22a0a21bc",
-      "size_bytes": 12619
+      "sha256": "4ad101e2219176ebb2339c8fd1087d19e19bb8447072c7cb3f17ad6967bac7a1",
+      "size_bytes": 13007
     },
     {
       "path": "web/src/comparison.js",
@@ -306,5 +306,6 @@
     "report_ref": "fixtures/phase-6/completion-report.json",
     "report_sha256": "b78158dc76a8214feee57d88e6a4098f977fed73d578b5c01afaa878fcd3ba3f"
   },
-  "compatibility_update": "Physical first-release integration preserves the archived synthetic baseline; source bindings refreshed after exact stored-state and physical-preparation changes."
+  "compatibility_update": "Physical first-release integration preserves the archived synthetic baseline; source bindings refreshed after exact stored-state and physical-preparation changes. Hosted compatibility update: captured physical Python-engine runs are the default hosted examples; the repository-root display-only Moon adapter serves the existing registered representation. Numerical models, native schemas, archived schedules, scientific verification scope and original review claims are unchanged. Arbitrary new analysis still requires the Python engine. This binding refresh does not establish public deployment completion or vendor permission.",
+  "hosted_source_compatibility_update": "Final hosted-source compatibility refresh: professional interface, Mintlify documentation routing, production-origin ion authentication and build-time Expat packaging affect presentation and transport only. Native scientific modules and captured ZIP schedules are unchanged. Generated native binaries and credentials are excluded from these source bindings. Original scientific scope and archived review claims are preserved; operational deployment evidence is recorded separately."
 }

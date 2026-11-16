@@ -69,9 +69,12 @@ export function renderTimeline(container, { scenario, result, contacts = [], exp
     lane(`Engine available contact: ${contact.sender} to ${contact.receiver} / ${contact.contact_id}. ${selected ? 'Allocated below.' : 'Unused; reason Unknown.'}`, contact.source_transmit_window, 'timeline-window');
   }
   for (const contact of contacts.filter(value => !engineContacts.some(engine => engine.contact_id === value.contact_id))) lane(`Synthetic source-window reference: ${contact.sender} to ${contact.receiver} / ${contact.contact_id}`, contact.source_transmit_window, 'timeline-window');
-  if (!result?.allocations?.length) container.append(el('p', 'No computed transmission supplied. Read the engine status and explanation; missing allocations do not establish success.', 'notice'));
+  if (!result?.allocations?.length) container.append(el('p', result?.status === 'infeasible_in_model'
+    ? `No scheduled transmission: infeasible in the declared model. ${result.provenance.reason}`
+    : 'No computed transmission supplied. Read the engine status and explanation; missing allocations do not establish success.', 'notice'));
   const scheduled = el('details');
   scheduled.append(el('summary', `Scheduled transmissions and storage (${result?.allocations?.length ?? 0} transmissions)`));
+  scheduled.open = true;
   if (result?.allocations?.length) container.append(scheduled);
   for (const allocation of result?.allocations ?? []) {
     const contact = engineContacts.find(value => value.contact_id === allocation.contact_id);

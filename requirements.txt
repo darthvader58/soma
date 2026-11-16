@@ -1,0 +1,4 @@
+# Hosted display conversion only: no kernels, solver, or analysis service.
+fastapi==0.163.0
+numpy==2.5.4
+rasterio==1.5.2

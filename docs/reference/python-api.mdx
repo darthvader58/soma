@@ -1,0 +1,81 @@
+---
+title: Python API
+description: Public planning, validation, export, and independent replay interfaces in version 0.1.0.
+---
+
+## `soma.plan_delivery`
+
+```python
+plan_delivery(scenario, **kwargs) -> dict
+```
+
+Return the native result dictionary. Keyword arguments pass through to `soma.engine.plan_run`. Feasibility is released only after the selected schedule passes independent replay.
+
+## `soma.engine.plan_run`
+
+```python
+plan_run(
+    scenario,
+    *,
+    analysis_inputs=None,
+    options=None,
+    progress=None,
+    cancel_event=None,
+) -> dict
+```
+
+| Argument | Meaning |
+| --- | --- |
+| `scenario` | Complete scenario dictionary validated against the native schema and semantic rules |
+| `analysis_inputs` | Optional versioned analysis dictionary bound to the exact scenario hash; omitted inputs use the configured provider |
+| `options` | Scheduler settings listed below; unsupported keys raise `ValueError` |
+| `progress` | Optional callable receiving stage names during preparation, scheduling, replay, and export |
+| `cancel_event` | Optional event supporting `is_set()`; cancellation can raise `InterruptedError` |
+
+The returned record contains `scenario`, `result`, `analysis_inputs`, `validation`, and `details`. It returns detached data. `details` identifies the policy, scheduler options, software, analysis provenance, and solver evidence. `validation` is `None` when no candidate was replayed.
+
+### Scheduler options
+
+| Key | Default | Validation |
+| --- | --- | --- |
+| `chunk_bytes` | 16,777,216 | Positive integer |
+| `bin_s` | 5 for synthetic runs; 60 for terrain/ephemeris runs | Positive finite number |
+| `time_limit_s` | 15 | Nonnegative finite number |
+
+These settings introduce discretization and conservative forwarding boundaries. They do not define a physical accuracy guarantee. The policy first satisfies deadline and constraints, then prefers fewer relay hops, earlier completion, and lower lander communications energy.
+
+## Validation and hashing
+
+```python
+from soma.validation import (
+    load_scenario,
+    validate_scenario,
+    scenario_sha256,
+    data_volume_bytes,
+)
+
+scenario = load_scenario("fixtures/synthetic-relay/scenario.json")
+checked = validate_scenario(scenario)
+digest = scenario_sha256(checked)
+byte_count = data_volume_bytes(checked["data_volume"])
+```
+
+`load_scenario(path)` reads and validates JSON. `validate_scenario(document)` checks schema and semantics and returns the validated scenario. Invalid scenarios raise `ScenarioValidationError`; malformed or unsupported values can also raise `ValueError`. Use the hash to associate results with their exact request, rather than relying on the editable browser form.
+
+## Exports and replay
+
+```python
+from soma.exports import create_run_package, summary
+from soma.schedule.replay import replay_schedule
+
+report = replay_schedule(
+    run["scenario"],
+    run["result"]["contacts"],
+    run["result"]["allocations"],
+    run["analysis_inputs"]["generation_bins"],
+)
+package_bytes = create_run_package(run)
+compact_summary = summary(run)
+```
+
+`replay_schedule(..., require_complete=True)` recomputes the schedule constraints. Its `passed` field is the replay decision. `create_run_package(run)` returns ZIP bytes; it does not write a file. See [exports and replay](/reference/exports-replay).

@@ -108,7 +108,14 @@ export function createFixtureClient(fixtures, { fetchImpl = globalThis.fetch, fi
       const artifact = completed;
       const hash = await canonicalScenarioHash(scenario);
       if (!artifact || artifact !== completed || artifact.hash !== hash) throw new Error('No completed display matches this scenario.');
-      return frozen(structuredClone(validateDisplayPayload(artifact.fixture.display, hash, artifact.result)));
+      let display = artifact.fixture.display;
+      if (!display && artifact.fixture.displayUrl) {
+        const response = await fetchImpl(artifact.fixture.displayUrl);
+        if (!response.ok) throw new Error(`Captured display returned HTTP ${response.status}.`);
+        display = await response.json();
+      }
+      if (completed !== artifact || generation !== artifact.current) throw abortError();
+      return frozen(structuredClone(validateDisplayPayload(display, hash, artifact.result)));
     },
     async exportRun(scenario) {
       const artifact = completed;

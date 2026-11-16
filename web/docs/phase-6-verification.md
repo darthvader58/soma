@@ -110,7 +110,7 @@ behavior; it is not a regression of the separate map-registration checks.
 An unsupported site returns Unknown; an operating day outside the declared
 domain is rejected with a coverage explanation. This
 demonstration validates scheduling under supplied synthetic contacts, not a
-terrain-backed operational lunar prediction. Local integrated Phase 6 verification is complete, including the [independent automated review](phase-6-independent-review.md). Future public deployment was not requested; its terms and account review remain separate. Phase 7 has not started.
+terrain-backed operational lunar prediction. Local integrated Phase 6 verification is complete, including the [independent automated review](phase-6-independent-review.md). Public deployment was outside this historical verification run; current hosting is documented in [Hosted planner](hosted-deployment.md). Phase 7 has not started.
 
 The existing visual draft direction is preserved: ENERGY 1 / RHYTHM 1 / MOTION 1.
 Product-copy changes say “data-ready time” so an edit within one day is described

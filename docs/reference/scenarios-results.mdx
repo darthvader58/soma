@@ -1,0 +1,39 @@
+---
+title: Scenarios and results
+description: Explicit units, finite resources, timing conventions, and result status semantics.
+---
+
+Scenarios are standalone JSON documents. Start from a supplied fixture rather than assembling an incomplete request. The native contracts live in the repository's [schemas directory](https://github.com/darthvader58/soma/tree/main/schemas).
+
+## Required modeling decisions
+
+A scenario declares its run version, analysis mode, lander coordinates and Moon-fixed frame, reference radius and elevation datum, separate antenna and panel heights, timezone-qualified UTC readiness and deadline, volume and unit, and analysis horizon.
+
+It also declares hardware, relay and station references, route families, rate method, pointing, service assumptions, dataset references, and input provenance. Resource profiles must provide finite storage and explicit service and energy parameters. Omitted fields do not become unlimited storage, continuous service, zero load, or perfect pointing.
+
+## Result states
+
+| `status` | Interpretation |
+| --- | --- |
+| `feasible_under_assumptions` | Complete-file delivery passed independent replay under the declared inputs |
+| `infeasible_in_model` | The bounded discretized model proved no complete schedule on the covered declared network |
+| `unknown` | Coverage or solver evidence does not support a delivery conclusion |
+
+| `solver_status` | Interpretation |
+| --- | --- |
+| `proven_optimum` | Proven optimum for the stated discretized model and policy |
+| `feasible_incumbent` | Valid incumbent; optimality is unproved |
+| `proven_infeasible_discretized_model` | Proven infeasibility of the discretized model |
+| `unresolved` | No conclusive solver result |
+
+`model_fidelity` distinguishes `assumed_rate_simulation`, `modeled_link_budget`, and `not_implemented`. A feasible assumed-rate result remains assumed-rate. Inspect `assumptions`, `warnings`, and `provenance` alongside status.
+
+Incomplete contact coverage can still support a replayed feasible schedule using known contacts. Failure on that subset cannot prove that the full network is infeasible, and optimality over unknown opportunities remains unproved.
+
+## Contact and allocation time
+
+Native contact windows use **source-transmit UTC epochs**. Each allocation exports its source transmit interval, receiver occupancy interval, and `byte_available_utc`.
+
+Receiver occupancy includes modeled one-way light time. A relay cannot forward a chunk before it becomes available. Delivery means the **last byte arrives by the deadline**, not merely that the first transmission starts before it.
+
+Unknown values remain JSON `null` or explicit unknown states. They must not be interpreted as zero energy, zero delay, or an unobstructed horizon.

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "SOMA",
+  "colors": {"primary": "#526D3D", "light": "#8BAA69", "dark": "#40582E"},
+  "navigation": {
+    "groups": [
+      {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/quickstart", "getting-started/physical-runs"]},
+      {"group": "Library reference", "pages": ["reference/python-api", "reference/scenarios-results", "reference/service", "reference/exports-replay"]},
+      {"group": "Scientific model", "pages": ["science/frames-data", "science/assumptions-limits"]}
+    ]
+  },
+  "navbar": {"links": [{"label": "Web application", "href": "https://soma-atlas-two.vercel.app"}, {"label": "Source", "href": "https://github.com/darthvader58/soma"}]},
+  "footer": {"socials": {"github": "https://github.com/darthvader58/soma"}}
+}

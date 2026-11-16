@@ -9,10 +9,35 @@ test.beforeEach(async ({ page }) => {
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Lunar terrain unavailable' })).toBeVisible();
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await page.getByLabel('Declared network example').selectOption('0');
   page.__somaErrors = errors;
 });
 
 test.afterEach(async ({ page }) => { expect(page.__somaErrors).toEqual([]); });
+
+test('captured physical cases show computed transmissions, exact failure reason and unchanged run package', async ({ page }) => {
+  await page.reload();
+  await expect(page.getByLabel('Declared network example')).toHaveValue('2');
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await expect(page.locator('#timeline .timeline-allocation')).toHaveCount(2);
+  await expect(page.locator('#timeline .timeline-allocation').first()).toBeVisible();
+  await expect(page.locator('#science-context')).toContainText('numerical terrain and ephemerides');
+  await expect(page.locator('#display-status')).toContainText('Frame alignment verified');
+  await page.getByLabel('Declared network example').selectOption('3');
+  await expect(page.locator('#job-status')).toContainText('infeasible_in_model');
+  await expect(page.locator('#timeline')).toContainText('at most 0 payload bits');
+  await expect(page.locator('#timeline .timeline-allocation')).toHaveCount(0);
+  await page.getByLabel('Declared network example').selectOption('4');
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await expect(page.locator('#timeline .timeline-allocation')).toHaveCount(4);
+  await expect(page.locator('#timeline .timeline-storage')).toHaveCount(3);
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download run package (ZIP)' }).click();
+  const downloaded = await readFile(await (await pending).path());
+  const original = await readFile(new URL('../../fixtures/physical-south-pole/relay-later/run.zip', import.meta.url));
+  expect(downloaded.equals(original)).toBe(true);
+});
 
 test('computed direct failure and replayed relay schedule remain separate from hand arithmetic', async ({ page }) => {
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
@@ -27,7 +52,7 @@ test('computed direct failure and replayed relay schedule remain separate from h
   await expect(page.locator('#result')).toContainText('104,857,600 bytes');
   await expect(page.locator('#result')).toContainText('Assumed-rate simulation');
   await expect(page.locator('#result')).toContainText('receiver payload occupancy');
-  await page.getByText('Scheduled transmissions and storage (14 transmissions)', { exact: true }).click();
+  await expect(page.getByText('Scheduled transmissions and storage (14 transmissions)', { exact: true })).toBeVisible();
   await expect(page.locator('#timeline .timeline-allocation').first()).toBeVisible();
   await page.getByLabel('Show hand-calculated reference').check();
   await expect(page.locator('#result')).toContainText('2026-11-14T09:06:59.4304Z');
@@ -46,11 +71,12 @@ test('computed direct failure and replayed relay schedule remain separate from h
 });
 
 test('Phase 2 keeps fixture analysis coordinates separate from typed drafts and preserves the deadline rule', async ({ page }) => {
-  await expect(page.locator('.phase-label')).toContainText('Phase 5');
+  await expect(page.getByRole('link', { name: 'Documentation', exact: true })).toHaveAttribute('href', '/docs');
   const fixturePoint = await page.locator('#analysis-location').textContent();
   await expect(page.locator('#analysis-location')).toContainText('synthetic, not service-resolved');
   await expect(page.locator('#analysis-location')).toContainText('Antenna 2 m; panel 1 m');
-  await expect(page.getByRole('checkbox', { name: /Earth-orbit relay/ })).toBeDisabled();
+  await expect(page.getByRole('checkbox', { name: /Earth-orbit relay/ })).toHaveCount(0);
+  await expect(page.locator('body')).not.toContainText(/\bPhase\s+\d|Visual draft|Draft scenario|Draft fields/);
   await expect(page.locator('.scenario-form')).toContainText('Deadline rule: fixed absolute deadline');
   const deadline = await page.getByLabel('Last-byte deadline (UTC / qualified offset)', { exact: true }).inputValue();
   const horizonEnd = await page.getByLabel('Analysis ends (UTC / qualified offset)', { exact: true }).inputValue();
@@ -63,7 +89,7 @@ test('Phase 2 keeps fixture analysis coordinates separate from typed drafts and 
   await expect(page.locator('#analysis-location')).toHaveText(fixturePoint);
   await expect(page.getByLabel('Last-byte deadline (UTC / qualified offset)', { exact: true })).toHaveValue(deadline);
   await expect(page.getByLabel('Analysis ends (UTC / qualified offset)', { exact: true })).toHaveValue(horizonEnd);
-  await page.getByRole('button', { name: 'Restore fixture' }).click();
+  await page.getByRole('button', { name: 'Restore scenario' }).click();
   await expect(page.locator('#draft-location')).toBeHidden();
 });
 
@@ -87,6 +113,7 @@ test('display picks leave scientific inputs and captured output unchanged; scrub
     }
   ` }));
   await page.reload();
+  await page.getByLabel('Declared network example').selectOption('0');
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
   const result = await page.locator('#result').textContent();
   const status = await page.locator('#job-status').textContent();
@@ -109,7 +136,7 @@ test('display picks leave scientific inputs and captured output unchanged; scrub
   await expect(page.locator('#display-pick')).toBeHidden();
   await expect(page.locator('#result')).toHaveText(result);
   await page.getByRole('button', { name: 'Simulate renderer surface pick' }).click();
-  await page.getByRole('button', { name: 'Restore fixture' }).click();
+  await page.getByRole('button', { name: 'Restore scenario' }).click();
   await expect(page.locator('#display-pick')).toBeHidden();
   await expect(page.locator('#moon-view')).toHaveAttribute('data-marker', 'cleared');
 });
@@ -200,8 +227,8 @@ test('two saved results expose task differences and remain immutable after edits
   await page.getByLabel('Planetocentric latitude (°)', { exact: true }).fill('-88');
   await expect(page.locator('#comparison')).toHaveText(comparison);
   await expect(page.getByRole('button', { name: 'Save current result as A' })).toBeDisabled();
-  await page.getByRole('button', { name: 'Restore comparison fixtures' }).click();
-  await expect(page.locator('#comparison-status')).toContainText('captured direct and relay fixtures');
+  await page.getByRole('button', { name: 'Restore reference comparison' }).click();
+  await expect(page.locator('#comparison-status')).toContainText('captured synthetic direct and relay reference runs');
 });
 
 test('editing invalidates captured output and cannot reuse an offline result', async ({ page }) => {
@@ -213,12 +240,12 @@ test('editing invalidates captured output and cannot reuse an offline result', a
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
   await expect(page.locator('#validation-errors')).toContainText('no captured engine result matches');
   await expect(page.locator('#result')).not.toContainText('b1d39f45');
-  await page.getByRole('button', { name: 'Restore fixture' }).click();
+  await page.getByRole('button', { name: 'Restore scenario' }).click();
   await expect(page.getByLabel('Antenna height (m)', { exact: true })).toHaveValue('2');
   await page.getByLabel('East longitude', { exact: false }).fill('180');
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Download result JSON' })).toBeDisabled();
-  await page.getByRole('button', { name: 'Restore fixture' }).click();
+  await page.getByRole('button', { name: 'Restore scenario' }).click();
   await page.getByRole('checkbox', { name: 'Direct to Earth', exact: true }).uncheck();
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
   await expect(page.locator('#validation-errors')).toContainText('route_families');
@@ -263,7 +290,7 @@ test('complete fixture package downloads byte-for-byte and the selected schedule
   await page.getByText('Inspect engine battery history', { exact: true }).click();
   await expect(page.locator('#result')).toContainText('Stored energy (Wh)');
   const pending = page.waitForEvent('download');
-  await page.getByRole('button', { name: 'Download fixture run package (ZIP)' }).click();
+  await page.getByRole('button', { name: 'Download run package (ZIP)' }).click();
   const downloaded = await readFile(await (await pending).path());
   const original = await readFile(new URL('../../web/fixtures/synthetic-relay/run.zip', import.meta.url));
   expect(downloaded.equals(original)).toBe(true);
@@ -285,7 +312,7 @@ test('an explicitly delayed fixture job can be canceled without a stale success 
   await expect(page.locator('#job-status')).toContainText('Job canceled');
   await page.waitForTimeout(1700);
   await expect(page.locator('#result')).toContainText('No engine result has been loaded');
-  await expect(page.getByRole('button', { name: 'Download fixture run package (ZIP)' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Download run package (ZIP)' })).toBeDisabled();
 });
 
 test('retry retains the edited scenario and restore clears the retry action', async ({ page }) => {
@@ -295,7 +322,7 @@ test('retry retains the edited scenario and restore clears the retry action', as
   await page.getByRole('button', { name: 'Retry same scenario', exact: true }).click();
   await expect(page.locator('#validation-errors')).toContainText('no captured engine result matches');
   await expect(page.getByLabel('Antenna height (m)', { exact: true })).toHaveValue('3');
-  await page.getByRole('button', { name: 'Restore fixture', exact: true }).click();
+  await page.getByRole('button', { name: 'Restore scenario', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Retry same scenario', exact: true })).toBeHidden();
 });
 
@@ -355,7 +382,7 @@ test('keyboard focus, skip link and 200 percent text resizing remain usable', as
   const focus = await page.locator('#plan-button').evaluate(node => getComputedStyle(node).outlineStyle);
   expect(focus).not.toBe('none');
   await page.keyboard.press('Tab');
-  await expect(page.getByRole('button', { name: 'Restore fixture' })).toBeFocused();
+  await expect(page.getByRole('button', { name: 'Restore scenario' })).toBeFocused();
   await page.addStyleTag({ content: ':root { font-size: 200%; }' });
   const dimensions = await page.evaluate(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth }));
   expect(dimensions.scroll).toBeLessThanOrEqual(dimensions.width);

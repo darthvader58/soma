@@ -114,10 +114,6 @@ export function renderScenarioForm(container, { scenario, onChange = () => {} })
         notify();
       }); wrapper.append(input, document.createTextNode(label)); network.append(wrapper);
     }
-    const futureRoute = el('label', undefined, 'check-field field-wide');
-    const earthOrbit = el('input'); earthOrbit.type = 'checkbox'; earthOrbit.disabled = true;
-    futureRoute.append(earthOrbit, document.createTextNode('Earth-orbit relay (Phase 7; unavailable in the baseline)'));
-    network.append(futureRoute);
     for (const relay of current.profiles.relays) {
       const label = el('label', undefined, 'check-field field-wide');
       const input = el('input'); input.type = 'checkbox'; input.checked = current.relay_refs.includes(relay.id);
@@ -126,7 +122,7 @@ export function renderScenarioForm(container, { scenario, onChange = () => {} })
         current = patchScenario(current, 'relay_refs', [...refs]); notify();
       }); label.append(input, document.createTextNode(`${relay.id} (${relay.input_class}; ${relay.trajectory.kind}; ${relay.behavior}; storage ${relay.storage_capacity_bytes.toLocaleString('en-US')} bytes)`)); network.append(label);
     }
-    if (!current.profiles.relays.length) network.append(el('p', 'No relay profile is embedded in this scenario. Load the relay fixture to inspect that network.', 'muted field-wide'));
+    if (!current.profiles.relays.length) network.append(el('p', 'No relay profile is embedded in this scenario. Select a lunar-relay scenario to inspect that network.', 'muted field-wide'));
     const details = el('details'); details.append(el('summary', 'Declared hardware and assumptions'));
     const hardware = current.profiles.hardware.find(profile => profile.id === current.hardware_profile_ref);
     const pre = el('pre', JSON.stringify({ hardware, rate_method: current.rate_method, pointing_assumption: current.pointing_assumption, service_assumption_label: current.service_assumption_label, station_refs: current.station_refs }, null, 2), 'scenario-hardware');
