@@ -2,10 +2,11 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "SOMA",
+  "appearance": {"default": "dark", "strict": true},
   "colors": {"primary": "#526D3D", "light": "#8BAA69", "dark": "#40582E"},
   "navigation": {
     "groups": [
-      {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/live-research", "getting-started/quickstart", "getting-started/physical-runs"]},
+      {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/live-research", "guides/analysis-and-map", "getting-started/quickstart", "getting-started/physical-runs"]},
       {"group": "Demonstration", "pages": ["guides/workbench-demo"]},
       {"group": "Library reference", "pages": ["reference/research-api", "reference/python-api", "reference/scenarios-results", "reference/service", "reference/exports-replay"]},
       {"group": "Scientific model", "pages": ["science/research-sources", "science/frames-data", "science/assumptions-limits"]}

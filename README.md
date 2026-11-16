@@ -52,8 +52,8 @@ python examples/research_geometry.py --data-root /tmp/soma-research-sources --ou
 ```
 
 The dashboard places the site catalog, Moon scene, numerical inspector and shared
-UTC controls in one research workspace. Choose a light or dark appearance;
-the scene lighting and scientific results remain the same. Methods, source
+UTC controls in one dark research workspace. Scene lighting is neutral and
+does not represent calculated terrain illumination. Methods, source
 checksums and limitations travel with the result.
 
 Use the [six-minute recording guide](docs/guides/workbench-demo.mdx) for exact

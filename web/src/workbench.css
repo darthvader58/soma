@@ -2,26 +2,6 @@
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-synthesis: none;
   font-size: 14px;
-  color-scheme: light;
-  --page: #ecefea;
-  --panel: #faf9f6;
-  --surface: #ffffff;
-  --subtle: #f0f2ee;
-  --ink: #25333c;
-  --muted: #56656e;
-  --line: #d2d8d6;
-  --control-edge: #79878d;
-  --accent: #965b0d;
-  --accent-fill: #e8ad4d;
-  --accent-ink: #242d31;
-  --selection: #fff0d7;
-  --focus: #905608;
-  --plot-earth: #354c5b;
-  --scene: #101719;
-  background: var(--page);
-  color: var(--ink);
-}
-:root[data-theme="dark"] {
   color-scheme: dark;
   --page: #151d22;
   --panel: #202a30;
@@ -37,6 +17,9 @@
   --selection: #443a29;
   --focus: #edbd73;
   --plot-earth: #c6d5dd;
+  --scene: #101719;
+  background: var(--page);
+  color: var(--ink);
 }
 * { box-sizing: border-box; }
 body { margin: 0; }
@@ -85,14 +68,12 @@ label { color: var(--muted); }
   border-bottom: 1px solid var(--line);
 }
 .research-brand { color: var(--ink); font-size: 23px; font-weight: 800; letter-spacing: 1.4px; text-decoration: none; }
-.workspace-title { border-left: 1px solid var(--line); padding-left: 24px; }
+.workspace-title { border-left: 1px solid var(--line); padding-left: 24px; min-width: 0; }
 .workspace-title h1 { font-size: 16px; font-weight: 650; letter-spacing: -.3px; }
-.workspace-title p { color: var(--muted); font-size: 11px; margin-top: 4px; }
+.workspace-title p { color: var(--muted); font-size: 11px; margin-top: 4px; max-width: 330px; line-height: 1.4; }
 .research-header nav { display: flex; gap: 21px; align-items: center; margin-left: auto; }
 .research-header nav a { color: var(--muted); font-size: 12px; font-weight: 550; text-decoration: none; }
 .research-header nav a:hover { color: var(--ink); text-decoration: underline; }
-.theme-control { display: flex; align-items: center; gap: 8px; font-size: 11px; padding-left: 19px; border-left: 1px solid var(--line); }
-.theme-control select { font-size: 11px; min-height: 32px; padding: 5px 7px; }
 .research-workspace {
   display: grid;
   grid-template-columns: 252px minmax(350px, 1fr) 306px;
@@ -147,6 +128,7 @@ label { color: var(--muted); }
 .scene-camera button { background: #253138eb; color: #edf1ef; border-color: #85959e; border-radius: 4px; font-size: 10px; min-height: 31px; padding: 5px 9px; }
 .scene-camera button:hover:not(:disabled) { background: #3b4951; border-color: #c2ccd2; }
 .scene-camera button[aria-pressed="true"] { background: #e8ad4d; color: #242d31; border-color: #e8ad4d; }
+.scene-camera button[aria-pressed="true"]:hover { background: #f1bd69; color: #242d31; border-color: #f1bd69; }
 .scene-camera button:focus-visible { outline-color: #efbd73; }
 .scene-toolbar > span { font-size: 9px; letter-spacing: .3px; color: #c6d1d6; white-space: nowrap; }
 .research-moon { position: relative; min-height: 360px; height: 100%; flex: 1; }
@@ -163,6 +145,9 @@ label { color: var(--muted); }
 .site-fields input { width: 100%; min-height: 36px; font-size: 12px; font-variant-numeric: tabular-nums; }
 .site-fields label:nth-child(3) { grid-column: 1 / -1; }
 .inspector-note { font-size: 10px; color: var(--muted); line-height: 1.55; margin: 12px 0 20px; }
+.context-site-action { padding: 12px 0; border-bottom: 1px solid var(--line); margin-bottom: 14px; }
+.context-site-action p { color: var(--muted); font-size: 11px; margin-bottom: 10px; }
+.context-site-action button { min-height: 44px; }
 .readout-section { padding-top: 17px; border-top: 1px solid var(--line); }
 .readout-section h3 { margin-bottom: 12px; }
 .readout-section h3 span { font-size: 10px; color: var(--accent); font-weight: 450; }
@@ -208,6 +193,9 @@ th, td { padding: 8px 8px 7px 0; border-bottom: 1px solid var(--line); white-spa
 thead th { color: var(--muted); font-weight: 450; font-size: 10px; }
 tbody th { font-weight: 600; white-space: normal; }
 .sample-note { font-size: 9px; line-height: 1.5; color: var(--muted); margin-top: 6px; }
+.result-handoff { padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--line); }
+.result-handoff p { color: var(--muted); font-size: 10px; line-height: 1.5; }
+.result-handoff p:first-child { color: var(--ink); font-size: 12px; margin-bottom: 6px; }
 #study-methods { margin-top: 10px; padding-top: 5px; }
 #study-methods summary { min-height: 25px; padding: 3px 0; font-size: 10px; }
 #saved-alternatives:not(:empty) { border-top: 1px solid var(--line); padding-top: 12px; margin-top: 12px; overflow: auto; }
@@ -220,9 +208,7 @@ tbody th { font-weight: 600; white-space: normal; }
 @media (max-width: 1150px) {
   .research-header { gap: 18px; padding: 0 18px; }
   .workspace-title { padding-left: 18px; }
-  .workspace-title p { display: none; }
   .research-header nav { gap: 14px; }
-  .theme-control { padding-left: 12px; }
   .research-workspace { grid-template-columns: 216px minmax(300px, 1fr) 266px; }
   .study-toolbar { padding: 14px 18px; gap: 14px; }
   .analysis-name { min-width: 155px; }
@@ -239,7 +225,6 @@ tbody th { font-weight: 600; white-space: normal; }
   .research-header nav { margin-left: auto; }
   .research-header nav a { font-size: 11px; }
   .workspace-title h1 { font-size: 14px; }
-  .theme-control { font-size: 10px; }
   .research-workspace { height: auto; min-height: 0; grid-template-columns: 220px minmax(0, 1fr); grid-template-rows: auto auto 460px auto auto; }
   .study-toolbar { flex-wrap: wrap; gap: 15px; }
   .analysis-name { width: 100%; }
@@ -273,8 +258,6 @@ tbody th { font-weight: 600; white-space: normal; }
   .workspace-title h1 { font-size: 13px; }
   .research-header nav { width: 100%; margin-left: 0; gap: 18px; min-height: 38px; }
   .research-header nav a { min-height: 44px; display: flex; align-items: center; font-size: 11px; }
-  .theme-control { margin-left: auto; padding-left: 12px; gap: 5px; }
-  .theme-control select { min-height: 44px; }
   .research-workspace { display: flex; flex-direction: column; }
   .study-toolbar { padding: 17px 15px; gap: 16px; }
   .analysis-name strong { display: block; font-size: 19px; }
@@ -332,8 +315,6 @@ tbody th { font-weight: 600; white-space: normal; }
   .workspace-title { padding-left: 10px; }
   .workspace-title h1 { font-size: 12px; }
   .research-header nav { flex-wrap: wrap; gap: 5px 20px; }
-  .theme-control { width: 100%; margin-left: 0; padding: 0; border-left: 0; justify-content: space-between; }
-  .theme-control select { min-width: 90px; }
   .site-list { display: flex; }
 }
 @media (prefers-reduced-motion: reduce) {
