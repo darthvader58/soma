@@ -206,6 +206,10 @@ does not host the planning job API.
 
 ### Vercel deployment
 
+Library documentation is published with [Mintlify](https://soma-ce3178ca.mintlify.site/).
+The application's Documentation button opens `/docs`, which redirects to that
+site. Documentation source lives in [`docs/`](docs/README.md).
+
 Deploy from the **repository root**, with the framework preset **Other**.
 The root `vercel.json` installs and builds `web/`, serves `web/dist`, and routes
 `/api/moon/*` to the Python function in `api/index.py`. This configuration is

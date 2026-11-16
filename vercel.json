@@ -11,6 +11,10 @@
       "excludeFiles": "{web/**,tests/**,fixtures/**,.venv/**,tatcenv/**,plan/**,task_outputs/**,.runtime/**,.git/**,**/__pycache__/**}"
     }
   },
+  "redirects": [
+    {"source": "/docs", "destination": "https://soma-ce3178ca.mintlify.site/", "permanent": false},
+    {"source": "/docs/:path*", "destination": "https://soma-ce3178ca.mintlify.site/:path*", "permanent": false}
+  ],
   "rewrites": [
     {"source": "/api/moon/:path*", "destination": "/api/index"},
     {"source": "/((?!api/).*)", "destination": "/index.html"}
