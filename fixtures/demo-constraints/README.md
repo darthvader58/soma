@@ -1,8 +1,8 @@
-# Synthetic constraint demonstrations
+# Physical mission constraint demonstrations
 
-These two cases extend the captured demo with independent battery and service failures. Every contact, payload rate, service calendar, and generation input is synthetic. They are software/model demonstrations, not lunar mission predictions. No spacecraft trajectory or numerical terrain/ephemeris is supplied; missing display states remain unknown.
+These are controlled changes to the **same hypothetical 16 MiB south-pole mission** as `fixtures/physical-south-pole/relay-later/run.zip`: November 30, 2026, 08:00–14:00 UTC, with the same site, DE421 frame and ephemerides, LOLA terrain, state histories, radio profiles, contacts, generation, and scheduler settings. This is a planned-mission study, not a flown operation. The lunar relay is a synthetic two-body preset; rates, hardware, ideal pointing, and station service remain assumptions.
 
-Reproduce from the repository root with the analysis/planning dependencies installed:
+Reproduce from the repository root:
 
 ```sh
 .venv/bin/python scripts/build-demo-constraints.py
@@ -11,29 +11,31 @@ Reproduce from the repository root with the analysis/planning dependencies insta
 .venv/bin/pytest tests/engine/test_demo_constraints.py -q
 ```
 
-The generator reads exact archived scenarios, analysis inputs and scheduler options from `fixtures/phase-6/sensitivity.json`, calls `plan_run`, creates each package using `create_run_package`, and independently verifies it. It does not hand-edit a result or invent a selected infeasible schedule. The archive's feasible baseline schedule is independently replayed under its original inputs, then replayed under each changed control to demonstrate the particular violation.
+No data download is needed to recompute the schedule from these archived numerical inputs. Recomputing the underlying terrain/ephemeris analysis is a separate physical reproduction workflow. The generator verifies and independently replays the original physical baseline before changing one control. It preserves numerical analysis and the original scheduler settings: 60-second bins, one 16,777,216-byte chunk, and a 15-second solver limit. Only scenario-hash bindings in the analysis and environment metadata are refreshed to match each changed scenario.
 
-| Case ID | Only change from the archived baseline | Computed outcome | Independent baseline-witness rejection |
+| Case ID | Only mission control changed | Native outcome | Original baseline schedule fails replay with |
 | --- | --- | --- | --- |
-| `battery-low` | Initial energy 80 → 11 Wh; reserve stays 10 Wh | `infeasible_in_model`; `proven_infeasible_discretized_model` | `energy_reserve` |
-| `service-off` | Lunar relay service windows become an empty list | `infeasible_in_model`; `proven_infeasible_discretized_model` | `service_unavailable` |
+| `battery-low` | Initial energy 80 → 11 Wh; reserve remains 10 Wh | `unknown`, solver `unresolved` | `energy_reserve` |
+| `service-off` | Hypothetical lunar relay service windows become empty | `unknown`, solver `unresolved` | `service_unavailable` |
 
-Both preserve native `scenario_id: synthetic-relay`; their different scenario hashes identify the inputs. Use the case ID for the UI capture directory. Exact hashes and package source bindings appear in `demonstration.json`.
+The source physical analysis explicitly has **incomplete contact coverage**. The engine can release a feasible incumbent on known contacts, as it did for the original relay case. Failure to deliver on known contacts cannot establish infeasibility across unknown opportunities. These cases therefore retain the native conservative `unknown` result; they must not be advertised as proven full-network infeasible.
 
 ## Battery interpretation
 
-The synthetic horizon is November 14, 2026, 08:50–10:05 UTC: 75 minutes. Generation is explicitly zero. The 5 W base load alone requires 6.25 Wh of electrical delivery, or approximately 6.944444 Wh removed from storage at 0.9 discharge efficiency. With initial energy 11 Wh and reserve 10 Wh, only 1 Wh may be removed above reserve. The base load therefore already exceeds the available margin, before communications demand.
+The six-hour November 30 physical analysis has zero modeled generation. The declared 5 W base load alone requires 30 Wh of delivered electrical energy, or approximately 33.333333 Wh removed from storage at 0.9 discharge efficiency. Initial energy of 11 Wh leaves only 1 Wh above the 10 Wh reserve, so even base demand exceeds that margin before communications. Independent replay of the formerly feasible baseline produces only `energy_reserve` violations. The native engine still conservatively reports unknown because its delivery-status logic preserves incomplete contact coverage.
 
-No feasible energy trajectory was selected in this case. Empty native energy histories and null minimum-energy summary fields remain unknown; they are not a simulated zero-energy trajectory. The rejected counterfactual replay is clearly separate evidence, not the chosen schedule.
+No schedule or energy history is selected for this unresolved result. Null completion and minimum-energy fields remain unknown. The separate rejected-baseline replay is evidence about that counterfactual schedule, not a chosen replacement.
 
 ## Service interpretation
 
-The synthetic relay has no service windows. It cannot receive or forward data, even though the supplied contact templates retain their synthetic geometry and assumed rates. The direct contact can carry only 307,200,000 bits versus the 838,860,800-bit (100 MiB) dataset. Disabling service cannot be repaired by drawing a visible link.
+The same hypothetical relay has no allocated service windows. The baseline cannot use it, even though the same physical contact geometry and assumed rates remain in the archived inputs. Independent replay produces only `service_unavailable` errors. No known usable direct contacts exist in this later physical case; unknown opportunities remain unknown. The full-network outcome remains unresolved.
+
+The retained environment is the archived geometry/power diagnostic; service decisions in that baseline diagnostic are not a fresh assessment of the changed calendar. The scheduler and independent replay apply the changed scenario's actual service profile.
 
 ## Artifact contract
 
-Each directory contains the full `run.zip`, its engine-authored extracted members, the complete `run.json` calculation record, package `verification.json`, and `baseline-counterfactual-replay.json`. JSON and CSV outputs, display data, registration, and the ZIP come from existing engine interfaces. Display positions are not fabricated for the contact-only relay.
+Each directory contains the full engine-created `run.zip`, its extracted members, the complete `run.json`, package `verification.json`, and a separate `baseline-counterfactual-replay.json`. The physical environment, states, registered display representation, and numerical arrays are retained. Unknown results have no allocated transmission line, but their real stored state samples are available for display.
 
-The top-level demonstration includes a human-readable constraint explanation derived from the declared inputs. The native solver's generic infeasibility reason remains unchanged. Package verification audits consistency and the infeasible export contract; the bounded solver supplies the infeasibility proof. Rejecting one baseline witness alone would not prove all schedules infeasible.
+`demonstration.json` records case IDs, exact scenario and package hashes, input labels, constraint explanations, source/generator checksums, and artifact bindings. Both scenarios retain native ID `physical-south-pole-nov-30`; distinct hashes identify their controls. Native result reasons are unedited; the explanatory control narrative is stored separately.
 
-The generation recipe and exact scientific outcomes are reproducible. ZIP files record current software versions and source hashes, so changing the engine source or dependency versions can change ZIP bytes even when the same infeasible outcome is reproduced. No native schema, scientific algorithm, or archived sensitivity record is changed.
+Reproduction computes actual outcomes through `plan_run` and verifies complete archives. It does not modify the native schemas, scientific modules, source physical archive, or solver result. ZIP bytes also record current software versions and source hashes, so they can change when the export environment changes even if the same unknown outcome is reproduced.

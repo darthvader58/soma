@@ -101,6 +101,22 @@
       "passed": true
     },
     {
+      "name": "display_states_exact",
+      "passed": true
+    },
+    {
+      "name": "renderer_states_registered",
+      "passed": true
+    },
+    {
+      "name": "display_sample_epochs_exact",
+      "passed": true
+    },
+    {
+      "name": "environment_scenario_binding",
+      "passed": true
+    },
+    {
       "name": "display_native:contacts",
       "passed": true
     },
@@ -246,8 +262,8 @@
   "replay": null,
   "replay_status": "no_feasible_schedule_claimed; infeasibility is not independently proved by replay",
   "reproduce_command": ".venv/bin/python -m soma.verification.exports RUN_ZIP",
-  "scenario_sha256": "22d6f59174516ab03473eb11f0c85f880f560091b5d094d08c72f742906a6dbc",
-  "solver_status": "proven_infeasible_discretized_model",
-  "status": "infeasible_in_model",
-  "zip_sha256": "25c15a3a4ef4d29e486c8b3d854b7350dede720a7eb5cd207ab7461482daeab3"
+  "scenario_sha256": "21154d6b3ffafd4fc0f51df6ba88de617bb26e5e01e19213f4f171c69d19abbc",
+  "solver_status": "unresolved",
+  "status": "unknown",
+  "zip_sha256": "2b486774ee8fc58137fc82f72495dfb09236c99c95fffd0b55e226a908896fa1"
 }
