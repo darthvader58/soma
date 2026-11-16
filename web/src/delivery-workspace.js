@@ -88,7 +88,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
     $('delivery-input-errors').textContent = errors.join(' ');
     $('delivery-input-errors').hidden = !errors.length;
     $('plan-delivery').disabled = running || !capabilities.ready || Boolean(errors.length);
-    $('delivery-budget').textContent = `${scenario.data_volume.value} ${scenario.data_volume.unit} · ${Number.isFinite(duration) ? duration / 3600 : '?'} h · ${scenario.route_families.length} route families`;
+    $('delivery-budget').textContent = `${scenario.data_volume.value} ${scenario.data_volume.unit} · ${Number.isFinite(duration) ? duration / 3600 : '?'} h · ${scenario.route_families.length} route ${scenario.route_families.length === 1 ? 'family' : 'families'}`;
   }
   function renderForm() {
     const profile = hardware(), coverage = capabilities.coverage;
@@ -106,7 +106,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
       ${date('Data ready UTC', 'data_ready_utc', scenario.data_ready_utc)}${date('Last-byte deadline UTC', 'deadline_utc', scenario.deadline_utc)}${date('Delivery analysis starts UTC', 'analysis_horizon.start_utc', scenario.analysis_horizon.start_utc)}${date('Delivery analysis ends UTC', 'analysis_horizon.end_utc', scenario.analysis_horizon.end_utc)}</div>
       <p class="delivery-note">Dates use UTC. Changes do not move the absolute deadline or service calendars automatically.</p><button id="delivery-apply-service" type="button">Use analysis interval as assumed service</button>
       <h3>Route families</h3><div class="delivery-routes">${[['direct_to_earth', 'Direct to Earth'], ['single_lunar_relay', 'One lunar store-and-forward relay']].map(([value, label]) => `<label><input type="checkbox" data-delivery-route="${value}" ${scenario.route_families.includes(value) ? 'checked' : ''}>${label}</label>`).join('')}</div>
-      <h3>Hardware and energy</h3><label>Delivery hardware profile<select data-delivery-path="hardware_profile_ref">${scenario.profiles.hardware.map(item => `<option value="${esc(item.id)}" ${item.id === scenario.hardware_profile_ref ? 'selected' : ''}>${esc(item.id)} · ${esc(item.input_class)}</option>`).join('')}</select></label>
+      <h3>Hardware and energy</h3><p>Delivery hardware profile: <strong>${esc(profile.id)}</strong> · ${esc(profile.input_class)}. The provider supplies this profile; edit its declared parameters below.</p>
       <div class="delivery-fields">${number('Initial battery energy (Wh)', 'hardware.battery.initial_energy_wh', profile.battery.initial_energy_wh, 0)}${number('Battery reserve (Wh)', 'hardware.battery.reserve_wh', profile.battery.reserve_wh, 0)}${number('Battery capacity (Wh)', 'hardware.battery.capacity_wh', profile.battery.capacity_wh, 0)}${number('Base electrical load (W)', 'hardware.base_load_w', profile.base_load_w, 0)}${number('Fixed panel area (m²)', 'hardware.panel.area_m2', profile.panel.area_m2, 0)}${number('Panel efficiency', 'hardware.panel.efficiency', profile.panel.efficiency, 0)}</div>
       <h3>Numerical budgets</h3><div class="delivery-fields">${number('Planning bin (s)', 'options.bin_s', options.bin_s, capabilities.limits.min_bin_s)}${number('Solver time limit (s)', 'options.time_limit_s', options.time_limit_s, 1)}${number('Chunk bytes', 'options.chunk_bytes', options.chunk_bytes, 1)}</div>
       <details><summary>Complete declared profiles and service</summary><p>Profiles are explicit assumptions or published inputs, not access to a booked network.</p><pre id="delivery-profile-json">${esc(JSON.stringify(scenario.profiles, null, 2))}</pre></details>`;
@@ -150,6 +150,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
   }
   function renderProfiles() {
     if (!scenario) return;
+    if ($('delivery-profile-json')) $('delivery-profile-json').textContent = JSON.stringify(scenario.profiles, null, 2);
     const relay = scenario.profiles.relays.find(item => scenario.relay_refs.includes(item.id));
     $('delivery-profiles').innerHTML = `<h3>Declared network${stale ? ' · edited inputs' : ''}</h3><p>Rate method: ${esc(scenario.rate_method)}. Pointing: ${esc(scenario.pointing_assumption)}.</p><p>${esc(scenario.service_assumption_label)}</p><p>Hardware: ${esc(hardware().id)} · ${esc(hardware().input_class)}. Battery ${esc(hardware().battery.initial_energy_wh)} Wh initially; reserve ${esc(hardware().battery.reserve_wh)} Wh.</p>${relay ? `<p>Relay: ${esc(relay.id)} · ${esc(relay.trajectory.kind)} · ${relay.storage_capacity_bytes.toLocaleString()} bytes storage. No operational relay or LRO service is implied.</p>` : ''}<p>Ground stations: ${scenario.station_refs.map(esc).join(', ')}. Their declared service is not an operator allocation.</p>`;
   }
@@ -193,7 +194,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
     const science = document.createElement('details'); science.innerHTML = '<summary>Terrain, illumination, power and contact diagnostics</summary><div id="delivery-science"></div>'; evidence.append(science);
     timeline?.destroy(); timeline = renderTimeline($('delivery-timeline'), { scenario: artifact.scenario, result, sampleEpochs: artifact.display.sample_epochs_utc, onTimeChange: renderAtTime });
     for (const id of ['delivery-export-result', 'delivery-export-package']) $(id).disabled = false;
-    epoch = artifact.scenario.data_ready_utc;
+    epoch = result.allocations[0]?.source_transmit_interval.start_utc ?? artifact.scenario.data_ready_utc;
     timeline.setTime(epoch); renderAtTime(epoch);
     if (active) onMap(artifact, epoch);
   }
@@ -204,7 +205,7 @@ export function createDeliveryWorkspace({ root, apiBase = '/api', getCatalog = (
     try {
       const response = await client.analyze(scenario, options);
       if (current !== revision) return;
-      artifact = response; stale = false; renderArtifact();
+      artifact = response; stale = false; renderProfiles(); renderArtifact();
       message(`Calculated delivery in Python · ${describeStatus(response.result).label} · ${response.scenario_sha256.slice(0, 12)}. Rates and service retain their declared assumptions.`);
     } catch (error) { if (error.name !== 'AbortError' && current === revision) message(`Delivery unavailable: ${error.message} No captured or fabricated result replaced it.`); }
     finally { if (current === revision) { running = false; $('stop-delivery').hidden = true; refreshBudget(); } }

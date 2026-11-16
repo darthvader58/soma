@@ -57,7 +57,7 @@ workspace.dataset.tool = activeTool;
 const deliveryWorkspace = createDeliveryWorkspace({ root: workspace, apiBase: import.meta.env.VITE_SOMA_API_URL || '/api',
   getCatalog: () => catalog, getInspectedSite: () => catalog.find(site => site.id === inspected),
   onGeometry: () => activateTool('geometry'),
-  onMap: (artifact, epoch) => { if (activeTool === 'delivery') { viewer?.setDelivery(artifact); viewer?.setTime(epoch); $('follow-spacecraft').disabled = !artifact.scenario.relay_refs.length; setCamera('polar'); } },
+  onMap: (artifact, epoch) => { if (activeTool === 'delivery') { viewer?.setDelivery(artifact); viewer?.setTime(epoch); $('follow-spacecraft').disabled = !artifact.scenario.relay_refs.length; const allocation = artifact.result.allocations[0]; const contact = artifact.result.contacts.find(item => item.contact_id === allocation?.contact_id); setCamera(allocation ? artifact.scenario.relay_refs.includes(contact?.receiver) ? 'moon-network' : 'network' : 'polar'); } },
   onTime: epoch => { if (activeTool === 'delivery') viewer?.setTime(epoch); },
   onFocus: mode => { if (activeTool === 'delivery') setCamera(mode); },
 });

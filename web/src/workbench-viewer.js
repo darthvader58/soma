@@ -50,7 +50,9 @@ export async function createWorkbenchViewer(container, {
       if (node) { node.entity.position = cartesian(state.position); node.entity.show = true; }
     }
     for (const [id, node] of spacecraftEntities) node.entity.show = sample.states.some(state => state.target === id);
-    for (const { contact, allocation, positions } of sample.links) deliverySamples.push(viewer.entities.add({
+    const allocated = sample.links.filter(link => link.allocation);
+    const links = allocated.length ? allocated : sample.links;
+    for (const { contact, allocation, positions } of links) deliverySamples.push(viewer.entities.add({
       id: `delivery-link-${contact.contact_id}`, description: `${allocation ? 'Allocated source transmission' : 'Usable contact window, not selected delivery'}: ${contact.sender} to ${contact.receiver}. Exact endpoint positions at source epoch; not a light-time ray path.`,
       polyline: { positions: positions.map(cartesian), arcType: C.ArcType.NONE, width: allocation ? 4 : 2,
         material: allocation ? C.Color.fromCssColorString('#edb965') : new C.PolylineDashMaterialProperty({ color: C.Color.WHITE, dashLength: 16 }) },
@@ -202,8 +204,13 @@ export async function createWorkbenchViewer(container, {
         const halfAngle = Math.min(viewer.camera.frustum.fovy / 2, Math.atan(Math.tan(viewer.camera.frustum.fovy / 2) * aspect));
         const distance = sphere.radius / Math.sin(halfAngle);
         // View across the network baseline so the Moon and Earth do not overlap on screen.
-        const axis = C.Cartesian3.normalize(Math.hypot(sphere.center.x, sphere.center.y) > 1 ? new C.Cartesian3(-sphere.center.y, sphere.center.x, 0) : C.Cartesian3.UNIT_X, new C.Cartesian3());
-        viewer.camera.setView({ destination: new C.Cartesian3(sphere.center.x + axis.x * distance, sphere.center.y + axis.y * distance, sphere.center.z + axis.z * distance), orientation: { direction: C.Cartesian3.negate(axis, new C.Cartesian3()), up: C.Cartesian3.UNIT_Z } });
+        const local = mode === 'moon-network';
+        const axis = C.Cartesian3.normalize(local ? sphere.center : Math.hypot(sphere.center.x, sphere.center.y) > 1 ? new C.Cartesian3(-sphere.center.y, sphere.center.x, 0) : C.Cartesian3.UNIT_X, new C.Cartesian3());
+        const range = local ? Math.max(distance, delivery.scenario.lander.reference_radius_m - Math.hypot(sphere.center.x, sphere.center.y, sphere.center.z) + 200000) : distance;
+        const reference = Math.abs(axis.z) > 0.9 ? C.Cartesian3.UNIT_X : C.Cartesian3.UNIT_Z;
+        const dot = reference.x * axis.x + reference.y * axis.y + reference.z * axis.z;
+        const up = C.Cartesian3.normalize(new C.Cartesian3(reference.x - dot * axis.x, reference.y - dot * axis.y, reference.z - dot * axis.z), new C.Cartesian3());
+        viewer.camera.setView({ destination: new C.Cartesian3(sphere.center.x + axis.x * range, sphere.center.y + axis.y * range, sphere.center.z + axis.z * range), orientation: { direction: C.Cartesian3.negate(axis, new C.Cartesian3()), up } });
         report(mode === 'network' ? `Network at ${epoch}. Moon and Earth endpoints retain Python distances; the Moon appears small at this scale. Marker sizes are for legibility. Solid amber: allocated transfer; dashed: usable contact only.` : `Lunar hop at ${epoch}. Lander and synthetic relay retain their Python positions. Solid amber: allocated transfer; dashed: usable contact only. Earth-bound hops use Earth network view.`);
         viewer.scene.requestRender(); return;
       }

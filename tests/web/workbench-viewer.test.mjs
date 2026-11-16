@@ -18,7 +18,7 @@ async function displayHarness(t) {
       this.entities = new Cesium.EntityCollection();
       this.scene = { canvas: { clientWidth: 800, clientHeight: 500 }, primitives: { add: value => value },
         renderError: { addEventListener() {} }, requestRender() {} };
-      this.camera = { frustum: { fovy: Math.PI / 3 }, cancelFlight() {}, setView() {}, flyTo() {} };
+      this.camera = { frustum: { fovy: Math.PI / 3 }, cancelFlight() {}, setView(view) { this.lastView = view; }, flyTo() {} };
       this.clock = {};
     }
     resize() {}
@@ -43,6 +43,10 @@ test('network scale labels keep Earth readable and lunar-hop fit retains exact e
   const relay = display.renderer_states[0];
   display.renderer_states.push({ ...relay, target: 'EARTH', position: [380000000, 0, 0] });
   display.renderer_states.push({ ...relay, target: scenario.station_refs[0], position: [380000000, 1000, 0] });
+  const window = { start_utc: epoch, end_utc: new Date(Date.parse(epoch) + 1000).toISOString() };
+  display.contacts = [{ contact_id: 'selected', sender: scenario.lander.id, receiver: scenario.relay_refs[0], source_transmit_window: window },
+    { contact_id: 'unused-earth', sender: scenario.lander.id, receiver: 'EARTH', source_transmit_window: window }];
+  display.allocations = [{ contact_id: 'selected', source_transmit_interval: window }];
   api.setDelivery({ scenario, display }); api.setTime(epoch); api.camera('network');
   const earth = scene.entities.getById('delivery-node-EARTH');
   const station = scene.entities.getById(`delivery-node-${scenario.station_refs[0]}`);
@@ -54,6 +58,10 @@ test('network scale labels keep Earth readable and lunar-hop fit retains exact e
   api.camera('moon-network');
   assert.equal(relayNode.label.show.getValue(), true);
   assert.equal(station.label.show.getValue(), false);
+  assert.ok(Cesium.Cartesian3.magnitude(scene.camera.lastView.destination) > scenario.lander.reference_radius_m);
+  assert.ok([scene.camera.lastView.orientation.up.x, scene.camera.lastView.orientation.up.y, scene.camera.lastView.orientation.up.z].every(Number.isFinite));
+  assert.ok(scene.entities.getById('delivery-link-selected'));
+  assert.equal(scene.entities.getById('delivery-link-unused-earth'), undefined);
   assert.deepEqual(display.renderer_states[0], relay);
 });
 

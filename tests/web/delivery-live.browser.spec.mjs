@@ -27,6 +27,9 @@ test('fresh Python delivery renders exact schedule, moves network focus, validat
   await expect(page.locator('#delivery-outcome')).toContainText(artifact.result.model_fidelity);
   await expect(page.locator('#delivery-outcome')).toContainText(artifact.result.final_byte_arrival_utc);
   expect(artifact.replay.passed).toBe(true);
+  const automaticContact = artifact.result.contacts.find(item => item.contact_id === artifact.result.allocations[0].contact_id);
+  await expect(page.locator('#delivery-resource-readout')).toContainText(artifact.result.allocations[0].source_transmit_interval.start_utc);
+  await expect(page.locator('#research-map-status')).toContainText(artifact.scenario.relay_refs.includes(automaticContact.receiver) ? 'Lunar hop at' : 'Moon and Earth endpoints retain Python distances');
   await expect(page.getByRole('heading', { name: 'Exact selected transfers', exact: true })).toBeVisible();
   const first = page.locator('.delivery-focus button').first(); await first.click();
   const contact = artifact.result.contacts.find(item => item.contact_id === artifact.result.allocations[0].contact_id);
@@ -57,6 +60,7 @@ test('fresh Python delivery renders exact schedule, moves network focus, validat
   await page.screenshot({ path: testInfo.outputPath('delivery-mobile-390.png'), fullPage: true });
   await page.getByLabel('Battery reserve (Wh)', { exact: true }).fill('25');
   await expect(page.locator('#delivery-profiles')).toContainText('reserve 25 Wh');
+  await expect(page.locator('#delivery-profile-json')).toContainText('"reserve_wh": 25');
   await expect(page.getByRole('button', { name: 'Python run package', exact: true })).toBeDisabled();
   await page.getByLabel('Delivery data volume', { exact: true }).fill('');
   await expect(planButton).toBeDisabled();
