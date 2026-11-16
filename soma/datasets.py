@@ -155,6 +155,25 @@ def _preserve_legacy_near_snapshot(values, expected):
         values[:1145, :] = np.nan
     return values
 
+
+def raster_sample_identity(values):
+    """Hash C-order little-endian decoded sample bits, independent of TIFF codecs."""
+    import numpy as np
+    array = np.ascontiguousarray(values, dtype=values.dtype.newbyteorder("<"))
+    return {"sample_sha256": hashlib.sha256(array.tobytes(order="C")).hexdigest(),
+            "sample_dtype": array.dtype.str, "sample_shape": list(array.shape),
+            "finite_samples": int(np.isfinite(array).sum())}
+
+
+def _raster_mismatch(path, values, profile):
+    import rasterio
+    return ("Raster encoding differs from pinned bytes: "+json.dumps({
+        "path": path.name, "size_bytes": path.stat().st_size, "sha256": sha256(path),
+        **raster_sample_identity(values), "rasterio": rasterio.__version__,
+        "gdal": rasterio.__gdal_version__, "profile": {key: str(profile.get(key)) for key in
+            ("driver", "dtype", "width", "height", "compress", "tiled", "blockxsize", "blockysize", "transform", "nodata")}},
+        sort_keys=True))
+
 def extract_lola_window(data_root, *, expected_manifest=None):
     """Preserve an aligned 10 km square of elevation and float return counts.
 
@@ -229,7 +248,7 @@ def extract_lola_window(data_root, *, expected_manifest=None):
                         target.write(values, 1)
                         target.update_tags(**source.tags())
                     if expected and sha256(partial) != expected["sha256"]:
-                        raise ValueError("Recreated extract differs from pinned bytes; review the data revision")
+                        raise ValueError(_raster_mismatch(partial, values, profile))
                     partial.replace(output)
                     with rasterio.open(output) as target:
                         bounds = list(target.bounds)
