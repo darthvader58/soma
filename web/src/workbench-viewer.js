@@ -6,6 +6,8 @@ import { rendererSamplesAtTime } from './renderer-samples.js';
 // Camera-only navigation. Positions and intervals supplied by Python are never modified.
 export function navigateCamera(C, viewer, action, pivot = C.Cartesian3.ZERO) {
   const camera = viewer.camera;
+  const trackedPosition = viewer.trackedEntity?.position?.getValue(viewer.clock?.currentTime);
+  if (trackedPosition && [trackedPosition.x, trackedPosition.y, trackedPosition.z].every(Number.isFinite)) pivot = C.Cartesian3.clone(trackedPosition);
   viewer.trackedEntity = undefined;
   camera.cancelFlight();
   camera.lookAtTransform(C.Matrix4.IDENTITY);
@@ -177,6 +179,8 @@ export async function createWorkbenchViewer(container, {
     navigate(action) {
       if (!ready || destroyed) return false;
       if (action === 'reset') { api.camera(lastPreset); return true; }
+      const trackedPosition = viewer.trackedEntity?.position?.getValue(viewer.clock.currentTime);
+      if (trackedPosition && [trackedPosition.x, trackedPosition.y, trackedPosition.z].every(Number.isFinite)) cameraPivot = C.Cartesian3.clone(trackedPosition);
       const changed = navigateCamera(C, viewer, action, cameraPivot ?? C.Cartesian3.ZERO);
       cameraMode = 'manual';
       onCameraChange({ mode: 'manual', changed, position: [viewer.camera.positionWC.x, viewer.camera.positionWC.y, viewer.camera.positionWC.z] });

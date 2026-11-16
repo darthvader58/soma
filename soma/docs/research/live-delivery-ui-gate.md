@@ -10,6 +10,8 @@ Navigation follow-up, November 18: the integrating agent ran the 108-test web su
 
 Final navigation refinements: all **109** web tests, including six camera tests, pass. The integrating agent reran the navigation browser case (2.1 seconds; total 4.4 seconds) and production build after adding successful-preset reset protection and explicit direct/relay downlink source labels. In personal Aside inspection of the deployed navigation preview, Zoom in, Pan left, Rotate right and Tilt down changed the actual camera; the expanded controls and status remained readable. The direct-transfer view hides unused relay markers; a relay downlink identifies the synthetic relay sender rather than implying transmission from the lander. Native endpoint coordinates, selected time and result arrays remain unchanged.
 
+Release check: **110** web tests pass, including seven real-camera cases. Close-follow navigation uses the tracked object's existing position at the selected epoch before releasing tracking; its regression verifies a bounded 12% zoom step at a 1 km range, with unchanged source position and epoch. The essential Zoom/Reset row stays pinned while expanded controls scroll, with focused-control and caption-clearance assertions at 390 px. These refinements retain the same checked palette, native controls, scientific-data boundary and delivery-package behavior.
+
 ## Hard gate
 
 - R-02 PASS: new workspace copy contains no em dash; scientific punctuation in source records is preserved.

@@ -188,7 +188,8 @@ label { color: var(--muted); }
 .scene-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 13px 14px; position: absolute; top: 0; left: 0; right: 0; z-index: 2; background: linear-gradient(#101719f5, #10171900); }
 .scene-camera { display: flex; flex-wrap: wrap; gap: 5px; }
 .scene-navigation { position: absolute; z-index: 3; right: 12px; top: 78px; max-width: 210px; max-height: calc(100% - 150px); overflow: auto; padding: 8px; background: #202a30f5; border: 1px solid var(--control-edge); border-radius: 5px; }
-.navigation-essential { display: flex; gap: 5px; }
+.scene-navigation { scroll-padding-top: 58px; }
+.navigation-essential { position: sticky; top: 0; z-index: 1; display: flex; gap: 5px; background: var(--panel); padding-bottom: 5px; }
 .scene-navigation button { min-width: 44px; min-height: 44px; padding: 5px 8px; }
 .scene-navigation summary { cursor: pointer; font-size: 11px; padding-top: 10px; min-height: 35px; }
 .navigation-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 5px; }

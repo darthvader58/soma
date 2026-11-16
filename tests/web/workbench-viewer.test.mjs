@@ -68,6 +68,23 @@ test('unavailable network and site views cannot replace the last successful rese
   assert.ok(Cesium.Cartesian3.equalsEpsilon(globalPosition, scene.camera.positionWC, 1e-12, 1e-5));
 });
 
+test('close spacecraft following uses its stored current position to scale manual zoom without crossing it', () => {
+  const scene = { drawingBufferWidth: 800, drawingBufferHeight: 500, mapProjection: new Cesium.GeographicProjection(Cesium.Ellipsoid.MOON), mode: Cesium.SceneMode.SCENE3D, requestRender() {} };
+  const camera = new Cesium.Camera(scene), point = new Cesium.Cartesian3(1800000, 0, 0);
+  camera.setView({ destination: new Cesium.Cartesian3(1801000, 0, 0), orientation: { direction: new Cesium.Cartesian3(-1, 0, 0), up: Cesium.Cartesian3.UNIT_Z } });
+  const epoch = Cesium.JulianDate.fromIso8601('2026-04-01T00:00:00Z'), snapshot = Cesium.JulianDate.clone(epoch);
+  const position = new Cesium.ConstantPositionProperty(point), source = Cesium.Cartesian3.clone(position.getValue(epoch));
+  const viewer = { camera, scene, clock: { currentTime: epoch }, trackedEntity: { position } };
+  const before = Cesium.Cartesian3.distance(camera.positionWC, point);
+  assert.equal(navigateCamera(Cesium, viewer, 'zoom-in', Cesium.Cartesian3.ZERO), true);
+  const after = Cesium.Cartesian3.distance(camera.positionWC, point);
+  assert.ok(after < before && after >= before * 0.8);
+  assert.ok(camera.positionWC.x > point.x);
+  assert.equal(viewer.trackedEntity, undefined);
+  assert.ok(Cesium.JulianDate.equals(epoch, snapshot));
+  assert.ok(Cesium.Cartesian3.equals(position.getValue(epoch), source));
+});
+
 test('manual navigation releases follow and reset restores the last network fit without Earth/station history paths', async t => {
   const previous = globalThis.matchMedia; globalThis.matchMedia = () => ({ matches: true }); t.after(() => { globalThis.matchMedia = previous; });
   const read = name => JSON.parse(readFileSync(new URL(`../../web/fixtures/physical-south-pole/relay-later/${name}.json`, import.meta.url)));

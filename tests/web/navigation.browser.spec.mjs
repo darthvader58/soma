@@ -35,6 +35,15 @@ test('visible real-Cesium camera controls work in both tools and remain keyboard
   await page.keyboard.press('Tab'); await pan.focus(); await expect(pan).toBeFocused();
   await page.keyboard.press('Enter');
   expect(await navigation.getAttribute('data-camera-position')).not.toBe(manualPosition);
+  const tilt = page.getByRole('button', { name: 'Tilt down', exact: true });
+  await tilt.focus(); await page.keyboard.press('Enter');
+  const scrolledPanel = await navigation.boundingBox();
+  for (const name of ['Zoom in', 'Zoom out', 'Reset view']) {
+    const bounds = await page.getByRole('button', { name, exact: true }).boundingBox();
+    expect(bounds.y).toBeGreaterThanOrEqual(scrolledPanel.y);
+    expect(bounds.y + bounds.height).toBeLessThanOrEqual(scrolledPanel.y + scrolledPanel.height);
+    await expect(page.getByRole('button', { name, exact: true })).toBeInViewport();
+  }
   await page.getByRole('button', { name: 'Reset view', exact: true }).click();
   await expect(page.locator('[data-camera="global"]')).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Data delivery', exact: true }).click();
