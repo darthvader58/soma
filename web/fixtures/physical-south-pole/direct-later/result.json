@@ -1,0 +1,97 @@
+{
+  "allocations": [],
+  "assumptions": [
+    "Rate method: assumed_net_rate",
+    "Pointing: ideal_pointing",
+    "Service: Assumed finite six-hour educational service; no operator allocation",
+    "Real matched DE421 SPICE states and published LOLA terrain grids; assumed hardware, service, pointing and net radio rates.",
+    "Generation is the minimum of endpoint and midpoint samples per 60-second bin, held constant by assumption; no continuous power guarantee.",
+    "Contacts require clear endpoint and midpoint finite-segment samples per 60-second bin with 30-second outer guards; unsampled short events may be missed.",
+    "Same-epoch geometric rays omit retarded endpoint geometry; a positive constant upper-model delay is separately applied to receiver service and byte arrival.",
+    "Constant contact delay uses maximum sampled geometric range plus 60 seconds at an assumed 12 km/s range-rate bound.",
+    "Terrain above the reference sphere is bounded by an assumed 12 km global envelope; low-altitude finite ray samples use real numerical DEM values.",
+    "Fixed-panel center-ray projection, sampled uniform Sun disk and same-ray spherical Earth eclipse mask; no temperature or self-shadowing model.",
+    "Synthetic relay conics omit nonspherical gravity, third bodies and radiation pressure; they are not operational frozen or libration-point orbits.",
+    "Whole dataset uses direct contacts or one selected lunar store-and-forward relay; Earth-orbit relays disabled.",
+    "Payload durations rounded upward to an event-grid boundary; padded payload occupancy consumes declared radio power.",
+    "Radio conflicts and electrical loads conservatively reserve every intersected event bin.",
+    "Acquisition and teardown use the terminal TX or RX electrical draw respectively.",
+    "Relay buffer reserves a complete chunk at reception start and releases it after outgoing payload completion.",
+    "Ground sink retains all received chunks with finite configured station storage.",
+    "Policy: satisfy deadline and constraints, then fewer relay hops, earlier final arrival, lower lander communications energy.",
+    "SYNTHETIC external relay power assumed sufficient only during declared service; battery/base loads not modeled",
+    "Ground stations use externally powered service; station battery/base loads are outside the frozen profile."
+  ],
+  "buffer_history": [],
+  "contacts": [],
+  "delivered_bytes": 0,
+  "energy_history": [],
+  "final_byte_arrival_utc": null,
+  "model_fidelity": "assumed_rate_simulation",
+  "provenance": {
+    "dataset_manifest_ref": "physical-lola-de421-v1",
+    "engine_version": "0.1.0",
+    "implementation_status": "implemented",
+    "input_provenance": [
+      {
+        "description": "Numerical LOLA near/far products and matched DE421 SPICE; ground elevation resolved by the engine. Published interpolation quality is retained, not relabeled as measured terrain.",
+        "input_class": "published",
+        "scope": "terrain and celestial geometry",
+        "source_urls": [
+          "https://pgda.gsfc.nasa.gov/products/81",
+          "https://naif.jpl.nasa.gov/naif/spiceconcept.html"
+        ]
+      },
+      {
+        "description": "Educational lander profile, ideal pointing, assumed net payload rates and finite six-hour service calendars. Three rounded geographic station proxies illustrate diversity; they are not actual DSN antenna coordinates or booked service.",
+        "input_class": "assumed",
+        "scope": "hardware, rates, pointing and service",
+        "source_urls": []
+      },
+      {
+        "description": "synthetic_two_body_lunar_preset soma-polar-200km-v1. Explicit conic model, not an operational frozen orbit, libration orbit or real relay ephemeris.",
+        "input_class": "synthetic",
+        "scope": "lunar relay trajectory",
+        "source_urls": []
+      },
+      {
+        "description": "Same site, data volume, hardware, initial battery, network and six-hour mission-age deadline. Ready time, horizon, finite service calendars and synthetic trajectory coverage move together with the selected operating day.",
+        "input_class": "assumed",
+        "scope": "controlled date comparison",
+        "source_urls": []
+      }
+    ],
+    "kernel_manifest_ref": "de421-phase2-matched-kernel-set",
+    "reason": "Direct contacts after data readiness and before the receiver deadline provide at most 0 payload bits for a 134,217,728-bit file; the complete file cannot fit in the declared network.",
+    "source_urls": [
+      "https://naif.jpl.nasa.gov/naif/spiceconcept.html",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/fk/satellites/moon_080317.tf",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/lsk/naif0012.tls",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/earth_000101_270208_261113.bpc",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/pck/moon_pa_de421_1900-2050.bpc",
+      "https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/a_old_versions/de421.bsp",
+      "https://pds-geosciences.wustl.edu/lro/lro-l-lola-3-rdr-v1/lrolol_1xxx/data/lola_gdr/",
+      "https://pgda.gsfc.nasa.gov/products/81"
+    ]
+  },
+  "run_version": "0.1.0",
+  "scenario_id": "physical-south-pole-nov-30",
+  "scenario_sha256": "5f436971da5c81cfef984a36835504356ca29d12cac667d6ca99c38300e37531",
+  "solver_status": "proven_infeasible_discretized_model",
+  "status": "infeasible_in_model",
+  "storage_intervals": [],
+  "warnings": [
+    "Published grid interpolation is modeled terrain, not a measured surface at every pixel.",
+    "Fine-grid gaps use the explicitly declared coarse LOLA grid; both-source gaps remain unknown.",
+    "Extent convergence does not prove radial or angular sampling completeness.",
+    "This is an assumed-rate planning simulation, with no RF link closure or operational station/relay access claim.",
+    "Geometry and power are discrete sampled approximations; feasible results apply only under these declared assumptions.",
+    "physical-polar-lander-educational-americas-0: rejected: finite_sampled_terrain_intersection",
+    "physical-polar-lander-educational-europe-0: rejected: finite_sampled_terrain_intersection; station_below_minimum_elevation_plus_margin",
+    "physical-polar-lander-educational-australia-0: rejected: station_below_minimum_elevation_plus_margin",
+    "No complete dataset schedule satisfies the declared discrete route, capacity, storage, service, radio and energy constraints.",
+    "Published terrain and ephemerides feed this model; radio rates, service and synthetic relay trajectories remain declared assumptions, not mission predictions.",
+    "This result does not book service or certify navigation, relay operation or thermal survival.",
+    "Scientific map placement depends on the run's versioned renderer registration and its tested region; rendered terrain does not resolve numerical coverage."
+  ]
+}

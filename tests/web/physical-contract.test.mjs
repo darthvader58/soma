@@ -3,8 +3,35 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { validateScenario, canonicalScenarioHash } from '../../web/src/contracts.js';
 import { comparisonViewModel } from '../../web/src/comparison.js';
+import { validateResult } from '../../web/src/contracts.js';
+import { validateDisplayPayload } from '../../web/src/display.js';
+import { registrationGate } from '../../web/src/viewer.js';
 
 const load = async (path) => JSON.parse(await readFile(new URL(`../../${path}`, import.meta.url), 'utf8'));
+
+test('captured physical runs preserve exact engine ZIPs and bind result, display and registration', async () => {
+  for (const [name, status, allocations] of [['direct-ready', 'feasible_under_assumptions', 1], ['direct-later', 'infeasible_in_model', 0], ['relay-later', 'feasible_under_assumptions', 2]]) {
+    const prefix = `web/fixtures/physical-south-pole/${name}`;
+    const original = await readFile(new URL(`../../fixtures/physical-south-pole/${name}/run.zip`, import.meta.url));
+    const copied = await readFile(new URL(`../../${prefix}/run.zip`, import.meta.url));
+    assert.deepEqual(copied, original);
+    const scenario = await load(`${prefix}/scenario.json`);
+    const result = await load(`${prefix}/result.json`);
+    const display = await load(`${prefix}/display-data.json`);
+    const registration = await load(`${prefix}/renderer-registration.json`);
+    const hash = await canonicalScenarioHash(scenario);
+    assert.equal(validateScenario(scenario).valid, true);
+    assert.equal(validateResult(result).valid, true);
+    assert.equal(result.scenario_sha256, hash);
+    assert.equal(result.status, status);
+    assert.equal(result.allocations.length, allocations);
+    assert.equal(validateDisplayPayload(display, hash, result).scenario_sha256, hash);
+    assert.deepEqual(display.registration, registration);
+    assert.equal(registrationGate(registration, scenario.lander.frame).passed, true);
+    assert.equal(display.environment.scenario_sha256, hash);
+    if (name === 'direct-later') assert.match(result.provenance.reason, /at most 0 payload bits/);
+  }
+});
 
 test('physical presets preserve the engine frozen scenario contract byte-for-byte', async () => {
   for (const file of ['scenario.json', 'scenario-later.json']) {

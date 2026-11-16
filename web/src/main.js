@@ -10,6 +10,8 @@ import { createMoonViewer, registrationGate } from './viewer.js';
 import { displayTimeText } from './display.js';
 import { renderScience } from './science.js';
 import { renderComparison } from './comparison.js';
+import { physicalFixtures } from './physical-fixtures.js';
+import capturedRegistration from '../fixtures/physical-south-pole/direct-ready/renderer-registration.json' with { type: 'json' };
 import directScenario from '../fixtures/synthetic-direct/scenario.json' with { type: 'json' };
 import directContacts from '../fixtures/synthetic-direct/contacts.json' with { type: 'json' };
 import directExpected from '../fixtures/synthetic-direct/expected.json' with { type: 'json' };
@@ -34,19 +36,20 @@ import relaySummary from '../fixtures/synthetic-relay/summary.json' with { type:
 const fixtures = [
   { name: 'Direct to Earth', scenario: directScenario, contacts: directContacts, expected: directExpected, result: directResult, resultText: directResultText, environment: directEnvironment, environmentText: directEnvironmentText, packageUrl: directPackageUrl, summary: directSummary },
   { name: 'One lunar relay', scenario: relayScenario, contacts: relayContacts, expected: relayExpected, result: relayResult, resultText: relayResultText, environment: relayEnvironment, environmentText: relayEnvironmentText, packageUrl: relayPackageUrl, summary: relaySummary },
+  ...physicalFixtures,
 ];
 const fixtureMode = import.meta.env.VITE_SOMA_MODE === 'fixture';
 const apiUrl = fixtureMode ? undefined : import.meta.env.VITE_SOMA_API_URL || '/api';
 const physicalPresets = Object.entries(import.meta.glob('../fixtures/physical-south-pole/scenario*.json', { eager: true, import: 'default' }))
   .map(([, scenario]) => ({ name: `Physical · ${scenario.scenario_id}`, scenario }))
   .sort((a, b) => a.scenario.data_ready_utc.localeCompare(b.scenario.data_ready_utc));
-const examples = apiUrl ? [...fixtures, ...physicalPresets] : fixtures;
+const examples = apiUrl ? [...fixtures.slice(0, 2), ...physicalPresets] : fixtures;
 const client = fixtureMode ? createFixtureClient(fixtures) : createPlanClient({ baseUrl: apiUrl });
 const root = document.querySelector('#app');
 root.innerHTML = `
   <header class="app-header">
     <div class="identity"><span class="wordmark">SOMA</span><span class="identity-rule" aria-hidden="true"></span><span>Lunar delivery planner</span></div>
-    <span class="phase-label">Phase 5 · Visual draft</span>
+    <span class="phase-label">Computed lunar planning</span>
   </header>
   <main>
     <div class="page-heading"><div><h1>Plan a delivery from the Moon</h1><p>Inspect the site, data and network assumptions behind a delivery request.</p></div><p class="workspace-mode" id="workspace-mode"></p></div>
@@ -104,13 +107,15 @@ if (apiUrl) {
   byId('result-context').textContent = 'Choose Plan delivery to request a result from the live service.';
 }
 for (const [index, example] of examples.entries()) {
-  if (index < fixtures.length) continue;
+  if (index < 2) continue;
   const option = document.createElement('option');
   option.value = String(index);
   option.textContent = example.name;
   byId('fixture-select').append(option);
 }
-let activeFixture = examples[0];
+const initialIndex = fixtureMode ? 2 : 0;
+byId('fixture-select').value = String(initialIndex);
+let activeFixture = examples[initialIndex];
 let scenario = structuredClone(activeFixture.scenario);
 let result = null;
 let currentSummary;
@@ -128,7 +133,7 @@ const comparison = renderComparison(byId('comparison'), { entries: comparisonEnt
 
 function selectedEnvironment() {
   if (byId('science-source').value === 'recorded') return { environment: realEnvironment, raw: realEnvironmentText };
-  if (apiUrl) return currentDisplay?.environment ? { environment: currentDisplay.environment, raw: `${JSON.stringify(currentDisplay.environment, null, 2)}\n` } : {};
+  if (apiUrl || scenario.analysis_mode === 'terrain_ephemeris') return currentDisplay?.environment ? { environment: currentDisplay.environment, raw: `${JSON.stringify(currentDisplay.environment, null, 2)}\n` } : {};
   return modified ? {} : { environment: activeFixture.environment, raw: activeFixture.environmentText };
 }
 
@@ -141,7 +146,7 @@ function refreshScience() {
   const point = environment?.analysis_point;
   byId('science-context').textContent = !environment
     ? 'No matching completed-job scientific diagnostic. Saved fixture graphics are hidden.'
-    : `${recorded ? 'Separate recorded case using real LOLA and DE421 data; it does not change the scenario or delivery result.' : apiUrl ? 'Exact completed-job diagnostic from Python. Input provenance and synthetic labels are preserved below.' : 'Synthetic algorithm example: all directions, skyline and contact geometry are invented inputs, processed by Python.'} Site ${point.latitude_deg}° planetocentric, ${point.longitude_deg_east}° east; ${point.frame}. Antenna ${point.antenna_height_m} m; panel ${point.panel_height_m} m. Scenario SHA-256 ${environment.scenario_sha256}.`;
+    : `${recorded ? 'Separate recorded case using real LOLA and DE421 data; it does not change the scenario or delivery result.' : apiUrl || scenario.analysis_mode === 'terrain_ephemeris' ? 'Exact completed-run diagnostic from Python using numerical terrain and ephemerides. Input provenance and assumed rates remain labeled below.' : 'Synthetic algorithm example: all directions, skyline and contact geometry are invented inputs, processed by Python.'} Site ${point.latitude_deg}° planetocentric, ${point.longitude_deg_east}° east; ${point.frame}. Antenna ${point.antenna_height_m} m; panel ${point.panel_height_m} m. Scenario SHA-256 ${environment.scenario_sha256}.`;
 }
 
 function showErrors(messages = []) {
@@ -156,7 +161,7 @@ function showErrors(messages = []) {
 }
 
 function updateLocation() {
-  const resolved = apiUrl && currentDisplay?.environment?.analysis_point;
+  const resolved = currentDisplay?.environment?.analysis_point;
   const fixturePoint = resolved || (apiUrl ? scenario.lander : activeFixture.scenario.lander);
   const label = resolved ? 'Completed-job analysis point from Python' : apiUrl ? 'Declared scenario point (not renderer-resolved)' : 'Fixture analysis point (synthetic, not service-resolved)';
   byId('analysis-location').textContent = `${label}: ${fixturePoint.latitude_deg}° planetocentric, ${fixturePoint.longitude_deg_east}° east. ${fixturePoint.frame}. ${resolved ? 'Numerical DEM' : 'Declared'} elevation ${fixturePoint.elevation_m} m (${fixturePoint.elevation_datum}); reference radius ${fixturePoint.reference_radius_m} m. Antenna ${fixturePoint.antenna_height_m} m; panel ${fixturePoint.panel_height_m} m above ${resolved ? 'resolved' : 'declared'} ground.`;
@@ -175,7 +180,7 @@ function clearDisplayPick() {
 }
 
 function refreshOutput() {
-  const contacts = apiUrl ? result?.contacts ?? [] : modified ? [] : activeFixture.contacts;
+  const contacts = apiUrl || scenario.analysis_mode === 'terrain_ephemeris' ? [] : modified ? [] : activeFixture.contacts;
   const expected = !modified && byId('hand-reference').checked ? activeFixture.expected : undefined;
   renderResult(byId('result'), { result, scenario, contacts, expected });
   timeline?.destroy();
@@ -267,6 +272,7 @@ function restoreFixture() {
   updateLocation();
   viewer?.setScenario(scenario);
   refreshOutput();
+  if (!apiUrl && physical) void requestPlan();
 }
 
 byId('fixture-select').addEventListener('change', event => {
@@ -397,8 +403,14 @@ byId('download-package').addEventListener('click', async () => {
 
 updateLocation();
 refreshOutput();
+if (fixtureMode) {
+  document.querySelector('.project-notice').textContent = 'Captured Python runs using published numerical LOLA terrain and DE421 ephemerides. Inspect the direct, later direct and lunar-relay cases. Radio rates, service and the synthetic relay trajectory remain declared assumptions. Editing a scenario requires the live Python planning service.';
+  byId('workspace-mode').textContent = 'Captured · Computed Python runs';
+  restoreFixture();
+}
 viewer = await createMoonViewer(byId('moon-view'), {
   apiBase: apiUrl || '/api',
+  ...(!apiUrl ? { registration: capturedRegistration } : {}),
   scenario, ionToken: import.meta.env.VITE_CESIUM_ION_TOKEN,
   onStatus(status) {
     byId('map-status').textContent = status.message;
@@ -411,6 +423,7 @@ viewer = await createMoonViewer(byId('moon-view'), {
 });
 viewer.setScenario(scenario);
 viewer.setTime(selectedTime);
+viewer.setDisplay(currentDisplay);
 
 window.addEventListener('pagehide', () => {
   cancelCurrent();

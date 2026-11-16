@@ -9,10 +9,35 @@ test.beforeEach(async ({ page }) => {
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   await page.goto('/');
   await expect(page.getByRole('heading', { name: 'Lunar terrain unavailable' })).toBeVisible();
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await page.getByLabel('Declared network example').selectOption('0');
   page.__somaErrors = errors;
 });
 
 test.afterEach(async ({ page }) => { expect(page.__somaErrors).toEqual([]); });
+
+test('captured physical cases show computed transmissions, exact failure reason and unchanged run package', async ({ page }) => {
+  await page.reload();
+  await expect(page.getByLabel('Declared network example')).toHaveValue('2');
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await expect(page.locator('#timeline .timeline-allocation')).toHaveCount(2);
+  await expect(page.locator('#timeline .timeline-allocation').first()).toBeVisible();
+  await expect(page.locator('#science-context')).toContainText('numerical terrain and ephemerides');
+  await expect(page.locator('#display-status')).toContainText('Frame alignment verified');
+  await page.getByLabel('Declared network example').selectOption('3');
+  await expect(page.locator('#job-status')).toContainText('infeasible_in_model');
+  await expect(page.locator('#timeline')).toContainText('at most 0 payload bits');
+  await expect(page.locator('#timeline .timeline-allocation')).toHaveCount(0);
+  await page.getByLabel('Declared network example').selectOption('4');
+  await expect(page.locator('#job-status')).toContainText('feasible_under_assumptions');
+  await expect(page.locator('#timeline .timeline-allocation')).toHaveCount(4);
+  await expect(page.locator('#timeline .timeline-storage')).toHaveCount(3);
+  const pending = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download fixture run package (ZIP)' }).click();
+  const downloaded = await readFile(await (await pending).path());
+  const original = await readFile(new URL('../../fixtures/physical-south-pole/relay-later/run.zip', import.meta.url));
+  expect(downloaded.equals(original)).toBe(true);
+});
 
 test('computed direct failure and replayed relay schedule remain separate from hand arithmetic', async ({ page }) => {
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
@@ -27,7 +52,7 @@ test('computed direct failure and replayed relay schedule remain separate from h
   await expect(page.locator('#result')).toContainText('104,857,600 bytes');
   await expect(page.locator('#result')).toContainText('Assumed-rate simulation');
   await expect(page.locator('#result')).toContainText('receiver payload occupancy');
-  await page.getByText('Scheduled transmissions and storage (14 transmissions)', { exact: true }).click();
+  await expect(page.getByText('Scheduled transmissions and storage (14 transmissions)', { exact: true })).toBeVisible();
   await expect(page.locator('#timeline .timeline-allocation').first()).toBeVisible();
   await page.getByLabel('Show hand-calculated reference').check();
   await expect(page.locator('#result')).toContainText('2026-11-14T09:06:59.4304Z');
@@ -46,7 +71,7 @@ test('computed direct failure and replayed relay schedule remain separate from h
 });
 
 test('Phase 2 keeps fixture analysis coordinates separate from typed drafts and preserves the deadline rule', async ({ page }) => {
-  await expect(page.locator('.phase-label')).toContainText('Phase 5');
+  await expect(page.locator('.phase-label')).toContainText('Computed lunar planning');
   const fixturePoint = await page.locator('#analysis-location').textContent();
   await expect(page.locator('#analysis-location')).toContainText('synthetic, not service-resolved');
   await expect(page.locator('#analysis-location')).toContainText('Antenna 2 m; panel 1 m');
@@ -87,6 +112,7 @@ test('display picks leave scientific inputs and captured output unchanged; scrub
     }
   ` }));
   await page.reload();
+  await page.getByLabel('Declared network example').selectOption('0');
   await page.getByRole('button', { name: 'Plan delivery', exact: true }).click();
   const result = await page.locator('#result').textContent();
   const status = await page.locator('#job-status').textContent();

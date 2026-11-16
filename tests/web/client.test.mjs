@@ -303,3 +303,23 @@ test('offline display data is explicit captured input and is invalidated with it
   client.cancel();
   await assert.rejects(client.getDisplay(scenario), /No completed display/);
 });
+
+test('lazy captured display is validated and cannot publish after cancellation', async () => {
+  let release;
+  let started;
+  const fetching = new Promise(resolve => { started = resolve; });
+  const client = createFixtureClient([{ scenario, result, displayUrl: '/captured/display.json' }], {
+    fetchImpl: async url => {
+      assert.equal(url, '/captured/display.json');
+      started();
+      return new Promise(resolve => { release = () => resolve(response(display())); });
+    },
+  });
+  await client.plan(scenario);
+  const pending = client.getDisplay(scenario);
+  const rejected = assert.rejects(pending, { name: 'AbortError' });
+  await fetching;
+  client.cancel();
+  release();
+  await rejected;
+});
