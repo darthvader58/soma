@@ -56,6 +56,8 @@ test('custom location and distinct equipment heights create changed real request
  await page.getByRole('button',{name:'Run analysis',exact:true}).click();await expect(page.locator('#research-status')).toContainText('Calculated in Python');
  expect(requests.at(-1).sites.at(-1)).toMatchObject({latitude_deg:14.123,longitude_deg_east:-72.456,antenna_height_m:3.5,panel_height_m:1.25});
  await expect(page.locator('#site-count')).toHaveText('4 / 8');await expect(page.locator('#site-quality')).toContainText('panel height (1.25 m)');
+ await expect(page.locator('#research-moon')).toHaveAttribute('data-camera','site');
+ await expect(page.getByRole('button',{name:'Selected site',exact:true})).toHaveAttribute('aria-pressed','true');
 });
 
 test('stopping synchronous work explains cancellation boundary and late response cannot publish',async({page})=>{
@@ -83,27 +85,61 @@ test('narrow layout retains inputs, charts, keyboard focus and avoids horizontal
  await expect(page.locator('#geometry-chart svg')).toBeVisible();
 });
 
-test('appearance is persisted and never changes scientific samples, inputs or selected UTC',async({page})=>{
+test('fixed dark ignores old theme storage and keeps the full name visible at every width',async({page})=>{
+ await page.addInitScript(()=>localStorage.setItem('soma-research-theme','light'));
  const requests=await setup(page);await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
- await expect(page.locator('html')).toHaveAttribute('data-theme','light');
- await page.getByRole('button',{name:'Next stored sample'}).click();
- const epoch=await page.locator('#selected-utc').textContent(),readout=await page.locator('#site-readout').textContent();
- const initialRequests=requests.length;
- await page.getByLabel('Appearance',{exact:true}).selectOption('dark');
- await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+ await expect(page.locator('html')).toHaveCSS('color-scheme','dark');
+ await expect(page.getByLabel('Appearance',{exact:true})).toHaveCount(0);
  await expect(page.getByRole('button',{name:'Run analysis',exact:true})).toHaveCSS('color','rgb(36, 45, 49)');
  await expect(page.getByRole('button',{name:'Run analysis',exact:true})).toHaveCSS('background-color','rgb(232, 173, 77)');
- await expect(page.locator('#selected-utc')).toHaveText(epoch);await expect(page.locator('#site-readout')).toHaveText(readout);
+ const initialRequests=requests.length;
+ for(const width of [1440,1024,820,390,320]){
+  await page.setViewportSize({width,height:900});
+  await expect(page.locator('.workspace-title p')).toHaveText('Selenographic Observation and Mission Atlas');
+  await expect(page.locator('.workspace-title p')).toBeVisible();
+  expect(await page.locator('.workspace-title p').evaluate(node=>node.scrollWidth<=node.clientWidth&&node.scrollHeight<=node.clientHeight)).toBe(true);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ }
  expect(requests.length).toBe(initialRequests);
- await page.getByLabel('Appearance',{exact:true}).focus();await expect(page.getByLabel('Appearance',{exact:true})).toBeFocused();
- expect(await page.getByLabel('Appearance',{exact:true}).evaluate(node=>getComputedStyle(node).outlineStyle)).not.toBe('none');
- await page.setViewportSize({width:390,height:844});
- expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
- await page.reload();await expect(page.locator('html')).toHaveAttribute('data-theme','dark');
+ await page.reload();await expect(page.locator('html')).toHaveCSS('color-scheme','dark');
  await expect(page.locator('#research-status')).toContainText('Calculated in Python');
- await page.getByLabel('Appearance',{exact:true}).selectOption('light');await expect(page.locator('html')).toHaveAttribute('data-theme','light');
  await expect(page.getByRole('link',{name:'Documentation',exact:true})).toHaveAttribute('href','/docs/getting-started/live-research');
  await expect(page.getByRole('link',{name:'Delivery archive',exact:true})).toHaveCount(0);
+});
+
+test('identical reruns explain the unchanged scene and keep playback paused',async({page})=>{
+ const requests=await setup(page);await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ await expect(page.locator('#result-handoff-text')).toContainText('Paused at');
+ await expect(page.getByRole('button',{name:'Global',exact:true})).toHaveAttribute('aria-pressed','true');
+ await page.getByRole('button',{name:'Global',exact:true}).hover();
+ await expect(page.getByRole('button',{name:'Global',exact:true})).toHaveCSS('background-color','rgb(241, 189, 105)');
+ await expect(page.getByRole('button',{name:'Global',exact:true})).toHaveCSS('color','rgb(36, 45, 49)');
+ const initial=await page.locator('#selected-utc').textContent();
+ await page.getByRole('button',{name:'Run analysis',exact:true}).click();
+ await expect(page.locator('#result-handoff-text')).toContainText('Same inputs as the previous run');
+ expect(requests).toHaveLength(2);expect(requests[1]).toEqual(requests[0]);
+ await expect(page.getByRole('button',{name:'Play',exact:true})).toBeVisible();
+ await page.evaluate(async()=>{for(let frame=0;frame<3;frame++)await new Promise(requestAnimationFrame)});
+ await expect(page.locator('#selected-utc')).toHaveText(initial);
+ await expect(page.locator('#result-handoff')).toContainText('terrain shadows are not calculated');
+});
+
+test('an unchecked context site is included only through its explicit include-and-run action',async({page})=>{
+ const requests=await setup(page);
+ await page.route('**/api/research/catalog',route=>route.fulfill({json:{...researchCatalog,sites:[...researchCatalog.sites,{...researchCatalog.sites[0],id:'extra-context',name:'Extra context'}]}}));
+ await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ expect(requests[0].sites.some(site=>site.id==='copernicus')).toBe(false);
+ await page.getByRole('button',{name:/^Copernicus/}).click();
+ await expect(page.locator('#site-readout')).toContainText('No calculated sample for this site');
+ await expect(page.locator('.context-site-action')).toContainText('outside the selected study');
+ expect(requests).toHaveLength(1);
+ await page.getByRole('button',{name:'Include this site and run',exact:true}).click();
+ await expect(page.locator('#site-count')).toHaveText('4 / 8');
+ await expect(page.locator('#research-status')).toContainText('Calculated in Python');
+ expect(requests.at(-1).sites.some(site=>site.id==='copernicus')).toBe(true);
+ await expect(page.locator('#site-readout')).toContainText('Sun elevation / azimuth');
+ await expect(page.locator('#research-moon')).toHaveAttribute('data-camera','site');
+ await expect(page.getByRole('button',{name:'Selected site',exact:true})).toHaveAttribute('aria-pressed','true');
 });
 
 test('catalog, display layers, sample cursor and speed remain usable in the redesigned workspace',async({page})=>{
@@ -121,10 +157,10 @@ test('catalog, display layers, sample cursor and speed remain usable in the rede
  await page.getByLabel('Study time UTC',{exact:true}).focus();await page.keyboard.press('Home');await expect(page.locator('#selected-utc')).toHaveText('2026-11-16T00:00:00Z');
 });
 
-test('both appearances reflow from320px through tablet and the720px layout equivalent of200percent zoom',async({page})=>{
+test('fixed dark reflows from320px through tablet and the720px layout equivalent of200percent zoom',async({page})=>{
  await setup(page);await page.goto('/');await expect(page.locator('#research-status')).toContainText('Calculated in Python');
- for(const width of [320,390,720,768,1024,1440])for(const appearance of ['light','dark']){
-  await page.setViewportSize({width,height:900});await page.getByLabel('Appearance',{exact:true}).selectOption(appearance);
+ for(const width of [320,390,720,768,1024,1440]){
+  await page.setViewportSize({width,height:900});await expect(page.locator('html')).toHaveCSS('color-scheme','dark');
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   await expect(page.getByRole('button',{name:'Run analysis',exact:true})).toBeVisible();
   await expect(page.locator('#geometry-chart svg')).toBeVisible();

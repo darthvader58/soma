@@ -47,6 +47,7 @@ export async function createWorkbenchViewer(container, {
     if (!viewer || destroyed) return;
     clear(siteEntities);
     for (const site of catalog) {
+      if (result?.sites.some(item => item.id === site.id)) continue;
       if (!validPosition(site.position_m)) continue;
       const chosen = selected.has(site.id), inspecting = selectedId === site.id;
       siteEntities.push(viewer.entities.add({
@@ -58,13 +59,24 @@ export async function createWorkbenchViewer(container, {
           backgroundColor: C.Color.fromCssColorString('#172022'), distanceDisplayCondition: new C.DistanceDisplayCondition(0, 1e8) },
       }));
     }
+    for (const site of result?.sites ?? []) {
+      if (!validPosition(site.position_m)) continue;
+      siteEntities.push(viewer.entities.add({
+        id: `evaluated-${site.id}`, position: contextMarker(site.position_m), properties: { siteId: site.id },
+        point: { pixelSize: selectedId === site.id ? 14 : 11, color: C.Color.TRANSPARENT,
+          outlineColor: C.Color.fromCssColorString('#edb965'), outlineWidth: 3 },
+        label: { text: `${site.name} · evaluated`, show: labels, font: '13px sans-serif',
+          pixelOffset: new C.Cartesian2(0, -19), fillColor: C.Color.WHITE, showBackground: true,
+          backgroundColor: C.Color.fromCssColorString('#172022'), distanceDisplayCondition: new C.DistanceDisplayCondition(0, 1e8) },
+      }));
+    }
     viewer.scene.requestRender();
   }
   function drawDirections() {
     if (!viewer || destroyed) return;
     clear(directions);
     if (!result || !bodyDirections) return;
-    const site = result.sites.find(item => item.id === selectedId) ?? result.sites[0];
+    const site = selectedId ? result.sites.find(item => item.id === selectedId) : result.sites[0];
     const sample = storedSampleAt(site?.samples, epoch);
     if (!sample || !validPosition(site.position_m)) return;
     for (const [key, title] of [['sun', 'Sun direction'], ['earth', 'Earth center direction']]) {
@@ -88,13 +100,8 @@ export async function createWorkbenchViewer(container, {
       const wasFollowing = Boolean(viewer.trackedEntity);
       viewer.trackedEntity = undefined;
       clear(resultEntities); clear(directions); spacecraftEntities.clear();
+      drawSites();
       if (!result) return;
-      for (const site of result.sites) {
-        if (!validPosition(site.position_m)) continue;
-        resultEntities.push(viewer.entities.add({ id: `evaluated-${site.id}`, position: cartesian(site.position_m),
-          point: { pixelSize: 11, color: C.Color.TRANSPARENT, outlineColor: C.Color.fromCssColorString('#edb965'), outlineWidth: 3 },
-        }));
-      }
       for (const craft of result.spacecraft ?? []) {
         if (!craft.samples?.length || craft.samples.some(sample => !validPosition(sample.position_m))) continue;
         const position = new C.SampledPositionProperty(C.ReferenceFrame.FIXED);
@@ -122,7 +129,11 @@ export async function createWorkbenchViewer(container, {
       if (mode === 'site') {
         const site = result?.sites.find(item => item.id === selectedId) ?? catalog.find(item => item.id === selectedId);
         const vectors = siteCameraVectors(site?.position_m);
-        if (vectors) viewer.camera.flyTo({ destination: cartesian(vectors.destination), orientation: { direction: cartesian(vectors.direction), up: cartesian(vectors.up) }, duration: 0.7 });
+        if (vectors) {
+          const view = { destination: cartesian(vectors.destination), orientation: { direction: cartesian(vectors.direction), up: cartesian(vectors.up) } };
+          if (globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches) viewer.camera.setView(view);
+          else viewer.camera.flyTo({ ...view, duration: 0.7 });
+        }
         return;
       }
       fitContextCamera(mode, true);

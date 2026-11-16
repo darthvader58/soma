@@ -6,7 +6,7 @@ import bootstrapCatalog from '../fixtures/research-catalog.json' with { type: 'j
 
 const root = document.querySelector('#app');
 root.innerHTML = `
-<header class="research-header"><a class="research-brand" href="/">SOMA</a><div class="workspace-title"><h1>Lunar research workbench</h1><p>Moon-fixed geometry & public spacecraft histories</p></div><nav aria-label="Resources"><a href="/docs/getting-started/live-research">Documentation</a><a href="/docs/reference/research-api">Python reference</a><div class="theme-control"><label for="theme-select">Appearance</label><select id="theme-select"><option value="light">Light</option><option value="dark">Dark</option></select></div></nav></header>
+<header class="research-header"><a class="research-brand" href="/">SOMA</a><div class="workspace-title"><h1>Lunar research workbench</h1><p>Selenographic Observation and Mission Atlas</p></div><nav aria-label="Resources"><a href="/docs/getting-started/live-research">Documentation</a><a href="/docs/reference/research-api">Python reference</a></nav></header>
 <main class="research-workspace">
   <section class="study-toolbar" id="study-inputs" aria-label="Geometry study inputs">
     <div class="analysis-name"><strong>Sun & Earth geometry</strong><span>Define a study. Inspect the calculated geometry.</span></div>
@@ -34,6 +34,7 @@ root.innerHTML = `
   </section>
   <aside class="inspector-panel" aria-labelledby="inspector-heading"><div class="research-panel-heading"><h2 id="inspector-heading">Site inspector</h2><span id="inspector-kind"></span></div><div id="site-inspector"><p>Select a site from the object list.</p></div></aside>
   <section class="time-dock" aria-label="Shared UTC timeline and geometry results">
+    <div id="result-handoff" class="result-handoff" hidden><p id="result-handoff-text" role="status" aria-live="polite"></p><p>Hollow rings show evaluated sites; solid dots show catalog context. Marker placement is for legibility; terrain shadows are not calculated.</p></div>
     <div class="time-controls"><button id="play-study" type="button" disabled>Play</button><button id="previous-sample" type="button" aria-label="Previous stored sample" disabled>‹</button><button id="next-sample" type="button" aria-label="Next stored sample" disabled>›</button><output id="selected-utc">No calculated time samples</output><label>Playback speed<select id="playback-speed"><option value="60">60×</option><option value="600" selected>600×</option><option value="3600">3600×</option></select></label><div class="research-downloads"><button id="save-alternative" type="button" disabled>Save alternative</button><button id="export-study" type="button">Study JSON</button><button id="export-result" type="button" disabled>Result JSON</button><a id="export-package" hidden>Run package</a></div></div>
     <label class="cursor-label" for="study-cursor">Study time UTC</label><input id="study-cursor" type="range" min="0" max="1" value="0" step="1" disabled><div class="time-extent"><span id="time-start">Start UTC</span><span id="time-end">End UTC</span></div>
     <div class="dock-data"><div class="geometry-chart"><div class="chart-heading"><h2>Local center elevation</h2><span>Sun: solid · Earth: dashed</span></div><div id="geometry-chart"><p>Run a study to inspect changing geometry.</p></div></div><div class="geometry-table"><h2>Site comparison</h2><div id="site-comparison"><p>Same interval and sampling for every selected site.</p></div></div></div>
@@ -43,18 +44,12 @@ root.innerHTML = `
 </main>`;
 
 const $ = id => document.getElementById(id);
-let savedTheme;
-try { savedTheme = localStorage.getItem('soma-research-theme'); } catch { /* Appearance still works when storage is unavailable. */ }
-document.documentElement.dataset.theme = savedTheme === 'dark' ? 'dark' : 'light';
-$('theme-select').value = document.documentElement.dataset.theme;
-$('theme-select').addEventListener('change', event => {
-  document.documentElement.dataset.theme = event.target.value;
-  try { localStorage.setItem('soma-research-theme', event.target.value); } catch { /* The current page retains the selected appearance. */ }
-});
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const client = createResearchClient({ baseUrl: `${(import.meta.env.VITE_SOMA_API_URL || '/api').replace(/\/$/, '')}/research` });
 let catalog = [], selected = new Set(), inspected, inspectedCraft, capabilities, viewer, result, completed, stale = false, running = false, revision = 0;
 let cursor = 0, playing = false, lastFrame, customIndex = 0, alternatives = [], spacecraft = new Set();
+let completionContext = '';
+let requestedCamera = 'global';
 const status = message => { $('research-status').textContent = message; };
 const utcInput = epoch => epoch.replace(/Z$/, '').slice(0, 19);
 const inputUtc = value => value ? new Date(`${value}Z`).toISOString().replace('.000Z', 'Z') : '';
@@ -117,6 +112,7 @@ function renderInspector() {
   if (!site) return;
   $('inspector-kind').textContent = selected.has(site.id) ? 'In study' : 'Context';
   $('site-inspector').innerHTML = `<h3>${esc(site.name)}</h3><p class="inspector-coordinate">${Number(site.latitude_deg).toFixed(5)}° N · ${Number(site.longitude_deg_east).toFixed(5)}° E</p>
+    ${selected.has(site.id) ? '' : `<div class="context-site-action"><p>This is a catalog context site, outside the selected study. Run analysis evaluates only checked sites.${selected.size >= 8 ? ' Remove a selected site before including another.' : ''}</p><button id="include-inspected-site" type="button" ${selected.size >= 8 ? 'disabled' : ''}>Include this site and run</button></div>`}
     <div class="site-fields"><label>Latitude (° N)<input data-site-field="latitude_deg" type="number" min="-90" max="90" step="any" value="${site.latitude_deg}"></label><label>Longitude (° E)<input data-site-field="longitude_deg_east" type="number" min="-180" max="180" step="any" value="${site.longitude_deg_east}"></label><label>Elevation above reference sphere (m)<input data-site-field="elevation_m" type="number" step="any" value="${site.elevation_m}"></label><label>Antenna height (m)<input data-site-field="antenna_height_m" type="number" min="0" step="any" value="${site.antenna_height_m}"></label><label>Panel height (m)<input data-site-field="panel_height_m" type="number" min="0" step="any" value="${site.panel_height_m}"></label></div>
     <p class="inspector-note">Changing published coordinates creates a user-defined study location. Elevation is an input, not a tile measurement.</p>
     <section class="readout-section"><h3>Stored geometry <span id="stale-label"></span></h3><div id="site-readout"></div></section>
@@ -128,6 +124,10 @@ function renderInspector() {
     const link = document.createElement('a'); link.href = url; link.target = '_blank'; link.rel = 'noreferrer'; link.textContent = `Coordinate source ${index + 1}`; $('site-sources').append(link);
   }
   if (!sources.length) $('site-sources').textContent = site.input_class === 'user_defined' ? 'User-defined coordinates.' : 'Catalog source metadata unavailable.';
+  $('include-inspected-site')?.addEventListener('click', () => {
+    if (selected.size >= 8) return;
+    selected.add(site.id); inspect(site.id); markChanged(); runStudy();
+  });
   for (const field of $('site-inspector').querySelectorAll('[data-site-field]')) field.addEventListener('input', () => {
     site[field.dataset.siteField] = field.value === '' ? NaN : Number(field.value);
     site.input_class = 'user_defined';
@@ -162,8 +162,15 @@ function setCursor(milliseconds) {
   renderInspectorReadout(); renderChart();
   const sample = storedSampleAt(result.sites.find(item => item.id === inspected)?.samples, epoch);
   $('sample-note').textContent = `${stale ? 'Previous study. ' : ''}Scientific readout: stored sample ${sample?.epoch_utc ?? 'unavailable'}. Spacecraft motion between samples is linear display interpolation, with no extrapolation. Geometry does not establish terrain-clear access.`;
+  if (!playing) renderResultHandoff();
 }
-function pause() { playing = false; $('play-study').textContent = 'Play'; lastFrame = undefined; }
+function renderResultHandoff() {
+  $('result-handoff').hidden = !result;
+  if (!result) return;
+  const playback = playing ? 'Playing stored samples.' : `Paused at ${selectedEpoch() || result.epochs_utc[0]}. Press Play or step through stored samples.`;
+  $('result-handoff-text').textContent = `${stale ? 'Previous study; run analysis to update. ' : completionContext}${playback}`;
+}
+function pause() { playing = false; $('play-study').textContent = 'Play'; lastFrame = undefined; renderResultHandoff(); }
 function animate(timestamp) {
   if (!playing || !result) return;
   if (lastFrame !== undefined) setCursor(cursor + Math.min(timestamp - lastFrame, 250) * Number($('playback-speed').value));
@@ -248,17 +255,24 @@ function setRunning(value) { running = value; $('run-study').disabled = value; $
 async function runStudy() {
   const check = budget();
   if (check.errors.length) { status(check.errors.join(' ')); return; }
-  const current = revision; setRunning(true); status('Submitting these sites and UTC epochs to Python.');
+  const current = revision, previous = completed; setRunning(true); status('Submitting these sites and UTC epochs to Python.');
   try {
     const calculated = await client.analyze(requestStudy(), capabilities, progress => { if (current === revision) status(progress.stage ?? progress.status); });
     if (current !== revision) return;
     completed = calculated; result = calculated.result; stale = false; pause();
+    const sameStudy = previous?.hash === calculated.hash;
+    const sitePositions = sites => JSON.stringify(sites.map(site => [site.id, site.latitude_deg, site.longitude_deg_east, site.elevation_m]).sort((a, b) => a[0].localeCompare(b[0])));
+    const locationsChanged = previous && sitePositions(previous.result.request.sites) !== sitePositions(result.request.sites);
+    if (!result.sites.some(site => site.id === inspected)) inspected = result.sites[0].id;
+    completionContext = `${result.sites.length} evaluated sites · ${result.epochs_utc.length} stored epochs · ${calculated.hash.slice(0, 12)}. ${sameStudy ? 'Same inputs as the previous run; the scene can look unchanged. ' : ''}`;
     $('study-cursor').disabled = false; $('study-cursor').min = String(Date.parse(result.epochs_utc[0])); $('study-cursor').max = String(Date.parse(result.epochs_utc.at(-1)));
     for (const id of ['play-study', 'previous-sample', 'next-sample', 'export-result', 'save-alternative']) $(id).disabled = false;
     $('follow-spacecraft').disabled = !result.spacecraft?.length;
     if (calculated.jobId) { $('export-package').href = client.exportUrl(calculated.jobId); $('export-package').hidden = false; }
-    viewer?.setResult(result); setCursor(Date.parse(result.epochs_utc[0])); renderComparison(); renderMethods();
-    status(`Calculated in Python · ${result.sites.length} sites · ${result.epochs_utc.length} stored epochs · ${calculated.hash.slice(0, 12)}. Reference-sphere geometry; terrain visibility is not evaluated.`);
+    viewer?.setResult(result); viewer?.setSelection([...selected], inspected); setCursor(Date.parse(result.epochs_utc[0])); renderComparison(); renderMethods();
+    if (locationsChanged) setCamera('site');
+    else if (requestedCamera === 'follow') setCamera(result.spacecraft?.length ? 'follow' : 'global');
+    status(`Calculated in Python · ${result.sites.length} sites · ${result.epochs_utc.length} stored epochs · ${calculated.hash.slice(0, 12)}. ${sameStudy ? 'Same inputs; the geometry can look unchanged. ' : ''}Use Play or step through samples. Terrain visibility is not evaluated.`);
     if (inspectedCraft) inspectSpacecraft(inspectedCraft); else renderInspector();
   } catch (error) { if (error.name !== 'AbortError' && current === revision) status(`Analysis unavailable: ${error.message} No replacement result was generated.`); }
   finally { if (current === revision) setRunning(false); }
@@ -278,14 +292,16 @@ $('add-custom').addEventListener('click', () => {
   selected.add(id); inspect(id); markChanged();
 });
 $('study-cursor').addEventListener('input', event => { pause(); setCursor(Number(event.target.value)); });
-$('play-study').addEventListener('click', () => { if (playing) pause(); else { if (cursor >= Date.parse(result.epochs_utc.at(-1))) setCursor(Date.parse(result.epochs_utc[0])); playing = true; $('play-study').textContent = 'Pause'; requestAnimationFrame(animate); } });
+$('play-study').addEventListener('click', () => { if (playing) pause(); else { if (cursor >= Date.parse(result.epochs_utc.at(-1))) setCursor(Date.parse(result.epochs_utc[0])); playing = true; $('play-study').textContent = 'Pause'; renderResultHandoff(); requestAnimationFrame(animate); } });
 for (const [id, delta] of [['previous-sample', -1], ['next-sample', 1]]) $(id).addEventListener('click', () => {
   pause(); const epochs = result.epochs_utc.map(Date.parse); const index = epochs.findIndex(time => time >= cursor); setCursor(epochs[Math.max(0, Math.min(epochs.length - 1, index + delta))]);
 });
-for (const button of root.querySelectorAll('[data-camera]')) button.addEventListener('click', () => {
-  viewer?.camera(button.dataset.camera);
-  for (const control of root.querySelectorAll('[data-camera]')) control.setAttribute('aria-pressed', String(control === button));
-});
+function setCamera(mode) {
+  requestedCamera = mode;
+  viewer?.camera(mode);
+  for (const control of root.querySelectorAll('[data-camera]')) control.setAttribute('aria-pressed', String(control.dataset.camera === mode));
+}
+for (const button of root.querySelectorAll('[data-camera]')) button.addEventListener('click', () => setCamera(button.dataset.camera));
 for (const id of ['layer-labels', 'layer-paths', 'layer-directions']) $(id).addEventListener('change', () => viewer?.setLayers({ labels: $('layer-labels').checked, paths: $('layer-paths').checked, directions: $('layer-directions').checked }));
 $('export-study').addEventListener('click', () => { try { download(requestStudy(), 'soma-study.json'); } catch { status('Enter valid study fields before exporting.'); } });
 $('export-result').addEventListener('click', () => { if (result && !stale) download(result, `soma-result-${completed.hash.slice(0, 12)}.json`); });
@@ -312,7 +328,7 @@ async function initialize() {
       catalog.push({ id, name: `Picked site ${customIndex}`, kind: 'display pick', ...coordinates, elevation_m: 0, antenna_height_m: 2, panel_height_m: 1, input_class: 'user_defined', coordinate_notes: 'Coordinates selected from rendered Moon. Elevation is explicitly 0 m above the reference sphere; not measured terrain.' });
       selected.add(id); inspect(id); markChanged();
     },
-  }).then(value => { viewer = value; viewer.setCatalog(catalog); viewer.setSelection([...selected], inspected); if (result) viewer.setResult(result); });
+  }).then(value => { viewer = value; viewer.setCatalog(catalog); viewer.setSelection([...selected], inspected); if (result) { viewer.setResult(result); viewer.setTime(selectedEpoch()); } if (requestedCamera !== 'global') viewer.camera(requestedCamera); });
   const loaded = await Promise.allSettled([client.catalog(), client.capabilities()]);
   if (loaded[0].status === 'fulfilled' && revision === 0) {
     catalog = loaded[0].value.sites.map(site => ({ ...site, elevation_m: 0, antenna_height_m: 2, panel_height_m: 1 }));
