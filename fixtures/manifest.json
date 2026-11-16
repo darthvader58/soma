@@ -770,12 +770,16 @@
       "sha256": "b8ed10a5dc5ca7b78a9d9f72f8d7faf9e35382ad47278788f04d4a61989a6295"
     },
     {
+      "path": "soma/docs/hackathon-demo-evidence/relay-production.png",
+      "sha256": "90e95e4ca7cc8fe57cc0c5595074f351d29b83769bdad244ffecf11a33f3fa32"
+    },
+    {
       "path": "soma/docs/hackathon-demo-script.md",
       "sha256": "e892a04f2da7a452374f64e6bbe57ecdbe73e2bf1109de67f163c68c797ea274"
     },
     {
       "path": "soma/docs/hackathon-demo-verification.md",
-      "sha256": "f7456e63cd13948a578de5bf42ece5b9dd66177749d707deaabaa79a5e954949"
+      "sha256": "eec628b9b8dfadf669e2cc2151f92c9bdc98645e6109cb2572512028059c2359"
     },
     {
       "path": "soma/docs/hosted-deployment-verification.md",
