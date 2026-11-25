@@ -16,6 +16,25 @@ npx --yes mint broken-links --check-anchors
 
 The current CLI package is `mint`, not the legacy `mintlify` package. Configuration is `docs.json` and navigation entries resolve to MDX pages without extensions.
 
+## Maintain the library reference
+
+The public signature catalog is generated from package exports and explicitly documented entry points. It parses source with the standard library and does not import optional dependencies:
+
+```bash
+python docs/scripts/generate_api_catalog.py
+python docs/scripts/generate_api_catalog.py --check
+```
+
+Run these commands from the repository root. Update the prose module guides alongside the generated catalog: signatures alone do not define dictionary fields, scientific units, returned statuses or model limits.
+
+With the planning dependencies installed, check the selected data-free Python examples:
+
+```bash
+python docs/scripts/check_examples.py
+```
+
+This executes the quickstart, synthetic tutorials and selected reference examples in temporary working directories. It does not download scientific data or execute physical preparation snippets. The wheel must include schemas, manifests, registration artifacts and synthetic fixtures for the installed-package quickstart. Repository scripts remain explicitly labeled as checkout workflows.
+
 ## Publish with Mintlify
 
 1. Sign in to the official dashboard at https://app.mintlify.com/ and create or select the documentation project.

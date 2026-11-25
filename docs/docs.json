@@ -2,18 +2,108 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "SOMA",
-  "appearance": {"default": "dark", "strict": true},
-  "colors": {"primary": "#526D3D", "light": "#8BAA69", "dark": "#40582E"},
+  "appearance": {
+    "default": "dark",
+    "strict": true
+  },
+  "colors": {
+    "primary": "#526D3D",
+    "light": "#8BAA69",
+    "dark": "#40582E"
+  },
   "navigation": {
     "groups": [
-      {"group": "Start building", "pages": ["index", "getting-started/installation", "getting-started/live-research", "getting-started/live-delivery", "guides/analysis-and-map", "getting-started/quickstart", "getting-started/physical-runs"]},
-      {"group": "Demonstration", "pages": ["guides/workbench-demo"]},
-      {"group": "Library reference", "pages": ["reference/python-api", "reference/geometry-time", "reference/trajectories", "reference/terrain", "reference/illumination-power", "reference/communications", "reference/scheduling", "reference/validation-exports"]},
-      {"group": "HTTP and data contracts", "pages": ["reference/research-api", "reference/hosted-delivery", "reference/service", "reference/scenarios-results", "reference/exports-replay"]},
-      {"group": "Scientific model", "pages": ["science/capability-matrix", "science/research-sources", "science/frames-data", "science/terrain-revision", "science/assumptions-limits"]}
+      {
+        "group": "Start building",
+        "pages": [
+          "index",
+          "getting-started/installation",
+          "getting-started/quickstart",
+          "getting-started/troubleshooting",
+          "getting-started/live-research",
+          "getting-started/live-delivery",
+          "guides/analysis-and-map",
+          "getting-started/physical-runs"
+        ]
+      },
+      {
+        "group": "Library tutorials",
+        "pages": [
+          "tutorials/environment-analysis",
+          "tutorials/delivery-experiments"
+        ]
+      },
+      {
+        "group": "Demonstration",
+        "pages": [
+          "guides/workbench-demo"
+        ]
+      },
+      {
+        "group": "Library reference",
+        "pages": [
+          "reference/python-api",
+          "reference/cli",
+          "reference/geometry-time",
+          "reference/trajectories",
+          "reference/terrain",
+          "reference/illumination-power",
+          "reference/communications",
+          "reference/scheduling",
+          "reference/validation-exports",
+          "reference/api-catalog"
+        ]
+      },
+      {
+        "group": "HTTP and data contracts",
+        "pages": [
+          "reference/research-api",
+          "reference/hosted-delivery",
+          "reference/service",
+          "reference/scenarios-results",
+          "reference/exports-replay"
+        ]
+      },
+      {
+        "group": "Scientific model",
+        "pages": [
+          "science/capability-matrix",
+          "science/research-sources",
+          "science/frames-data",
+          "science/terrain-revision",
+          "science/assumptions-limits"
+        ]
+      },
+      {
+        "group": "Project",
+        "pages": [
+          "project/releases",
+          "project/contributing"
+        ]
+      }
     ]
   },
-  "redirects": [{"source": "/guides/hackathon-demo", "destination": "/guides/workbench-demo"}],
-  "navbar": {"links": [{"label": "Web application", "href": "https://soma-atlas-two.vercel.app"}, {"label": "Source", "href": "https://github.com/darthvader58/soma"}]},
-  "footer": {"socials": {"github": "https://github.com/darthvader58/soma"}}
+  "redirects": [
+    {
+      "source": "/guides/hackathon-demo",
+      "destination": "/guides/workbench-demo"
+    }
+  ],
+  "navbar": {
+    "links": [
+      {
+        "label": "Web application",
+        "href": "https://soma-atlas-two.vercel.app"
+      },
+      {
+        "label": "Source",
+        "href": "https://github.com/darthvader58/soma"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/darthvader58/soma"
+    }
+  }
 }

@@ -1,0 +1,48 @@
+---
+title: Troubleshooting
+description: Diagnose installation, solver, resource, coverage and replay failures without changing their scientific meaning.
+---
+
+## Installation and optional dependencies
+
+`ModuleNotFoundError` for `numpy`, `pyproj`, `rasterio`, `spiceypy` or `pulp` usually means the numerical workflow dependencies are absent from the active interpreter. Install `"soma-lunar[planning]==0.1.0"` using that interpreter's `python -m pip`. For a service, add the `service` extra. Check that `python -c "import soma; print(soma.__file__)"` resolves to the intended environment.
+
+The core install supports validation and hashing. The current planner imports the analysis stack even when a fixture's contacts are synthetic. Binary-wheel availability varies by Python/platform combination; use Python 3.12 or newer and consult the dependency's installation output if it needs a native build.
+
+## CBC is unavailable
+
+```bash
+python -c "import pulp; solver = pulp.PULP_CBC_CMD(); print(solver.available())"
+```
+
+An executable path indicates PuLP found its configured CBC binary. If it prints a false/empty value or execution fails, inspect the PuLP installation and operating-system permissions. The current scheduler selects `PULP_CBC_CMD`; installing a different solver alone does not configure SOMA to use it. Include the platform, Python version, PuLP version and complete error in an [issue](https://github.com/darthvader58/soma/issues).
+
+## A resource directory is missing
+
+Use `resource_directory("fixtures")` and `resource_directory("data")` from `soma.validation`. Do not assume a wheel contains a Git checkout at the current working directory. A missing bundled resource is a packaging problem. Keep the installed version and installation command in the report.
+
+The installed package includes synthetic fixtures and source manifests. Repository reproduction scripts under `scripts/`, `examples/` and `soma/docs/` may require a checkout; their existence in Git does not make them installed CLI commands.
+
+## The result is unknown
+
+Read `result["provenance"]["reason"]`, `warnings`, `solver_status` and `run["details"]`. `unknown` can indicate incomplete geometry, missing generation, unsupported coverage, a workload guard or a solver limit without a valid incumbent. It is distinct from `infeasible_in_model`.
+
+Changing coordinates or dates on the synthetic fixture does not recalculate physical contact geometry. Use the terrain/ephemeris workflow for supported physical inputs. The delivery provider's numerical coverage is a bounded south-polar region in November 2026, while reference-sphere geometry studies have a different source/coverage contract. Check [capabilities](/science/capability-matrix) and [frames/data](/science/frames-data).
+
+## A kernel or raster hash fails
+
+Use the manifest for the same release and retain its expected file size, checksum, frame and coverage. Reacquire the declared source through the documented preparation command. Renaming a different kernel, substituting a raster or updating a checksum alone does not establish a matched physical model.
+
+`MOON_ME_DE421`, `IAU_MOON` and a DE440 mean-Earth realization are different frames. A frame change requires a documented transformation and registration evidence. A zero-count or missing DEM sample stays unknown under the strict accessor policy.
+
+## Replay rejects a schedule
+
+Treat replay errors as a failed candidate, even when the optimizer or saved JSON labels it feasible. Inspect its structured errors for duplicate bytes, causal forwarding, occupied radios, service, capacity, storage, energy or late arrival. Preserve the original scenario, contacts, generation and allocations so the failure is reproducible.
+
+`create_run_package` validates structure and scenario identity; it does not repair a schedule. Run [independent replay and package verification](/reference/exports-replay) before using a saved result as evidence.
+
+## HTTP errors or missing jobs
+
+The [local service](/reference/service) exposes `/plans` jobs. The public [hosted delivery endpoint](/reference/hosted-delivery) is a separate bounded synchronous API. Their paths and persistence behavior differ. A local export requested before completion returns 409; invalid input returns 422; retained-job capacity can return 429. Export completed local jobs before restarting the service.
+
+When reporting a problem, include the package version, OS/Python versions, command, scientific status and solver status, scenario hash, source manifest IDs, scheduler settings, replay errors and a minimal synthetic reproduction when possible. Remove credentials and private mission inputs before posting public issues.

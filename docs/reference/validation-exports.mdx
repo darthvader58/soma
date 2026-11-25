@@ -36,9 +36,9 @@ All are in `soma.validation`; `ScenarioValidationError` derives from `ValueError
 The [research study API](/reference/research-api) adds `validate_study` and `study_sha256`, which validate and normalize study UTC epochs before hashing. Do not substitute the raw scenario hasher for those study semantics.
 
 ```python
-from soma.validation import load_scenario, validate_document, scenario_sha256, data_volume_bytes
+from soma.validation import load_scenario, validate_document, scenario_sha256, data_volume_bytes, resource_directory
 
-scenario = load_scenario("fixtures/synthetic-relay/scenario.json")
+scenario = load_scenario(resource_directory("fixtures") / "synthetic-relay" / "scenario.json")
 validate_document(scenario, "scenario")
 assert data_volume_bytes(scenario["data_volume"]) == 104857600
 assert len(scenario_sha256(scenario)) == 64
@@ -79,9 +79,9 @@ For the same supplied run and export environment the ZIP is byte-stable. A fresh
 ```python
 from soma.engine import plan_run
 from soma.exports import create_run_package, summary, json_bytes
-from soma.validation import load_scenario
+from soma.validation import load_scenario, resource_directory
 
-run = plan_run(load_scenario("fixtures/synthetic-relay/scenario.json"))
+run = plan_run(load_scenario(resource_directory("fixtures") / "synthetic-relay" / "scenario.json"))
 archive = create_run_package(run)
 assert archive[:2] == b"PK"
 assert archive == create_run_package(run)

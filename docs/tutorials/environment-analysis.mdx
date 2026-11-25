@@ -1,0 +1,81 @@
+---
+title: Analyze a synthetic environment
+description: Connect explicit surface coordinates, a terrain horizon, a finite solar disk and electrical power.
+---
+
+Install `soma-lunar[analysis]`. This tutorial uses a synthetic spherical surface and synthetic target vectors. It teaches the library's component boundaries without downloading a DEM or ephemeris. Its numbers are software checks, not a lunar forecast.
+
+## Declare the observer and terrain
+
+```python
+from soma.geometry import SurfacePoint
+from soma.terrain import SyntheticDEM, HorizonSite, HorizonSampling, build_horizon
+
+surface = SurfacePoint(0, 0, "MOON_ME_DE421", 1_737_400, 0, 2, 1, 0)
+terrain = SyntheticDEM(lambda latitude, longitude: 0, identifier="tutorial-synthetic-sphere")
+panel_site = HorizonSite(
+    surface.latitude_deg, surface.longitude_deg_east, surface.elevation_m,
+    surface.panel_height_m, surface.pole_reference_meridian_deg_east,
+    surface.frame, surface.reference_radius_m, surface.elevation_datum,
+)
+sampling = HorizonSampling(10, 5, 20, 100, (4_000, 8_000), 0.01, 8_000)
+panel_horizon = build_horizon(terrain, panel_site, sampling)
+assert panel_horizon.converged
+assert len(panel_horizon.bands) == 36
+```
+
+Latitude is planetocentric and longitude is east-positive. Elevation and equipment heights are meters above their declared reference. The panel is one meter above ground; the antenna is two meters above ground. Calculate a separate horizon for the antenna before using it for a communications target.
+
+## Resolve a partial sunrise
+
+The local Sun-center vector points north on the horizontal at one astronomical unit. Earth lies east, away from the Sun in this synthetic geometry:
+
+```python
+from soma.illumination import solar_disk_visibility
+
+sun_enu_m = [0, 149_597_870_700, 0]
+earth_enu_m = [380_000_000, 0, 0]
+visibility = solar_disk_visibility(
+    sun_enu_m, earth_enu_m, horizon=panel_horizon.to_dict(), horizon_margin_deg=0,
+)
+assert visibility["status"] == "evaluated_under_sampling"
+assert 0 < visibility["visible_fraction"] < 1
+print(visibility["visible_fraction"], visibility["sampling_history"])
+```
+
+The disk sampler applies terrain and Earth masks to the same rays. Its lower/upper bounds concern unknown terrain on sampled rays; they are not certified absolute error bars. For physical inputs, obtain both vectors from a consistent ephemeris and the same observer rather than timestamp-plus-longitude arithmetic.
+
+## Convert visible sunlight into electrical power
+
+Use a synthetic vertical panel facing north. Generation depends on the panel normal, area, conversion efficiency, lumped derating, range and visible fraction:
+
+```python
+from soma.power import fixed_panel_power
+
+panel = {
+    "kind": "fixed", "normal_local_enu": [0, 1, 0], "area_m2": 2,
+    "efficiency": 0.2, "lumped_derating": 0.8, "irradiance_at_1au_w_m2": 1000,
+}
+generation = fixed_panel_power(panel, sun_enu_m, visibility["visible_fraction"])
+assert 0 < generation["generated_power_w"] < 320
+print(generation["generated_power_w"])
+```
+
+Watts are electrical generation. Radio RF watts are a different quantity. This calculation alone does not establish a battery trajectory, a usable contact or a feasible schedule. [Illumination and power](/reference/illumination-power) includes battery integration with explicit bus-side power limits and efficiencies.
+
+## Preserve unknown terrain
+
+An absent terrain sample must not create a clear horizon:
+
+```python
+unknown_terrain = SyntheticDEM(lambda latitude, longitude: None,
+                               identifier="tutorial-synthetic-missing-terrain")
+unknown_horizon = build_horizon(unknown_terrain, panel_site, sampling)
+unresolved = solar_disk_visibility(
+    sun_enu_m, earth_enu_m, horizon=unknown_horizon.to_dict(), horizon_margin_deg=0,
+)
+assert unresolved["status"] == "unknown"
+assert unresolved["visible_fraction"] is None
+```
+
+For spacecraft, use [finite-segment terrain visibility](/reference/terrain#finite-spacecraft-segment). A directional horizon extends beyond the spacecraft and cannot establish whether a finite link is blocked. [Communications](/reference/communications) adds RF and service gates; [delivery experiments](/tutorials/delivery-experiments) add volume, storage and energy constraints.
