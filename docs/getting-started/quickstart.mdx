@@ -13,7 +13,9 @@ from soma.validation import load_scenario, resource_directory
 
 fixture = resource_directory("fixtures") / "synthetic-relay" / "scenario.json"
 scenario = load_scenario(fixture)
-run = plan_run(scenario)
+run = plan_run(scenario, options={
+    "chunk_bytes": 104_857_600, "bin_s": 5, "time_limit_s": 30,
+})
 result = run["result"]
 
 print(result["status"])
@@ -29,6 +31,8 @@ assert run["validation"]["passed"] is True
 ```
 
 The file contains **100 MiB**, or 104,857,600 bytes and 838,860,800 bits. The fixture's direct contact from 08:50 to 09:10 UTC at 256,000 net bits/s carries only 307,200,000 bits. It cannot finish the file. A 2,000,000 bit/s relay hop needs 419.4304 seconds; the later 10,000,000 bit/s ground hop needs 83.88608 seconds before additional modeled delays and scheduling padding.
+
+This first example uses one whole-file chunk to keep the bounded optimization small. Five-second bins still introduce conservative timing, which remains recorded in the result. Smaller chunks allow more allocation choices and require more solver work; a time limit without a valid incumbent returns `unknown`.
 
 The relay stores the data between its two contacts. The solver also checks finite buffers, both endpoints' radios, electrical demand and the deadline. Actual allocations depend on the discretized model and solver outcome, so use the returned final-byte timestamp rather than hard-coding an expected finish time.
 
@@ -71,7 +75,7 @@ Run these commands after the Python example has written `scenario.json`:
 
 ```bash
 python -m soma validate scenario.json
-python -m soma run scenario.json --output-dir soma-relay-run
+python -m soma run scenario.json --output-dir soma-relay-run --chunk-bytes 104857600 --bin-s 5 --time-limit-s 30
 python -m soma replay soma-relay-run/run.json
 python -m soma.verification.exports soma-relay-run/run.zip
 ```

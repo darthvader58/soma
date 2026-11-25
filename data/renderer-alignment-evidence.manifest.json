@@ -31,7 +31,7 @@
     },
     {
       "path": "soma/geometry/registration.py",
-      "sha256": "61f17b250acb25d6bfc4e7150935dfb06f27deec0ab82f8391124ae1134616bd"
+      "sha256": "adb16b519ca1818f1f4f66ab15c2e770291a74ee8ad9abfaba9a871b1888b132"
     },
     {
       "path": "soma/api/moon.py",

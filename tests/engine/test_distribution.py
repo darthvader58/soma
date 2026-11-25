@@ -55,11 +55,23 @@ def test_installed_wheel_plans_exports_and_replays_100_mib(tmp_path):
 
     fixtures = resource_directory("fixtures")
     direct = cli("plan", fixtures / "synthetic-direct" / "scenario.json")
-    assert direct["status"] == "infeasible_in_model"
+    assert direct["status"] == "infeasible_in_model", json.dumps(direct, indent=2)
     output = tmp_path / "relay-run"
-    summary = cli("run", fixtures / "synthetic-relay" / "scenario.json", "--output-dir", output)
-    assert summary["status"] == "feasible_under_assumptions"
+    # One whole-file chunk exercises the hand-checkable two-hop transfer without
+    # making this packaging check depend on a seven-chunk MILP's solve time.
+    summary = cli(
+        "run", fixtures / "synthetic-relay" / "scenario.json", "--output-dir", output,
+        "--chunk-bytes", "104857600", "--bin-s", "5", "--time-limit-s", "30",
+    )
     run = json.loads((output / "run.json").read_text())
+    diagnostics = json.dumps({
+        "summary": summary,
+        "reason": run["result"]["provenance"]["reason"],
+        "warnings": run["result"]["warnings"],
+        "solver": {key: value for key, value in run["details"].get("solver", {}).items()
+                   if not isinstance(value, (list, dict))},
+    }, indent=2)
+    assert summary["status"] == "feasible_under_assumptions", diagnostics
     assert run["result"]["delivered_bytes"] == 104_857_600
     assert run["result"]["model_fidelity"] == "assumed_rate_simulation"
     assert run["validation"]["passed"] is True

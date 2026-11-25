@@ -5,6 +5,8 @@ description: Compare direct and relay plans, reduce a buffer and prove that corr
 
 These examples use installed synthetic fixtures and require `soma-lunar[planning]`. The fixture geometry is fixed test input. Changing a coordinate or date does not turn it into a physical analysis. The [terrain-backed workflow](/getting-started/physical-runs) calculates physical geometry separately.
 
+Each calculation uses one whole-file chunk to keep this bounded example small. Five-second bins retain their conservative timing in the result. Smaller chunks add allocation choices and solver work; a time limit without a valid incumbent remains `unknown`.
+
 ## Compare direct delivery and store-and-forward
 
 ```python
@@ -12,9 +14,10 @@ from soma.engine import plan_run
 from soma.validation import load_scenario, resource_directory
 
 fixtures = resource_directory("fixtures")
-direct = plan_run(load_scenario(fixtures / "synthetic-direct" / "scenario.json"))
+options = {"chunk_bytes": 104_857_600, "bin_s": 5, "time_limit_s": 30}
+direct = plan_run(load_scenario(fixtures / "synthetic-direct" / "scenario.json"), options=options)
 relay_scenario = load_scenario(fixtures / "synthetic-relay" / "scenario.json")
-relay = plan_run(relay_scenario)
+relay = plan_run(relay_scenario, options=options)
 
 assert direct["result"]["status"] == "infeasible_in_model"
 assert relay["result"]["status"] == "feasible_under_assumptions"
@@ -36,7 +39,7 @@ small_buffer = deepcopy(relay_scenario)
 relay_id = small_buffer["relay_refs"][0]
 profile = next(p for p in small_buffer["profiles"]["relays"] if p["id"] == relay_id)
 profile["storage_capacity_bytes"] = 1
-limited = plan_run(small_buffer)
+limited = plan_run(small_buffer, options=options)
 
 assert limited["result"]["status"] == "infeasible_in_model"
 assert limited["result"]["scenario_sha256"] != relay["result"]["scenario_sha256"]

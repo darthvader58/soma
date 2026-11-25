@@ -25,7 +25,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "d310b44353785964b95ef7df06c8ddc6194ff2a0ae775cc66b0c99e959b76332"
+      "sha256": "b84ba7eb26dd71b73015bd3e4a6107d9255162f282c8a399460f34a04d9b5574"
     },
     {
       "path": "data/README.md",
@@ -89,7 +89,7 @@
     },
     {
       "path": "data/renderer-alignment-evidence.manifest.json",
-      "sha256": "6d5380b0f46936fa58462bad1e067b9bd3a905605b9ec44714b6c1abeae80b5d"
+      "sha256": "1d4372e7668af717f00217f4ea421277f734a01ea7e891ea3c4d796f75dfdb29"
     },
     {
       "path": "data/renderer-conversion.manifest.json",
@@ -113,7 +113,7 @@
     },
     {
       "path": "data/renderer-registration.manifest.json",
-      "sha256": "73d5294def057374261feebfe443cdfc624f0ee08ca66b9a356fdbef91cbba6b"
+      "sha256": "ba72d7e2a868dce6fb2fb759906fcdb75e264b52c24ba7ef2ab6c4ff40857fef"
     },
     {
       "path": "data/renderer-transect-capture.manifest.json",
@@ -937,7 +937,7 @@
     },
     {
       "path": "soma/geometry/registration.py",
-      "sha256": "61f17b250acb25d6bfc4e7150935dfb06f27deec0ab82f8391124ae1134616bd"
+      "sha256": "adb16b519ca1818f1f4f66ab15c2e770291a74ee8ad9abfaba9a871b1888b132"
     },
     {
       "path": "soma/geometry/registration_calibration.py",
@@ -1169,7 +1169,7 @@
     },
     {
       "path": "tests/engine/test_registration.py",
-      "sha256": "e90f3ded45f7b867298b9e575bc888aa93564fac60edf3303748f6d90def7d16"
+      "sha256": "3c2c79fb2ce1b70d17133f3f6a77838e128699dd968205b02978d01e6ef32548"
     },
     {
       "path": "tests/engine/test_registration_calibration.py",

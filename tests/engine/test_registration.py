@@ -110,6 +110,56 @@ def test_corrected_scene_requires_measured_features_and_site_scope():
         validate_renderer_registration(inside)
 
 
+def test_recomputed_feature_roundoff_preserves_certified_measurements(monkeypatch):
+    import soma.geometry.registration as registration
+    original = registration._feature_proof
+
+    def rounded_proof(reference_text, capture_text):
+        proof = deepcopy(original(reference_text, capture_text))
+        for point in proof['landmarks']:
+            for key in ('analysis_position_m', 'renderer_position_m'):
+                point[key] = [math.nextafter(value, math.inf) for value in point[key]]
+            point['residual_m'] += 1e-10
+        return proof
+
+    monkeypatch.setattr(registration, '_feature_proof', rounded_proof)
+    stored = json.loads((ROOT/'data/renderer-registration.manifest.json').read_text())
+    assert load_renderer_registration() == stored
+
+
+@pytest.mark.parametrize('field', ['analysis_position_m', 'renderer_position_m', 'residual_m', 'id'])
+def test_recomputed_feature_changes_beyond_roundoff_are_rejected(monkeypatch, field):
+    import soma.geometry.registration as registration
+    original = registration._feature_proof
+
+    def changed_proof(reference_text, capture_text):
+        proof = deepcopy(original(reference_text, capture_text))
+        point = proof['landmarks'][0]
+        if field.endswith('position_m'):
+            point[field][0] += 1e-4
+        elif field == 'residual_m':
+            point[field] += 1e-4
+        else:
+            point[field] += '-changed'
+        return proof
+
+    monkeypatch.setattr(registration, '_feature_proof', changed_proof)
+    with pytest.raises(ValueError, match='differs from recomputed'):
+        load_renderer_registration()
+
+
+def test_roundoff_allowance_does_not_relax_transform_or_scientific_tolerance():
+    stored = json.loads((ROOT/'data/renderer-registration.manifest.json').read_text())
+    changed = deepcopy(stored)
+    changed['transform_column_major'][0] += 1e-12
+    with pytest.raises(ValueError, match='identity bridge'):
+        validate_renderer_registration(changed)
+    changed = deepcopy(stored)
+    changed['tolerance_m'] += 1e-12
+    with pytest.raises(ValueError, match='Unsupported'):
+        validate_renderer_registration(changed)
+
+
 def test_packaged_evidence_loads_without_frontend_or_fixture_directories(tmp_path):
     import shutil
     data = tmp_path/'data'

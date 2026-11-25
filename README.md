@@ -65,7 +65,10 @@ from soma.validation import load_scenario, resource_directory
 
 scenario_path = resource_directory("fixtures") / "synthetic-relay" / "scenario.json"
 scenario = load_scenario(scenario_path)
-result = plan_delivery(scenario)
+result = plan_delivery(
+    scenario,
+    options={"chunk_bytes": 104_857_600, "bin_s": 5, "time_limit_s": 30},
+)
 
 print(result["status"])
 print(result["solver_status"])
@@ -74,7 +77,9 @@ print(result["delivered_bytes"])
 print(result["final_byte_arrival_utc"])
 ```
 
-A feasible result delivers all 104,857,600 bytes and passes independent schedule
+A single whole-file chunk keeps this introductory optimization small; its
+5-second bins and 30-second solver budget are explicit choices. A feasible
+result delivers all 104,857,600 bytes and passes independent schedule
 replay. `model_fidelity` remains `assumed_rate_simulation`. A time-limited run may
 return a feasible incumbent without proving optimality; an unresolved run remains
 `unknown`.
@@ -86,7 +91,10 @@ from pathlib import Path
 from soma.engine import plan_run
 from soma.exports import create_run_package
 
-run = plan_run(scenario, options={"bin_s": 5, "time_limit_s": 15})
+run = plan_run(
+    scenario,
+    options={"chunk_bytes": 104_857_600, "bin_s": 5, "time_limit_s": 30},
+)
 Path("soma-run.zip").write_bytes(create_run_package(run))
 print(run["validation"])  # None if no candidate schedule was replayed.
 ```
@@ -123,7 +131,7 @@ replay it:
 ```sh
 python -c "from pathlib import Path; from soma.validation import resource_directory; Path('scenario.json').write_bytes((resource_directory('fixtures') / 'synthetic-relay' / 'scenario.json').read_bytes())"
 python -m soma validate scenario.json
-python -m soma run scenario.json --output-dir soma-run
+python -m soma run scenario.json --output-dir soma-run --chunk-bytes 104857600 --bin-s 5 --time-limit-s 30
 python -m soma replay soma-run/run.json
 python -m soma.verification.exports soma-run/run.zip
 ```
