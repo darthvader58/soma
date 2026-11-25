@@ -18,7 +18,7 @@ python -m pip install "soma-lunar[planning]==0.1.0"
 
 On Windows PowerShell, activate the environment with `.venv\Scripts\Activate.ps1`.
 
-The command above requires the 0.1.0 release to be present on PyPI. If publication is still pending, use the source installation below. The repository version and a public index release are separate records.
+Version [0.1.0 is published on PyPI](https://pypi.org/project/soma-lunar/0.1.0/). The release workflow verifies the built distributions before uploading them through GitHub Trusted Publishing. Source installation remains available below for development.
 
 ## Choose dependencies
 
@@ -36,6 +36,23 @@ For a local service with independent geometry verification:
 ```bash
 python -m pip install "soma-lunar[planning,service,verification]==0.1.0"
 ```
+
+## Dependency versions in 0.1.0
+
+Pip installs the dependencies declared by each selected extra. You do not need to install these packages individually.
+
+| Workflow | Direct dependencies |
+| --- | --- |
+| Core, always installed | `jsonschema==4.26.0`, `referencing==0.37.0`, `rfc8785==0.1.4` |
+| `analysis` | `numpy==2.5.4`, `spiceypy==8.4.0`, `rasterio==1.5.2`, `pyproj==3.8.0` |
+| `planning` | All analysis dependencies plus `pulp==3.3.2` |
+| `service` | `fastapi==0.163.0`, `uvicorn==0.54.0`; select `planning,service` together for delivery jobs |
+| `verification` | `skyfield==1.55`; also select the analysis or planning extra for numerical workflows |
+| `test`, for development | `pytest>=8,<10`, `httpx==0.28.1` |
+
+NumPy, Rasterio, PyProj and SpiceyPy contain or use native numerical libraries. Supported wheels normally provide these components. A platform without a compatible wheel can require upstream build tools and native libraries; use each dependency's installation instructions rather than assuming every platform has the same prerequisites. CBC must be executable for scheduling; the check below verifies the solver available through PuLP.
+
+Use `python -m pip check` to detect missing or conflicting installed dependencies. Node.js is needed only for a source checkout's web application or Mintlify tooling; it is not needed to import or run the Python library.
 
 Scientific kernels and rasters are separate from Python dependencies. Installation does not start a scientific-data download. Small manifests, schemas and synthetic fixtures are included as installed resources. See [frames and datasets](/science/frames-data) before acquiring physical inputs.
 

@@ -3,7 +3,9 @@ title: Releases and reproducibility
 description: Track package versions, source revisions, data identities and the limits of the initial library release.
 ---
 
-The Python distribution is [`soma-lunar`](https://pypi.org/project/soma-lunar/), imported as `soma`. The repository's package version is **0.1.0**. Check the package index and [GitHub releases](https://github.com/darthvader58/soma/releases) for published artifacts; a version in source does not by itself establish publication.
+The Python distribution is [`soma-lunar`](https://pypi.org/project/soma-lunar/), imported as `soma`. Version **0.1.0** was published on November 25, 2026, from the [`v0.1.0` source tag](https://github.com/darthvader58/soma/tree/v0.1.0). The [PyPI release](https://pypi.org/project/soma-lunar/0.1.0/) provides the wheel, source distribution, SHA-256 identities and publication provenance; [GitHub releases](https://github.com/darthvader58/soma/releases) records the release notes.
+
+The release validation matrix checks clean-installed distributions on Linux with Python 3.12, 3.13 and 3.14, plus macOS and Windows with Python 3.14. Engine suites run on Linux with Python 3.12 and 3.14. The installed-library checks validate resources, reject the insufficient direct contact, calculate the synthetic 100 MiB relay transfer, independently replay it and verify the complete ZIP. These tests establish those software workflows; they do not establish physical mission feasibility.
 
 The full change history belongs in the repository [changelog](https://github.com/darthvader58/soma/blob/main/CHANGELOG.md). This documentation follows the production `main` branch. When reproducing an older calculation, use that release's documentation/source revision and its recorded manifests.
 
