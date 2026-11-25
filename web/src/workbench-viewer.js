@@ -92,12 +92,14 @@ export async function createWorkbenchViewer(container, {
   function deliveryLabels() {
     if (!delivery) return;
     const network = cameraMode === 'network' || cameraMode === 'manual' && lastPreset === 'network';
+    const earthCloseup = cameraMode === 'earth' || cameraMode === 'manual' && lastPreset === 'earth';
     for (const [id, node] of spacecraftEntities) {
       if (!node.entity.label) continue;
       const receivingStation = network && delivery.scenario.station_refs.includes(activeReceiver);
       if (network && receivingStation && (id === 'EARTH' || delivery.scenario.station_refs.includes(id) && id !== activeReceiver)) node.entity.show = false;
       if (receivingStation && delivery.scenario.relay_refs.includes(id) && id !== activeSender) node.entity.show = false;
       node.entity.label.show = labels && (network ? receivingStation ? id === activeReceiver || id === activeSender : id === 'EARTH' : !delivery.scenario.station_refs.includes(id));
+      if (id === 'EARTH' && earthCloseup) node.entity.label.show = false;
       if (node.path) node.path.show = paths && !network;
       if (id === 'EARTH') node.entity.label.text = 'Earth network · educational stations';
       else if (delivery.scenario.station_refs.includes(id)) node.entity.label.text = `Earth receiver · ${id} · assumed service`;
