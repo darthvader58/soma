@@ -8,11 +8,12 @@ description: Preserve the exact calculation and verify a schedule without rerunn
 ```python
 from pathlib import Path
 from soma.engine import plan_run
-from soma.exports import create_run_package
-from soma.validation import load_scenario
+from soma.exports import create_run_package, json_bytes
+from soma.validation import load_scenario, resource_directory
 
-run = plan_run(load_scenario("fixtures/synthetic-relay/scenario.json"))
+run = plan_run(load_scenario(resource_directory("fixtures") / "synthetic-relay" / "scenario.json"))
 Path("run.zip").write_bytes(create_run_package(run))
+Path("scenario.json").write_bytes(json_bytes(run["scenario"]))
 ```
 
 The package preserves scenario and result JSON, summary, contacts and schedule CSVs, energy and buffer histories, display CZML and structured display data, renderer registration, a Markdown explanation, and a checksummed run manifest. Analysis inputs and replay evidence are included when present; the pinned conversion manifest is included when applicable.
@@ -24,7 +25,7 @@ CSV headers state units. An empty CSV field represents unknown, never zero. Sour
 ## Replay the saved schedule
 
 ```bash
-python -m soma run fixtures/synthetic-relay/scenario.json --output-dir /tmp/soma-relay
+python -m soma run scenario.json --output-dir /tmp/soma-relay
 python -m soma replay /tmp/soma-relay/run.json
 ```
 

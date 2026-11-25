@@ -89,15 +89,15 @@ A usable contact still carries `radio_conflicts_and_energy_not_yet_checked`. Tho
 
 ### Executable synthetic contact gate
 
-Run from the repository checkout. This uses a hand-checkable fixture and explicitly synthetic interval geometry.
+This uses the installed fixture and a hand-checkable fixture and explicitly synthetic interval geometry.
 
 ```python
 from copy import deepcopy
 from soma.links import assess_contact
-from soma.validation import load_json, load_scenario
+from soma.validation import load_json, load_scenario, resource_directory
 
-scenario = load_scenario("fixtures/synthetic-direct/scenario.json")
-candidate = load_json("fixtures/synthetic-direct/contacts.json")[0]
+scenario = load_scenario(resource_directory("fixtures") / "synthetic-direct" / "scenario.json")
+candidate = load_json(resource_directory("fixtures") / "synthetic-direct" / "contacts.json")[0]
 candidate.update(
     geometry_status="clear_under_sampling", geometry_reason="synthetic_interval_assumption",
     geometry_evidence={"scope": "interval_wide", "coverage": deepcopy(candidate["source_transmit_window"])},

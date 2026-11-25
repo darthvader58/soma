@@ -1,0 +1,24 @@
+---
+title: Releases and reproducibility
+description: Track package versions, source revisions, data identities and the limits of the initial library release.
+---
+
+The Python distribution is [`soma-lunar`](https://pypi.org/project/soma-lunar/), imported as `soma`. The repository's package version is **0.1.0**. Check the package index and [GitHub releases](https://github.com/darthvader58/soma/releases) for published artifacts; a version in source does not by itself establish publication.
+
+The full change history belongs in the repository [changelog](https://github.com/darthvader58/soma/blob/main/CHANGELOG.md). This documentation follows the production `main` branch. When reproducing an older calculation, use that release's documentation/source revision and its recorded manifests.
+
+## Initial library scope
+
+Version 0.1.0 includes strict standalone contracts; explicit lunar coordinates and matched-kernel geometry; numerical DEM/horizon access; sampled solar-disk illumination; fixed-panel power and battery integration; RF/contact assessment; finite-volume direct or single-lunar-relay scheduling; independent replay; structured exports; and local HTTP planning jobs. The public geometry study and hosted delivery APIs expose separate bounded workflows.
+
+The [capability matrix](/science/capability-matrix) records the distinction between reusable library functions and the configured physical provider. It also lists exclusions. SOMA takes architectural inspiration from TATC and remains a companion package; this release does not claim all of TATC's mission-analysis capabilities.
+
+Terrain-backed delivery uses a bounded south-polar region and declared period. The relay trajectory, net rates, service calendar, hardware and ideal pointing in example runs remain synthetic or assumed as labeled. Global reference-sphere geometry does not establish terrain-clear visibility or delivery feasibility.
+
+## Retain a reproducible record
+
+Keep the complete exported package, not only a plotted trajectory or summary. It includes scenario identity, library/dependency versions, source references, checksums, assumptions, warnings, allocations, replay and resource histories. Source transmit, arrival occupancy and byte availability have distinct meanings.
+
+Pin the package version, source hashes and solver settings. Fresh optimization can return a different valid allocation after a time limit even for the same input. A byte-stable export of one supplied run does not promise identical decisions from every future solver execution.
+
+When updating, rerun schema validation and independent replay against your stored scenarios and compare status, fidelity, solver evidence and model assumptions. Report sensitivity to sampling, terrain margins, initial battery, rates and service as changes in model outcomes. The model does not emit a justified mission-success probability.

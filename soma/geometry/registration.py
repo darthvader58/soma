@@ -189,7 +189,13 @@ def load_renderer_registration(path=None):
         if not proof['registration_passed']:
             raise ValueError('Independent terrain feature check did not pass')
         for actual,expected in zip(manifest['landmarks'],proof['landmarks'],strict=True):
-            if any(actual[key]!=expected[key] for key in ('id','analysis_position_m','renderer_position_m','residual_m')):
+            # NumPy reductions can differ across platforms at floating-point
+            # roundoff. This 10 nm comparison does not relax the 10 m gate.
+            positions_match=all(math.isclose(a,b,rel_tol=0,abs_tol=1e-8)
+                for key in ('analysis_position_m','renderer_position_m')
+                for a,b in zip(actual[key],expected[key],strict=True))
+            if (actual['id']!=expected['id'] or not positions_match
+                    or not math.isclose(actual['residual_m'],expected['residual_m'],rel_tol=0,abs_tol=1e-8)):
                 raise ValueError('Registration certificate differs from recomputed feature measurements')
     return manifest
 

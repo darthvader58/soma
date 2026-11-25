@@ -5,6 +5,8 @@ description: Entry points and module references for the implemented lunar analys
 
 New multi-site ephemeris sampling is documented in the [research geometry API](/reference/research-api). The delivery interfaces below retain their original scenario/result contract.
 
+For a complete first run with installed fixtures, use the [quickstart](/getting-started/quickstart). The [source-derived signature catalog](/reference/api-catalog) lists exact public constructors, functions and methods. The guides below explain dictionary fields, units, returned values, errors and scientific scope. Undocumented implementation helpers are not a compatibility promise.
+
 ## Analysis modules
 
 | Module family | Reference |
@@ -68,9 +70,10 @@ from soma.validation import (
     validate_scenario,
     scenario_sha256,
     data_volume_bytes,
+    resource_directory,
 )
 
-scenario = load_scenario("fixtures/synthetic-relay/scenario.json")
+scenario = load_scenario(resource_directory("fixtures") / "synthetic-relay" / "scenario.json")
 checked = validate_scenario(scenario)
 digest = scenario_sha256(checked)
 byte_count = data_volume_bytes(checked["data_volume"])
@@ -95,3 +98,20 @@ compact_summary = summary(run)
 ```
 
 `replay_schedule(..., require_complete=True)` recomputes the schedule constraints. Its `passed` field is the replay decision. `create_run_package(run)` returns ZIP bytes; it does not write a file. See [exports and replay](/reference/exports-replay).
+
+## Errors, unknowns and rejected candidates
+
+An invalid input, a blocked path and an unresolved calculation have different meanings. Low-level dictionary APIs expect the fields described in their module guides; malformed caller-created dictionaries can also raise ordinary `KeyError` or `TypeError`. Validate complete scenarios before passing them through a pipeline.
+
+| Interface | Failure behavior |
+| --- | --- |
+| `load_scenario`, `validate_scenario`, `validate_document` | Raise `ScenarioValidationError` (a `ValueError`) for invalid contracts. File reads can raise `OSError`. |
+| Surface/time, numerical terrain, illumination, power and RF helpers | Raise `ValueError` for unsupported or invalid numerical conventions. Missing optional dependencies raise import errors; missing files can raise file/library errors. Unknown terrain and illumination are returned explicitly where their contract supports unknowns. |
+| `SpiceGeometry` | Invalid frames, mismatched kernels or uncovered epochs raise `ValueError`; inactive/nested ownership raises `RuntimeError`. Native toolkit/file errors are not transformed into visibility. |
+| `assess_contact` | Returns a structured `decision` with reasons and an empty contacts list when its gates reject or cannot establish a contact. Read this decision even when the call returns normally. |
+| `plan_run` | Input/options errors can raise `ValueError`; cancellation can raise `InterruptedError`. A supported calculation returns scientific and solver statuses, including `unknown` for unresolved work. |
+| `replay_schedule` | Returns `passed=False` and structured errors for invalid inputs or a violated schedule; it does not repair the trace. |
+| `analyze_study` | Uses `StudyValidationError` for study/model validation and `StudyCancelled` for cancellation. It does not download missing sources. |
+| `create_run_package` | Invalid result structure or mismatched scenario identity raises a validation error; it does not independently replay or repair allocations. |
+
+Warnings and assumptions are scientific output. Preserve them when rendering, exporting or comparing results. Replacing an unknown quantity with zero changes its meaning.

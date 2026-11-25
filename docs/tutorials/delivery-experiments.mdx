@@ -1,0 +1,84 @@
+---
+title: Controlled delivery experiments
+description: Compare direct and relay plans, reduce a buffer and prove that corrupted allocations fail replay.
+---
+
+These examples use installed synthetic fixtures and require `soma-lunar[planning]`. The fixture geometry is fixed test input. Changing a coordinate or date does not turn it into a physical analysis. The [terrain-backed workflow](/getting-started/physical-runs) calculates physical geometry separately.
+
+Each calculation uses one whole-file chunk to keep this bounded example small. Five-second bins retain their conservative timing in the result. Smaller chunks add allocation choices and solver work; a time limit without a valid incumbent remains `unknown`.
+
+## Compare direct delivery and store-and-forward
+
+```python
+from soma.engine import plan_run
+from soma.validation import load_scenario, resource_directory
+
+fixtures = resource_directory("fixtures")
+options = {"chunk_bytes": 104_857_600, "bin_s": 5, "time_limit_s": 30}
+direct = plan_run(load_scenario(fixtures / "synthetic-direct" / "scenario.json"), options=options)
+relay_scenario = load_scenario(fixtures / "synthetic-relay" / "scenario.json")
+relay = plan_run(relay_scenario, options=options)
+
+assert direct["result"]["status"] == "infeasible_in_model"
+assert relay["result"]["status"] == "feasible_under_assumptions"
+assert relay["result"]["storage_intervals"]
+print(direct["result"]["provenance"]["reason"])
+print(relay["result"]["final_byte_arrival_utc"])
+```
+
+Both files contain 100 MiB. The direct fixture's contact capacity is insufficient. The relay fixture adds two synthetic contacts and a finite store-and-forward buffer. These outcomes apply to those declared contacts, rates, resources and deadlines.
+
+## Reduce the relay buffer
+
+Keep the complete scenario and change one resource. A one-byte buffer cannot accept any of the planner's whole chunks:
+
+```python
+from copy import deepcopy
+
+small_buffer = deepcopy(relay_scenario)
+relay_id = small_buffer["relay_refs"][0]
+profile = next(p for p in small_buffer["profiles"]["relays"] if p["id"] == relay_id)
+profile["storage_capacity_bytes"] = 1
+limited = plan_run(small_buffer, options=options)
+
+assert limited["result"]["status"] == "infeasible_in_model"
+assert limited["result"]["scenario_sha256"] != relay["result"]["scenario_sha256"]
+print(limited["result"]["provenance"]["reason"])
+```
+
+The changed hash records the changed scientific input. Do not reuse analysis dictionaries that are bound to an earlier scenario hash. Model infeasibility can involve several interacting constraints; its reason should not be treated as a proof of one unique physical cause.
+
+## Reject a duplicated allocation
+
+Replay can reject a result even if a caller labels it feasible. Here it detects a duplicated transmission and its consequences:
+
+```python
+from soma.schedule import replay_schedule
+
+bad_allocations = deepcopy(relay["result"]["allocations"])
+duplicate = deepcopy(bad_allocations[0])
+duplicate["allocation_id"] = "intentional-duplicate-for-replay-test"
+bad_allocations.append(duplicate)
+
+report = replay_schedule(
+    relay["scenario"], relay["result"]["contacts"], bad_allocations,
+    relay["analysis_inputs"]["generation_bins"],
+)
+assert report["passed"] is False
+assert report["errors"]
+print(report["errors"])
+```
+
+Keep this corrupted trace separate from the valid run. `create_run_package` serializes and checks structural/hash relationships; it does not repair allocations or replace independent replay.
+
+## Inspect timing and waiting
+
+```python
+for allocation in relay["result"]["allocations"]:
+    print(allocation["chunk_id"], allocation["byte_length"])
+    print("transmit:", allocation["source_transmit_interval"])
+    print("receiver:", allocation["receiver_occupancy_interval"])
+    print("available:", allocation["byte_available_utc"])
+```
+
+Native contact windows are source transmit windows. Receiver service and radio occupancy use arrival epochs, and forwarding waits until byte availability. The synthetic fixture disables propagation delay explicitly; it does not establish that real lunar links have zero delay. See [scheduling and replay](/reference/scheduling) for discretization, solver status and the bounded objective.

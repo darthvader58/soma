@@ -46,7 +46,7 @@
     },
     {
       "path": "renderer-alignment-evidence.manifest.json",
-      "sha256": "6d5380b0f46936fa58462bad1e067b9bd3a905605b9ec44714b6c1abeae80b5d"
+      "sha256": "1d4372e7668af717f00217f4ea421277f734a01ea7e891ea3c4d796f75dfdb29"
     }
   ],
   "conversion_manifest_ref": "renderer-conversion.manifest.json",

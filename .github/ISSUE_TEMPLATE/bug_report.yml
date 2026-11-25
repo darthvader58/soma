@@ -1,0 +1,34 @@
+name: Bug report
+description: Report a reproducible software or numerical failure.
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+      description: Include scientific status, solver status, warnings, or replay errors when relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Supply the exact command or API request and a minimal shareable scenario. Remove credentials and private data.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: SOMA version, Python version, operating system/architecture, installation extras, and solver version if planning is involved.
+    validations:
+      required: true
+  - type: textarea
+    id: scientific_inputs
+    attributes:
+      label: Scientific inputs and provenance
+      description: For numerical issues, include units, origin/frame realization, UTC interval, datum, equipment heights, sampling, and dataset/kernel manifest IDs and hashes. Attach an exact run package if shareable.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Logs, independent reference calculation, or the smallest failing export. Explain the definitions used in a reference comparison.

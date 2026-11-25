@@ -1,0 +1,60 @@
+---
+title: Command line reference
+description: Validate, calculate, replay and export with the installed soma CLI.
+---
+
+`soma` and `python -m soma` call the same entry point. Use `python -m soma --help` or append `--help` to a command for the installed version's argument parser. Planning/replay require the `planning` extra; geometry requires `analysis`; independent geometry verification additionally requires `verification`.
+
+## Delivery workflow
+
+The [quickstart](/getting-started/quickstart) writes `scenario.json` from an installed synthetic fixture. Substitute your complete validated scenario file in these commands:
+
+```bash
+python -m soma validate scenario.json
+python -m soma plan scenario.json
+python -m soma run scenario.json --output-dir result-directory
+python -m soma replay result-directory/run.json
+python -m soma.verification.exports result-directory/run.zip
+```
+
+| Command | Output |
+| --- | --- |
+| `validate PATH` | Scenario ID, canonical hash and structural/semantic validity. Does not calculate feasibility. |
+| `plan PATH` | Native scientific result as JSON on stdout. |
+| `run PATH --output-dir DIR` | Full export members, `run.json` and `run.zip`, plus summary status and hashes on stdout. Existing same-named files in the directory are overwritten; use a new directory to preserve an earlier run. |
+| `replay PATH` | Independent replay report for `run.json`; checks scenario identity and claimed delivery metrics. Does not invoke optimization. |
+| `python -m soma.verification.exports ZIP` | Independent verification of the full saved ZIP, including checksums, content and replay consistency. |
+
+`plan` and `run` share these optional arguments:
+
+| Argument | Meaning |
+| --- | --- |
+| `--analysis-inputs PATH` | Prepared analysis JSON, versioned and bound to the exact scenario hash. Omit to use the configured provider. |
+| `--chunk-bytes INTEGER` | Positive planning-chunk size in bytes; default 16,777,216. |
+| `--bin-s NUMBER` | Positive scheduling step in seconds. Provider-dependent default: 5 s for synthetic or 60 s for terrain/ephemeris. |
+| `--time-limit-s NUMBER` | Nonnegative solver time-limit setting in seconds; default 15. Read solver status before claiming an optimum. |
+
+An exit code of zero for `plan`/`run` means the command returned a result. It can return `infeasible_in_model` or `unknown`; read the JSON status. Invalid input or a command error returns nonzero. Replay and package verification return nonzero when their checks fail.
+
+## Physical inputs and diagnostics
+
+Acquisition is explicit and separate from installation or calculation:
+
+```bash
+python -m soma fetch-geometry-data --data-root /tmp/soma-data --physical
+python -m soma verify-geometry --data-root /tmp/soma-data
+```
+
+`fetch-geometry-data` accepts `--kernels-only` to omit terrain, or `--physical` to acquire the additional bounded polar patch used by physical delivery. Check product sizes, coverage, hashes and terms in [frames and datasets](/science/frames-data) before downloading. Data-root paths are local numerical sources, not Cesium cache directories.
+
+The lower-level diagnostics are distinct from delivery planning:
+
+| Command | Required arguments and scope |
+| --- | --- |
+| `geometry SCENARIO --data-root DIR` | Produces time-tagged Sun/Earth, terrain horizons and geometric intervals. Options include `--sample-step-s` (300), `--azimuth-step-deg` (30), `--required-extent-m` (200,000), a paired explicit `--latitude-deg`/`--longitude-deg-east` override, and `--synthetic-relay`. No usable-contact or delivery claim. |
+| `environment GEOMETRY_JSON --generation-time-model left_sample_piecewise_constant_assumption` | Converts a versioned geometry diagnostic into environment records under the named temporal approximation. `--contact-candidates PATH` supplies explicit interval-wide candidates; they are not inferred from isolated geometry samples. |
+| `environment-fixture SCENARIO --contacts CONTACTS_JSON` | Calculates synthetic algorithm/display diagnostics. Requires `analysis_mode="synthetic_fixture"`; does not establish a physical environment or schedule. |
+
+`--synthetic-relay` requests a labeled diagnostic two-body preset. It is not an operational frozen orbit or a libration-point ephemeris. For actual delivery use `plan`/`run`, which integrate prepared contacts and generation with storage, radio, energy and causal forwarding constraints.
+
+The public research-study HTTP operations and local jobs have different bounds and data preparation. See [research API](/reference/research-api), [local service](/reference/service) and [physical reproduction](/getting-started/physical-runs) for their complete workflows.

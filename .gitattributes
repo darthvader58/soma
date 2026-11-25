@@ -1,0 +1,12 @@
+# Preserve byte-bound scientific source and manifest identities on every checkout.
+* text=auto eol=lf
+*.bpc -text
+*.bsp -text
+*.zip -text
+*.npz -text
+*.tif -text
+*.tiff -text
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.webp -text

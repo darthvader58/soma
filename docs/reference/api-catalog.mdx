@@ -1,0 +1,539 @@
+---
+title: Public API signatures
+description: Exact source-derived signatures for the documented Python interfaces.
+---
+
+This catalog is generated from the repository source. The module guides explain parameters, units, returned records, exceptions and scientific limits. Dictionary contents are specified in those guides and the JSON schemas; a Python signature alone does not define a complete scenario.
+
+Only declared package exports and the explicitly documented engine, validation and export interfaces appear here. Internal acquisition, renderer and service helpers are outside this catalog. Optional dependencies are listed in [installation](/getting-started/installation).
+
+Maintainers regenerate this page with `python docs/scripts/generate_api_catalog.py` and check for drift with `python docs/scripts/generate_api_catalog.py --check`.
+
+## `soma`
+
+### `plan_delivery`
+
+```python
+plan_delivery(scenario, **kwargs)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/__init__.py#L6)
+
+## `soma.engine`
+
+### `plan_run`
+
+```python
+plan_run(scenario, *, analysis_inputs=None, options=None, progress=None, cancel_event=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/engine.py#L69)
+
+## `soma.geometry`
+
+### `SurfacePoint`
+
+```python
+SurfacePoint(latitude_deg: float, longitude_deg_east: float, frame: str, reference_radius_m: float, elevation_m: float, antenna_height_m: float, panel_height_m: float, pole_reference_meridian_deg_east: float, elevation_datum: str = 'height_above_reference_sphere')
+SurfacePoint.from_lander(lander)
+SurfacePoint.from_cartesian(position_m, *, reference_radius_m, frame='MOON_ME_DE421', antenna_height_m=0, panel_height_m=0, pole_reference_meridian_deg_east=0)
+SurfacePoint.position_m(height_m=0)
+SurfacePoint.local_basis()
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/surface.py#L41)
+
+### `local_basis`
+
+```python
+local_basis(latitude_deg, longitude_deg_east, pole_reference_meridian_deg_east=0)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/surface.py#L28)
+
+### `surface_position`
+
+```python
+surface_position(latitude_deg, longitude_deg_east, radius_m, elevation_m=0)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/surface.py#L18)
+
+### `vector_direction`
+
+```python
+vector_direction(vector_fixed_m, basis)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/surface.py#L87)
+
+### `segment_intersects_sphere`
+
+```python
+segment_intersects_sphere(source_m, target_m, radius_m, *, center_m=(0, 0, 0), clearance_m=0, endpoint_tolerance_m=1e-06)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/surface.py#L98)
+
+### `SpiceGeometry`
+
+```python
+SpiceGeometry(manifest, data_root)
+SpiceGeometry.state(target, utc, frame='MOON_ME_DE421', origin='MOON', aberration='NONE')
+SpiceGeometry.direction(surface, target, utc, height_m=0)
+SpiceGeometry.station_state(station, utc, frame='MOON_ME_DE421')
+SpiceGeometry.transform_position(position_m, utc, from_frame='J2000', to_frame='MOON_ME_DE421')
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/spice.py#L45)
+
+### `StateHistory`
+
+```python
+StateHistory(metadata, samples, *, utc_to_et=None)
+StateHistory.state(epoch)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/trajectories.py#L18)
+
+### `SyntheticTwoBodyLunarPreset`
+
+```python
+SyntheticTwoBodyLunarPreset(*, target, epoch_utc, coverage, gm_m3_s2, reference_radius_m, semimajor_axis_m, eccentricity, inclination_deg, ascending_node_deg, argument_periapsis_deg, mean_anomaly_deg, utc_to_et)
+SyntheticTwoBodyLunarPreset.state(utc)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/geometry/trajectories.py#L94)
+
+## `soma.time`
+
+### `parse_utc`
+
+```python
+parse_utc(value: str) -> datetime
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/time/__init__.py#L15)
+
+### `format_utc`
+
+```python
+format_utc(value: datetime) -> str
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/time/__init__.py#L42)
+
+## `soma.time.spice`
+
+### `utc_to_et`
+
+```python
+utc_to_et(value)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/time/spice.py#L5)
+
+## `soma.terrain`
+
+### `CompositeDEM`
+
+```python
+CompositeDEM(*sources: DEM)
+CompositeDEM.sample(latitude_deg, longitude_deg_east)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/dem.py#L293)
+
+### `GeographicRasterDEM`
+
+```python
+GeographicRasterDEM(elevation_path, count_path, metadata: dict)
+GeographicRasterDEM.close()
+GeographicRasterDEM.sample(latitude_deg, longitude_deg_east)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/dem.py#L189)
+
+### `RasterDEM`
+
+```python
+RasterDEM(elevation_path, count_path, metadata: dict)
+RasterDEM.close()
+RasterDEM.sample(latitude_deg, longitude_deg_east)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/dem.py#L73)
+
+### `SyntheticDEM`
+
+```python
+SyntheticDEM(elevation_function, *, identifier: str)
+SyntheticDEM.sample(latitude_deg, longitude_deg_east)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/dem.py#L167)
+
+### `TerrainSample`
+
+```python
+TerrainSample(elevation_m: float | None, quality_flags: tuple[str, ...], count: float | None = None, source_id: str = '')
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/dem.py#L24)
+
+### `HorizonBand`
+
+```python
+HorizonBand(azimuth_deg: float, elevation_deg: float | None, sampled_lower_bound_deg: float | None, unknown_samples: int, quality_flags: tuple[str, ...])
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L74)
+
+### `HorizonCache`
+
+```python
+HorizonCache()
+HorizonCache.get(key)
+HorizonCache.put(profile)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L122)
+
+### `HorizonProfile`
+
+```python
+HorizonProfile(cache_key: str, site: HorizonSite, sampling: HorizonSampling, bands: tuple[HorizonBand, ...], converged: bool, maximum_change_deg: float | None, algorithm_version: str = ALGORITHM_VERSION, classification_scope: str = 'sampled_distant_target_horizon_not_finite_spacecraft')
+HorizonProfile.to_dict()
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L83)
+
+### `HorizonSampling`
+
+```python
+HorizonSampling(azimuth_step_deg: float, near_step_m: float, far_step_m: float, near_extent_m: float, extents_m: tuple[float, ...], convergence_tolerance_deg: float, required_max_extent_m: float)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L42)
+
+### `HorizonSite`
+
+```python
+HorizonSite(latitude_deg: float, longitude_deg_east: float, elevation_m: float, height_m: float, pole_reference_meridian_deg_east: float, frame: str, reference_radius_m: float, elevation_datum: str)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L22)
+
+### `SegmentVisibility`
+
+```python
+SegmentVisibility(status: str, reason: str, minimum_sampled_clearance_m: float | None, tested_range_m: float, sample_count: int, quality_flags: tuple[str, ...])
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L181)
+
+### `build_horizon`
+
+```python
+build_horizon(dem: DEM, site: HorizonSite, sampling: HorizonSampling, *, cache=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L138)
+
+### `finite_segment_visibility`
+
+```python
+finite_segment_visibility(dem: DEM, observer_m, target_m, *, frame: str, step_m: float, clearance_m: float, body_radius_m: float, max_samples: int=100000)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L190)
+
+### `horizon_cache_key`
+
+```python
+horizon_cache_key(dem: DEM, site: HorizonSite, sampling: HorizonSampling)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/terrain/horizons.py#L97)
+
+## `soma.illumination`
+
+### `solar_disk_visibility`
+
+```python
+solar_disk_visibility(sun_vector_enu_m, earth_vector_enu_m, *, horizon, sun_radius_m=695700000.0, earth_radius_m=6378137.0, horizon_margin_deg=0.1, samples=512, max_samples=8192, tolerance=0.005)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/illumination/__init__.py#L16)
+
+## `soma.power`
+
+### `fixed_panel_power`
+
+```python
+fixed_panel_power(panel_profile, sun_vector_enu_m, visible_fraction)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/power/__init__.py#L19)
+
+### `integrate_battery`
+
+```python
+integrate_battery(profile, bins, *, base_load_w)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/power/__init__.py#L47)
+
+## `soma.links`
+
+### `assess_contact`
+
+```python
+assess_contact(candidate, sender_profile, receiver_profile, *, guard_s, link_budget=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/links/contacts.py#L62)
+
+### `evaluate_geometry`
+
+```python
+evaluate_geometry(dem, sender_state, receiver_state, *, step_m, clearance_m, body_radius_m, occulting_spheres, station_normal=None, minimum_elevation_deg=None, occulting_ellipsoids=())
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/links/contacts.py#L184)
+
+### `link_budget`
+
+```python
+link_budget(profile, mode)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/links/budget.py#L22)
+
+## `soma.schedule`
+
+### `solve_schedule`
+
+```python
+solve_schedule(scenario, contacts, generation_bins, *, chunk_bytes=16777216, bin_s=5, time_limit_s=15, cancel_event=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/schedule/optimizer.py#L11)
+
+### `replay_schedule`
+
+```python
+replay_schedule(scenario, contacts, allocations, generation_bins, *, require_complete=True)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/schedule/replay.py#L30)
+
+## `soma.validation`
+
+### `ScenarioValidationError`
+
+```python
+class ScenarioValidationError(ValueError)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L15)
+
+### `load_json`
+
+```python
+load_json(path: str | Path)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L43)
+
+### `validate_document`
+
+```python
+validate_document(document, schema_name: str) -> None
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L119)
+
+### `validate_documents`
+
+```python
+validate_documents(documents, schema_name: str) -> None
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L124)
+
+### `validate_scenario`
+
+```python
+validate_scenario(scenario: dict) -> dict
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L271)
+
+### `load_scenario`
+
+```python
+load_scenario(path: str | Path) -> dict
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L284)
+
+### `scenario_sha256`
+
+```python
+scenario_sha256(scenario: dict) -> str
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L288)
+
+### `data_volume_bytes`
+
+```python
+data_volume_bytes(volume: dict) -> int
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L161)
+
+### `schema_registry`
+
+```python
+schema_registry()
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L79)
+
+### `resource_directory`
+
+```python
+resource_directory(name: str) -> Path
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/validation.py#L19)
+
+## `soma.exports`
+
+### `json_bytes`
+
+```python
+json_bytes(value)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/exports/__init__.py#L20)
+
+### `summary`
+
+```python
+summary(run)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/exports/__init__.py#L24)
+
+### `display_payload`
+
+```python
+display_payload(run, display=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/exports/__init__.py#L96)
+
+### `explanation`
+
+```python
+explanation(run, display=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/exports/__init__.py#L131)
+
+### `create_run_package`
+
+```python
+create_run_package(run)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/exports/__init__.py#L166)
+
+## `soma.exports.display`
+
+### `display_data`
+
+```python
+display_data(run)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/exports/display.py#L13)
+
+### `renderer_registration`
+
+```python
+renderer_registration()
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/exports/display.py#L8)
+
+## `soma.research`
+
+### `StudyValidationError`
+
+```python
+class StudyValidationError(ValueError)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/validation.py#L10)
+
+### `StudyCancelled`
+
+```python
+class StudyCancelled(RuntimeError)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/geometry.py#L19)
+
+### `validate_study`
+
+```python
+validate_study(document)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/validation.py#L33)
+
+### `study_sha256`
+
+```python
+study_sha256(request)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/validation.py#L70)
+
+### `analyze_study`
+
+```python
+analyze_study(request, *, data_root=None, progress=None, cancel_event=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/geometry.py#L131)
+
+### `runtime_capabilities`
+
+```python
+runtime_capabilities(*, data_root=None)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/geometry.py#L72)
+
+## `soma.research.catalog`
+
+### `site_catalog`
+
+```python
+site_catalog()
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/catalog.py#L10)
+
+### `resolve_site`
+
+```python
+resolve_site(identifier)
+```
+
+[Source](https://github.com/darthvader58/soma/blob/main/soma/research/catalog.py#L42)

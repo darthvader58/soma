@@ -72,9 +72,9 @@ This is the synthetic 100 MiB software-test network, not a lunar prediction.
 ```python
 from soma.engine import plan_run
 from soma.schedule import replay_schedule
-from soma.validation import load_scenario
+from soma.validation import load_scenario, resource_directory
 
-run = plan_run(load_scenario("fixtures/synthetic-relay/scenario.json"))
+run = plan_run(load_scenario(resource_directory("fixtures") / "synthetic-relay" / "scenario.json"))
 assert run["result"]["status"] == "feasible_under_assumptions"
 assert run["result"]["delivered_bytes"] == 104857600
 replayed = replay_schedule(run["scenario"], run["result"]["contacts"],

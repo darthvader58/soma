@@ -5,6 +5,8 @@ description: Submit isolated planning jobs and retrieve immutable results from t
 
 The FastAPI service is intended for local use. It runs jobs in separate Python processes so one SPICE kernel configuration cannot contaminate another.
 
+Install `soma-lunar[planning,service]`. The following server command works from an installed package. Scientific terrain jobs additionally need their declared local data root; the synthetic quickstart needs no such downloads.
+
 ```bash
 source .venv/bin/activate
 uvicorn soma.api.app:app --host 127.0.0.1 --port 8000
@@ -14,10 +16,12 @@ Interactive API documentation is available at `http://127.0.0.1:8000/docs`. The 
 
 ## Submit and poll
 
+First run the [Python quickstart](/getting-started/quickstart) to save the installed synthetic scenario as `scenario.json` in your working directory.
+
 ```bash
 curl --request POST http://127.0.0.1:8000/plans \
   --header 'Content-Type: application/json' \
-  --data-binary @fixtures/synthetic-relay/scenario.json
+  --data-binary @scenario.json
 ```
 
 A successful submission returns HTTP 202 with `job_id` and `scenario_sha256`. Poll `GET /plans/{job_id}` for status, progress stage, and the completed immutable result. Match the returned scenario hash to your request before displaying it.
@@ -36,6 +40,8 @@ A successful submission returns HTTP 202 with `job_id` and `scenario_sha256`. Po
 Exports and derived display endpoints require a completed job; early requests return HTTP 409. Invalid scenarios return HTTP 422. Request and retention limits are enforced; exceeding retained job capacity returns HTTP 429. Export runs you need to keep before restarting the service.
 
 ## Local frontend
+
+The following frontend commands require a repository checkout. They are separate from using the Python library or local API.
 
 ```bash
 npm --prefix web ci

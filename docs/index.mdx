@@ -5,7 +5,7 @@ description: Calculate lunar geometry from published sources and audit data-deli
 
 SOMA stands for **Selenographic Observation and Mission Atlas**. It provides a Python lunar analysis library and an interactive Moon workbench with two analysis tools. **Geometry** calculates new multi-site Sun/Earth geometry and reconstructed LRO states. **Data delivery** calculates terrain-backed, energy-constrained schedules in a bounded south-polar region. Contact capacity, radio conflicts, propagation delay, finite storage and lander energy constrain delivery.
 
-The distribution is `soma-lunar`; import it as `soma`. The current repository version is **0.1.0**. Install from source using the [installation guide](/getting-started/installation), then reproduce a [live geometry study](/getting-started/live-research) with pinned NASA ephemerides. The [synthetic delivery tutorial](/getting-started/quickstart) remains available for hand-checkable scheduling tests without data downloads.
+The distribution is `soma-lunar`; import it as `soma`. The current repository version is **0.1.0**. Use the [installation guide](/getting-started/installation) and calculate your [first synthetic delivery plan](/getting-started/quickstart) with installed fixtures and no scientific-data downloads. For physical geometry, prepare the pinned sources for a [live geometry study](/getting-started/live-research).
 
 ## Choose a workflow
 
@@ -17,10 +17,13 @@ The distribution is `soma-lunar`; import it as `soma`. The current repository ve
 | Call the bounded public delivery endpoint | [Hosted delivery API](/reference/hosted-delivery) |
 | Find implemented functions and their limits | [Python modules](/reference/python-api) and [capability matrix](/science/capability-matrix) |
 | Calculate a standalone scenario | [Python quickstart](/getting-started/quickstart) |
+| Connect terrain, solar-disk visibility and electrical power | [Environment tutorial](/tutorials/environment-analysis) |
+| Change a resource and reject a corrupted schedule | [Delivery experiments](/tutorials/delivery-experiments) |
 | Reproduce the terrain-backed date comparison | [Physical runs](/getting-started/physical-runs) |
 | Integrate with a local application | [HTTP service](/reference/service) |
 | Audit a saved result | [Exports and replay](/reference/exports-replay) |
 | Understand reference frames and coverage | [Frames and datasets](/science/frames-data) |
+| Find exact signatures and release notes | [API catalog](/reference/api-catalog) and [releases](/project/releases) |
 
 ## Read the outcome correctly
 

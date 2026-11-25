@@ -1,0 +1,52 @@
+---
+title: Contributing
+description: Develop and review the library with reproducible examples, contract checks and explicit scientific scope.
+---
+
+The [source repository](https://github.com/darthvader58/soma) contains the Python library, schemas, numerical manifests, tests, application and this documentation. Read the repository's [contribution guide](https://github.com/darthvader58/soma/blob/main/CONTRIBUTING.md) and the [project plan](https://github.com/darthvader58/soma/tree/main/plan) before proposing a scientific change.
+
+## Prepare a checkout
+
+```bash
+git clone https://github.com/darthvader58/soma.git
+cd soma
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[planning,service,verification,test]"
+python -m pytest tests/engine -q
+```
+
+Some independent physical checks need separately acquired data and explicit environment opt-ins. State which checks ran and which were skipped; a skipped physical comparison is not validation evidence.
+
+## Keep a change reviewable
+
+Change one scientific purpose at a time. Include a minimal scenario and test showing the previous failure and the resulting behavior. Retain explicit units, frame realization, origin, time scale and provenance. Contact windows use source transmit epochs, and receiver occupancy and causal availability are separate quantities.
+
+Schema changes affect consumers and stored fixtures. Review the contract and compatibility consequences before changing field names or enums. A feasible schedule using assumed rates remains an assumed-rate simulation. Missing terrain cannot become a clear horizon; missing resources cannot become unlimited service or storage.
+
+Keep scientific computation in Python. A browser display or renderer interpolation must not decide visibility, electrical generation or routing. Read the [capability matrix](/science/capability-matrix) before describing a new feature as part of the released library.
+
+## Update documentation with the API
+
+The module guides explain parameter meaning, units, returned records, errors and scientific exclusions. The [signature catalog](/reference/api-catalog) is derived from the source without importing optional dependencies:
+
+```bash
+python docs/scripts/generate_api_catalog.py
+python docs/scripts/generate_api_catalog.py --check
+python docs/scripts/check_examples.py
+```
+
+The example check executes the explicitly selected synthetic tutorial/reference snippets in temporary working directories. It does not acquire kernels or verify physical snippets. Add a source-backed example for new public behavior and state any preparation it needs.
+
+From `docs/`, validate the Mintlify source:
+
+```bash
+npx --yes mint validate
+npx --yes mint broken-links --check-anchors --check-redirects
+```
+
+Preview with `npx --yes mint dev --no-open`. Review navigation, code blocks, tables and mobile reading order before merging. The production Mintlify project reads `main` and the `docs` subdirectory; changes on an unpublished branch are not yet live.
+
+## Report problems
+
+Use [GitHub issues](https://github.com/darthvader58/soma/issues) for reproducible bugs and focused proposals. Include version, platform, source IDs/hashes, scenario hash, solver settings and replay errors when relevant. Keep credentials and private mission inputs out of public reports.

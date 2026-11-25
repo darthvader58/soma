@@ -1,52 +1,67 @@
 ---
 title: Installation
-description: Install the source distribution and the dependencies required for your workflow.
+description: Install soma-lunar, select workflow dependencies and verify the local solver.
 ---
 
-Use **Python 3.12 or newer** for the full analysis stack. Python 3.14 has been used for repository verification. The package requires Python 3.12 or newer; NumPy 2.5.4 also requires this minimum.
+SOMA's distribution name is `soma-lunar`; its Python import is `soma`. Version 0.1.0 requires **Python 3.12 or newer**. A browser, Cesium account and cloned repository are unnecessary for the library quickstart.
+
+## Install from PyPI
+
+Create an isolated environment, then install the planning workflow:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install "soma-lunar[planning]==0.1.0"
+```
+
+On Windows PowerShell, activate the environment with `.venv\Scripts\Activate.ps1`.
+
+The command above requires the 0.1.0 release to be present on PyPI. If publication is still pending, use the source installation below. The repository version and a public index release are separate records.
+
+## Choose dependencies
+
+| Installation | What it provides |
+| --- | --- |
+| `soma-lunar` | Scenario/schema validation, strict JSON and canonical hashing. Does not include the numerical planner dependencies. |
+| `soma-lunar[analysis]` | NumPy, SpiceyPy, Rasterio and PyProj for numerical geometry, terrain, illumination and power. |
+| `soma-lunar[planning]` | The analysis stack plus PuLP for delivery planning and replay. The current planner imports the analysis dependencies even for synthetic inputs. |
+| `soma-lunar[service]` | FastAPI and Uvicorn. Combine with `planning` to serve delivery jobs. |
+| `soma-lunar[verification]` | Skyfield for independent ephemeris comparisons; combine with `analysis` or `planning`. |
+| `soma-lunar[test]` | Pytest and HTTP test support for a source checkout. |
+
+For a local service with independent geometry verification:
+
+```bash
+python -m pip install "soma-lunar[planning,service,verification]==0.1.0"
+```
+
+Scientific kernels and rasters are separate from Python dependencies. Installation does not start a scientific-data download. Small manifests, schemas and synthetic fixtures are included as installed resources. See [frames and datasets](/science/frames-data) before acquiring physical inputs.
+
+## Verify the environment
+
+```bash
+python -c "import soma; print(soma.__version__)"
+python -m soma --help
+python -c "import pulp; print(pulp.PULP_CBC_CMD().available())"
+```
+
+The last command should print a path to an executable CBC solver. An empty/false value means PuLP cannot find its configured CBC executable. Installation and solver availability depend on the platform; a missing solver is not a scientific infeasibility result. See [troubleshooting](/getting-started/troubleshooting).
+
+The `soma` console command and `python -m soma` expose the same CLI. Continue with [your first synthetic plan](/getting-started/quickstart), which locates its example through installed resources.
+
+## Install from a checkout
+
+Use this route for development, unreleased changes and repository reproduction scripts:
 
 ```bash
 git clone https://github.com/darthvader58/soma.git
 cd soma
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -e ".[analysis,planning,service]"
-```
-
-Run the examples from the repository root so their fixture paths resolve. These instructions install from the repository; they do not assume a published package index release.
-
-## Dependency groups
-
-| Extra | Purpose |
-| --- | --- |
-| `analysis` | NumPy, SpiceyPy, Rasterio, and PyProj for numerical geometry and terrain |
-| `planning` | PuLP and the bounded mixed-integer scheduling workflow |
-| `service` | FastAPI and Uvicorn for the local HTTP boundary |
-| `verification` | Skyfield for independent ephemeris comparisons |
-| `test` | Pytest and HTTP client support for engine tests |
-
-The core distribution installs JSON schema validation and canonical JSON hashing
-dependencies. Installation does not run scientific downloads. One unmodified
-Earth-orientation kernel is retained with the source distribution; other kernels
-and numerical rasters are acquired separately. See the [source notes](/science/frames-data).
-
-The historically named `hosted-display` dependency group now supplies FastAPI,
-NumPy, Rasterio, SpiceyPy, PyProj and PuLP for the bounded Vercel runtime. Use the
-workflow extras above for local development and Uvicorn service access.
-
-For verification work:
-
-```bash
-python -m pip install -e ".[test,verification]"
+python -m pip install -e ".[planning,service,verification,test]"
 python -m pytest tests/engine -q
 ```
 
-## Check the installation
-
-```bash
-python -c 'import soma; print(soma.__version__)'
-python -m soma --help
-python -m soma validate fixtures/synthetic-relay/scenario.json
-```
-
-Continue with the [synthetic quickstart](/getting-started/quickstart). Acquire scientific data separately only when running the [physical workflow](/getting-started/physical-runs).
+Pin a release tag or commit when reproducing a calculation. Keep the scenario, source hashes, solver settings and exported manifest alongside the library version. The [contribution guide](/project/contributing) describes checks for source changes.
