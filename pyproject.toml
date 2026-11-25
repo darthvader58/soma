@@ -6,6 +6,21 @@ build-backend = "setuptools.build_meta"
 name = "soma-lunar"
 version = "0.1.0"
 description = "Lunar data-delivery planning under declared assumptions"
+readme = "README.md"
+license = "GPL-3.0-only"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+authors = [{name = "Shashwat Raj"}, {name = "Saanvi Kakde"}]
+keywords = ["Moon", "lunar", "mission-analysis", "communications", "scheduling", "SPICE"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Astronomy",
+]
 requires-python = ">=3.12"
 dependencies = ["jsonschema==4.26.0", "referencing==0.37.0", "rfc8785==0.1.4"]
 
@@ -13,8 +28,17 @@ dependencies = ["jsonschema==4.26.0", "referencing==0.37.0", "rfc8785==0.1.4"]
 test = ["pytest>=8,<10", "httpx==0.28.1"]
 analysis = ["numpy==2.5.4", "spiceypy==8.4.0", "rasterio==1.5.2", "pyproj==3.8.0"]
 verification = ["skyfield==1.55"]
-planning = ["pulp==3.3.2"]
+planning = ["pulp==3.3.2", "numpy==2.5.4", "spiceypy==8.4.0", "rasterio==1.5.2", "pyproj==3.8.0"]
 service = ["fastapi==0.163.0", "uvicorn==0.54.0"]
+
+[project.urls]
+Documentation = "https://soma-ce3178ca.mintlify.site"
+Repository = "https://github.com/darthvader58/soma"
+Issues = "https://github.com/darthvader58/soma/issues"
+Changelog = "https://github.com/darthvader58/soma/blob/main/CHANGELOG.md"
+
+[project.scripts]
+soma = "soma.__main__:main"
 
 [dependency-groups]
 hosted-display = ["fastapi==0.163.0", "numpy==2.5.4", "rasterio==1.5.2", "spiceypy==8.4.0", "pyproj==3.8.0", "pulp==3.3.2"]
@@ -24,11 +48,17 @@ default-groups = ["hosted-display"]
 
 [tool.setuptools.packages.find]
 include = ["soma*"]
+namespaces = false
+
+[tool.setuptools]
+include-package-data = false
 
 [tool.setuptools.data-files]
 "share/soma/schemas" = ["schemas/*.schema.json"]
 "share/soma/data" = ["data/*.manifest.json", "data/research-sites.json"]
 "share/soma/data/pinned" = ["data/pinned/*.bpc", "data/pinned/README.md"]
+"share/soma/fixtures/synthetic-relay" = ["fixtures/synthetic-relay/*.json", "fixtures/synthetic-relay/README.md"]
+"share/soma/fixtures/synthetic-direct" = ["fixtures/synthetic-direct/*.json", "fixtures/synthetic-direct/README.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests/engine"]

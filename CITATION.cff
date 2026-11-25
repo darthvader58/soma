@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use SOMA, cite this software and the original data and methods used in your analysis."
+type: software
+title: "SOMA: Selenographic Observation and Mission Atlas"
+abstract: "A Python library and web workbench for finite-volume lunar data-delivery planning under explicit geometry, radio, network, and energy assumptions."
+authors:
+  - family-names: Raj
+    given-names: Shashwat
+  - family-names: Kakde
+    given-names: Saanvi
+version: 0.1.0
+date-released: "2026-11-25"
+repository-code: "https://github.com/darthvader58/soma"
+url: "https://soma-ce3178ca.mintlify.site"
+license: GPL-3.0-only
+keywords:
+  - lunar
+  - mission analysis
+  - communications
+  - scheduling
+  - terrain
+  - SPICE

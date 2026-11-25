@@ -1,0 +1,13 @@
+include README.md LICENSE THIRD_PARTY_NOTICES.md CHANGELOG.md
+include CONTRIBUTING.md CITATION.cff
+include scripts/verify-distribution.py
+recursive-include soma *.py
+recursive-include schemas *.schema.json
+include data/*.manifest.json data/research-sites.json
+include data/pinned/*.bpc data/pinned/README.md
+include fixtures/synthetic-direct/*.json fixtures/synthetic-direct/README.md
+include fixtures/synthetic-relay/*.json fixtures/synthetic-relay/README.md
+prune soma/docs
+prune tests
+include tests/engine/test_distribution.py
+global-exclude __pycache__ *.py[cod] .DS_Store .env .env.*

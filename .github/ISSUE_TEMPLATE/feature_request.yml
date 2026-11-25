@@ -1,0 +1,22 @@
+name: Model or workflow proposal
+description: Propose a bounded capability or workflow improvement.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: Describe the user task and the current limitation, with a concrete scenario if possible.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Identify affected inputs, outputs, plan sections, and scope boundaries.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Scientific basis and verification
+      description: For model changes, link original methods or dataset documentation and propose a hand check, independent comparison, or acceptance case. Separate published facts from new assumptions.

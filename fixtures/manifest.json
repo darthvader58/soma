@@ -25,7 +25,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "d6d5d3e3ea58900c4b482c9187cc474b12e849fb748de3849c88e715ea1b455d"
+      "sha256": "d310b44353785964b95ef7df06c8ddc6194ff2a0ae775cc66b0c99e959b76332"
     },
     {
       "path": "data/README.md",
@@ -669,7 +669,7 @@
     },
     {
       "path": "fixtures/synthetic-relay/README.md",
-      "sha256": "74376ff28d4889359cc9db06e4391015e3eb45fef54b70645de0b0738166044f"
+      "sha256": "6b2d5489eefc51269da8c0a5988a0e26d5ee4468b97d2b6d1db63fc7dad6fe23"
     },
     {
       "path": "fixtures/synthetic-relay/contacts.json",
@@ -713,7 +713,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "d00e99a0c5e6b458f66312557a57be0b0fa5184cb51ee907ecd2cc5220d2b822"
+      "sha256": "a7cb8c6f73af3f1553185cc87a1b258f69a5829dc91a66724a4f7fd151a6298f"
     },
     {
       "path": "schemas/allocation.schema.json",
